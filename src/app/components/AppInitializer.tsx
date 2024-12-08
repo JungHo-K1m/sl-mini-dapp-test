@@ -60,14 +60,14 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
             return;
           }
 
-          const idToken = liff.getIDToken();
-          if (!idToken) throw new Error("ID 토큰을 가져오지 못했습니다.");
+          const lineToken = liff.getAccessToken();
+          if (!lineToken) throw new Error("ID 토큰을 가져오지 못했습니다.");
 
-          console.log("라인 ID Token 확인 : ", idToken);
+          console.log("라인 Access Token 확인 : ", lineToken);
 
           // 신규/기존 사용자 확인
           try {
-            const isInitial = await userAuthenticationWithServer(idToken);
+            const isInitial = await userAuthenticationWithServer(lineToken);
 
             if (isInitial === undefined) {
               throw new Error("사용자 인증에 실패했습니다.");
