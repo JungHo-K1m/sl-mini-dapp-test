@@ -1,5 +1,20 @@
+/* src\pages\PreviousRewards\PreviousRewards.css */
 
 .box-bg{
     background: radial-gradient(50% 50% at 50% 50%, rgba(46, 51, 100, 0.7) 0%, rgba(42, 41, 78, 0.7) 100%);
 }
 
+.swiper-pagination-bullet {
+    background: #a3a3a3 !important;
+    opacity: 1 !important;
+
+
+  }
+  
+  .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: #0147E5 !important; /* 활성화된 dot 색상 변경 */
+    width: 20px !important;
+    height: 8px !important;
+    border-radius: 30px;
+  }
+  

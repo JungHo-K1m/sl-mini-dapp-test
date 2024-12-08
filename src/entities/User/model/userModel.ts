@@ -99,6 +99,21 @@ interface UserState {
   setBoards: (boards: Board[]) => void;
 
   refillDice: () => Promise<void>;
+
+  // **추가된 함수들**
+  addGoldItem: () => Promise<void>;
+  removeGoldItem: () => Promise<void>;
+  addSilverItem: () => Promise<void>;
+  removeSilverItem: () => Promise<void>;
+  addBronzeItem: () => Promise<void>;
+  removeBronzeItem: () => Promise<void>;
+  addRewardItem: () => Promise<void>;
+  removeRewardItem: () => Promise<void>;
+  addAutoItem: () => Promise<void>;
+  removeAutoItem: () => Promise<void>;
+  addAllItems: () => Promise<void>;
+
+
 }
 
 // 필요한 인터페이스 정의
@@ -520,6 +535,183 @@ export const useUserStore = create<UserState>((set, get) => ({
       console.error('주사위 리필 중 에러 발생:', error);
       set({ error: error.message || '주사위 리필에 실패했습니다.' });
       throw error; // 에러를 다시 던져 컴포넌트에서 처리할 수 있도록 함
+    }
+  },
+
+   // 테스트용 아이템 추가 함수들
+   addGoldItem: async () => {
+    try {
+      const response = await api.get('/test/items/gold');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('골드 아이템 추가 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '골드 아이템 추가 실패');
+      }
+    } catch (error: any) {
+      console.error('골드 아이템 추가 실패:', error);
+      set({ error: error.message || '골드 아이템 추가에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  removeGoldItem: async () => {
+    try {
+      const response = await api.get('/test/items/gold/delete');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('골드 아이템 삭제 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '골드 아이템 삭제 실패');
+      }
+    } catch (error: any) {
+      console.error('골드 아이템 삭제 실패:', error);
+      set({ error: error.message || '골드 아이템 삭제에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  addSilverItem: async () => {
+    try {
+      const response = await api.get('/test/items/silver');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('실버 아이템 추가 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '실버 아이템 추가 실패');
+      }
+    } catch (error: any) {
+      console.error('실버 아이템 추가 실패:', error);
+      set({ error: error.message || '실버 아이템 추가에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  removeSilverItem: async () => {
+    try {
+      const response = await api.get('/test/items/silver/delete');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('실버 아이템 삭제 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '실버 아이템 삭제 실패');
+      }
+    } catch (error: any) {
+      console.error('실버 아이템 삭제 실패:', error);
+      set({ error: error.message || '실버 아이템 삭제에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  addBronzeItem: async () => {
+    try {
+      const response = await api.get('/test/items/bronze');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('브론즈 아이템 추가 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '브론즈 아이템 추가 실패');
+      }
+    } catch (error: any) {
+      console.error('브론즈 아이템 추가 실패:', error);
+      set({ error: error.message || '브론즈 아이템 추가에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  removeBronzeItem: async () => {
+    try {
+      const response = await api.get('/test/items/bronze/delete');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('브론즈 아이템 삭제 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '브론즈 아이템 삭제 실패');
+      }
+    } catch (error: any) {
+      console.error('브론즈 아이템 삭제 실패:', error);
+      set({ error: error.message || '브론즈 아이템 삭제에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  addRewardItem: async () => {
+    try {
+      const response = await api.get('/test/items/reward');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('스핀/말판 리워드 아이템 추가 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '스핀/말판 리워드 아이템 추가 실패');
+      }
+    } catch (error: any) {
+      console.error('스핀/말판 리워드 아이템 추가 실패:', error);
+      set({ error: error.message || '스핀/말판 리워드 아이템 추가에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  removeRewardItem: async () => {
+    try {
+      const response = await api.get('/test/items/reward/delete');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('스핀/말판 리워드 아이템 삭제 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '스핀/말판 리워드 아이템 삭제 실패');
+      }
+    } catch (error: any) {
+      console.error('스핀/말판 리워드 아이템 삭제 실패:', error);
+      set({ error: error.message || '스핀/말판 리워드 아이템 삭제에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  addAutoItem: async () => {
+    try {
+      const response = await api.get('/test/items/auto');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('오토 아이템 추가 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '오토 아이템 추가 실패');
+      }
+    } catch (error: any) {
+      console.error('오토 아이템 추가 실패:', error);
+      set({ error: error.message || '오토 아이템 추가에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  removeAutoItem: async () => {
+    try {
+      const response = await api.get('/test/items/auto/delete');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('오토 아이템 삭제 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '오토 아이템 삭제 실패');
+      }
+    } catch (error: any) {
+      console.error('오토 아이템 삭제 실패:', error);
+      set({ error: error.message || '오토 아이템 삭제에 실패했습니다.' });
+      throw error;
+    }
+  },
+
+  addAllItems: async () => {
+    try {
+      const response = await api.get('/test/items/all');
+      if (response.data.code === 'OK') {
+        set({ items: response.data.data });
+        console.log('전체 아이템 추가 성공:', response.data.data);
+      } else {
+        throw new Error(response.data.message || '전체 아이템 추가 실패');
+      }
+    } catch (error: any) {
+      console.error('전체 아이템 추가 실패:', error);
+      set({ error: error.message || '전체 아이템 추가에 실패했습니다.' });
+      throw error;
     }
   },
 

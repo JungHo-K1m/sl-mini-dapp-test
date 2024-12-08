@@ -2,6 +2,7 @@ import api from '@/shared/api/axiosInstance';
 
 export interface InitialDataResponse {
   myRanking: Array<{
+    itsMe: boolean;
     userId: string;
     rank: number;
     slRewards: number;

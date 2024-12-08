@@ -13,10 +13,6 @@ const MyRankingWidget: React.FC = () => {
   // useUserStore에서 필요한 데이터 가져오기
   const { rank, starPoints, lotteryCount, slToken } = useUserStore();
 
-  // 디버깅: 현재 포인트 상태 확인
-  React.useEffect(() => {
-    console.log("MyRankingWidget - Current Points:", { rank, starPoints, lotteryCount, slToken });
-  }, [rank, starPoints, lotteryCount, slToken]);
 
   const handleRankingClick = () => {
     setSelected('/reward');

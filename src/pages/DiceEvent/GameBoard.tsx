@@ -25,6 +25,7 @@ import { RollDiceResponseData } from "@/features/DiceEvent/api/rollDiceApi";
 import NFTRewardList from "@/widgets/NFTRewardCard";
 import { PiSpinnerBallFill } from "react-icons/pi";
 import { formatNumber } from "@/shared/utils/formatNumber";
+import { GiCardJoker } from "react-icons/gi";
 
 dayjs.extend(duration);
 dayjs.extend(utc); // UTC 플러그인 적용
@@ -75,6 +76,17 @@ const GameBoard: React.FC<GameBoardProps> = ({
     isAuto,
     setIsAuto,
     refillDice, // refillDice 함수 추가
+    addGoldItem,
+    removeGoldItem,
+    addSilverItem,
+    removeSilverItem,
+    addBronzeItem,
+    removeBronzeItem,
+    addRewardItem,
+    removeRewardItem,
+    addAutoItem,
+    removeAutoItem,
+    addAllItems,
   } = useUserStore();
   const [timeUntilRefill, setTimeUntilRefill] = useState("");
   const [isRefilling, setIsRefilling] = useState(false); // 리필 중 상태 관리
@@ -235,19 +247,122 @@ const GameBoard: React.FC<GameBoardProps> = ({
     );
   };
 
-    // Refill Dice API 호출 함수
-    const handleRefillDice = async () => {
-      try {
-        setIsRefilling(true); // 리필 중 상태 활성화
-        await refillDice();
-        console.log("주사위 리필 성공");
-        setIsRefilling(false); // 리필 완료
-      } catch (error: any) {
-        console.error("주사위 리필 실패:", error);
-        // 추가적인 에러 처리 (예: 사용자에게 알림)
-        setIsRefilling(false); // 리필 완료
-      }
-    };
+
+
+      // Refill Dice API 호출 함수
+  const handleRefillDice = async () => {
+    try {
+      setIsRefilling(true); // 리필 중 상태 활성화
+      await refillDice();
+      console.log("주사위 리필 성공");
+      setIsRefilling(false); // 리필 완료
+    } catch (error: any) {
+      console.error("주사위 리필 실패:", error);
+      // 추가적인 에러 처리 (예: 사용자에게 알림)
+      setIsRefilling(false); // 리필 완료
+    }
+  };
+
+ // 테스트용 아이템 추가/삭제 핸들러
+ const handleAddGold = async () => {
+  try {
+    await addGoldItem();
+    alert("Gold NFT가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("Gold NFT 추가에 실패했습니다.");
+    // 에러는 useUserStore에서 처리하므로 여기서는 별도 처리 불필요
+  }
+};
+
+const handleRemoveGold = async () => {
+  try {
+    await removeGoldItem();
+    alert("Gold NFT가 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("Gold NFT 삭제에 실패했습니다.");
+  }
+};
+
+const handleAddSilver = async () => {
+  try {
+    await addSilverItem();
+    alert("Silver NFT가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("Silver NFT 추가에 실패했습니다.");
+  }
+};
+
+const handleRemoveSilver = async () => {
+  try {
+    await removeSilverItem();
+    alert("Silver NFT가 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("Silver NFT 삭제에 실패했습니다.");
+  }
+};
+
+const handleAddBronze = async () => {
+  try {
+    await addBronzeItem();
+    alert("Bronze NFT가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("Bronze NFT 추가에 실패했습니다.");
+  }
+};
+
+const handleRemoveBronze = async () => {
+  try {
+    await removeBronzeItem();
+    alert("Bronze NFT가 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("Bronze NFT 삭제에 실패했습니다.");
+  }
+};
+
+const handleAddReward = async () => {
+  try {
+    await addRewardItem();
+    alert("Reward NFT가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("Reward NFT 추가에 실패했습니다.");
+  }
+};
+
+const handleRemoveReward = async () => {
+  try {
+    await removeRewardItem();
+    alert("Reward NFT가 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("Reward NFT 삭제에 실패했습니다.");
+  }
+};
+
+const handleAddAuto = async () => {
+  try {
+    await addAutoItem();
+    alert("Auto NFT가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("Auto NFT 추가에 실패했습니다.");
+  }
+};
+
+const handleRemoveAuto = async () => {
+  try {
+    await removeAutoItem();
+    alert("Auto NFT가 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("Auto NFT 삭제에 실패했습니다.");
+  }
+};
+
+const handleAddAll = async () => {
+  try {
+    await addAllItems();
+    alert("모든 NFT가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("모든 NFT 추가에 실패했습니다.");
+  }
+};
 
   return (
     <div className="grid grid-cols-6 grid-rows-6 gap-1 text-xs md:text-base relative">
@@ -428,6 +543,92 @@ const GameBoard: React.FC<GameBoardProps> = ({
               </div>
             </DialogContent>
           </Dialog>
+
+{/**테스트용 마스터 컨텐츠 */}
+<Dialog>
+        <DialogTrigger>
+          <div className="absolute text-white -right-11 -top-8 md:-right-24 md:-top-20 font-semibold text-xs md:text-sm md:space-y-1">
+            <GiCardJoker className=" w-8 h-8  " />
+          </div>
+        </DialogTrigger>
+        <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh md:h-auto overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
+          <div className="flex flex-col gap-4 p-4">
+            {/* 추가 버튼 */}
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={handleAddGold}
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                Gold NFT + 1
+              </button>
+              <button
+                onClick={handleAddSilver}
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                Silver NFT + 1
+              </button>
+              <button
+                onClick={handleAddBronze}
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                Bronze NFT + 1
+              </button>
+              <button
+                onClick={handleAddAuto}
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                Auto NFT + 1
+              </button>
+              <button
+                onClick={handleAddReward}
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                Reward NFT + 1
+              </button>
+              <button
+                onClick={handleAddAll}
+                className="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded"
+              >
+                All NFTs + 1
+              </button>
+            </div>
+
+            {/* 삭제 버튼 */}
+            <div className="flex flex-col gap-2 mt-4">
+              <button
+                onClick={handleRemoveGold}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Gold NFT - 1
+              </button>
+              <button
+                onClick={handleRemoveSilver}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Silver NFT - 1
+              </button>
+              <button
+                onClick={handleRemoveBronze}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Bronze NFT - 1
+              </button>
+              <button
+                onClick={handleRemoveAuto}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Auto NFT - 1
+              </button>
+              <button
+                onClick={handleRemoveReward}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Reward NFT - 1
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
           {/* 수정된 Auto 스위치 부분 */}
           <div className=" absolute flex flex-col items-center text-white -right-11 md:-right-24 md:-bottom-24 -bottom-14 ">
