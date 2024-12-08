@@ -108,3 +108,17 @@ export {
   TooltipContent,
   TooltipProvider,
 } from './tooltip';
+
+
+export {
+  Switch,
+} from './switch';
+
+export {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from './dialog';
