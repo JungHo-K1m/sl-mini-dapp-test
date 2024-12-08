@@ -44,7 +44,7 @@ const App:React.FC = () =>{
       {isInitialized && (
         <Routes>
           {/* DiceEventLayout Pages */}
-          <Route path="/" element={<Navigate to="/dice-event" />} />
+          <Route path="/" element={<Navigate to="/" />} />
           <Route path="/dice-event" element={<DiceEventLayout><DiceEvent /></DiceEventLayout>} />
           <Route path="/AI-menu" element={<DiceEventLayout><AIMenu /></DiceEventLayout>} />
           <Route path="/mission" element={<DiceEventLayout><MissionPage /></DiceEventLayout>} />

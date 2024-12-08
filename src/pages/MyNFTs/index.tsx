@@ -12,10 +12,10 @@ const MyNfts: React.FC = () => {
         { id: 2, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
         { id: 3, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
         { id: 4, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
-        // { id: 5, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
-        // { id: 6, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
-        // { id: 7, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
-        // { id: 8, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
+        { id: 5, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
+        { id: 6, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
+        { id: 7, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
+        { id: 8, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
       ];
 
     return (

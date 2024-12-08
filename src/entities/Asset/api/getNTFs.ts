@@ -1,10 +1,9 @@
 import api from '@/shared/api/axiosInstance';
 
-export const getWallets = async(): Promise<any> => {
-    const response = await api.get('/wallet/my');
+export const getNFTList = async(): Promise<any> => {
+    const response = await api.get('/');
 
     if(response.data.code === 'OK'){
-        console.log("지갑 목록 확인이요: ", response.data.data);
         return response.data.data;
     }else{
         console.error('Unexpected response:', response);
@@ -12,4 +11,4 @@ export const getWallets = async(): Promise<any> => {
     }
 };
 
-export default getWallets;
+export default getNFTList;

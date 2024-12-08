@@ -13,6 +13,8 @@ const MyAssets: React.FC = () => {
     const { t } = useTranslation();
     const { email, userLv, characterImage } = useUserStore();
     const [loading, setLoading] = useState(true);
+    const [nft, setNFT] = useState(0);
+    const [showModal, setShowModal] = useState(false);
 
     // 페이지 진입 후 0.2초 뒤 loading을 false로 변경 => 추후 nft 정보, 보상내역 정보 API 받아오는 시간 동안으로 변경
     useEffect(() => {
@@ -28,7 +30,7 @@ const MyAssets: React.FC = () => {
     }
 
     // nft 더미 데이터
-    const nftCollection = [
+    const nftCollection: any[] = [
         { id: 1, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
         { id: 2, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
         { id: 3, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
@@ -43,6 +45,7 @@ const MyAssets: React.FC = () => {
         { id: 4, description: "Game Win", date: "17-10-2024", points: "+150P" },
         { id: 5, description: "Game Lose", date: "17-10-2024", points: "-150P" },
     ];
+
 
     return (  
         <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-32">
@@ -76,55 +79,81 @@ const MyAssets: React.FC = () => {
             </div>
 
             {/* NFT 상점 이동 영역 - 추후 수정 예정 */}
-            <div 
-                className="rounded-2xl p-4 mt-6 w-full flex items-center justify-between"
-                style={{
-                    background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
-                }}>
-                <div>
-                    <h3 className="text-lg font-semibold">{t("asset_page.Shop_Unique_NFTs_Now!")}</h3>
-                    <p className="text-sm text-gray-200">
-                    {t("asset_page.Start_collecting_rare_and")}
-                    </p>
-                    <p className="text-sm text-gray-200">
-                    {t("asset_page.unique_digital_assets_today!")}
-                    </p>
+            {nft !== 0 ? (
+                <div 
+                    className="rounded-2xl p-4 mt-6 w-full flex items-center justify-between"
+                    style={{
+                        background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
+                    }}>
+                    <div>
+                        <h3 className="text-lg font-semibold">{t("asset_page.Shop_Unique_NFTs_Now!")}</h3>
+                        <p className="text-sm text-gray-200">
+                        {t("asset_page.Start_collecting_rare_and")}
+                        </p>
+                        <p className="text-sm text-gray-200">
+                        {t("asset_page.unique_digital_assets_today!")}
+                        </p>
+                    </div>
+                    <img
+                        src={Images.cart}
+                        alt="Shop NFTs"
+                        className="w-20 h-20"
+                    />
                 </div>
-                <img
-                    src={Images.cart}
-                    alt="Shop NFTs"
-                    className="w-20 h-20"
-                />
-            </div>
+            ):(
+            <div></div>)}
+            
 
             {/* 내 NFT 컬렉션 */}
             <div className="mt-10 w-full">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold">{t("asset_page.My_NFT_Collection")}</h2>
-                    <button
-                        className="flex items-center text-white text-sm"
-                        onClick={() => navigate("/my-nfts")}
+                    {nft !== 0 && (
+                        <button
+                            className="flex items-center text-white text-sm"
+                            onClick={() => navigate("/my-nfts")}
+                            aria-label="View All NFTs"
                         >
-                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
-                    </button>
+                            {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
+                        </button>
+                    )}
                 </div>
-                <div className="grid grid-cols-2 gap-4 mt-4 w-full">
-                    {nftCollection.map((nft) => (
-                        <div
-                            key={nft.id}
-                            className="bg-[#1F1E27] border border-[#737373] p-[10px] rounded-xl flex flex-col items-center"
-                            >
-                            {/* 비율을 유지하며 크기가 리니어하게 바뀌도록 설정 */}
-                            <div className="w-full aspect-[145/154] rounded-md mt-1 mx-1 overflow-hidden">
-                                <img
-                                src={nft.image}
-                                alt={nft.name}
-                                className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <p className="mt-2 font-bold">{nft.name}</p>
+                <div className="mt-4 w-full">
+                    {nft === 0 ? (
+                        <div className="mt-20 h-[150px] flex flex-col items-center justify-center">
+                            <p className="text-center text-[#737373] text-xl">
+                                {t("asset_page.no_nft")}<br />
+                                {t("asset_page.own_nft")}
+                            </p>
+                            <button
+                                className="w-1/2 py-4 rounded-full text-lg font-semibold mt-6"
+                                style={{ backgroundColor: '#0147E5' }}
+                                onClick={()=>setShowModal(true)}
+                                >
+                                {t("asset_page.shop_nft")}
+                            </button>
                         </div>
-                    ))}
+
+                    ) : (
+                        <div className="grid grid-cols-2 gap-4 mt-4 w-full">
+                            {nftCollection.map((nftItem) => (
+                                <div
+                                    key={nftItem.id}
+                                    className="bg-[#1F1E27] border border-[#737373] p-[10px] rounded-xl flex flex-col items-center"
+                                    >
+                                    {/* 비율을 유지하며 크기가 리니어하게 바뀌도록 설정 */}
+                                    <div className="w-full aspect-[145/154] rounded-md mt-1 mx-1 overflow-hidden">
+                                        <img
+                                        src={nftItem.image}
+                                        alt={nftItem.name}
+                                        className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                    <p className="mt-2 font-bold">{nftItem.name}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -160,6 +189,21 @@ const MyAssets: React.FC = () => {
                     ))}
                 </div>
             </div>
+
+            {/* NFT 구매 알림 모달창 */}
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
+                    <div className="bg-white text-black p-6 rounded-lg text-center w-[70%]">
+                        <p>서비스 준비 중입니다.</p>
+                        <button
+                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                            onClick={()=>setShowModal(false)}
+                            >
+                            {t("OK")}
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

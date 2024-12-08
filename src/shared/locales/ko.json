@@ -99,6 +99,7 @@
         "delete": "삭제",
         "receive_reward": "보상을 받기 위해서는",
         "add_wallet_address": "지갑 주소를 추가해야합니다.",
+        "erc_20": "USDT ERC-20 지갑 주소를 입력해야 합니다.",
         "wallet_question": "{{wallet}} 계정을 가지고 있습니까?",
         "yes": "네, 계정이 있습니다.",
         "create_account": "계정 생성",
@@ -152,7 +153,10 @@
         "used": "지출",
         "all_type": "모든 유형",
         "sl": "SL 토큰",
-        "point": "포인트"
+        "point": "포인트",
+        "no_nft": "아직 보유한 NFT가 없습니다.",
+        "own_nft": "NFT를 소유하고 순위를 높이세요!",
+        "shop_nft": "NFT 쇼핑"
     },
     "dice_evnet": {
         "Attendance": "출석",
