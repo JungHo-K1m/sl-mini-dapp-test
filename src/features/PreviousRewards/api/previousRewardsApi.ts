@@ -1,3 +1,5 @@
+//src\features\PreviousRewards\api\previousRewardsApi.ts
+
 import api from '@/shared/api/axiosInstance';
 
 export interface RangeRankingData {
@@ -7,6 +9,7 @@ export interface RangeRankingData {
   usdtRewards: number;
   nftType: string | null; // GOLD/SILVER/BRONZE/null
   selectedRewardType?: string | null; // USDT/SL/NULL
+  itsMe: boolean;
 }
 
 // 범위별 랭킹 조회 API

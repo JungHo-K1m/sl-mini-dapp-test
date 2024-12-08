@@ -3,7 +3,8 @@ import React from 'react';
 const UserLevel: React.FC<{
   userLv: number;
   charactorImageSrc: string;
-}> = ({ userLv, charactorImageSrc }) => {
+  exp: number; // 경험치 퍼센트 추가
+}> = ({ userLv, charactorImageSrc, exp }) => {
   // 사용자 레벨에 따른 클래스명 및 메인 컬러 결정
   let levelClassName = '';
   let mainColor = '';
@@ -25,6 +26,9 @@ const UserLevel: React.FC<{
     mainColor = '#0147e5';
   }
 
+  // 경험치를 정수화
+  const roundedExp = Math.floor(exp);
+
   return (
     <div
       className={`flex flex-col items-center justify-center rounded-3xl w-32 h-36 md:w-48 md:h-44 ${levelClassName}`}
@@ -36,17 +40,17 @@ const UserLevel: React.FC<{
       />
       <div className="flex flex-row items-center w-full px-4 gap-2">
         <p className="font-semibold text-[8px] md:text-xs">Lv.{userLv}</p>
-        <div className="flex flex-row border border-[#F59E0B] rounded-full w-full h-2 gap-[0.5px]">
+        <div className="flex flex-row border border-[#F59E0B] rounded-full w-full h-2">
           {/* 레벨 진행 바 */}
-          {[...Array(20)].map((_, i) => {
+          {[...Array(100)].map((_, i) => {
             let barColor = '';
-            if (i < 4) {
+            if (i < 20) {
               barColor = '#DD2726';
-            } else if (i < 8) {
+            } else if (i < 40) {
               barColor = '#F59E0B';
-            } else if (i < 12) {
+            } else if (i < 60) {
               barColor = '#FACC15';
-            } else if (i < 16) {
+            } else if (i < 80) {
               barColor = '#22C55E';
             } else {
               barColor = '#0147E5';
@@ -54,12 +58,11 @@ const UserLevel: React.FC<{
             return (
               <div
                 key={i}
-                className={`w-[5%] ${
+                className={`w-[1%] ${
                   i === 0 ? 'rounded-l-full' : ''
-                } ${i === 19 ? 'rounded-r-full' : ''}`}
+                } ${i === 99 ? 'rounded-r-full' : ''}`}
                 style={{
-                  backgroundColor: barColor,
-                  display: userLv > i ? 'block' : 'none',
+                  backgroundColor: i < roundedExp ? barColor : 'transparent',
                 }}
               ></div>
             );

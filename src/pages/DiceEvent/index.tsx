@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/shared/components/ui/dialog";
+} from "@/shared/components/ui";
 import {formatNumber}  from "@/shared/utils/formatNumber";
 import LevelRewards from "@/widgets/LevelRewards";
 
@@ -35,6 +35,7 @@ const DiceEventPage: React.FC = () => {
     position,
     monthlyPrize,
     isAuto, // isAuto 상태 가져오기
+    pet, // pet 데이터 가져오기
   } = useUserStore();
 
   const game = useDiceGame();
@@ -146,6 +147,7 @@ const DiceEventPage: React.FC = () => {
                 <UserLevel
                   userLv={userLv}
                   charactorImageSrc={charactorImageSrc}
+                  exp={pet.exp} // 경험치 추가
                 />
               </DialogTrigger>
               <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold  overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">

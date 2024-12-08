@@ -1,3 +1,5 @@
+//src\features\PreviousRewards\model\previousRewardsModel.ts
+
 import { create } from 'zustand';
 import { fetchRangeRankingAPI, RangeRankingData } from '../api/previousRewardsApi';
 
