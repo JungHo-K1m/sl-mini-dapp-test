@@ -17,8 +17,8 @@ async function storeResult(formData: FormData, type: string): Promise<boolean> {
     const response = await api.post(endpoint, formData);
 
     if (response.data.code === 'OK') {
-      console.log("Data stored successfully.");
-      console.log("뭐하카나: ", response);
+      // console.log("Data stored successfully.");
+      console.log("뭐하카나: ", response.data);
       return true;
     } else {
       console.warn(`Unexpected response code: ${response.data.code}`);
