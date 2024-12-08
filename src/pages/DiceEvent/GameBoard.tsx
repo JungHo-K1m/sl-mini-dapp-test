@@ -87,6 +87,10 @@ const GameBoard: React.FC<GameBoardProps> = ({
     addAutoItem,
     removeAutoItem,
     addAllItems,
+    addDice,
+    addSLToken,
+    removeDice,
+    removeSLToken,
   } = useUserStore();
   const [timeUntilRefill, setTimeUntilRefill] = useState("");
   const [isRefilling, setIsRefilling] = useState(false); // 리필 중 상태 관리
@@ -364,6 +368,42 @@ const handleAddAll = async () => {
   }
 };
 
+const handleAddDice = async () => {
+  try {
+    await addDice();
+    alert("주사위가 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("주사위 추가에 실패했습니다.");
+  }
+};
+
+const handleRemoveDice = async () => {
+  try {
+    await removeDice();
+    alert("주사위가 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("주사위 삭제에 실패했습니다.");
+  }
+}
+
+const handleAddSLToken = async () => {
+  try {
+    await addSLToken();
+    alert("SL Token이 성공적으로 추가되었습니다!");
+  } catch (error) {
+    alert("SL Token 추가에 실패했습니다.");
+  }
+}
+
+const handleRemoveSLToken = async () => {
+  try {
+    await removeSLToken();
+    alert("SL Token이 성공적으로 삭제되었습니다!");
+  } catch (error) {
+    alert("SL Token 삭제에 실패했습니다.");
+  }
+}
+
   return (
     <div className="grid grid-cols-6 grid-rows-6 gap-1 text-xs md:text-base relative">
       {/* 에러 메시지 표시 */}
@@ -455,7 +495,7 @@ const handleAddAll = async () => {
             />
           </div>
           <p className="absolute text-white text-sm font-semibold drop-shadow bottom-6 right-5 z-20 md:bottom-11 md:right-9">
-            x {diceCount}
+            x {formatNumber(diceCount)}
           </p>
           {/* "LUCKY" image animation */}
           <AnimatePresence>
@@ -555,6 +595,18 @@ const handleAddAll = async () => {
           <div className="flex flex-col gap-4 p-4">
             {/* 추가 버튼 */}
             <div className="flex flex-col gap-2">
+            <button
+                onClick={handleAddDice}
+                className="bg-green-400 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                Dice + 100
+              </button>
+              <button
+                onClick={handleAddSLToken}
+                className="bg-green-400 hover:bg-green-600 text-white py-2 px-4 rounded"
+              >
+                SL Token + 100
+              </button>
               <button
                 onClick={handleAddGold}
                 className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
@@ -591,10 +643,23 @@ const handleAddAll = async () => {
               >
                 All NFTs + 1
               </button>
+            
             </div>
 
             {/* 삭제 버튼 */}
             <div className="flex flex-col gap-2 mt-4">
+              <button
+                onClick={handleRemoveDice}
+                className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                Dice - 100
+              </button>
+              <button
+                onClick={handleRemoveSLToken}
+                className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
+              >
+                SL Token - 100
+              </button>
               <button
                 onClick={handleRemoveGold}
                 className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"

@@ -11,6 +11,8 @@ export interface RollDiceResponseData {
   slToken: number;
   diceResult: number;
   tileSequence: number;
+  level: number; // 추가된 속성
+  exp: number;    // 추가된 속성
 }
 
 export const rollDiceAPI = async (gauge: number, sequence: number): Promise<RollDiceResponseData> => {

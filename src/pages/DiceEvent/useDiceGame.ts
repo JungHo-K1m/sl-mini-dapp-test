@@ -33,6 +33,8 @@ export const useDiceGame = () => {
     setIsAuto,
     boards, // boards 디스트럭처링 추가
     items, // items 디스트럭처링 추가
+    setUserLv, // 추가
+   setPet, // 추가
   } = useUserStore();
 
   const [moving, setMoving] = useState<boolean>(false);
@@ -174,8 +176,11 @@ export const useDiceGame = () => {
       setSlToken(data.slToken);
       setPosition(newPosition); // 여기서 position 업데이트
 
-      // 주사위를 굴렸으므로 diceCount는 이미 업데이트 되었으므로 추가 감소 없음
-      // setDiceCount((prev) => prev - 1); // 제거
+      setUserLv(data.level);
+      setPet({
+        level: data.level,
+        exp: data.exp, // 서버 응답으로 받은 경험치 값
+      });
 
       // 주사위 값 및 애니메이션 처리
       setShowDiceValue(true);
@@ -402,6 +407,8 @@ export const useDiceGame = () => {
     error, // 에러 상태 노출
     setIsAuto,
     isAuto,
+    setPet,
+    setUserLv,
   };
 };
 

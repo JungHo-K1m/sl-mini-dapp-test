@@ -28,7 +28,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
         // 언어 설정
         const userLanguage = liff.getLanguage();
         const languageMap: { [key: string]: string } = {
-          "ko-KR": "ko",
+          // "ko-KR": "ko",
           "en-US": "en",
           "ja-JP": "ja",
           "zh-TW": "zh",
