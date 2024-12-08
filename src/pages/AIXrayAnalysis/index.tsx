@@ -6,12 +6,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import storeResult from '@/entities/AI/api/stroeResult';
 import useMainPageStore from '@/shared/store/useMainPageStore';
 import { useMutation } from '@tanstack/react-query';
-import { useTranslation } from "react-i18next";
 
 const AIXrayAnalysis: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { t } = useTranslation();
   const [model, setModel] = useState<tmImage.CustomMobileNet | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [label, setLabel] = useState('Upload an X-ray image to start analysis.');
@@ -20,29 +16,21 @@ const AIXrayAnalysis: React.FC = () => {
   const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const { selectedMenu } = useMainPageStore();
+  const navigate = useNavigate();
+  const location = useLocation();
   const petData = location.state as { id: string };
   const [id] = useState<string>(petData?.id || '');
-  const [modalInfo, setModalInfo] = useState({
-    isVisible: false,
-    message: '',
-  });
-  
-  const showModalFunction = (message: string) => {
-    setModalInfo({
-      isVisible: true,
-      message,
-    });
-  };
-  
 
   // 최초 안내 문구 표시
   let Alert = '';
 
   if(selectedMenu === 'ai-analysis'){
-    Alert = t("ai_page.Please_upload_actual_photo");
+    Alert = "Please upload an actual photo of your pet's teeth.\nPerformance may be suboptimal as this is in beta test mode.";
   } else if(selectedMenu === 'x-ray'){
-    Alert = t("ai_page.Please_upload_x_ray_image");
+    Alert = "Please upload an X-ray image of your pet's teeth.\nPerformance may be suboptimal as this is in beta test mode.";
   }
+
+  const [caution, setCaution] = useState(Alert);
 
   // useMutation 훅 사용
   const { mutate: saveResultMutate, isPending: isSaving } = useMutation<boolean, Error, FormData>({
@@ -53,7 +41,7 @@ const AIXrayAnalysis: React.FC = () => {
 
         return storeResult(formData, "xray");
       }else {
-        return Promise.reject(new Error(t("ai_page.An_error_occurred:_selected_menu_is_not_set.")));
+        return Promise.reject(new Error('Selected menu is not set.'));
       }
     },
     onSuccess: () => {
@@ -62,24 +50,21 @@ const AIXrayAnalysis: React.FC = () => {
     },
     onError: (error: any) => {
       console.error('Error saving result:', error);
-      showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again."));
+      alert(error.message || 'Failed to save result. Please try again.');
     },
   });
 
+
   // 진단 가능한 항목에 대한 설명
   const symptomsInfo: Record<string, string> = {
-    "Gingivitis & Plaque": t("ai_page.reuslts.symptoms_of_gingivitis_and_plaque"),
-    "Periodontitis": t("ai_page.reuslts.symptoms_of_periodontitis"),
-    "Normal": t("ai_page.reuslts.no_issues_detected"),
-    "Decrease in dental bone density": t("ai_page.reuslts.decrease_in_dental_bone_density"),
-    "Fractured tooth": t("ai_page.reuslts.fractured_tooth"),
-    "Gingivitis": t("ai_page.reuslts.symptoms_of_gingivitis"),
-    "Healthy": t("ai_page.reuslts.no_issues_detected_healthy"),
+    "Gingivitis & Plaque": "Symptoms of gingivitis and plaque have been detected in your dog. It is important to visit the vet as soon as possible to address this condition. Maintaining good oral hygiene is crucial for your pet's health.",
+    "Periodontitis": "Symptoms of periodontitis have been detected in your dog. This condition can cause discomfort and pain. We recommend seeing a veterinarian promptly for proper diagnosis and treatment.",
+    "Normal": "No issues were detected in your dog's teeth. Keep maintaining good dental hygiene to ensure their continued health.",
+    "Decrease in dental bone density": "A decrease in dental bone density has been detected in your dog's X-ray. This could indicate bone loss, which may require veterinary attention. Regular check-ups and appropriate dental care are recommended.",
+    "Fractured tooth": "Symptoms of a fractured tooth have been detected in your dog. It is important to visit the vet as soon as possible to address this condition. Fractured teeth can cause discomfort and lead to other oral health issues.",
+    "Gingivitis": "Symptoms of gingivitis have been detected in your dog. Gingivitis can lead to more severe dental issues if untreated. It is recommended to see a veterinarian to discuss a treatment plan.",
+    "Healthy": "No issues were detected in your dog's teeth. Your dog's dental health appears to be good. Keep maintaining regular oral hygiene to ensure their continued health."
   };
-  
-  const getSymptomDescription = (label: string) =>
-    symptomsInfo[label] || t("ai_page.Diagnosis_information_not_available.");
-  
 
   // Teachable Machine 모델 로드 함수
   const loadModel = async () => {
@@ -107,7 +92,7 @@ const AIXrayAnalysis: React.FC = () => {
         return loadedModel; // 모델 로드 후 반환
       } catch (error) {
         console.error("Failed to load model:", error);
-        showModalFunction(t("ai_page.Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection."));
+        alert("Failed to load the AI model. Please try again later or check your network connection.");
       }
     }
     return model; // 이미 로드된 모델이 있으면 반환
@@ -117,86 +102,67 @@ const AIXrayAnalysis: React.FC = () => {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedImage(event.target.files[0]);
-      setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image."));
+      setLabel("Click the button to analyze the uploaded image.");
       setIsAnalyzed(false);
     }
   };
 
   // 이미지 분석 함수
   const analyzeImage = async () => {
-
-     // 이미지를 업로드하지 않았을 때 모달 표시
     if (!selectedImage) {
-      setShowModal(true);
-      showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
+      setShowModal(true); // 이미지를 업로드하지 않았을 때 모달 표시
+      setCaution('Please upload an image before analysis.');
       return;
     }
-  
+
     setLoading(true);
     const loadedModel = await loadModel(); // 모델을 로드하고 가져옴
-  
-    try {
-      // 토큰 사용 후 이미지 분석 진행
-      if (loadedModel && selectedImage) {
-        const imageElement = document.createElement("img");
-        imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
-        imageElement.onload = async () => {
-          const prediction = await loadedModel.predict(imageElement);
-          const highestPrediction = prediction.reduce((prev, current) =>
-            prev.probability > current.probability ? prev : current
-          );
 
-          console.log(
-            "Current prediction:",
-            highestPrediction.className,
-            "Probability:",
-            highestPrediction.probability
-          );
+    if (loadedModel && selectedImage) {
+      const imageElement = document.createElement('img');
+      imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
+      imageElement.onload = async () => {
+        const prediction = await loadedModel.predict(imageElement);
+        const highestPrediction = prediction.reduce((prev, current) =>
+          prev.probability > current.probability ? prev : current
+        );
 
-          // 번역된 라벨 설정
-          const predictionKey = highestPrediction.className.replace(/ /g, "_");
-          const translatedLabel =
-            highestPrediction.probability > 0.95
-              ? t(`ai_page.reuslts.${predictionKey}`, { defaultValue: t("ai_page.reuslts.Normal") })
-              : t("ai_page.reuslts.Normal");
+        console.log("Current prediction:", highestPrediction.className, "Probability:", highestPrediction.probability);
 
+        if (highestPrediction.probability > 0.95) {
+          setLabel(highestPrediction.className);
+        } else {
+          setLabel("Normal"); // 확률이 낮을 때 기본 라벨로 설정
+        }
 
-          setLabel(translatedLabel); // 번역된 라벨을 상태에 저장
-          setLoading(false);
-          setIsAnalyzed(true);
-          saveResult();
-        };
-      } else {
         setLoading(false);
-      }
-    }catch(error:any){
-      console.error("Error during analysis:", error);
+        setIsAnalyzed(true);
+      };
+    } else {
       setLoading(false);
-      showModalFunction(t("ai_page.Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection."));
     }
   };
-  
 
 
   // 서버에 저장하는 함수
   const saveResult = () => {
-    if (!selectedImage || !isAnalyzed) {
-      showModalFunction(t("ai_page.Please_analyze_the_image_before_saving."));
-      return;
+    if (selectedImage && isAnalyzed) {
+      if (selectedMenu) {
+        const formData = new FormData();
+        formData.append(
+          'json',
+          new Blob([JSON.stringify({ petId: id, result: label })], { type: 'application/json' })
+        );
+        formData.append('file', selectedImage);
+  
+        saveResultMutate(formData);
+      } else {
+        alert('An error occurred: selected menu is not set.');
+      }
+    } else {
+      alert('Please analyze the image before saving.');
     }
-  
-    if (!selectedMenu) {
-      showModalFunction(t("ai_page.An_error_occurred:_selected_menu_is_not_set."));
-      return;
-    }
-  
-    const formData = new FormData();
-    formData.append("json", new Blob([JSON.stringify({ petId: id, result: label })], { type: "application/json" }));
-    formData.append("file", selectedImage);
-  
-    saveResultMutate(formData);
   };
-  
 
   // 분석 재실행 버튼
   const clickReset = () => {
@@ -208,11 +174,11 @@ const AIXrayAnalysis: React.FC = () => {
   // 제목 설정
   const getTitle = () => {
     if (selectedMenu === 'x-ray') {
-      return t("ai_page.ai_xray_analysis");
+      return 'AI X-ray Analysis';
     } else if (selectedMenu === 'ai-analysis') {
-      return t("ai_page.ai_dental_examination");
+      return 'AI Dental Examination';
     } else {
-      return t("ai_page.ai_analysis");
+      return 'AI Analysis';
     }
   };
 
@@ -225,7 +191,7 @@ const AIXrayAnalysis: React.FC = () => {
           onClick={() => navigate(-1)}
         />
         <h1 className="text-xl font-bold flex-grow text-center">{getTitle()}</h1>
-        <div className="w-5"></div>
+        <div className="w-6"></div>
       </div>
   
       <div className="mt-6 w-full max-w-sm mx-auto rounded-md overflow-hidden p-2 flex flex-col items-center">
@@ -242,7 +208,7 @@ const AIXrayAnalysis: React.FC = () => {
           {selectedImage ? (
             <img
               src={window.URL.createObjectURL(selectedImage)}
-              alt="Uploaded X-ray image"
+              alt="Uploaded X-ray"
               className="w-64 h-64 rounded-md object-fill"
             />
           ) : (
@@ -266,7 +232,7 @@ const AIXrayAnalysis: React.FC = () => {
             onClick={analyzeImage}
             disabled={loading}
           >
-            {loading ? t("ai_page.Analyzing...") : t("ai_page.Upload_image_and_analysis")}
+            {loading ? 'Analyzing...' : 'Upload image and analysis'}
           </button>
         </div>
       )}
@@ -275,12 +241,10 @@ const AIXrayAnalysis: React.FC = () => {
       {isAnalyzed && (
         <>
           <div id="label-container" className="mt-4 text-lg font-semibold">
-            {/* 진단명 */}
-            <p>{t("ai_page.Analysis_results")}: {label}</p>
+            <p>Analysis results: {label}</p>
           </div>
   
           <div className="mt-4 p-4 bg-gray-800 text-white rounded-xl shadow-md max-w-sm mx-auto">
-            {/* 진단 결과 설명 */}
             <p
               className="overflow-hidden text-sm"
               style={{
@@ -288,48 +252,48 @@ const AIXrayAnalysis: React.FC = () => {
                 WebkitLineClamp: showFullText ? undefined : 3,
                 WebkitBoxOrient: 'vertical',
               }}
-              >
-              {getSymptomDescription(label)}
+            >
+              {symptomsInfo[label]}
             </p>
             <div className="flex justify-center mt-2">
-              {/* 더 보기 버튼, 줄이기 버튼 */}
               {!showFullText ? (
                 <button
                   className="mt-2 w-1/2 text-black text-base font-semibold py-2 px-4 rounded-xl"
                   style={{ backgroundColor: '#FFFFFF' }}
                   onClick={() => setShowFullText(true)}
-                  >
-                  {t("ai_page.See_more")}
+                >
+                  See more
                 </button>
               ) : (
                 <button
                   className="mt-2 w-1/2 text-black text-base font-semibold py-2 px-4 rounded-xl"
                   style={{ backgroundColor: '#FFFFFF' }}
                   onClick={() => setShowFullText(false)}
-                  >
-                  {t("ai_page.See_less")}
+                >
+                  See less
                 </button>
               )}
             </div>
           </div>
   
-          
+          {/* Retest 및 Save 버튼을 수평으로 배치 */}
           <div className="flex w-full max-w-sm justify-between mt-10 mb-16">
-            {/* Retest 버튼 */}
             <button
               className="w-[48%] h-14 text-white text-base py-2 px-4 rounded-full border-2"
               style={{ backgroundColor: '#252932', borderColor: '#35383F' }}
               onClick={clickReset}
-              >
-              {t("ai_page.Retest")}
+            >
+              Retest
             </button>
-            {/* Home 버튼 */}
             <button
-              className="w-[48%] h-14 text-white text-base py-2 px-4 rounded-full border-2"
-              style={{ backgroundColor: '#0147E5', borderColor: '#0147E5' }}
-              onClick={()=>navigate('/AI-menu')}
-              >
-              {t("ai_page.Home")}
+              className={`w-[48%] h-14 text-white text-base py-2 px-4 rounded-full ${
+                isSaving ? 'cursor-wait' : ''
+              }`}
+              style={{ backgroundColor: isSaving ? '#555' : '#0147E5' }}
+              onClick={saveResult}
+              disabled={isSaving}
+            >
+              {isSaving ? 'Saving...' : 'Save'}
             </button>
           </div>
         </>
@@ -350,31 +314,15 @@ const AIXrayAnalysis: React.FC = () => {
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg w-1/2"
               onClick={() => setShowModal(false)}
-              >
-              {t("OK")}
+            >
+              OK
             </button>
           </div>
         </div>
       )}
-
-
-      {modalInfo.isVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-[80%]">
-            <div className="bg-white text-black p-6 rounded-lg text-center">
-                <div> &nbsp;</div>
-                <p>{modalInfo.message}</p>
-                <div> &nbsp;</div>
-                <button
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                    onClick={()=>setModalInfo({ isVisible: false, message: '' })}
-                    >
-                    {t("OK")}
-                </button>
-            </div>
-        </div>
-      )}
     </div>
   );
+  
 };
 
 export default AIXrayAnalysis;
