@@ -1,0 +1,20 @@
+.follow-on-x-mission-card {
+  background: linear-gradient(180deg, #484ada 0%, #2d2774 100%);
+}
+
+.join-telegram-mission-card {
+  background: linear-gradient(359.87deg, #154b8a -95.99%, #0c95f5 99.89%);
+}
+
+.subscribe-to-email-mission-card {
+  background: linear-gradient(180deg, #cb59b9 0%, #812467 100%);
+}
+
+.join-the-sl-discord-mission-card {
+  background: linear-gradient(180deg, #8189ff 0%, #323abc 100%);
+}
+
+.basic-mission-card {
+  background: linear-gradient(180deg, rgba(25, 32, 60, 0.7) 0%, #304689 100%);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+}

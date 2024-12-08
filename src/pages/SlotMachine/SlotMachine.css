@@ -1,0 +1,42 @@
+.slot-machine {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  height: 150px; /* 슬롯 머신 전체 높이 */
+  width: 100px; /* 슬롯 머신 전체 너비 */
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+  background: transparent; /* 슬롯 배경을 투명하게 설정 */
+  border: 2px solid gray; /* 슬롯 영역을 표시하는 border */
+}
+
+.slot-item {
+  height: 100%; /* 슬롯 아이템 간의 간격을 조절하는 부분 */
+  width: 100%; /* 슬롯의 너비 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot-image {
+  width: 60px; /* 이미지 크기 설정 */
+  height: 60px; /* 이미지 크기 설정 */
+}
+
+.spin-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0d1226;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.spin-button:hover {
+  background-color: #1a1f36;
+}
