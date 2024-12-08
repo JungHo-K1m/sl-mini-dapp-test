@@ -1,6 +1,4 @@
-// src/pages/PreviousRewards/index.tsx
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { TopTitle } from "@/shared/components/ui";
 import "./PreviousRewards.css";
 import {
@@ -18,7 +16,6 @@ import { useRaffleEntityStore } from '@/entities/PreviousRewards/model/raffleEnt
 import { useRaffleFeatureStore } from '@/features/PreviousRewards/model/raffleFeatureModel';
 
 import { selectRankingReward, selectRaffleReward } from "@/features/PreviousRewards/api/rewardApi";
-
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
 
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // LoadingSpinner 임포트
@@ -51,12 +48,20 @@ const PreviousRewards: React.FC = () => {
   } = usePreviousRewardsFeatureStore();
 
   const {
-    myRankings: raffleMyRankings, // 이름 충돌 방지를 위해 별칭 사용
+    myRankings: raffleMyRankings,
     topRankings: raffleTopRankings,
     isLoadingInitialRaffle,
     errorInitialRaffle,
+    hasLoadedInitialRaffle,
     loadInitialRaffle,
-  } = useRaffleEntityStore();
+  } = useRaffleEntityStore((state) => ({
+    myRankings: state.myRankings,
+    topRankings: state.topRankings,
+    isLoadingInitialRaffle: state.isLoadingInitialRaffle,
+    errorInitialRaffle: state.errorInitialRaffle,
+    hasLoadedInitialRaffle: state.hasLoadedInitialRaffle,
+    loadInitialRaffle: state.loadInitialRaffle,
+  }));
 
   const {
     dialogRaffleRankings,
@@ -82,11 +87,11 @@ const PreviousRewards: React.FC = () => {
   useEffect(() => {
     // 래플 탭 진입 시 데이터 없으면 로딩
     if (currentTab === "raffle") {
-      if (!raffleMyRankings || raffleMyRankings.length === 0 || !raffleTopRankings || raffleTopRankings.length === 0) {
+      if (!hasLoadedInitialRaffle) { // 플래그로 조건 변경
         loadInitialRaffle();
       }
     }
-  }, [currentTab, loadInitialRaffle, raffleMyRankings, raffleTopRankings]);
+  }, [currentTab, loadInitialRaffle, hasLoadedInitialRaffle]);
 
   const handleRangeClick = async (start: number, end: number) => {
     if (currentTab === "ranking") {
@@ -186,14 +191,6 @@ const PreviousRewards: React.FC = () => {
     setRewardDialogOpen(false);
   };
 
-  // 로딩/에러 처리
-  if (currentTab === "ranking") {
-    if (isLoadingInitial) return <LoadingSpinner />;
-    if (errorInitial) return <ErrorMessage message={errorInitial} />;
-  } else {
-    if (isLoadingInitialRaffle) return <LoadingSpinner />;
-    if (errorInitialRaffle) return <ErrorMessage message={errorInitialRaffle} />;
-  }
 
   return (
     <div className="flex flex-col mb-44 text-white items-center w-full">
@@ -260,49 +257,50 @@ const PreviousRewards: React.FC = () => {
         </TabsContent>
 
         <TabsContent value="raffle">
-          <RaffleSection
-            myRankings={(raffleMyRankings ?? []).map(r => ({
-              ...r,
-              nftType: r.nftType ?? null,
-              selectedRewardType: r.selectedRewardType ?? null,
-              itsMe: r.itsMe ?? false, // 추가된 필드
-            }))}
-            raffleTopRankings={(raffleTopRankings ?? []).map(r => ({
-              ...r,
-              nftType: r.nftType ?? null,
-              selectedRewardType: r.selectedRewardType ?? null,
-              itsMe: r.itsMe ?? false, // 추가된 필드
-            }))}
-            currentRaffleIndex={currentRaffleIndex}
-            setCurrentRaffleIndex={setCurrentRaffleIndex}
-            raffleIsReceived={raffleIsReceived}
-            currentRaffleItem={currentRaffleItem ? {
-              ...currentRaffleItem,
+        <RaffleSection
+          myRankings={(raffleMyRankings ?? []).map(r => ({
+            ...r,
+            nftType: r.nftType ?? null,
+            selectedRewardType: r.selectedRewardType ?? null,
+            itsMe: r.itsMe ?? false, // 추가된 필드
+          }))}
+          raffleTopRankings={(raffleTopRankings ?? []).map(r => ({
+            ...r,
+            nftType: r.nftType ?? null,
+            selectedRewardType: r.selectedRewardType ?? null,
+            itsMe: r.itsMe ?? false, // 추가된 필드
+          }))}
+          currentRaffleIndex={currentRaffleIndex}
+          setCurrentRaffleIndex={setCurrentRaffleIndex}
+          raffleIsReceived={raffleIsReceived}
+          currentRaffleItem={currentRaffleItem ? {
+            ...currentRaffleItem,
+            nftType: currentRaffleItem.nftType ?? null,
+            selectedRewardType: currentRaffleItem.selectedRewardType ?? null,
+            itsMe: currentRaffleItem.itsMe ?? false, // 추가된 필드
+          } : null}
+          onGetReward={() => {
+            if (!currentRaffleItem) return;
+            handleGetReward({
+              rank: currentRaffleItem.rank,
+              userId: currentRaffleItem.userId,
+              slRewards: currentRaffleItem.slRewards,
+              usdtRewards: currentRaffleItem.usdtRewards,
               nftType: currentRaffleItem.nftType ?? null,
               selectedRewardType: currentRaffleItem.selectedRewardType ?? null,
               itsMe: currentRaffleItem.itsMe ?? false, // 추가된 필드
-            } : null}
-            onGetReward={() => {
-              if (!currentRaffleItem) return;
-              handleGetReward({
-                rank: currentRaffleItem.rank,
-                userId: currentRaffleItem.userId,
-                slRewards: currentRaffleItem.slRewards,
-                usdtRewards: currentRaffleItem.usdtRewards,
-                nftType: currentRaffleItem.nftType ?? null,
-                selectedRewardType: currentRaffleItem.selectedRewardType ?? null,
-                itsMe: currentRaffleItem.itsMe ?? false, // 추가된 필드
-              });
-            }}
-            dialogOpen={dialogOpen}
-            onDialogOpenChange={setDialogOpen}
-            dialogTitle={dialogTitle}
-            dialogRaffleRankings={dialogRaffleRankingsPlayerData}
-            isLoadingRaffleRange={isLoadingRaffleRange}
-            raffleRangeError={raffleRangeError}
-            handleRangeClick={handleRangeClick}
-          />
-        </TabsContent>
+            });
+          }}
+          dialogOpen={dialogOpen}
+          onDialogOpenChange={setDialogOpen}
+          dialogTitle={dialogTitle}
+          dialogRaffleRankings={dialogRaffleRankingsPlayerData}
+          isLoadingRaffleRange={isLoadingRaffleRange}
+          raffleRangeError={raffleRangeError}
+          handleRangeClick={handleRangeClick}
+          isLoadingInitialRaffle={isLoadingInitialRaffle} // 추가된 prop 전달
+        />
+      </TabsContent>
       </Tabs>
     </div>
   );

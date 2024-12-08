@@ -1,8 +1,18 @@
-import React from "react";
+// src/widgets/PreviousRewards/ui/RankingSection.tsx
+
+import React, { useEffect } from "react";
 import Images from "@/shared/assets/images";
 import { IoCaretDown } from "react-icons/io5";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/shared/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shared/components/ui/dialog";
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
+import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // 로딩 스피너 임포트
+import ErrorMessage from "@/shared/components/ui/ErrorMessage"; // 에러 메시지 컴포넌트 임포트
 
 interface RankingSectionProps {
   myData: PlayerData | null;
@@ -16,6 +26,8 @@ interface RankingSectionProps {
   isLoadingRange: boolean;
   rangeError: string | null;
   handleRangeClick: (start: number, end: number) => void;
+  isLoadingInitial?: boolean; // 추가된 prop (RankingSection에서는 필요 없음)
+  errorInitial?: string | null; // 추가된 prop (RankingSection에서는 필요 없음)
 }
 
 const RankingSection: React.FC<RankingSectionProps> = ({
@@ -29,21 +41,34 @@ const RankingSection: React.FC<RankingSectionProps> = ({
   dialogRankings,
   isLoadingRange,
   rangeError,
-  handleRangeClick
+  handleRangeClick,
 }) => {
+
+  useEffect(() => {
+    console.log("RankingSection myData:", myData);
+  }, [myData]);
 
   return (
     <div className="p-6 bg-[#0D1226] text-white w-full h-full">
-      <div>
-        {myData && myData.rank && (
-          <>
-            <p className=" font-semibold">
-              {myData.userId === null
-                ? "No ranking data for you."
-                : "Congratulations! Here’s your reward : "}
-            </p>
-            {myData.userId && (
-              <div className="relative flex flex-row items-center box-bg rounded-3xl h-24 border-2 border-[#0147E5] mt-3 p-5 gap-3 ">
+      {myData ? (
+        <>
+          {/* 랭킹이 1000위 안에 들지 못한 경우 */}
+          {myData.rank > 1000 ? (
+            <>
+              <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
+              <p className="font-semibold text-sm text-center">
+                Your Rank: #<span className="text-[#FDE047] font-bold">{myData.rank}</span><br/>
+                Keep playing and try agin next time!
+              </p>
+        </div>
+            </>
+          ) : (
+            // 랭킹이 1000위 이내인 경우
+            <>
+              <p className="font-semibold">
+                Congratulations! Here’s your reward:
+              </p>
+              <div className="relative flex flex-row items-center box-bg rounded-3xl h-24 border-2 border-[#0147E5] mt-3 p-5 gap-3">
                 {isReceived && (
                   <div className="absolute top-2 right-2 bg-[#0147E5] rounded-full px-3 py-1 text-sm">
                     Received
@@ -54,7 +79,11 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                   <p>{myData.userId}</p>
                   <div className="flex flex-row items-center gap-1">
                     <img
-                      src={myData.selectedRewardType === "USDT" ? Images.Usdt : Images.TokenReward}
+                      src={
+                        myData.selectedRewardType === "USDT"
+                          ? Images.Usdt
+                          : Images.TokenReward
+                      }
                       alt="token"
                       className="w-5 h-5"
                     />
@@ -68,8 +97,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                   </div>
                 </div>
               </div>
-            )}
-            {myData.userId && (
+              {/* 보상 버튼 */}
               <button
                 className={`bg-[#0147E5] rounded-full w-full h-14 mt-3 font-medium ${
                   isReceived ? "opacity-50 cursor-not-allowed" : ""
@@ -81,13 +109,24 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                   ? "Get Rewarded"
                   : `Reward Selected (${myData.selectedRewardType})`}
               </button>
-            )}
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </>
+      ) : (
+        // 랭킹 데이터가 없는 경우
+        <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
+          <p className="font-semibold text-sm text-center">
+            You didn't rank this time. <br />
+           Keep playing and try agin next time!
+          </p>
+        </div>
+      )}
+
+      {/* Top Rankings */}
       <div className="flex flex-col mt-8">
         {topRankings.slice(0, 20).map((r) => {
-          const rReceived = r.selectedRewardType === "USDT" || r.selectedRewardType === "SL";
+          const rReceived =
+            r.selectedRewardType === "USDT" || r.selectedRewardType === "SL";
           return (
             <div
               key={r.rank}
@@ -96,15 +135,17 @@ const RankingSection: React.FC<RankingSectionProps> = ({
               <p>{r.rank}</p>
               <div className="flex flex-col gap-1">
                 <p>{r.userId}</p>
-                <div className={`flex flex-row items-center gap-1 `}>
+                <div className={`flex flex-row items-center gap-1`}>
                   <img
-                    src={r.selectedRewardType === "USDT" ? Images.Usdt : Images.TokenReward}
+                    src={
+                      r.selectedRewardType === "USDT"
+                        ? Images.Usdt
+                        : Images.TokenReward
+                    }
                     alt="token"
                     className="w-5 h-5"
                   />
-                  <p
-                    className={`text-sm font-semibold `}
-                  >
+                  <p className={`text-sm font-semibold`}>
                     {r.slRewards.toLocaleString()}{" "}
                     <span className="font-normal text-[#a3a3a3]">
                       (or {r.usdtRewards.toLocaleString()} USDT)
@@ -117,26 +158,21 @@ const RankingSection: React.FC<RankingSectionProps> = ({
           );
         })}
       </div>
+
+      {/* Dialogs */}
       <div className="mt-14 space-y-4">
         <Dialog open={dialogOpen} onOpenChange={onDialogOpenChange}>
           <DialogTrigger
-            className="w-full"
+            className="w-full cursor-pointer"
             onClick={() => handleRangeClick(21, 100)}
           >
-            <div className="flex flex-row justify-between items-center ">
+            <div className="flex flex-row justify-between items-center">
               <div className="flex flex-row items-center gap-2">
                 21-100 <IoCaretDown className={"w-5 h-5"} />
               </div>
               <div className="flex flex-row items-center gap-1">
-                <img
-                  src={Images.TokenReward}
-                  alt="token"
-                  className="w-5 h-5"
-                />
-                <p className="text-sm font-semibold">
-                  500{" "}
-            
-                </p>
+                <img src={Images.TokenReward} alt="token" className="w-5 h-5" />
+                <p className="text-sm font-semibold">500 </p>
               </div>
             </div>
           </DialogTrigger>
@@ -151,7 +187,9 @@ const RankingSection: React.FC<RankingSectionProps> = ({
               dialogRankings.map((r) => (
                 <div
                   key={r.rank}
-                  className={`flex flex-row gap-10 border-b pb-2 truncate ${r.itsMe ? "text-[#FDE047] font-bold" : ""}`}
+                  className={`flex flex-row gap-10 border-b pb-2 truncate ${
+                    r.itsMe ? "text-[#FDE047] font-bold" : ""
+                  }`}
                 >
                   <p>{r.rank}</p>
                   <p>{r.userId}</p>
@@ -162,7 +200,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
 
         <div className="w-full border-b"></div>
         <div
-          className="flex flex-row justify-between items-center  cursor-pointer"
+          className="flex flex-row justify-between items-center cursor-pointer"
           onClick={() => handleRangeClick(101, 500)}
         >
           <div className="flex flex-row items-center gap-2">
@@ -170,10 +208,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
           </div>
           <div className="flex flex-row items-center gap-1">
             <img src={Images.TokenReward} alt="token" className="w-5 h-5" />
-            <p className="text-sm font-semibold">
-              25{" "}
-            
-            </p>
+            <p className="text-sm font-semibold">25 </p>
           </div>
         </div>
         <div className="w-full border-b"></div>
@@ -186,10 +221,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
           </div>
           <div className="flex flex-row items-center gap-1">
             <img src={Images.TokenReward} alt="token" className="w-5 h-5" />
-            <p className="text-sm font-semibold">
-              10{" "}
-          
-            </p>
+            <p className="text-sm font-semibold">10 </p>
           </div>
         </div>
       </div>
