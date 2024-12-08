@@ -4,8 +4,6 @@ import { FaChevronLeft } from "react-icons/fa";
 import Images from "@/shared/assets/images";
 import { useNavigate, useLocation } from 'react-router-dom';
 import storeResult from '@/entities/AI/api/stroeResult';
-import useToken from '@/entities/AI/api/useToken';
-import checkBalance from '@/entities/AI/api/checkBalance';
 import useMainPageStore from '@/shared/store/useMainPageStore';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from "react-i18next";
@@ -138,53 +136,40 @@ const AIXrayAnalysis: React.FC = () => {
     const loadedModel = await loadModel(); // 모델을 로드하고 가져옴
   
     try {
-      // ai진단을 사용할 SL 토큰 있는지 먼저 확인
-      const balance = await checkBalance();
-  
-      // SL 토큰이 충분한 경우
-      if (balance) {
-        // 토큰 사용 API 사용
-        const tokenUsed = await useToken();
-  
-        // 토큰 사용 후 이미지 분석 진행
-        if (loadedModel && selectedImage && tokenUsed) {
-          const imageElement = document.createElement("img");
-          imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
-          imageElement.onload = async () => {
-            const prediction = await loadedModel.predict(imageElement);
-            const highestPrediction = prediction.reduce((prev, current) =>
-              prev.probability > current.probability ? prev : current
-            );
-  
-            console.log(
-              "Current prediction:",
-              highestPrediction.className,
-              "Probability:",
-              highestPrediction.probability
-            );
-  
-            // 번역된 라벨 설정
-            const predictionKey = highestPrediction.className.replace(/ /g, "_");
-            const translatedLabel =
-              highestPrediction.probability > 0.95
-                ? t(`ai_page.reuslts.${predictionKey}`, { defaultValue: t("ai_page.reuslts.Normal") })
-                : t("ai_page.reuslts.Normal");
+      // 토큰 사용 후 이미지 분석 진행
+      if (loadedModel && selectedImage) {
+        const imageElement = document.createElement("img");
+        imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
+        imageElement.onload = async () => {
+          const prediction = await loadedModel.predict(imageElement);
+          const highestPrediction = prediction.reduce((prev, current) =>
+            prev.probability > current.probability ? prev : current
+          );
 
-  
-            setLabel(translatedLabel); // 번역된 라벨을 상태에 저장
-            setLoading(false);
-            setIsAnalyzed(true);
-            saveResult();
-          };
-        } else {
+          console.log(
+            "Current prediction:",
+            highestPrediction.className,
+            "Probability:",
+            highestPrediction.probability
+          );
+
+          // 번역된 라벨 설정
+          const predictionKey = highestPrediction.className.replace(/ /g, "_");
+          const translatedLabel =
+            highestPrediction.probability > 0.95
+              ? t(`ai_page.reuslts.${predictionKey}`, { defaultValue: t("ai_page.reuslts.Normal") })
+              : t("ai_page.reuslts.Normal");
+
+
+          setLabel(translatedLabel); // 번역된 라벨을 상태에 저장
           setLoading(false);
-        }
+          setIsAnalyzed(true);
+          saveResult();
+        };
       } else {
-        // SL 토큰이 부족한 경우 처리
-        showModalFunction(t("ai_page.Failed_to_load_records._Please_try_again_later."));
         setLoading(false);
       }
-    } catch (error: any) {
+    }catch(error:any){
       console.error("Error during analysis:", error);
       setLoading(false);
       showModalFunction(t("ai_page.Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection."));
