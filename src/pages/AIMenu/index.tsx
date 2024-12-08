@@ -90,16 +90,13 @@ const AIMenu: React.FC = () => {
 
   return (
     <div className="flex flex-col text-white mx-6 md:mx-28 min-h-screen">
-      <div 
-        className="flex items-center w-full mt-8 relative"
-        onClick={()=> navigate('/reward-history')}>
+      <div className="flex items-center w-full mt-8 relative">
         <img
           src={Images.SLToken}
           alt="Star"
           className="w-6 h-6 mr-2"
           />
         <p className="text-lg font-semibold mr-2">{slToken} SL</p>
-        <FaChevronRight className="text-lg cursor-pointer" />
       </div>
 
       <div className="grid grid-cols-2 gap-3 mt-6">
