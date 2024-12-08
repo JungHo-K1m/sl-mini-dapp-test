@@ -7,6 +7,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
 import useUserStore from "@/shared/store/useInfoStore";
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
+import getMyslToken from '@/entities/Asset/api/getSL';
 
 interface AIMenuProps {
   title: string;
@@ -43,8 +44,27 @@ const AIMenu: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const setSelectedMenu = useMainPageStore((state) => state.setSelectedMenu);
-  const {slToken} = useUserStore(); // 사용자가 보유한 SL토큰 수
+  const [slToken, setSlToken] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    const getMyTokenCount = async () => {
+      try{
+        const count = await getMyslToken();
+  
+        if(count){
+          setSlToken(count);
+        }else{
+          console.warn('Failed to fetch sl token count');
+        }
+      }catch(error:any){
+        console.error('Failed to fetch sl token count:', error);
+      }finally {
+        setLoading(false); // 로딩 종료
+      }
+    };
+    getMyTokenCount();
+  }, []);
 
   // 모달 초기 상태를 LocalStorage 확인 후 설정
   const [showModal, setShowModal] = useState(() => {
@@ -63,14 +83,6 @@ const AIMenu: React.FC = () => {
     navigate('/select-pet');
   };
 
-  // 페이지 진입 후 0.2초 뒤 loading을 false로 변경
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 200); 
-    return () => clearTimeout(timer);
-  }, []);
-  
   if (loading) {
     // 로딩 중일 때는 로딩스피너만 보여줌
     return <LoadingSpinner />;
