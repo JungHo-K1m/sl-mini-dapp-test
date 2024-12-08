@@ -163,7 +163,7 @@ const Reward: React.FC = () => {
           </div>
 
           {/* 상위 3위 랭킹 보상 */}
-          {rankingProducts.map((award: Award, index: number) =>
+          {rankingProducts.map((award, index) =>
             <RewardItem
               key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
               rank={index + 1}
@@ -173,7 +173,7 @@ const Reward: React.FC = () => {
           )}
 
           {/* 4위 이후 랭킹 보상 */}
-          {rankingOthers.map((award: Award, index: any) =>
+          {rankingOthers.map((award, index) =>
             <RewardItem
               key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
               rank={award.rangeStart === award.rangeEnd ? award.rangeStart : `${award.rangeStart}-${award.rangeEnd}`}
@@ -200,7 +200,7 @@ const Reward: React.FC = () => {
         </div>
       
           {/* 상위 3위 래플 보상 */}
-          {raffleProducts.map((award: Award, index: number) =>
+          {raffleProducts.map((award, index) =>
             <RewardItem
               key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
               rank={index + 1}
@@ -210,7 +210,7 @@ const Reward: React.FC = () => {
           )}
 
           {/* 4위 이후 래플 보상 */}
-          {raffleOthers.map((award: Award, index: any) =>
+          {raffleOthers.map((award, index) =>
             <RewardItem
               key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
               rank={award.rangeStart === award.rangeEnd ? award.rangeStart : `${award.rangeStart}-${award.rangeEnd}`}
