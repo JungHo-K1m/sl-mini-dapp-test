@@ -53,7 +53,7 @@ const AIMenu: React.FC = () => {
         const count = await getMyslToken();
   
         if(count){
-          setSlToken(count);
+          setSlToken(count.slCount);
         }else{
           console.warn('Failed to fetch sl token count');
         }
