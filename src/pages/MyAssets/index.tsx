@@ -122,15 +122,18 @@ const MyAssets: React.FC = () => {
                     {nft === 0 ? (
                         <div className="mt-20 h-[150px] flex flex-col items-center justify-center">
                             <p className="text-center text-[#737373] text-xl">
-                                {t("asset_page.no_nft")}<br />
-                                {t("asset_page.own_nft")}
+                                {/* {t("asset_page.no_nft")}<br />
+                                {t("asset_page.own_nft")} */}
+                                No NFTs in your colletion yet.<br />
+                                Own NFT and Boost your rank!
                             </p>
                             <button
                                 className="w-1/2 py-4 rounded-full text-lg font-semibold mt-6"
                                 style={{ backgroundColor: '#0147E5' }}
                                 onClick={()=>setShowModal(true)}
                                 >
-                                {t("asset_page.shop_nft")}
+                                {/* {t("asset_page.shop_nft")} */}
+                                Shop NFT
                             </button>
                         </div>
 
