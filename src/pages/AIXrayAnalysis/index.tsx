@@ -308,8 +308,8 @@ const AIXrayAnalysis: React.FC = () => {
   
       {/* 이미지 업로드 요청 모달 */}
       {showModal && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center md:mx-10">
-          <div className="bg-white p-6 rounded-lg text-black text-center mx-3">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center w-full">
+          <div className="bg-white p-6 rounded-lg text-black text-center w-[70%] max-w-[550px]">
             <p>
               {Alert.split('\n').map((line, index) => (
                 <React.Fragment key={index}>
