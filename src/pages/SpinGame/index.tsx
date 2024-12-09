@@ -13,6 +13,7 @@ import { HiX } from "react-icons/hi";
 import api from "@/shared/api/axiosInstance";
 import { useUserStore } from "@/entities/User/model/userModel";
 import { formatNumber } from "@/shared/utils/formatNumber";
+import { motion } from "framer-motion";
 
 const data = [
   // 스타 보상
@@ -251,8 +252,6 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
       } else if (normalizedSpinType === "BOOM") {
         console.log("Boom! Better luck next time!");
       }
-
-
     }
     setIsDialogOpen(true);
   };
@@ -262,7 +261,6 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
     setIsDialogOpen(false);
     onSpinEnd();
     setIsSpinning(false); // 스핀 완료
-    
   };
 
   const getPrizeDisplayName = (spinType: string | undefined) => {
@@ -300,36 +298,62 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
         Win Prizes!
       </h1>
 
-      <img
-        src={Images.Spin}
-        alt="Spin-game"
-        className="w-[320px] md:w-[360px] md:mt-16"
-        loading="lazy"
-      />
-
-      <img
-        src={Images.SpinPin}
-        alt="Spin-game"
-        className="w-[126px] h-[142px] absolute z-10 transform rotate-45"
-        loading="lazy"
-      />
-      <div className="absolute top-[1/2] left-1/2 transform -translate-x-1/2 z-0">
-        <Wheel
-          mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
-          data={data}
-          outerBorderColor="#E52025"
-          onStopSpinning={handleSpinEnd} // 스핀 종료 후 처리
-          spinDuration={0.5}
-          outerBorderWidth={20}
-          radiusLineColor="none"
-          pointerProps={{
-            style: {
-              width: "0px",
-              height: "0px",
-            },
-          }}
+      <motion.div
+        initial={{ y: -200, opacity: 0 }} // 화면 위쪽에서 시작
+        animate={{ y: 0, opacity: 1 }} // 원래 위치로 이동하며 나타남
+        transition={{
+          duration: 1, // 애니메이션 지속 시간
+          ease: "easeOut", // 애니메이션 효과
+        }}
+      >
+        <img
+          src={Images.Spin}
+          alt="Spin-game"
+          className="w-[320px] md:w-[360px] md:mt-16"
+          loading="lazy"
         />
+      </motion.div>
+
+   
+      <motion.img
+  src={Images.SpinPin}
+  alt="Spin-game"
+  className="w-[126px] h-[142px] absolute z-10 transform rotate-45"
+  loading="lazy"
+  initial={{ y: -200, opacity: 0 }} // 화면 위쪽에서 시작
+  animate={{ y: 0, opacity: 1, rotate:"45deg" }} // 원래 위치로 이동하며 나타남
+  transition={{
+    duration: 1, // 애니메이션 지속 시간
+    ease: "easeOut", // 애니메이션 효과
+  }}
+/>
+
+      <div className="absolute top-[1/2] left-1/2 transform -translate-x-1/2 z-0">
+        <motion.div
+          initial={{ y: -200, opacity: 0 }} // 화면 위쪽에서 시작
+          animate={{ y: 0, opacity: 1 }} // 원래 위치로 이동하며 나타남
+          transition={{
+            duration: 1, // 애니메이션 지속 시간
+            ease: "easeOut", // 애니메이션 효과
+          }}
+        >
+          <Wheel
+            mustStartSpinning={mustSpin}
+            prizeNumber={prizeNumber}
+            data={data}
+            outerBorderColor="#E52025"
+            onStopSpinning={handleSpinEnd} // 스핀 종료 후 처리
+            spinDuration={0.5}
+            outerBorderWidth={20}
+            radiusLineColor="none"
+            pointerProps={{
+              style: {
+                width: "0px",
+                height: "0px",
+              },
+            }}
+          />
+        </motion.div>
       </div>
 
       <button
@@ -375,11 +399,13 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
               ) : (
                 <>
                   <p className="text-xl font-semibold">
-                    Congratulations! <br/>You won {prizeData&&formatNumber(prizeData?.amount)}{" "}
+                    Congratulations! <br />
+                    You won {prizeData && formatNumber(prizeData?.amount)}{" "}
                     {getPrizeDisplayName(prizeData?.spinType)}!
                   </p>
                   <p className="text-[#a3a3a3]">
-                    This reward has been added to <br/>your account.
+                    This reward has been added to <br />
+                    your account.
                   </p>
                 </>
               )}
@@ -411,7 +437,17 @@ const SpinGame: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
       {showSpin ? (
         <Spin onSpinEnd={onSpinEnd} />
       ) : (
-        <SpinGameStart onStart={handleStartClick} />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }} // 처음 크기와 투명도
+          animate={{ scale: 1, opacity: 1 }} // 최종 크기와 투명도
+          transition={{
+            duration: 0.8, // 애니메이션 지속 시간
+            ease: "easeOut", // 애니메이션 가속도 설정
+          }}
+          className="flex h-full w-full" // Spin 컴포넌트의 스타일
+        >
+          <SpinGameStart onStart={handleStartClick} />
+        </motion.div>
       )}
     </div>
   );

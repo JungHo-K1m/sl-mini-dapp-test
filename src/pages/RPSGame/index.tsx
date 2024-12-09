@@ -124,6 +124,15 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
       }}
     >
       {!isGameStarted ? (
+           <motion.div
+           initial={{ scale: 0, opacity: 0 }} // 처음 크기와 투명도
+           animate={{ scale: 1, opacity: 1 }} // 최종 크기와 투명도
+           transition={{
+             duration: 0.8, // 애니메이션 지속 시간
+             ease: "easeOut", // 애니메이션 가속도 설정
+           }}
+           className="flex h-full w-full" // Spin 컴포넌트의 스타일
+         >
         <RPSGameStart
           onStart={handleGameStart}
           allowedBetting={allowedBetting}
@@ -132,6 +141,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
             handleRPSGameEnd("lose", 0); // 상태 업데이트 및 페이지 복귀
           }}
         />
+      </motion.div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full w-[600px] overflow-hidden mx-auto">
           {/* 배팅 금액과 배율 표시 */}
@@ -148,7 +158,15 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
           </div>
 
           {/* 게임 보드 및 애니메이션 */}
-          <div className="mt-8 relative">
+          <motion.div
+  initial={{ y: 300, opacity: 0 }} // 아래에서 시작 (y: 300)
+  animate={{ y: 0, opacity: 1 }} // 제자리로 이동하며 나타남
+  transition={{
+    duration: 1, // 애니메이션 지속 시간
+    ease: "easeOut", // 애니메이션 효과
+  }}
+  className="mt-8 relative"
+>
             <img
               src={Images.RPSGame}
               alt="RPS Game"
@@ -259,7 +277,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                 onClick={() => handleSpin("scissors")}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
       <RPSResultDialog
