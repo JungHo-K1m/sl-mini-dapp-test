@@ -2,6 +2,7 @@ import React from 'react';
 import { FaChevronLeft } from "react-icons/fa";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const MyNfts: React.FC = () => {
     const navigate = useNavigate();
@@ -20,15 +21,7 @@ const MyNfts: React.FC = () => {
 
     return (
         <div className="flex flex-col text-white mb-2  mx-6 min-h-screen">
-            <div className="flex items-center w-full mt-3 mb-8 relative">
-                {/* 뒤로가기 버튼 */}
-                <FaChevronLeft
-                    className="text-xl cursor-pointer"
-                    onClick={() => navigate(-1)}
-                />
-                <h1 className="text-xl font-bold flex-grow text-center">{t("asset_page.My_NFT_Collection")}</h1>
-                <div className="w-5"></div>
-            </div>
+            <TopTitle title={t("asset_page.My_NFT_Collection")} back={true} />
 
             {/* NFT 컬렉션 */}
             <div className="grid grid-cols-2 gap-4 mt-4 w-full mb-6">

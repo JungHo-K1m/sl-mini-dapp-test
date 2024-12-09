@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import registerPet from '@/entities/Pet/api/registPet';
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const PetRegister: React.FC = () => {
     const navigate = useNavigate();
@@ -59,15 +60,7 @@ const PetRegister: React.FC = () => {
 
     return (
     <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-20">
-        <div className="flex items-center w-full mt-7 mb-8 relative">
-            {/* 뒤로가기 버튼 */}
-            <FaChevronLeft
-                className="text-xl cursor-pointer"
-                onClick={() => navigate(-1)}
-            />
-           <h1 className="text-xl font-bold flex-1 text-center">{t("ai_page.Register_Pet")}</h1>
-           <div className="w-5"></div>
-        </div>
+        <TopTitle title={t("ai_page.Register_Pet")} back={true} />
 
         {/* 반려동물 이미지 업로드 */}
         <div className="mt-10 relative">

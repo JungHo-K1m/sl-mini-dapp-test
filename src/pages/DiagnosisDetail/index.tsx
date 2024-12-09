@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Images from "@/shared/assets/images";
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const DiagnosisDetail: React.FC = () => {
     const location = useLocation();
@@ -14,15 +15,7 @@ const DiagnosisDetail: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center text-white mx-6 md:mx-28  min-h-screen">
-            <div className="flex items-center w-full mt-4 relative">
-                <img
-                    src={Images.goback}
-                    alt="Go Back"
-                    className="w-8 h-8 cursor-pointer absolute left-0"
-                    onClick={() => navigate(-1)}
-                />
-                <h1 className="text-2xl mx-auto font-semibold">{t("ai_page.Record_Details")}</h1>
-            </div>
+            <TopTitle title={t("ai_page.Record_Details")} back={true} />
 
             {/* 이미지 표시 영역 */}
             <div className="mt-6 w-full max-w-sm lg:max-w-md mx-auto rounded-2xl overflow-hidden p-2 flex flex-col items-center">

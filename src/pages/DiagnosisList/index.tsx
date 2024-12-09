@@ -4,6 +4,7 @@ import { FaChevronLeft, FaChevronDown } from 'react-icons/fa';
 import getRecords from '@/entities/AI/api/getRecord';
 import getDiagnosisList from '@/entities/Pet/api/getDiagnosisList';
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const DiagnosisRecords: React.FC = () => {
     const location = useLocation();
@@ -107,15 +108,7 @@ const DiagnosisRecords: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center text-white mx-6 min-h-screen">
-            <div className="flex items-center w-full mt-7 mb-8 relative">
-                {/* 뒤로가기 버튼 */}
-                <FaChevronLeft
-                    className="text-xl cursor-pointer"
-                    onClick={() => navigate('/select-pet')}
-                />
-                <h1 className="text-xl font-bold flex-1 text-center">{t("ai_page.Records")}</h1>
-                <div className="w-5"></div>
-            </div>
+            <TopTitle title={t("ai_page.Records")} back={true} />
 
             {/* 필터링 버튼 */}
             <div className="flex justify-start w-full mt-8 h-11 relative">

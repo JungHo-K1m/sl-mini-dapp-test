@@ -12,6 +12,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { AiFillQuestionCircle } from 'react-icons/ai';
 import { useTranslation } from "react-i18next";
 import registerWallet from '@/entities/Asset/api/registerWallet';
+import { TopTitle } from '@/shared/components/ui';
 
 // SelectedWallet 인터페이스 정의
 interface SelectedWallet {
@@ -253,16 +254,7 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
 
     return (
         <div className="flex flex-col text-white mb-32 mx-6 min-h-screen">
-            <div className="flex items-center w-full mt-3 mb-8 relative">
-                {/* 뒤로가기 버튼 */}
-                <FaChevronLeft
-                    className="text-xl cursor-pointer"
-                    onClick={() => navigate(-1)}
-                    aria-label="뒤로가기"
-                />
-                <h1 className="text-xl font-bold flex-grow text-center">{t("wallet_page.wallet")}</h1>
-                <div className="w-5"></div>
-            </div>
+            <TopTitle title={t("wallet_page.wallet")} back={true} />
 
             {/* 필터링된 거래소 표시 */}
             <div className="flex flex-col gap-3">

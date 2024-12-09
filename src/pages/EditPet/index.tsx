@@ -5,6 +5,7 @@ import updatePetInfo from '@/entities/Pet/api/updatePetInfo'; // 반려동물 �
 import deletePet from '@/entities/Pet/api/deletePetInfo';
 import { FaChevronLeft } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const EditPet: React.FC = () => {
     const location = useLocation();
@@ -82,15 +83,7 @@ const EditPet: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-20">
-            <div className="flex items-center w-full mt-7 mb-8 relative">
-                {/* 뒤로가기 버튼 */}
-                <FaChevronLeft
-                    className="text-xl cursor-pointer"
-                    onClick={() => navigate(-1)}
-                />
-                <h1 className="text-xl font-bold flex-1 text-center">{t("ai_page.Edit_Pet")}</h1>
-                <div className="w-5"></div>
-            </div>
+            <TopTitle title={t("ai_page.Edit_Pet")} back={true} />
       
             {/* 반려동물 이미지 업로드 */}
             <div className="mt-10 relative">

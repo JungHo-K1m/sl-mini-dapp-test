@@ -6,6 +6,7 @@ import { getPetList } from '@/entities/Pet/api/getPetList';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Pet } from '@/entities/Pet/model/types';
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const SelectPet: React.FC = () => {
   const navigate = useNavigate();
@@ -59,15 +60,7 @@ const SelectPet: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
-      <div className="flex items-center w-full mt-7 mb-8 relative">
-        {/* 뒤로가기 버튼 */}
-        <FaChevronLeft
-          className="text-xl cursor-pointer"
-          onClick={() => navigate('/AI-menu')}
-        />
-        <h1 className="text-xl font-bold flex-1 text-center">{t("ai_page.Select_Pet")}</h1>
-        <div className="w-5"></div>
-      </div>
+      <TopTitle title={t("ai_page.Select_Pet")} back={true} />
 
       <div className="grid grid-cols-2 gap-6 mt-11 w-full max-w-md">
         {/* 반려동물 목록 */}

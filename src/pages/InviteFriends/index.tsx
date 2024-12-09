@@ -27,20 +27,12 @@ const InviteFriends: React.FC = () => {
 
   return (
     <div className="flex flex-col mx-6 mb-44 text-white items-center min-h-screen">
-      <div className="flex items-center w-full mt-7 mb-8 relative">
-          {/* 뒤로가기 버튼 */}
-          <FaChevronLeft
-            className="text-xl cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-          <h1 className="text-xl font-bold flex-1 text-center">{t("mission_page.Invite_Friend")}</h1>
-          <div className="w-5"></div>
-        </div>
+      <TopTitle title={t("mission_page.Invite_Friend")} back={true} />
       <p>{t("mission_page.Referral_Code")}</p>
       <button
         className="flex flex-row gap-2 items-center border border-white rounded-full w-56 md:w-80 h-16 justify-center mt-2 px-4"
         onClick={copyToClipboard}
-      >
+        >
         <p className="truncate">{referralLink}</p>
         <BiCopy className="min-w-5 min-h-5" />
       </button>

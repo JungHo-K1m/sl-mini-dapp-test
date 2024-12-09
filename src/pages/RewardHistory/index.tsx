@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronDown } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { TopTitle } from '@/shared/components/ui';
 
 const RewardHistory: React.FC = () => {
     const navigate = useNavigate();
@@ -34,16 +35,8 @@ const RewardHistory: React.FC = () => {
 
     return (
         <div className="flex flex-col text-white mb-32 mx-6 min-h-screen">
-            <div className="flex items-center w-full mt-3 mb-2 relative">
-                {/* 뒤로가기 버튼 */}
-                <FaChevronLeft
-                    className="text-xl cursor-pointer"
-                    onClick={() => navigate(-1)}
-                />
-                <h1 className="text-xl font-bold flex-grow text-center">{t("asset_page.Rewards_History")}</h1>
-                <div className="w-5"></div>
-            </div>
-            
+            <TopTitle title={t("asset_page.Rewards_History")} back={true} />
+
             {/* 필터링 버튼 */}
             <div className="flex justify-start w-full mt-8 h-11 gap-4">
                 {/* 수익/지출 필터 */}
