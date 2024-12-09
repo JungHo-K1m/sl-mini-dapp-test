@@ -131,8 +131,8 @@ const AIMenu: React.FC = () => {
 
       {/* SL토큰 소요 알림 모달창 */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white text-black p-6 rounded-lg text-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
+            <div className="bg-white text-black p-6 rounded-lg text-center w-[70%] max-w-[550px]">
                 <p>{t("ai_page.5SL_tokens")}</p>
                 <button
                     className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"

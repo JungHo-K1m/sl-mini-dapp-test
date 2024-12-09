@@ -104,10 +104,10 @@ const MyAssets: React.FC = () => {
             {/* 내 NFT 컬렉션 */}
             <div className="mt-10 w-full">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold">{t("asset_page.My_NFT_Collection")}</h2>
+                    <h2 className="text-lg font-bold">{t("asset_page.My_NFT_Collection")}</h2>
                     {nft !== 0 && (
                         <button
-                            className="flex items-center text-white text-sm"
+                            className="flex items-center text-white text-xs"
                             onClick={() => navigate("/my-nfts")}
                             aria-label="View All NFTs"
                         >
@@ -118,14 +118,14 @@ const MyAssets: React.FC = () => {
                 <div className="mt-4 w-full">
                     {nft === 0 ? (
                         <div className="mt-20 h-[150px] flex flex-col items-center justify-center">
-                            <p className="text-center text-[#737373] text-xl">
+                            <p className="text-center text-[#737373] text-lg">
                                 {/* {t("asset_page.no_nft")}<br />
                                 {t("asset_page.own_nft")} */}
                                 No NFTs in your colletion yet.<br />
                                 Own NFT and Boost your rank!
                             </p>
                             <button
-                                className="w-1/2 py-4 rounded-full text-lg font-semibold mt-6"
+                                className="w-1/2 py-4 rounded-full text-base font-semibold mt-6"
                                 style={{ backgroundColor: '#0147E5' }}
                                 onClick={()=>setShowModal(true)}
                                 >
@@ -160,9 +160,9 @@ const MyAssets: React.FC = () => {
             {/* 보상 내역 */}
             <div className="mt-10 w-full">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-bold">{t("asset_page.Rewards_History")}</h2>
+                    <h2 className="text-lg font-bold">{t("asset_page.Rewards_History")}</h2>
                     <button
-                        className="flex items-center text-white text-sm"
+                        className="flex items-center text-white text-xs"
                         onClick={() => navigate("/reward-history")}
                         >
                         {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
@@ -193,7 +193,7 @@ const MyAssets: React.FC = () => {
             {/* NFT 구매 알림 모달창 */}
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
-                    <div className="bg-white text-black p-6 rounded-lg text-center w-[70%]">
+                    <div className="bg-white text-black p-6 rounded-lg text-center w-[70%] max-w-[550px]">
                         <p>서비스 준비 중입니다.</p>
                         <button
                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
