@@ -198,7 +198,7 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center text-white mx-6 md:mx-28  min-h-screen">
+    <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
       <TopTitle title={getTitle()} back={true} />
   
       <div className="mt-6 w-full max-w-sm mx-auto rounded-md overflow-hidden p-2 flex flex-col items-center">
