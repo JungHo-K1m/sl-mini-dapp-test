@@ -9,7 +9,7 @@
       "AI_based_examination_for_pets": "AI-based examination for pets",
       "AI_based_dental_X_ray_analysis": "AI-based dental X-ray analysis",
       "Viewing_Records": "Viewing Records",
-      "10SL_tokens": "10SL tokens are consumed to run AI diagnostics.",
+      "5SL_tokens": "5SL tokens are consumed to run AI diagnostics.",
       "Select_Pet": "Select Pet",
       "Add_Profile": "Add Profile",
       "Register_Pet": "Register Pet",
@@ -54,6 +54,7 @@
         "symptoms_of_gingivitis_and_plaque": "Symptoms of gingivitis and plaque have been detected in your pet. It is important to visit the vet as soon as possible to address this condition. Maintaining good oral hygiene is crucial for your pet's health.",
         "symptoms_of_periodontitis": "Symptoms of periodontitis have been detected in your pet. This condition can cause discomfort and pain. We recommend seeing a veterinarian promptly for proper diagnosis and treatment.",
         "no_issues_detected": "No issues were detected in your pet's teeth. Keep maintaining good dental hygiene to ensure their continued health.",
+        "symptoms_of_normal": "No issues were detected in your pet's teeth. Keep maintaining good dental hygiene to ensure their continued health.",
         "decrease_in_dental_bone_density": "A decrease in dental bone density has been detected in your pet's X-ray. This could indicate bone loss, which may require veterinary attention. Regular check-ups and appropriate dental care are recommended.",
         "fractured_tooth": "Symptoms of a fractured tooth have been detected in your pet. It is important to visit the vet as soon as possible to address this condition. Fractured teeth can cause discomfort and lead to other oral health issues.",
         "symptoms_of_gingivitis": "Symptoms of gingivitis have been detected in your pet. Gingivitis can lead to more severe dental issues if untreated. It is recommended to see a veterinarian to discuss a treatment plan.",
@@ -98,6 +99,7 @@
         "delete": "Delete",
         "receive_reward": "To receive rewards,",
         "add_wallet_address": "you need to add a wallet address.",
+        "erc_20": "Please enter the USDT ERC-20 wallet address.",
         "wallet_question": "Do you have a {{wallet}} account?",
         "yes": "Yes, I have an account.",
         "create_account": "Create Account",
@@ -151,7 +153,10 @@
       "used": "Used",
       "all_type": "All Types",
       "sl": "SL Token",
-      "point": "Point"
+      "point": "Point",
+      "no_nft": "No NFTs in your colletion yet.",
+      "own_nft": "Own NFT and Boost your rank!",
+      "shop_nft": "Shop NFT"
     },
     "dice_evnet": {
       "Attendance": "Attendance",

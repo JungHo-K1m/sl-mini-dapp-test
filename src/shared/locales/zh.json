@@ -9,7 +9,7 @@
       "AI_based_examination_for_pets": "基於AI的寵物牙齒分析",
       "AI_based_dental_X_ray_analysis": "基於AI的牙科X光分析",
       "Viewing_Records": "查看結果",
-      "10SL_tokens": "10SL令牌用於運行AI診斷。",
+      "5SL_tokens": "5SL令牌用於運行AI診斷。",
       "Select_Pet": "選擇寵物",
       "Add_Profile": "添加檔案",
       "Register_Pet": "註冊寵物",
@@ -54,6 +54,7 @@
         "symptoms_of_gingivitis_and_plaque": "檢測到牙齦炎和牙菌斑的症狀。請儘快帶您的寵物看獸醫，以解決此問題。保持良好的口腔衛生對寵物的健康至關重要。",
         "symptoms_of_periodontitis": "檢測到牙周炎的症狀。這種情況可能會引起不適和疼痛。我們建議立即就醫以獲得正確的診斷和治療。",
         "no_issues_detected": "未檢測到您的寵物牙齒有任何問題。請繼續保持良好的牙齒衛生以確保健康。",
+        "symptoms_of_normal": "未檢測到您的寵物牙齒有任何問題。請繼續保持良好的牙齒衛生以確保健康。",
         "decrease_in_dental_bone_density": "檢測到您的寵物X光圖像中的牙齒骨密度降低。這可能表明骨質流失，建議進行獸醫檢查。",
         "fractured_tooth": "檢測到您的寵物牙齒骨折的症狀。請儘快帶您的寵物看獸醫，以解決此問題。",
         "symptoms_of_gingivitis": "檢測到牙齦炎的症狀。如果不進行治療，牙齦炎可能導致更嚴重的問題。",
@@ -98,6 +99,7 @@
       "delete": "刪除",
       "receive_reward": "為了獲得獎勵，",
       "add_wallet_address": "您需要新增錢包地址。",
+      "erc_20": "请输入USDT ERC-20钱包地址。",
       "wallet_question": "您有 {{wallet}} 帳戶嗎？",
       "yes": "是的，我有帳戶。",
       "create_account": "建立新帳戶",
@@ -151,7 +153,10 @@
       "used": "支出",
       "all_type": "所有類型",
       "sl": "SL 代币",
-      "point": "点"
+      "point": "点",
+      "no_nft": "您的收藏中还没有 NFT。",
+      "own_nft": "拥有NFT并提升您的排名！",
+      "shop_nft": "购物NFT"
     },
     "dice_evnet": {
       "Attendance": "簽到",
