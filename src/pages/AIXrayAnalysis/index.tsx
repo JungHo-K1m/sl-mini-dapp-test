@@ -126,13 +126,22 @@ const AIXrayAnalysis: React.FC = () => {
       const imageElement = document.createElement('img');
       imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
       imageElement.onload = async () => {
-        const prediction = await loadedModel.predict(imageElement);
-        const highestPrediction = prediction.reduce((prev, current) =>
+        const predictions = await loadedModel.predict(imageElement);
+
+        // 모든 클래스의 확률 출력
+        console.log("Predictions:");
+        predictions.forEach((prediction) => {
+          console.log(`Class: ${prediction.className}, Probability: ${prediction.probability}`);
+        });
+
+        // 가장 높은 확률의 클래스 선택
+        const highestPrediction = predictions.reduce((prev, current) =>
           prev.probability > current.probability ? prev : current
         );
 
-        console.log("Current prediction:", highestPrediction.className, "Probability:", highestPrediction.probability);
+        console.log("Highest prediction:", highestPrediction.className, "Probability:", highestPrediction.probability);
 
+        // 확률이 0.95 이상이면 해당 클래스를 라벨로 설정
         if (highestPrediction.probability > 0.95) {
           setLabel(highestPrediction.className);
         } else {
@@ -146,6 +155,7 @@ const AIXrayAnalysis: React.FC = () => {
       setLoading(false);
     }
   };
+
 
 
   // 서버에 저장하는 함수
