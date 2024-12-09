@@ -79,29 +79,26 @@ const MyAssets: React.FC = () => {
             </div>
 
             {/* NFT 상점 이동 영역 - 추후 수정 예정 */}
-            {nft !== 0 ? (
-                <div 
-                    className="rounded-2xl p-4 mt-6 w-full flex items-center justify-between"
-                    style={{
-                        background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
-                    }}>
-                    <div>
-                        <h3 className="text-lg font-semibold">{t("asset_page.Shop_Unique_NFTs_Now!")}</h3>
-                        <p className="text-sm text-gray-200">
-                        {t("asset_page.Start_collecting_rare_and")}
-                        </p>
-                        <p className="text-sm text-gray-200">
-                        {t("asset_page.unique_digital_assets_today!")}
-                        </p>
-                    </div>
-                    <img
-                        src={Images.cart}
-                        alt="Shop NFTs"
-                        className="w-20 h-20"
-                    />
+            <div 
+                className="rounded-2xl p-4 mt-6 w-full flex items-center justify-between"
+                style={{
+                    background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
+                }}>
+                <div>
+                    <h3 className="text-lg font-semibold">{t("asset_page.Shop_Unique_NFTs_Now!")}</h3>
+                    <p className="text-sm text-gray-200">
+                    {t("asset_page.Start_collecting_rare_and")}
+                    </p>
+                    <p className="text-sm text-gray-200">
+                    {t("asset_page.unique_digital_assets_today!")}
+                    </p>
                 </div>
-            ):(
-            <div></div>)}
+                <img
+                    src={Images.cart}
+                    alt="Shop NFTs"
+                    className="w-20 h-20"
+                />
+            </div>
             
 
             {/* 내 NFT 컬렉션 */}
