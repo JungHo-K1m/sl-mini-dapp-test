@@ -33,7 +33,7 @@ const AIMenus: React.FC<AIMenuProps> = ({
       >
       <img src={image} alt={alt} className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain" />
       <div className="flex flex-col items-center justify-center">
-        <p className="text-sm md:text-xl lg:text-lg font-semibold text-center px-2">{title}</p>
+        <p className="text-sm md:text-lg lg:text-lg font-semibold text-center px-2">{title}</p>
       </div>
     </div>
   );
