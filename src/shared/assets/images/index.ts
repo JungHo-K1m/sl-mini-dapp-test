@@ -106,6 +106,9 @@ import gate_io_logo from "./gate_io.png"
 import Usdt from "./usdt.png";
 import LinkedIn from "./LinkedIn.png";
 import MissionCompleted from "./mission-completed.png"
+import FirstReward from "./firstreward.png"
+import Calender from "./calendar.png"
+import Celebration from "./celebration.png"
 
 
 
@@ -217,6 +220,9 @@ const Images = {
   Usdt,
   LinkedIn,
   MissionCompleted,
+  FirstReward,
+  Calender,
+  Celebration,
 };
 
 export default Images;

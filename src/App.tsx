@@ -26,6 +26,7 @@ import MyAssets from "./pages/MyAssets";
 import MyNfts from "./pages/MyNFTs";
 import RewardHistory from "./pages/RewardHistory";
 import PreviousRewards from "@/pages/PreviousRewards";
+import FirstRewardPage from "./pages/FirstReward";
 
 
 // QueryClient 설정
@@ -67,6 +68,8 @@ const App:React.FC = () =>{
           <Route path="/ai-xray-analysis" element={<DiceEventLayout hidden={true}><AIXrayAnalysis /></DiceEventLayout>} />
           <Route path="/my-nfts" element={<DiceEventLayout hidden={true}><MyNfts /></DiceEventLayout>} />
           <Route path="/reward-history" element={<DiceEventLayout hidden={true}><RewardHistory /></DiceEventLayout>} />
+          <Route path="/first-reward" element={<DiceEventLayout hidden={true}><FirstRewardPage /></DiceEventLayout>} />
+          
         </Routes>
       )}
     </QueryClientProvider>

@@ -194,7 +194,7 @@ export const useDiceGame = () => {
       const expectedDiceValue = getExpectedDiceValue(gaugeValue);
       if (!isAuto && value === expectedDiceValue) {
         setIsLuckyVisible(true);
-        setTimeout(() => setIsLuckyVisible(false), 800); //0.8초 후 사라짐
+        setTimeout(() => setIsLuckyVisible(false), 2000); //2초 후 사라짐
       }
 
       movePiece(previousPosition, newPosition, (finalPosition) => {

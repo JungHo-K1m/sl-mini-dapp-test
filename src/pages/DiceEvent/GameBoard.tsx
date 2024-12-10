@@ -507,7 +507,7 @@ const handleRemoveSLToken = async () => {
                 animate={{ scale: 1.2, opacity: 1 }}
                 exit={{ scale: 0.5, opacity: 0 }}
                 transition={{ duration: 1 }}
-                className="absolute bottom-0 -left-8 md:-left-14 md:-bottom-4 z-10 min-w-[180px] md:min-w-[280px]"
+                className="absolute bottom-0 -left-8 md:-left-14 md:-bottom-4  min-w-[180px] md:min-w-[280px] z-50"
               />
             )}
           </AnimatePresence>
