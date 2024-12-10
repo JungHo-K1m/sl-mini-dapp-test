@@ -27,12 +27,12 @@ const FirstRewardPage: React.FC = () => {
         </div>
 
         {/* 보상 내역 */}
-        <div className="flex flex-col items-center bg-[#1F283C] rounded-2xl px-4 py-6 mt-16 w-full">
-            <h2 className="text-base font-semibold mb-4">Your rewards include:</h2>
-            <div className="flex flex-col gap-2 text-sm">
-                <div className="flex items-center gap-2">
+        <h2 className="text-base font-semibold mb-4 mt-16">Your rewards include:</h2>
+        <div className="flex flex-col items-center bg-[#1F283C] rounded-2xl px-4 py-6 w-full">
+        <div className="flex flex-col gap-2 text-sm">
+          <div className="flex items-center gap-2">
                     <img
-                        src={Images.Calender}// 아이콘을 대체하세요
+                        src={Images.Calender}
                         alt="calendar-icon"
                         className="w-6 h-6"
                     />
@@ -40,7 +40,7 @@ const FirstRewardPage: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     <img
-                        src={Images.Celebration} // 아이콘을 대체하세요
+                        src={Images.Celebration}
                         alt="gift-icon"
                         className="w-6 h-6"
                     />
@@ -50,9 +50,9 @@ const FirstRewardPage: React.FC = () => {
         </div>
 
     {/* 보상 받기 버튼 */}
-    <div className="w-full max-w-md absolute bottom-16 left-1/2 transform -translate-x-1/2">
+    <div className="w-full absolute bottom-16 left-1/2 transform -translate-x-1/2">
         <button
-            className="bg-blue-500 text-white rounded-full text-lg font-semibold py-3 px-6 mt-10"
+            className="w-full py-4 bg-[#0147E5] text-white rounded-full text-lg font-semibold px-6 mt-10"
             onClick={handleReceiveReward}
         >
             Receive Reward & Start Now!
