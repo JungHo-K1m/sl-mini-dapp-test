@@ -92,7 +92,7 @@ const Reward: React.FC = () => {
           onClick={() => navigate('/previous-rewards')}
           role="button"
           tabIndex={0}
-          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
+          // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
         >
           Last month's
           <br />
@@ -131,11 +131,11 @@ const Reward: React.FC = () => {
       {/** 클릭 시 이전 랭킹(상품)결과로 이동 */}
       <div
         className="first-to-third-pace-box h-36 rounded-3xl mb-14 flex flex-row items-center justify-around p-5 cursor-pointer"
-        onClick={() => navigate('/previous-rewards', { state: { fromPage: 'reward' } })}
+        onClick={() => navigate('/previous-rewards')}
         // onClick={()=>alert("서비스 준비중입니다.")}
         role="button"
         tabIndex={0}
-        onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards', { state: { fromPage: 'reward' } }); }}
+        // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards', { state: { fromPage: 'reward' } }); }}
       >
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">Previous Rewards</p>
