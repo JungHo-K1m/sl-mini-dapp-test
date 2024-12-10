@@ -14,7 +14,7 @@ const SelectCharacterPage: React.FC = () => {
       const response = await chooseCharacter(selectedPet);
       if(response){
         // 정상 반환이면 메인 페이지로 이동
-        navigate('/dice-event');
+        navigate('/first-reward');
       }else{
         console.log("캐릭터 선택 에러 발생");
         localStorage.removeItem('accessToken');
