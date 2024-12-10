@@ -45,7 +45,7 @@ const PreviousRewards: React.FC = () => {
       navigate('/reward');
     }
   }, [state, navigate]);
-  
+
   const {
     myRanking,
     topRankings,
@@ -205,6 +205,9 @@ const PreviousRewards: React.FC = () => {
     setRewardDialogOpen(false);
   };
 
+  if (!myData) {
+    return <div>No data available</div>;
+  }
 
   return (
     <div className="flex flex-col mb-44 text-white items-center w-full">
