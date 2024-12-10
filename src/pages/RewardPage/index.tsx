@@ -49,7 +49,7 @@ const Reward: React.FC = () => {
 
   // "View More" 버튼 핸들러
   const handleViewMore = () => {
-    if (currentPage + 1 < totalPages) {
+    if (currentPage + 1 < totalPages && !isLoadingLeaderboard) {
       fetchNextLeaderboardPage();
     }
   };
