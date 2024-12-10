@@ -39,54 +39,69 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     playRound,
     allowedBetting,
     currentRound,
-    handleRPSGameEnd, // handleRPSGameEnd 추가
+    handleRPSGameEnd,
+    totalRounds,
   } = useRPSGameStore();
 
   const { starPoints } = useUserStore();
 
-  // 애니메이션 상태
+  // 모든 슬롯 상태 관리: spinning | stopped
+  const [slotStates, setSlotStates] = useState<("spinning" | "stopped")[]>([
+    "stopped",
+    "stopped",
+    "stopped",
+  ]);
+
+  // 최소 하나의 슬롯이라도 spinning이면 true
+  const isAnySlotSpinning = slotStates.some((state) => state === "spinning");
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  // 핸들러: 사용자가 선택한 가위/바위/보로 스핀 시작
+  // 게임 시작 시 모든 슬롯을 spinning, isAnimating을 true로 만든다.
+  const handleGameStart = () => {
+    startGame();
+    setSlotStates(["spinning", "spinning", "spinning"]);
+    setIsAnimating(true); // 게임 시작 시 애니메이션 시작
+    console.log("Game started with betAmount:", betAmount);
+  };
+
   const handleSpin = async (userChoice: string) => {
-    if (isSpinning || isAnimating) return;
+    if (isSpinning || !isAnySlotSpinning) return; 
+    // 이미 스핀 중이거나 더 이상 회전하는 슬롯이 없으면 return
+    spin();
 
-    spin(); // 스핀 상태 활성화
-    setIsAnimating(true); // 애니메이션 상태 활성화
-
-    console.log("Spinning with choice:", userChoice, "current betAmount:", betAmount);
-
-    // 애니메이션 시간 (예: 2초) 동안 대기
     setTimeout(async () => {
       try {
-        // 서버 요청을 통해 결과 가져오기
         const response = await playRound(userChoice);
         if (response) {
-          // 스핀 중지 및 슬롯 결과 업데이트
           stopSpin(userChoice, response.computerChoice);
+
+          // 현재 라운드의 슬롯만 정지
+          setSlotStates((prev) => {
+            const newStates = [...prev];
+            newStates[currentRound - 1] = "stopped";
+            return newStates;
+          });
+          
+          // 만약 모든 슬롯이 멈췄다면(마지막 라운드 끝)
+          if (currentRound >= totalRounds) {
+            // 모든 슬롯 정지 후 애니메이션 종료
+            setIsAnimating(false);
+          }
+
         } else {
-          // playRound가 null을 반환한 경우 에러로 간주
           throw new Error("Failed to play round.");
         }
       } catch (error) {
         console.error("Error during RPS playRound:", error);
         alert("An error occurred while playing Rock-Paper-Scissors. The page will reload.");
         window.location.reload();
-      } finally {
-        setIsAnimating(false); // 애니메이션 상태 비활성화
-        console.log("Spin completed");
       }
-    }, 2000); // 2초 후 서버 요청
-  };
-
-  const handleGameStart = () => {
-    startGame();
-    console.log("Game started with betAmount:", betAmount);
+    }, 2000);
   };
 
   const handleContinue = () => {
-    if (consecutiveWins >= 3) {
-      // 최대 3라운드 승리 시 자동 종료
+    if (consecutiveWins >= totalRounds) {
+      // 마지막 라운드까지 끝났으면 quit
       handleQuit();
     } else {
       continueGame();
@@ -96,16 +111,16 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
 
   const handleQuit = () => {
     endGame();
-    onGameEnd(gameResult!, lastReward); // gameResult가 null이 아님을 확신할 수 있도록 '!' 추가
+    onGameEnd(gameResult!, lastReward);
     console.log(`Game ended with ${gameResult}:`, lastReward);
   };
+
+  const fetchAllowedBetting = useRPSGameStore((state) => state.fetchAllowedBetting);
 
   useEffect(() => {
     console.log("Component mounted");
     fetchAllowedBetting();
-  }, []);
-
-  const fetchAllowedBetting = useRPSGameStore((state) => state.fetchAllowedBetting);
+  }, [fetchAllowedBetting]);
 
   useEffect(() => {
     document.body.style.overflowX = "hidden";
@@ -124,24 +139,24 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
       }}
     >
       {!isGameStarted ? (
-           <motion.div
-           initial={{ scale: 0, opacity: 0 }} // 처음 크기와 투명도
-           animate={{ scale: 1, opacity: 1 }} // 최종 크기와 투명도
-           transition={{
-             duration: 0.8, // 애니메이션 지속 시간
-             ease: "easeOut", // 애니메이션 가속도 설정
-           }}
-           className="flex h-full w-full" // Spin 컴포넌트의 스타일
-         >
-        <RPSGameStart
-          onStart={handleGameStart}
-          allowedBetting={allowedBetting}
-          onCancel={() => {
-            onCancel(); // 기존 onCancel 호출
-            handleRPSGameEnd("lose", 0); // 상태 업데이트 및 페이지 복귀
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            ease: "easeOut",
           }}
-        />
-      </motion.div>
+          className="flex h-full w-full"
+        >
+          <RPSGameStart
+            onStart={handleGameStart}
+            allowedBetting={allowedBetting}
+            onCancel={() => {
+              onCancel();
+              handleRPSGameEnd("lose", 0);
+            }}
+          />
+        </motion.div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full w-[600px] overflow-hidden mx-auto">
           {/* 배팅 금액과 배율 표시 */}
@@ -159,20 +174,19 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
 
           {/* 게임 보드 및 애니메이션 */}
           <motion.div
-  initial={{ y: 300, opacity: 0 }} // 아래에서 시작 (y: 300)
-  animate={{ y: 0, opacity: 1 }} // 제자리로 이동하며 나타남
-  transition={{
-    duration: 1, // 애니메이션 지속 시간
-    ease: "easeOut", // 애니메이션 효과
-  }}
-  className="mt-8 relative"
->
+            initial={{ y: 300, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              duration: 1,
+              ease: "easeOut",
+            }}
+            className="mt-8 relative"
+          >
             <img
               src={Images.RPSGame}
               alt="RPS Game"
               className="w-[352px] mx-auto"
             />
-            {/* Computer's choice slots */}
             {[...Array(3)].map((_, index) => (
               <div
                 key={index}
@@ -181,29 +195,25 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                   position: "absolute",
                   bottom: "204px",
                 }}
-                className="gap-2 flex flex-row items-center justify-center pl-1 w-[87px] overflow-y-hidden h-[80px] transform"
+                className="gap-2 flex flex-row items-center justify-center pl-1 w-[87px] overflow-y-hidden h-[80px]"
               >
                 <motion.div
                   className="flex flex-col items-center justify-center h-full"
                   initial={{ y: 0 }}
                   animate={{
-                    // 현재 라운드에 해당하는 슬롯만 애니메이션 실행
                     y:
-                      isAnimating && currentRound === index + 1
+                      slotStates[index] === "spinning"
                         ? ["-100%", "0%"]
-                        : "0%",
+                        : "0%", 
                   }}
                   transition={{
-                    duration:
-                      isAnimating && currentRound === index + 1 ? 0.1 : 0.5,
+                    duration: slotStates[index] === "spinning" ? 0.1 : 0.5,
                     ease: "linear",
-                    repeat:
-                      isAnimating && currentRound === index + 1 ? Infinity : 0,
+                    repeat: slotStates[index] === "spinning" ? Infinity : 0,
                   }}
                 >
-                  {isAnimating && currentRound === index + 1 ? (
+                  {slotStates[index] === "spinning" ? (
                     <div className="slot-item text-5xl flex items-center justify-center">
-                      {/* 회전 애니메이션 제거 */}
                       <img
                         src={rpsImages.scissors}
                         alt="Spinning"
@@ -219,7 +229,8 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                         <img
                           src={
                             rpsImages[
-                              useRPSGameStore.getState().slotResults[index].computerChoice as keyof typeof rpsImages
+                              useRPSGameStore.getState().slotResults[index]
+                                .computerChoice as keyof typeof rpsImages
                             ]
                           }
                           alt={`slot-${index}`}
@@ -237,7 +248,6 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                 </motion.div>
               </div>
             ))}
-            {/* 하단 버튼을 절대 위치로 설정하여 동일한 위치에 표시 */}
             <div
               style={{
                 position: "absolute",
@@ -250,7 +260,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                 src={Images.RockButton}
                 alt="Rock"
                 className={`w-[68px] h-[68px] cursor-pointer ${
-                  isSpinning || isAnimating
+                  isSpinning || !isAnySlotSpinning
                     ? "opacity-50 cursor-not-allowed"
                     : ""
                 }`}
@@ -260,7 +270,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                 src={Images.PaperButton}
                 alt="Paper"
                 className={`w-[68px] h-[68px] cursor-pointer ${
-                  isSpinning || isAnimating
+                  isSpinning || !isAnySlotSpinning
                     ? "opacity-50 cursor-not-allowed"
                     : ""
                 }`}
@@ -270,7 +280,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                 src={Images.ScissorsButton}
                 alt="Scissors"
                 className={`w-[68px] h-[68px] cursor-pointer ${
-                  isSpinning || isAnimating
+                  isSpinning || !isAnySlotSpinning
                     ? "opacity-50 cursor-not-allowed"
                     : ""
                 }`}
@@ -284,7 +294,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
         isOpen={isDialogOpen}
         onClose={closeDialog}
         result={gameResult}
-        winnings={lastReward} // lastReward은 이미 +/-
+        winnings={lastReward}
         onContinue={handleContinue}
         onQuit={handleQuit}
         consecutiveWins={consecutiveWins}

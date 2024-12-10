@@ -28,7 +28,6 @@ interface RPSGameState {
   consecutiveWins: number;
   lastReward: number;
   winMultiplier: number;
-
   setBetAmount: (amount: number) => void;
   setAllowedBetting: (amount: number) => void;
   startGame: () => void;
@@ -58,14 +57,12 @@ export const useRPSGameStore = create<RPSGameState>((set, get) => ({
   winMultiplier: 1,
 
   setBetAmount: (amount: number) => {
-    console.log(`Setting betAmount to: ${amount}`);
     set({ betAmount: amount });
   },
   
   setAllowedBetting: (amount: number) => set({ allowedBetting: amount }),
 
   startGame: () => {
-    console.log("Starting game");
     set({
       isGameStarted: true,
       currentRound: 1,
@@ -86,12 +83,11 @@ export const useRPSGameStore = create<RPSGameState>((set, get) => ({
     })),
 
   continueGame: () =>
-    set((state) => ({
+    set({
       isDialogOpen: false,
       gameResult: null,
       lastReward: 0,
-      // 'consecutiveWins'와 'winMultiplier'는 playRound에서 관리
-    })),
+    }),
 
   endGame: () =>
     set({
@@ -110,66 +106,46 @@ export const useRPSGameStore = create<RPSGameState>((set, get) => ({
 
   closeDialog: () => set({ isDialogOpen: false }),
 
-  // 베팅 가능 금액 및 현재 포인트 조회
   fetchAllowedBetting: async () => {
     try {
-      console.log("Fetching allowed betting");
       const response = await api.get("/rps/star");
-      console.log("Allowed betting response:", response);
       if (response.data.code === "OK") {
         const { starCount, allowedBetting } = response.data.data;
         set({ allowedBetting });
         useUserStore.getState().setStarPoints(starCount);
-      } else {
-        console.error("Error fetching allowed betting:", response.data.message);
       }
-    } catch (error) {
-      console.error("Error fetching allowed betting:", error);
-    }
+    } catch (error) {}
   },
 
-  // 가위바위보 게임 진행
   playRound: async (userChoice: string): Promise<PlayRoundResponse | null> => {
     const bettingAmount = get().betAmount;
-    console.log("Current betAmount:", bettingAmount);
-  
     if (bettingAmount <= 0) {
-      console.error("Betting amount must be greater than 0.");
       return null;
     }
-  
     try {
       const requestData = {
         bettingAmount: bettingAmount,
         value: userChoice === "rock" ? 1 : userChoice === "paper" ? 2 : 0,
       };
-      console.log("Sending POST /play-rps with data:", requestData);
-  
       const response = await api.post("/play-rps", requestData);
-      console.log("Received response from POST /play-rps:", response);
-  
+
       if (response.data.code === "OK") {
         const { reward, result, pcValue } = response.data.data;
         const computerChoice =
           pcValue === 1 ? "rock" : pcValue === 2 ? "paper" : "scissors";
-  
+
         let winnings = 0;
         let newConsecutiveWins = get().consecutiveWins;
         let newWinMultiplier = get().winMultiplier;
-  
+
         if (result === "WIN") {
           newConsecutiveWins += 1;
           newWinMultiplier = Math.pow(3, newConsecutiveWins);
           winnings = bettingAmount * 3;
-  
           useUserStore.getState().setStarPoints(
             useUserStore.getState().starPoints + winnings
           );
-  
-          console.log(`Round ${get().currentRound}: WIN! Winnings: +${winnings}`);
-  
           set({
-            slotResults: [...get().slotResults, { userChoice, computerChoice }],
             gameResult: "win",
             consecutiveWins: newConsecutiveWins,
             lastReward: winnings,
@@ -177,71 +153,50 @@ export const useRPSGameStore = create<RPSGameState>((set, get) => ({
             betAmount: winnings,
             currentRound: get().currentRound + 1,
           });
-  
-          console.log(
-            `Proceeding to round ${get().currentRound} with betAmount: ${winnings} and winMultiplier: ${newWinMultiplier}`
-          );
-  
+          // 변경사항: 3연승에도 바로 다이얼로그를 띄우지 않고 지연 후 띄움
+          // 이렇게 하면 마지막 승부 결과도 화면에 보인 뒤 다이얼로그가 뜸
           if (newConsecutiveWins >= get().totalRounds) {
-            console.log("Maximum consecutive wins reached. Ending game.");
             setTimeout(() => {
-              set({
-                isDialogOpen: true, // 결과창을 보여줌
-                isGameStarted: false,
-                betAmount: 0,
-                currentRound: 1,
-                consecutiveWins: 0,
-                winMultiplier: 1,
-                gameResult: null,
-                lastReward: 0,
-                slotResults: [],
-              });
-            }, 1000);
+              set({ isDialogOpen: true });
+            }, 450);
+          } else {
+            setTimeout(() => {
+              set({ isDialogOpen: true });
+            }, 450);
           }
         } else {
           newConsecutiveWins = 0;
           newWinMultiplier = 1;
           winnings = -bettingAmount;
-  
           useUserStore.getState().setStarPoints(
             useUserStore.getState().starPoints + winnings
           );
-  
           set({
-            slotResults: [...get().slotResults, { userChoice, computerChoice }],
             gameResult: "lose",
             consecutiveWins: newConsecutiveWins,
             lastReward: winnings,
             winMultiplier: newWinMultiplier,
             betAmount: 0,
           });
-  
-          console.log(`Round ${get().currentRound}: LOSE! Winnings: ${winnings}`);
+          setTimeout(() => {
+            set({ isDialogOpen: true });
+          }, 450);
         }
-  
-        // 결과창 표시를 1초 지연
-        setTimeout(() => {
-          set({ isDialogOpen: true });
-        }, 450);
-  
+
         return {
           computerChoice,
           result: result === "WIN" ? "win" : "lose",
           reward: winnings,
         };
       } else {
-        console.error("Error playing RPS:", response.data.message);
         return null;
       }
     } catch (error: any) {
-      console.error("Error playing RPS:", error);
       return null;
     }
   },
   
-  // RPS 게임 종료 처리 함수 추가
   handleRPSGameEnd: (result: "win" | "lose", winnings: number) => {
-    console.log(`useRPSGameStore - handleRPSGameEnd called with: ${result}, ${winnings}`);
     set({
       isDialogOpen: false,
       isGameStarted: false,

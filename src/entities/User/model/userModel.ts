@@ -1,6 +1,6 @@
 // src/entities/User/model/userModel.ts
 
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { fetchHomeData } from '@/entities/User/api/userApi';
 import api from '@/shared/api/axiosInstance';
 import { rollDiceAPI, RollDiceResponseData } from '@/features/DiceEvent/api/rollDiceApi';

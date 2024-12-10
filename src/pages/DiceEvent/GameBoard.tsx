@@ -6,14 +6,14 @@ import { StarTile, DiceTile, AirplaneTile, Gauge } from "@/features/DiceEvent";
 import Dice from "@/widgets/Dice";
 import { BsDice5Fill } from "react-icons/bs";
 import Images from "@/shared/assets/images";
-import { Switch } from "@/shared/components/ui/switch";
+import { Switch } from "@/shared/components/ui";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/shared/components/ui/dialog";
+} from "@/shared/components/ui";
 import { IoDice, IoGameController, IoTicket } from "react-icons/io5";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useUserStore } from "@/entities/User/model/userModel";
@@ -125,7 +125,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
     return () => clearInterval(interval);
   }, [diceRefilledAt, fetchUserData, diceCount, items.autoNftCount]);
 
-  // isAuto가 true일 때 5초마다 diceRef.current.roll() 호출
+  // isAuto가 true일 때 1초마다 diceRef.current.roll() 호출
   useEffect(() => {
     let autoInterval: NodeJS.Timeout;
 
@@ -141,7 +141,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           console.log("Auto rolling dice");
           diceRef.current?.roll();
         }
-      }, 5000); // 5초
+      }, 1000); // 1초
     } else {
       console.log("Auto mode 비활성화됨");
     }

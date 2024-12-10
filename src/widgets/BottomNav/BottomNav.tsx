@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { AiOutlineGift } from "react-icons/ai";
+import { AiOutlineGift, AiOutlineTrophy } from "react-icons/ai";
 import { TbTargetArrow } from "react-icons/tb";
 import { BiWallet } from "react-icons/bi";
 import { useNavigationStore } from "@/shared/store/navigationStore";
 import { IoGameControllerOutline } from "react-icons/io5";
+
 import Images from "@/shared/assets/images";
 
 interface BottomNavigationProps {
@@ -25,36 +26,36 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({hidden}) => {
       className={`fixed bottom-8 self-center rounded-full flex flex-row items-center justify-evenly bottomNav-bg h-16 w-80 font-medium text-[10px] bg-white shadow-lg z-10 ${hidden ? 'hidden' : ''}`}
   
    >
-      <Link to="/AI-menu" onClick={() => handleNavigation("/AI-menu")}>
+      <Link to="/home" onClick={() => handleNavigation("/home")}>
         <motion.div
           className={`flex flex-col items-center justify-center rounded-lg w-12 h-12 ${
-            selected === "/AI-menu"
+            selected === "/home"
               ? "text-[#0147e5] bg-[#e0f2fe]"
               : "text-[#A3A3A3]"
           }`}
           animate={{
-            backgroundColor: selected === "/AI-menu" ? "#e0f2fe" : "#ffffff",
-            color: selected === "/AI-menu" ? "#0147e5" : "#A3A3A3",
+            backgroundColor: selected === "/home" ? "#e0f2fe" : "#ffffff",
+            color: selected === "/home" ? "#0147e5" : "#A3A3A3",
           }}
           transition={{ duration: 0.3 }}
         >
           <motion.div
             className="flex items-center justify-center"
             animate={{
-              scale: selected === "/AI-menu" ? 0.9 : 1,
+              scale: selected === "/home" ? 0.9 : 1,
             }}
             transition={{ duration: 0.3 }}
           >
-            {  selected === "/AI-menu" ? <img src={Images.SeletedBottomBarAI} className="w-6 h-6" /> :  <img src={Images.BottomBarAI} className="w-6 h-6" /> }
+            {  selected === "/home" ? <img src={Images.SeletedBottomBarAI} className="w-6 h-6" /> :  <img src={Images.BottomBarAI} className="w-6 h-6" /> }
          
           </motion.div>
-          {selected === "/AI-menu" && (
+          {selected === "/home" && (
             <motion.p
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              AI
+              Home
             </motion.p>
           )}
         </motion.div>
@@ -159,35 +160,35 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({hidden}) => {
           )}
         </motion.div>
       </Link>
-      <Link to="/my-assets" onClick={() => handleNavigation("/my-assets")}>
+      <Link to="/wallet" onClick={() => handleNavigation("/wallet")}>
         <motion.div
           className={`flex flex-col items-center justify-center rounded-lg w-12 h-12 ${
-            selected === "/my-assets"
+            selected === "/wallet"
               ? "text-[#0147e5] bg-[#e0f2fe]"
               : "text-[#A3A3A3]"
           }`}
           animate={{
-            backgroundColor: selected === "/my-assets" ? "#e0f2fe" : "#ffffff",
-            color: selected === "/my-assets" ? "#0147e5" : "#A3A3A3",
+            backgroundColor: selected === "/wallet" ? "#e0f2fe" : "#ffffff",
+            color: selected === "/wallet" ? "#0147e5" : "#A3A3A3",
           }}
           transition={{ duration: 0.3 }}
         >
           <motion.div
             className="flex items-center justify-center"
             animate={{
-              scale: selected === "/my-assets" ? 0.9 : 1,
+              scale: selected === "/wallet" ? 0.9 : 1,
             }}
             transition={{ duration: 0.3 }}
           >
             <BiWallet className="w-6 h-6" />
           </motion.div>
-          {selected === "/my-assets" && (
+          {selected === "/wallet" && (
             <motion.p
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              Asset
+              Wallet
             </motion.p>
           )}
         </motion.div>
