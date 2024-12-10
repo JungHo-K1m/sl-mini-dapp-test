@@ -7,8 +7,13 @@ import storeResult from '@/entities/AI/api/stroeResult';
 import useMainPageStore from '@/shared/store/useMainPageStore';
 import { useMutation } from '@tanstack/react-query';
 import { TopTitle } from '@/shared/components/ui';
+import { useTranslation } from "react-i18next";
 
 const AIXrayAnalysis: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t } = useTranslation();
+
   const [model, setModel] = useState<tmImage.CustomMobileNet | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [label, setLabel] = useState('Upload an X-ray image to start analysis.');
@@ -17,18 +22,27 @@ const AIXrayAnalysis: React.FC = () => {
   const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const { selectedMenu } = useMainPageStore();
-  const navigate = useNavigate();
-  const location = useLocation();
   const petData = location.state as { id: string };
   const [id] = useState<string>(petData?.id || '');
+  const [modalInfo, setModalInfo] = useState({
+    isVisible: false,
+    message: '',
+  });
+  
+  const showModalFunction = (message: string) => {
+    setModalInfo({
+      isVisible: true,
+      message,
+    });
+  };
 
   // 최초 안내 문구 표시
   let Alert = '';
 
   if(selectedMenu === 'ai-analysis'){
-    Alert = "Please upload an actual photo of your pet's teeth.\nPerformance may be suboptimal as this is in beta test mode.";
+    Alert = t("ai_page.Please_upload_actual_photo");
   } else if(selectedMenu === 'x-ray'){
-    Alert = "Please upload an X-ray image of your pet's teeth.\nPerformance may be suboptimal as this is in beta test mode.";
+    Alert = t("ai_page.Please_upload_x_ray_image");
   }
 
   const [caution, setCaution] = useState(Alert);
@@ -41,7 +55,7 @@ const AIXrayAnalysis: React.FC = () => {
       } else if (selectedMenu === 'x-ray') {
         return storeResult(formData, "xray");
       } else {
-        return Promise.reject(new Error('Selected menu is not set.'));
+        return Promise.reject(new Error(t("ai_page.An_error_occurred:_selected_menu_is_not_set.")));
       }
     },
     onSuccess: (result) => {
@@ -55,22 +69,25 @@ const AIXrayAnalysis: React.FC = () => {
     },
     onError: (error: any) => {
       console.error('Error saving result:', error);
-      alert(error.message || 'Failed to save result. Please try again.');
+      showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again."));
     },
   });
 
 
   // 진단 가능한 항목에 대한 설명
   const symptomsInfo: Record<string, string> = {
-    "Gingivitis & Plaque": "Symptoms of gingivitis and plaque have been detected in your dog. It is important to visit the vet as soon as possible to address this condition. Maintaining good oral hygiene is crucial for your pet's health.",
-    "Periodontitis": "Symptoms of periodontitis have been detected in your dog. This condition can cause discomfort and pain. We recommend seeing a veterinarian promptly for proper diagnosis and treatment.",
-    "Normal": "No issues were detected in your dog's teeth. Keep maintaining good dental hygiene to ensure their continued health.",
-    "Decrease in dental bone density": "A decrease in dental bone density has been detected in your dog's X-ray. This could indicate bone loss, which may require veterinary attention. Regular check-ups and appropriate dental care are recommended.",
-    "Fractured tooth": "Symptoms of a fractured tooth have been detected in your dog. It is important to visit the vet as soon as possible to address this condition. Fractured teeth can cause discomfort and lead to other oral health issues.",
-    "Gingivitis": "Symptoms of gingivitis have been detected in your dog. Gingivitis can lead to more severe dental issues if untreated. It is recommended to see a veterinarian to discuss a treatment plan.",
-    "Healthy": "No issues were detected in your dog's teeth. Your dog's dental health appears to be good. Keep maintaining regular oral hygiene to ensure their continued health."
+    "Gingivitis & Plaque": t("ai_page.reuslts.symptoms_of_gingivitis_and_plaque"),
+    "Periodontitis": t("ai_page.reuslts.symptoms_of_periodontitis"),
+    "Normal": t("ai_page.reuslts.no_issues_detected"),
+    "Decrease in dental bone density": t("ai_page.reuslts.decrease_in_dental_bone_density"),
+    "Fractured tooth": t("ai_page.reuslts.fractured_tooth"),
+    "Gingivitis": t("ai_page.reuslts.symptoms_of_gingivitis"),
+    "Healthy": t("ai_page.reuslts.no_issues_detected_healthy"),
   };
-
+  
+  const getSymptomDescription = (label: string) =>
+    symptomsInfo[label] || t("ai_page.Diagnosis_information_not_available.");
+  
   // Teachable Machine 모델 로드 함수
   const loadModel = async () => {
     if (!model) {
@@ -97,7 +114,7 @@ const AIXrayAnalysis: React.FC = () => {
         return loadedModel; // 모델 로드 후 반환
       } catch (error) {
         console.error("Failed to load model:", error);
-        alert("Failed to load the AI model. Please try again later or check your network connection.");
+        showModalFunction(t("ai_page.Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection."));
       }
     }
     return model; // 이미 로드된 모델이 있으면 반환
@@ -107,7 +124,7 @@ const AIXrayAnalysis: React.FC = () => {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedImage(event.target.files[0]);
-      setLabel("Click the button to analyze the uploaded image.");
+      setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image."));
       setIsAnalyzed(false);
     }
   };
@@ -116,7 +133,7 @@ const AIXrayAnalysis: React.FC = () => {
   const analyzeImage = async () => {
     if (!selectedImage) {
       setShowModal(true); // 이미지를 업로드하지 않았을 때 모달 표시
-      setCaution('Please upload an image before analysis.');
+      showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
       return;
     }
 
@@ -124,33 +141,33 @@ const AIXrayAnalysis: React.FC = () => {
     const loadedModel = await loadModel(); // 모델을 로드하고 가져옴
 
     if (loadedModel && selectedImage) {
-      const imageElement = document.createElement('img');
+      const imageElement = document.createElement("img");
       imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
       imageElement.onload = async () => {
-        const predictions = await loadedModel.predict(imageElement);
-
-        // 모든 클래스의 확률 출력
-        console.log("Predictions:");
-        predictions.forEach((prediction) => {
-          console.log(`Class: ${prediction.className}, Probability: ${prediction.probability}`);
-        });
-
-        // 가장 높은 확률의 클래스 선택
-        const highestPrediction = predictions.reduce((prev, current) =>
+        const prediction = await loadedModel.predict(imageElement);
+        const highestPrediction = prediction.reduce((prev, current) =>
           prev.probability > current.probability ? prev : current
         );
 
-        console.log("Highest prediction:", highestPrediction.className, "Probability:", highestPrediction.probability);
+        console.log(
+          "Current prediction:",
+          highestPrediction.className,
+          "Probability:",
+          highestPrediction.probability
+        );
 
-        // 확률이 0.95 이상이면 해당 클래스를 라벨로 설정
-        if (highestPrediction.probability > 0.95) {
-          setLabel(highestPrediction.className);
-        } else {
-          setLabel("Normal"); // 확률이 낮을 때 기본 라벨로 설정
-        }
+        // 번역된 라벨 설정
+        const predictionKey = highestPrediction.className.replace(/ /g, "_");
+        const translatedLabel =
+          highestPrediction.probability > 0.95
+            ? t(`ai_page.reuslts.${predictionKey}`, { defaultValue: t("ai_page.reuslts.Normal") })
+            : t("ai_page.reuslts.Normal");
 
+
+        setLabel(translatedLabel); // 번역된 라벨을 상태에 저장
         setLoading(false);
         setIsAnalyzed(true);
+        saveResult();
       };
     } else {
       setLoading(false);
@@ -172,10 +189,10 @@ const AIXrayAnalysis: React.FC = () => {
   
         saveResultMutate(formData);
       } else {
-        alert('An error occurred: selected menu is not set.');
+        showModalFunction(t("ai_page.An_error_occurred:_selected_menu_is_not_set."));
       }
     } else {
-      alert('Please analyze the image before saving.');
+      showModalFunction(t("ai_page.Please_analyze_the_image_before_saving."));
     }
   };
 
@@ -186,14 +203,15 @@ const AIXrayAnalysis: React.FC = () => {
     setIsAnalyzed(false);
   }
   
+  
   // 제목 설정
   const getTitle = () => {
     if (selectedMenu === 'x-ray') {
-      return 'AI X-ray Analysis';
+      return t("ai_page.ai_xray_analysis");
     } else if (selectedMenu === 'ai-analysis') {
-      return 'AI Dental Examination';
+      return t("ai_page.ai_dental_examination");
     } else {
-      return 'AI Analysis';
+      return t("ai_page.ai_analysis");
     }
   };
 
@@ -239,7 +257,7 @@ const AIXrayAnalysis: React.FC = () => {
             onClick={analyzeImage}
             disabled={loading}
           >
-            {loading ? 'Analyzing...' : 'Upload image and analysis'}
+            {loading ? t("ai_page.Analyzing...") : t("ai_page.Upload_image_and_analysis")}
           </button>
         </div>
       )}
@@ -248,10 +266,12 @@ const AIXrayAnalysis: React.FC = () => {
       {isAnalyzed && (
         <>
           <div id="label-container" className="mt-4 text-lg font-semibold">
-            <p>Analysis results: {label}</p>
+            {/* 진단명 */}
+            <p>{t("ai_page.Analysis_results")}: {label}</p>
           </div>
   
           <div className="mt-4 p-4 bg-gray-800 text-white rounded-xl shadow-md max-w-sm mx-auto">
+            {/* 진단 결과 설명 */}
             <p
               className="overflow-hidden text-sm"
               style={{
@@ -259,25 +279,26 @@ const AIXrayAnalysis: React.FC = () => {
                 WebkitLineClamp: showFullText ? undefined : 3,
                 WebkitBoxOrient: 'vertical',
               }}
-            >
-              {symptomsInfo[label]}
+              >
+              {getSymptomDescription(label)}
             </p>
             <div className="flex justify-center mt-2">
+              {/* 더 보기 버튼, 줄이기 버튼 */}
               {!showFullText ? (
                 <button
                   className="mt-2 w-1/2 text-black text-base font-semibold py-2 px-4 rounded-xl"
                   style={{ backgroundColor: '#FFFFFF' }}
                   onClick={() => setShowFullText(true)}
-                >
-                  See more
+                  >
+                  {t("ai_page.See_more")}
                 </button>
               ) : (
                 <button
                   className="mt-2 w-1/2 text-black text-base font-semibold py-2 px-4 rounded-xl"
                   style={{ backgroundColor: '#FFFFFF' }}
                   onClick={() => setShowFullText(false)}
-                >
-                  See less
+                  >
+                  {t("ai_page.See_less")}
                 </button>
               )}
             </div>
@@ -308,8 +329,8 @@ const AIXrayAnalysis: React.FC = () => {
   
       {/* 이미지 업로드 요청 모달 */}
       {showModal && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center w-full">
-          <div className="bg-white p-6 rounded-lg text-black text-center w-[70%] max-w-[550px]">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center md:mx-10">
+          <div className="bg-white p-6 rounded-lg text-black text-center mx-3">
             <p>
               {Alert.split('\n').map((line, index) => (
                 <React.Fragment key={index}>
@@ -321,10 +342,27 @@ const AIXrayAnalysis: React.FC = () => {
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg w-1/2"
               onClick={() => setShowModal(false)}
-            >
-              OK
+              >
+              {t("OK")}
             </button>
           </div>
+        </div>
+      )}
+
+
+      {modalInfo.isVisible && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-[80%]">
+            <div className="bg-white text-black p-6 rounded-lg text-center">
+                <div> &nbsp;</div>
+                <p>{modalInfo.message}</p>
+                <div> &nbsp;</div>
+                <button
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                    onClick={()=>setModalInfo({ isVisible: false, message: '' })}
+                    >
+                    {t("OK")}
+                </button>
+            </div>
         </div>
       )}
     </div>
