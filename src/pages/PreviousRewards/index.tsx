@@ -40,11 +40,11 @@ const PreviousRewards: React.FC = () => {
   const state = location.state || { fromPage: null };
 
   useEffect(() => {
-    if (!state.fromPage) {
-      // state가 없으면 이전 페이지로 리다이렉트
-      navigate('/reward');
+    if (!state || !state.fromPage) {
+      navigate('/reward', { replace: true }); // replace를 사용해 히스토리를 대체
     }
   }, [state, navigate]);
+  
 
   const {
     myRanking,
@@ -93,10 +93,14 @@ const PreviousRewards: React.FC = () => {
   const [selectedMyData, setSelectedMyData] = useState<RewardData | null>(null);
 
   const round = 1; // 예시 라운드 번호. 실제 라운드 번호로 대체하세요.
-
-  useEffect(() => {
+  const fetchInitialRanking = useCallback(() => {
     loadInitialRanking();
   }, [loadInitialRanking]);
+  
+  useEffect(() => {
+    fetchInitialRanking();
+  }, [fetchInitialRanking]); // 더 명확한 의존성 관리
+  
 
   useEffect(() => {
     // 래플 탭 진입 시 데이터 없으면 로딩
@@ -108,6 +112,7 @@ const PreviousRewards: React.FC = () => {
   }, [currentTab, loadInitialRaffle, hasLoadedInitialRaffle]);
 
   const handleRangeClick = async (start: number, end: number) => {
+    if (dialogOpen) return; // 다이얼로그가 이미 열려 있으면 실행 중단
     if (currentTab === "ranking") {
       await loadRangeRanking(start, end);
     } else {
@@ -116,6 +121,7 @@ const PreviousRewards: React.FC = () => {
     setDialogTitle(`${start}-${end}`);
     setDialogOpen(true);
   };
+  
 
   const myData = myRanking && myRanking.length > 0 ? myRanking[0] : null;
   const isReceived = myData?.selectedRewardType === "USDT" || myData?.selectedRewardType === "SL";
@@ -204,10 +210,6 @@ const PreviousRewards: React.FC = () => {
     setSelectedMyData((prev) => prev ? { ...prev, ...updatedData } : null);
     setRewardDialogOpen(false);
   };
-
-  if (!myData) {
-    return <div>No data available</div>;
-  }
 
   return (
     <div className="flex flex-col mb-44 text-white items-center w-full">
