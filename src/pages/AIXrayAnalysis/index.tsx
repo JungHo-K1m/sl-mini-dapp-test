@@ -167,7 +167,6 @@ const AIXrayAnalysis: React.FC = () => {
         setLabel(translatedLabel); // 번역된 라벨을 상태에 저장
         setLoading(false);
         setIsAnalyzed(true);
-        saveResult();
       };
     } else {
       setLoading(false);
@@ -329,8 +328,8 @@ const AIXrayAnalysis: React.FC = () => {
   
       {/* 이미지 업로드 요청 모달 */}
       {showModal && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center md:mx-10">
-          <div className="bg-white p-6 rounded-lg text-black text-center mx-3">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center w-full">
+          <div className="bg-white p-6 rounded-lg text-black text-center mx-3w-[70%] max-w-[550px]">
             <p>
               {Alert.split('\n').map((line, index) => (
                 <React.Fragment key={index}>
@@ -351,8 +350,8 @@ const AIXrayAnalysis: React.FC = () => {
 
 
       {modalInfo.isVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-[80%]">
-            <div className="bg-white text-black p-6 rounded-lg text-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
+            <div className="bg-white text-black p-6 rounded-lg text-center w-[70%] max-w-[550px]">
                 <div> &nbsp;</div>
                 <p>{modalInfo.message}</p>
                 <div> &nbsp;</div>
