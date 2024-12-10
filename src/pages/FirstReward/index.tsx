@@ -12,7 +12,7 @@ const FirstRewardPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-20">
         {/* 상단 메시지 */}
-        <h1 className="text-center mt-12 text-lg font-semibold">
+        <h1 className="text-center mt-36 text-lg font-semibold">
             As a new member, <br />
             you're starting your journey with
         </h1>
