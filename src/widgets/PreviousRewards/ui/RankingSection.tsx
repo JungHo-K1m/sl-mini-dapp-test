@@ -44,9 +44,9 @@ const RankingSection: React.FC<RankingSectionProps> = ({
   handleRangeClick,
 }) => {
 
-  useEffect(() => {
-    console.log("RankingSection myData:", myData);
-  }, [myData]);
+  // useEffect(() => {
+  //   console.log("RankingSection myData:", myData);
+  // }, [myData]);
 
   return (
     <div className="p-6 bg-[#0D1226] text-white w-full h-full">
