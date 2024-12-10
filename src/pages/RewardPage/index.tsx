@@ -49,7 +49,7 @@ const Reward: React.FC = () => {
 
   // "View More" 버튼 핸들러
   const handleViewMore = () => {
-    if (currentPage + 1 < totalPages && !isLoadingLeaderboard) {
+    if (currentPage + 1 < totalPages) {
       fetchNextLeaderboardPage();
     }
   };
@@ -85,15 +85,14 @@ const Reward: React.FC = () => {
   return (
     <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full ">
       <TopTitle title="Rewards" />
-      <div className="flex flex-row items-center justify-between mb-11">
+      <div className="flex flex-row items-center justify-between mb-11 font-semibold">
         {/* "Last month's Results" 클릭 시 다른 페이지로 이동 */}
         <div
           className="text-center cursor-pointer"
-          onClick={() => navigate('/previous-rewards', { state: { fromPage: 'reward' } })}
-
+          onClick={() => navigate('/previous-rewards')}
           role="button"
           tabIndex={0}
-          // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
+          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
         >
           Last month's
           <br />
@@ -132,12 +131,10 @@ const Reward: React.FC = () => {
       {/** 클릭 시 이전 랭킹(상품)결과로 이동 */}
       <div
         className="first-to-third-pace-box h-36 rounded-3xl mb-14 flex flex-row items-center justify-around p-5 cursor-pointer"
-        onClick={() => navigate('/previous-rewards', { state: { fromPage: 'reward' } })}
-
-        // onClick={()=>alert("서비스 준비중입니다.")}
+        onClick={() => navigate('/previous-rewards')}
         role="button"
         tabIndex={0}
-        // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards', { state: { fromPage: 'reward' } }); }}
+        onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
       >
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">Previous Rewards</p>

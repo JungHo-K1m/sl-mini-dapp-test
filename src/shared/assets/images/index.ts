@@ -104,6 +104,8 @@ import bitget_logo from "./bitget_logo.png"
 import kraken_logo from "./kraken_logo.png"
 import gate_io_logo from "./gate_io.png"
 import Usdt from "./usdt.png";
+import LinkedIn from "./LinkedIn.png";
+import MissionCompleted from "./mission-completed.png"
 
 
 
@@ -213,6 +215,8 @@ const Images = {
   kraken_logo,
   gate_io_logo,
   Usdt,
+  LinkedIn,
+  MissionCompleted,
 };
 
 export default Images;
