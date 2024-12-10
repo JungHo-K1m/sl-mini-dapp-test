@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TopTitle } from "@/shared/components/ui";
 import "./PreviousRewards.css";
 import {
@@ -32,6 +33,19 @@ interface RewardData {
 }
 
 const PreviousRewards: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // state가 없을 경우 기본값 설정
+  const state = location.state || { fromPage: null };
+
+  useEffect(() => {
+    if (!state.fromPage) {
+      // state가 없으면 이전 페이지로 리다이렉트
+      navigate('/reward');
+    }
+  }, [state, navigate]);
+  
   const {
     myRanking,
     topRankings,
