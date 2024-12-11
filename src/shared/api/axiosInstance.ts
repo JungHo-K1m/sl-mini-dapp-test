@@ -3,7 +3,7 @@ import { useUserStore } from '@/entities/User/model/userModel';
 
 // Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://c9fd-61-81-223-147.ngrok-free.app',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://c380-61-81-223-147.ngrok-free.app',
   headers: {
     'Content-Type': 'application/json', // 기본 Content-Type
     'ngrok-skip-browser-warning': '69420', // ngrok 경고 무시 헤더
