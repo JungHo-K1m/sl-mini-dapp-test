@@ -1,6 +1,7 @@
-// src/pages/DiceEventPage.tsx
 
-import React, { useEffect, useState } from "react";
+
+// src/pages/DiceEventPage.tsx
+import React, { useEffect, useState, useRef } from "react";
 import UserLevel from "@/entities/User/components/UserLevel";
 import "@/features/DiceEvent/DiceEvent.css";
 import Images from "@/shared/assets/images";
@@ -8,7 +9,7 @@ import { MonthlyPrize } from "@/entities/MonthlyPrize";
 import Attendance from "@/widgets/Attendance";
 import MyRankingWidget from "@/widgets/MyRanking/MyRankingWidget";
 import MissionWidget from "@/widgets/MissionWidget/MissionWidget";
-import useDiceGame from "./useDiceGame"; // 수정된 import
+import useDiceGame from "./useDiceGame";
 import GameBoard from "./GameBoard";
 import { Board } from "@/features/DiceEvent";
 import RPSGame from "../RPSGame";
@@ -18,12 +19,39 @@ import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui";
-import {formatNumber}  from "@/shared/utils/formatNumber";
+import { formatNumber } from "@/shared/utils/formatNumber";
 import LevelRewards from "@/widgets/LevelRewards";
+
+const levelRewards = [
+  // 2~9 레벨 보상 예시
+  { level: 2, dice: 10, points: 1000, },
+  { level: 3, dice: 15, points: 2000, },
+  { level: 4, dice: 20, points: 3000, },
+  { level: 5, dice: 30, points: 5000, tickets: 3, },
+  { level: 6, dice: 40, points: 7000, tickets: 2, },
+  { level: 7, dice: 50, points: 10000, tickets: 3, },
+  { level: 8, dice: 60, points: 15000, tickets: 4, },
+  { level: 9, dice: 70, points: 20000, tickets: 5, },
+  
+  // 10~14 레벨 보상 예시
+  { level: 10, dice: 100, points: 30000, tickets: 7, },
+  { level: 11, dice: 100, points: 30000, tickets: 7, },
+  { level: 12, dice: 100, points: 30000, tickets: 7, },
+  { level: 13, dice: 100, points: 30000, tickets: 7, },
+  { level: 14, dice: 100, points: 30000, tickets: 7, },
+
+  // 15~19 레벨 보상 예시
+  { level: 15, dice: 200, points: 50000, tickets: 15, },
+  { level: 16, dice: 200, points: 50000, tickets: 15, },
+  { level: 17, dice: 200, points: 50000, tickets: 15, },
+  { level: 18, dice: 200, points: 50000, tickets: 15, },
+  { level: 19, dice: 200, points: 50000, tickets: 15, },
+
+  // 20 레벨 보상 예시
+  { level: 20, dice: 500, points: 100000, tickets: 100, },
+];
 
 const DiceEventPage: React.FC = () => {
   const {
@@ -34,8 +62,8 @@ const DiceEventPage: React.FC = () => {
     characterType,
     position,
     monthlyPrize,
-    isAuto, // isAuto 상태 가져오기
-    pet, // pet 데이터 가져오기
+    isAuto,
+    pet,
   } = useUserStore();
 
   const game = useDiceGame();
@@ -43,12 +71,24 @@ const DiceEventPage: React.FC = () => {
   const [initialY, setInitialY] = useState<number>(474);
   const [delta, setDelta] = useState<number>(56);
 
-  // 캐릭터 이미지 결정 로직 추가
+  // 레벨 업 시 팝업 표시를 위한 상태
+  const [showLevelUpDialog, setShowLevelUpDialog] = useState<boolean>(false);
+  const [prevLevel, setPrevLevel] = useState<number>(userLv);
+
+  // 레벨 업 감지: userLv가 이전 레벨보다 커질 때만 팝업 표시
+  useEffect(() => {
+    if (userLv > prevLevel) {
+      setShowLevelUpDialog(true);
+    }
+    setPrevLevel(userLv);
+  }, [userLv, prevLevel]);
+
+  // 현재 레벨 보상 찾기
+  const currentReward = levelRewards.find(r => r.level === userLv);
+
   const getCharacterImageSrc = () => {
-    // 레벨에 따른 인덱스 계산
     const index = Math.floor((userLv - 1) / 2);
 
-    // 캐릭터 타입에 따른 이미지 배열
     const catImages = [
       Images.CatLv1to2,
       Images.CatLv3to4,
@@ -80,6 +120,12 @@ const DiceEventPage: React.FC = () => {
     } else {
       return dogImages[index] || dogImages[dogImages.length - 1];
     }
+  };
+
+  const getLevelEffectImageSrc = () => {
+    const level = Math.min(userLv, 20);
+    const effectImageKey = `LevelEffect${level}` as keyof typeof Images;
+    return Images[effectImageKey] || Images.LevelEffect1;
   };
 
   const charactorImageSrc = getCharacterImageSrc();
@@ -121,12 +167,9 @@ const DiceEventPage: React.FC = () => {
     return <div>Error loading data: {error}</div>;
   }
 
-  // handleRPSGameEnd 함수 수정
   const handleRPSGameEnd = (result: "win" | "lose", winnings: number) => {
     console.log(`RPS Game Ended: ${result}, Winnings: ${winnings}`);
-    // 사용자 데이터 다시 가져오기
     fetchUserData();
-    // useDiceGame의 handleRPSGameEnd 호출하여 상태 업데이트
     game.handleRPSGameEnd(result, winnings);
   };
 
@@ -147,7 +190,7 @@ const DiceEventPage: React.FC = () => {
                 <UserLevel
                   userLv={userLv}
                   charactorImageSrc={charactorImageSrc}
-                  exp={pet.exp} // 경험치 추가
+                  exp={pet.exp}
                 />
               </DialogTrigger>
               <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold  overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
@@ -176,22 +219,21 @@ const DiceEventPage: React.FC = () => {
             isHolding={game.isHolding}
             handleMouseDown={game.handleMouseDown}
             handleMouseUp={game.handleMouseUp}
-            isLuckyVisible={game.isLuckyVisible} // "LUCKY" 상태 전달
+            isLuckyVisible={game.isLuckyVisible}
           />
-          {game.selectingTile &&
-            !isAuto && ( // isAuto가 false일 때만 모달 표시
-              <div className="absolute md:-top-40 -top-20 left-0 w-full h-full flex justify-center items-center z-20">
-                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-75"></div>
-                <div className="text-white text-lg z-30 flex flex-col items-center justify-center mb-96 md:mb-[442px] font-semibold md:text-xl">
-                  <img
-                    src={Images.Airplane}
-                    alt="airplane"
-                    className="h-20 md:h-28"
-                  />
-                  Select a tile to move
-                </div>
+          {game.selectingTile && !isAuto && (
+            <div className="absolute md:-top-40 -top-20 left-0 w-full h-full flex justify-center items-center z-20">
+              <div className="absolute top-0 left-0 w-full h-full bg-black opacity-75"></div>
+              <div className="text-white text-lg z-30 flex flex-col items-center justify-center mb-96 md:mb-[442px] font-semibold md:text-xl">
+                <img
+                  src={Images.Airplane}
+                  alt="airplane"
+                  className="h-20 md:h-28"
+                />
+                Select a tile to move
               </div>
-            )}
+            </div>
+          )}
           <Board
             position={position}
             charactorImageSrc={charactorImageSrc}
@@ -200,17 +242,61 @@ const DiceEventPage: React.FC = () => {
             delta={delta}
           />
           <br />
-          
-      
-          <MyRankingWidget  />
-      
-        
+          <MyRankingWidget />
           <br />
           <Attendance />
           <MissionWidget />
-          <br /> <br /> <br />
-          <br />
-          <br />
+
+          {/* 레벨업 시 다이얼로그: 이전보다 레벨이 올라갔을 때만 표시 */}
+          <Dialog open={showLevelUpDialog}>
+            <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
+              <div className="flex flex-col items-center justify-around">
+                <div className=" flex flex-col items-center gap-2">
+                  <h1 className=" font-jalnan text-5xl text-[#FDE047]">
+                    Level up!
+                  </h1>
+                  <img
+                    src={getLevelEffectImageSrc()}
+                    alt="levelupEffect"
+                    className=" w-36 h-36"
+                  />
+                </div>
+                <div className="flex flex-col gap-6">
+                  <p className="font-jalnan">Get Rewarded</p>
+                  {currentReward && (
+                    <div className="flex flex-row items-center gap-2">
+                      <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
+                        <img src={Images.Dice} alt="dice" className="w-6 h-6" />
+                        <p className=" font-semibold text-xs">+{currentReward.dice}</p>
+                      </div>
+                      <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
+                        <img src={Images.Star} alt="star" className="w-6 h-6" />
+                        <p className=" font-semibold text-xs">+{formatNumber(currentReward.points)}</p>
+                      </div>
+                      {currentReward.tickets && (
+                        <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
+                          <img
+                            src={Images.LotteryTicket}
+                            alt="rapple"
+                            className="w-6 h-6"
+                          />
+                          <p className=" font-semibold text-xs">+{currentReward.tickets}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={() => setShowLevelUpDialog(false)}
+                  className="bg-[#0147E5] font-medium rounded-full w-40 h-14"
+                >
+                  Close
+                </button>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          <br /><br /><br /><br /><br />
           <div className="hidden md:block md:mb-40"> &nbsp;</div>
         </>
       )}

@@ -109,6 +109,26 @@ import MissionCompleted from "./mission-completed.png"
 import FirstReward from "./firstreward.png"
 import Calender from "./calendar.png"
 import Celebration from "./celebration.png"
+import LevelEffect1 from './LvEffect_1.png';
+import LevelEffect2 from './LvEffect_2.png';
+import LevelEffect3 from './LvEffect_3.png';
+import LevelEffect4 from './LvEffect_4.png';
+import LevelEffect5 from './LvEffect_5.png';
+import LevelEffect6 from './LvEffect_6.png';
+import LevelEffect7 from './LvEffect_7.png';
+import LevelEffect8 from './LvEffect_8.png';
+import LevelEffect9 from './LvEffect_9.png';
+import LevelEffect10 from './LvEffect_10.png';
+import LevelEffect11 from './LvEffect_11.png';
+import LevelEffect12 from './LvEffect_12.png';
+import LevelEffect13 from './LvEffect_13.png';
+import LevelEffect14 from './LvEffect_14.png';
+import LevelEffect15 from './LvEffect_15.png';
+import LevelEffect16 from './LvEffect_16.png';
+import LevelEffect17 from './LvEffect_17.png';
+import LevelEffect18 from './LvEffect_18.png';
+import LevelEffect19 from './LvEffect_19.png';
+import LevelEffect20 from './LvEffect_20.png';
 
 
 
@@ -223,6 +243,26 @@ const Images = {
   FirstReward,
   Calender,
   Celebration,
+  LevelEffect1,
+  LevelEffect2,
+  LevelEffect3,
+  LevelEffect4,
+  LevelEffect5,
+  LevelEffect6,
+  LevelEffect7,
+  LevelEffect8,
+  LevelEffect9,
+  LevelEffect10,
+  LevelEffect11,
+  LevelEffect12,
+  LevelEffect13,
+  LevelEffect14,
+  LevelEffect15,
+  LevelEffect16,
+  LevelEffect17,
+  LevelEffect18,
+  LevelEffect19,
+  LevelEffect20
 };
 
 export default Images;
