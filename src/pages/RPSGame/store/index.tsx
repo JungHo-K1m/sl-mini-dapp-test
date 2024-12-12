@@ -1,6 +1,6 @@
 // src/pages/RPSGame/store/index.tsx
 
-import { create } from "zustand";
+import create from "zustand";
 import api from "@/shared/api/axiosInstance";
 import { useUserStore } from "@/entities/User/model/userModel";
 

@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import create from 'zustand';
 import { fetchInitialRaffleAPI, RaffleInitialDataResponse } from '../api/raffleApi';
 import { PlayerData } from '@/features/PreviousRewards/types/PlayerData';
 

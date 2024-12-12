@@ -1,6 +1,6 @@
 // src/entities/PreviousRewards/model/previousRewardsModel.ts
 
-import { create } from 'zustand';
+import create from 'zustand';
 import { fetchInitialRankingAPI, InitialDataResponse } from '../api/previousRewardsApi';
 import { PlayerData } from '@/features/PreviousRewards/types/PlayerData';
 

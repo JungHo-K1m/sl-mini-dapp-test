@@ -1,5 +1,5 @@
 // src/features/PreviousRewards/model/raffleFeatureModel.ts
-import { create } from 'zustand';
+import create from 'zustand';
 import { fetchRaffleRangeRankingAPI, RaffleRangeRankingData } from '@/entities/PreviousRewards/api/raffleApi';
 
 interface RaffleFeatureState {

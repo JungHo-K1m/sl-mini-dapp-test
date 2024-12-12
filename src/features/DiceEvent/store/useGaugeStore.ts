@@ -1,5 +1,5 @@
 // src/features/DiceEvent/store/useGageStore.ts
-import { create } from 'zustand';
+import create from 'zustand';
 
 interface GaugeStore {
   gaugeValue: number;

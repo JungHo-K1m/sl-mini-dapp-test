@@ -1,6 +1,6 @@
 // src/entities/Mission/model/missionModel.ts
 
-import { create } from 'zustand';
+import create from 'zustand';
 import api from '@/shared/api/axiosInstance';
 
 export interface Mission {

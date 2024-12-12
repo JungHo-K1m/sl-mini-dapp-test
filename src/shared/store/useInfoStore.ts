@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import create from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Images from "@/shared/assets/images"; // 이미지 객체 import
 

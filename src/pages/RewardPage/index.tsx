@@ -92,7 +92,7 @@ const Reward: React.FC = () => {
           onClick={() => navigate('/previous-rewards')}
           role="button"
           tabIndex={0}
-          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
+          // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
         >
           Last month's
           <br />
@@ -134,7 +134,7 @@ const Reward: React.FC = () => {
         onClick={() => navigate('/previous-rewards')}
         role="button"
         tabIndex={0}
-        onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
+        // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
       >
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">Previous Rewards</p>

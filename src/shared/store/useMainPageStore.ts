@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import create from 'zustand';
 
 interface MainPageState {
   selectedMenu: 'x-ray' | 'ai-analysis' | 'records' | null;
