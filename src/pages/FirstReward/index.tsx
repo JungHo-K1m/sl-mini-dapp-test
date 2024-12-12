@@ -27,9 +27,9 @@ const FirstRewardPage: React.FC = () => {
         </div>
 
         {/* 보상 내역 */}
-        <h2 className="text-base font-semibold mb-4 mt-16">Your rewards include:</h2>
+        <h2 className="text-lg font-semibold mb-4 mt-16 justify-start ml-8">Your rewards include:</h2>
         <div className="flex flex-col items-center bg-[#1F283C] rounded-2xl px-4 py-6 w-full">
-            <div className="flex flex-col gap-2 text-sm">
+            <div className="flex flex-col gap-2 text-base">
                 <div className="flex items-center gap-2">
                     <img
                         src={Images.Calender}
