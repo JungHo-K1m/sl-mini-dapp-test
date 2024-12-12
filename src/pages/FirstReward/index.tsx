@@ -27,16 +27,16 @@ const FirstRewardPage: React.FC = () => {
         </div>
 
         {/* 보상 내역 */}
-        <h2 className="text-lg font-semibold mb-4 mt-16 justify-start ml-8">Your rewards include:</h2>
-        <div className="flex flex-col items-center bg-[#1F283C] rounded-2xl px-4 py-6 w-full">
-            <div className="flex flex-col gap-2 text-base">
+        <h2 className="text-lg font-semibold mb-4 mt-16 text-left w-full">Your rewards include:</h2>
+        <div className="flex flex-col items-start bg-[#1F283C] rounded-2xl px-4 py-6 w-full">
+            <div className="flex flex-col gap-2 text-base w-full">
                 <div className="flex items-center gap-2">
                     <img
                         src={Images.Calender}
                         alt="calendar-icon"
                         className="w-6 h-6"
                     />
-                    <p>Daily Attendance : 10,000P</p>
+                    <p className="text-left">Daily Attendance : 10,000P</p>
                 </div>
                 <div className="flex items-center gap-2">
                     <img
@@ -44,11 +44,10 @@ const FirstRewardPage: React.FC = () => {
                         alt="gift-icon"
                         className="w-6 h-6"
                     />
-                    <p>Welcome gift for joining : 777P</p>
+                    <p className="text-left">Welcome gift for joining : 777P</p>
                 </div>
             </div>
         </div>
-
     {/* 보상 받기 버튼 */}
     <div className="w-full absolute bottom-16 left-1/2 transform -translate-x-1/2">
         <button
