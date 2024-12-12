@@ -79,11 +79,12 @@ const PreviousRewards: React.FC = () => {
   const [selectedMyData, setSelectedMyData] = useState<RewardData | null>(null);
 
   const round = 1; // 예시 라운드 번호. 실제 라운드 번호로 대체하세요.
-
+  
   useEffect(() => {
-    loadInitialRanking();
-  }, [loadInitialRanking]);
-
+    usePreviousRewardsEntityStore.getState().loadInitialRanking();
+  }, []);
+  
+  
   useEffect(() => {
     // 래플 탭 진입 시 데이터 없으면 로딩
     if (currentTab === "raffle") {
