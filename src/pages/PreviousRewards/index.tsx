@@ -81,8 +81,14 @@ const PreviousRewards: React.FC = () => {
   const round = 1; // 예시 라운드 번호. 실제 라운드 번호로 대체하세요.
   
   useEffect(() => {
-    usePreviousRewardsEntityStore.getState().loadInitialRanking();
+    // 상태를 직접 불러오되, 상태 업데이트는 최소화
+    const loadRanking = async () => {
+      const { loadInitialRanking } = usePreviousRewardsEntityStore.getState();
+      await loadInitialRanking();
+    };
+    loadRanking();
   }, []);
+  
   
   
   useEffect(() => {
