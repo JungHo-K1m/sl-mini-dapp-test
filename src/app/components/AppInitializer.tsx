@@ -180,15 +180,15 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   // }, [fetchUserData, navigate, onInitialized]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const initializeApp = async () => {
       if (initializedRef.current) return;
       initializedRef.current = true;
-    
+  
       try {
         // LIFF 초기화
         await liff.init({ liffId: import.meta.env.VITE_LIFF_ID });
-    
+  
         // 언어 설정
         const userLanguage = liff.getLanguage();
         const languageMap: { [key: string]: string } = {
@@ -198,9 +198,9 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
         };
         const i18nLanguage = languageMap[userLanguage] || "en";
         i18n.changeLanguage(i18nLanguage);
-    
+  
         let accessToken = localStorage.getItem("accessToken");
-    
+  
         if (accessToken) {
           await getUserInfo();
         } else {
@@ -212,21 +212,22 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
                 console.log("액세스 토큰 갱신 성공");
                 await getUserInfo();
               } else {
+                console.error("리프레시 토큰 갱신 실패");
                 throw new Error("리프레시 토큰 갱신 실패");
               }
             } catch (error) {
               handleError(error, navigate);
             }
           } else {
-            // 라인 로그인 및 인증
             if (!liff.isLoggedIn()) {
+              console.log("사용자가 로그인되지 않음. 라인 로그인 진행.");
               liff.login();
               return;
             }
-    
+  
             const lineToken = liff.getAccessToken();
-            if (!lineToken) throw new Error("ID 토큰을 가져오지 못했습니다.");
-    
+            if (!lineToken) throw new Error("라인 Access Token을 가져오지 못했습니다.");
+  
             const isInitial = await userAuthenticationWithServer(lineToken);
             if (isInitial) {
               navigate("/choose-character");
@@ -242,9 +243,10 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
         onInitialized();
       }
     };
-
+  
     initializeApp();
   }, [fetchUserData, navigate, onInitialized]);
+  
   
   
   if (showSplash) {
