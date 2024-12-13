@@ -160,35 +160,35 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({hidden}) => {
           )}
         </motion.div>
       </Link>
-      <Link to="/wallet" onClick={() => handleNavigation("/wallet")}>
+      <Link to="/my-assets" onClick={() => handleNavigation("/my-assets")}>
         <motion.div
           className={`flex flex-col items-center justify-center rounded-lg w-12 h-12 ${
-            selected === "/wallet"
+            selected === "/my-assets"
               ? "text-[#0147e5] bg-[#e0f2fe]"
               : "text-[#A3A3A3]"
           }`}
           animate={{
-            backgroundColor: selected === "/wallet" ? "#e0f2fe" : "#ffffff",
-            color: selected === "/wallet" ? "#0147e5" : "#A3A3A3",
+            backgroundColor: selected === "/my-assets" ? "#e0f2fe" : "#ffffff",
+            color: selected === "/my-assets" ? "#0147e5" : "#A3A3A3",
           }}
           transition={{ duration: 0.3 }}
         >
           <motion.div
             className="flex items-center justify-center"
             animate={{
-              scale: selected === "/wallet" ? 0.9 : 1,
+              scale: selected === "/my-assets" ? 0.9 : 1,
             }}
             transition={{ duration: 0.3 }}
           >
             <BiWallet className="w-6 h-6" />
           </motion.div>
-          {selected === "/wallet" && (
+          {selected === "/my-assets" && (
             <motion.p
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              Wallet
+              Asset
             </motion.p>
           )}
         </motion.div>
