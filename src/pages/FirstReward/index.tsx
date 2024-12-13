@@ -22,21 +22,21 @@ const FirstRewardPage: React.FC = () => {
             <img
                 src={Images.firstPoints}
                 alt="reward-icon"
-                className="w-36 h-36"
+                className="w-24 h-24"
             />
 
             
             <img
                 src={Images.firstSL}
                 alt="reward-icon"
-                className="w-36 h-36"
+                className="w-24 h-24"
             />
 
             
             <img
                 src={Images.firstDice}
                 alt="reward-icon"
-                className="w-36 h-36"
+                className="w-24 h-24"
             />
         </div>
 
@@ -50,7 +50,7 @@ const FirstRewardPage: React.FC = () => {
                         alt="calendar-icon"
                         className="w-6 h-6"
                     />
-                    <p className="text-left">Daily Attendance : 10,000P</p>
+                    <p className="text-left">Daily Attendance : 1,000 Point</p>
                 </div>
                 <div className="flex items-center gap-2">
                     <img
@@ -59,8 +59,12 @@ const FirstRewardPage: React.FC = () => {
                         className="w-6 h-6"
                     />
                     <p className="text-left">
-                        Welcome gift for joining :<br/>
-                        7,777 Points + 10SL Tokens + 30 Dices
+                        Welcome gift for joining
+                    </p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <p className="text-left ml-9">
+                        : 7,777 Point + 10SL Token + 30 Dice
                     </p>
                 </div>
             </div>
