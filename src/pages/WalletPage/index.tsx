@@ -191,7 +191,8 @@ const WalletPage: React.FC = () => {
                 !selectedWallet ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={!selectedWallet}
-              onClick={handleDeleteWallet}
+              // onClick={handleDeleteWallet}
+              onClick={()=>navigate("/first-reward")}
             >
               {t("wallet_page.delete")}
             </button>
