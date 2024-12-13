@@ -89,7 +89,7 @@ import goback from "./back-icon.png";
 import pointStar from "./star.png";
 import line from "./line_btn.png";
 import BottomBarAI from "./bottomBarAI.png";
-import SeletedBottomBarAI from "./seletedBottomBarAI.png" 
+import SeletedBottomBarAI from "./seletedBottomBarAI.png";
 import Gold from "./gold.png";
 import Silver from "./silver.png";
 import Bronze from "./bronze.png";
@@ -98,17 +98,16 @@ import Boom from "./boom.png";
 import Trophy from "./trophy.png";
 import GoldMedal from "./goldmedal.png";
 import RewardNFT from "./rewardNFT.png";
-import cart from "./cart.png"
-import SLToken from "./slToken.png"
-import bitget_logo from "./bitget_logo.png"
-import kraken_logo from "./kraken_logo.png"
-import gate_io_logo from "./gate_io.png"
+import cart from "./cart.png";
+import SLToken from "./slToken.png";
+import bitget_logo from "./bitget_logo.png";
+import kraken_logo from "./kraken_logo.png";
+import gate_io_logo from "./gate_io.png";
 import Usdt from "./usdt.png";
 import LinkedIn from "./LinkedIn.png";
-import MissionCompleted from "./mission-completed.png"
-import FirstReward from "./firstreward.png"
-import Calender from "./calendar.png"
-import Celebration from "./celebration.png"
+import MissionCompleted from "./mission-completed.png";
+import Calender from "./calendar.png";
+import Celebration from "./celebration.png";
 import LevelEffect1 from './LvEffect_1.png';
 import LevelEffect2 from './LvEffect_2.png';
 import LevelEffect3 from './LvEffect_3.png';
@@ -137,9 +136,11 @@ import spinStar1000 from "./spinstar1000.png";
 import spinStar2000 from "./spinstar2000.png";
 import spinStar4000 from "./spinstar4000.png";
 import spinStar5000 from "./spinstar5000.png";
-import spinRapple1 from "./spinrapple1.png"
+import spinRapple1 from "./spinrapple1.png";
 import spinToken10 from "./spintoken10.png";
-
+import firstPoints from "./first-star.png";
+import firstSL from "./first-sl.png";
+import firstDice from "./first-dice.png";
 
 
 const Images = {
@@ -250,7 +251,6 @@ const Images = {
   Usdt,
   LinkedIn,
   MissionCompleted,
-  FirstReward,
   Calender,
   Celebration,
   LevelEffect1,
@@ -282,7 +282,10 @@ const Images = {
   spinStar4000,
   spinStar5000,
   spinRapple1,
-  spinToken10
+  spinToken10,
+  firstDice,
+  firstPoints,
+  firstSL,
 };
 
 export default Images;

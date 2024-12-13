@@ -18,9 +18,23 @@ const FirstRewardPage: React.FC = () => {
         </h1>
 
         {/* 보상 아이콘 */}
-        <div className="mt-6">
+        <div className="mt-6 flex justify-center gap-4">
             <img
-                src={Images.FirstReward} // 아이콘을 대체하세요
+                src={Images.firstPoints}
+                alt="reward-icon"
+                className="w-36 h-36"
+            />
+
+            
+            <img
+                src={Images.firstSL}
+                alt="reward-icon"
+                className="w-36 h-36"
+            />
+
+            
+            <img
+                src={Images.firstDice}
                 alt="reward-icon"
                 className="w-36 h-36"
             />
@@ -44,7 +58,10 @@ const FirstRewardPage: React.FC = () => {
                         alt="gift-icon"
                         className="w-6 h-6"
                     />
-                    <p className="text-left">Welcome gift for joining : 777P</p>
+                    <p className="text-left">
+                        Welcome gift for joining :<br/>
+                        7,777 Points + 10SL Tokens + 30 Dices
+                    </p>
                 </div>
             </div>
         </div>
