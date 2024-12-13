@@ -35,6 +35,8 @@
       "See_more": "查看更多",
       "See_less": "收起",
       "Retest": "重新測試",
+      "Saving": "保存中...",
+      "Save": "保存。",
       "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "加載AI模型失敗，請稍後重試或檢查您的網絡連接。",
       "Click_the_button_to_analyze_the_uploaded_image.": "點擊按鈕分析上傳的圖像。",
       "Please_upload_an_image_before_analysis.": "請在分析前上傳圖像。",

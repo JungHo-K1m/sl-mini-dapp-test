@@ -35,6 +35,8 @@
         "See_more": "もっと見る",
         "See_less": "閉じる",
         "Retest": "再試験",
+        "Saving": "貯蔵中...",
+        "Save": "貯蔵",
         "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "AIモデルの読み込みに失敗しました。後でもう一度試すか、ネットワーク接続を確認してください。",
         "Click_the_button_to_analyze_the_uploaded_image.": "ボタンをクリックしてアップロードした画像を分析します。",
         "Please_upload_an_image_before_analysis.": "分析前に画像をアップロードしてください。",

@@ -180,13 +180,15 @@ const AIXrayAnalysis: React.FC = () => {
             <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-3'}`}>
               {getSymptomDescription(label)}
             </p>
-            <button
-              className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
-              style={{ backgroundColor: '#FFFFFF' }}
-              onClick={() => setShowFullText(!showFullText)}
-            >
-              {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
-            </button>
+            <div className="flex justify-center mt-2">
+              <button
+                className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
+                style={{ backgroundColor: '#FFFFFF' }}
+                onClick={() => setShowFullText(!showFullText)}
+                >
+                {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
+              </button>
+            </div>
           </div>
 
           <div className="flex w-full max-w-sm justify-between mt-10 mb-16">

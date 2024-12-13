@@ -35,6 +35,8 @@
       "See_more": "See more",
       "See_less": "See less",
       "Retest": "Retest",
+      "Saving": "Saving...",
+      "Save": "Save",
       "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "Failed to load the AI model. Please try again later or check your network connection.",
       "Click_the_button_to_analyze_the_uploaded_image.": "Click the button to analyze the uploaded image.",
       "Please_upload_an_image_before_analysis.": "Please upload an image before analysis.",
