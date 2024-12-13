@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as tmImage from '@teachablemachine/image';
-import { FaChevronLeft } from "react-icons/fa";
-import Images from "@/shared/assets/images";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import { useMutation } from '@tanstack/react-query';
+import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
 import useMainPageStore from '@/shared/store/useMainPageStore';
-import { useMutation } from '@tanstack/react-query';
 import { TopTitle } from '@/shared/components/ui';
-import { useTranslation } from "react-i18next";
 
 const AIXrayAnalysis: React.FC = () => {
   const navigate = useNavigate();
@@ -16,65 +15,17 @@ const AIXrayAnalysis: React.FC = () => {
 
   const [model, setModel] = useState<tmImage.CustomMobileNet | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [label, setLabel] = useState('Upload an X-ray image to start analysis.');
+  const [label, setLabel] = useState(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
   const [loading, setLoading] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [showModal, setShowModal] = useState(true);
+  const [modalInfo, setModalInfo] = useState({ isVisible: false, message: '' });
+
   const { selectedMenu } = useMainPageStore();
   const petData = location.state as { id: string };
-  const [id] = useState<string>(petData?.id || '');
-  const [modalInfo, setModalInfo] = useState({
-    isVisible: false,
-    message: '',
-  });
-  
-  const showModalFunction = (message: string) => {
-    setModalInfo({
-      isVisible: true,
-      message,
-    });
-  };
+  const petId = petData?.id || '';
 
-  // 최초 안내 문구 표시
-  let Alert = '';
-
-  if(selectedMenu === 'ai-analysis'){
-    Alert = t("ai_page.Please_upload_actual_photo");
-  } else if(selectedMenu === 'x-ray'){
-    Alert = t("ai_page.Please_upload_x_ray_image");
-  }
-
-  const [caution, setCaution] = useState(Alert);
-
-  // useMutation 훅 사용
-  const { mutate: saveResultMutate, isPending: isSaving } = useMutation<boolean, Error, FormData>({
-    mutationFn: (formData) => {
-      if (selectedMenu === 'ai-analysis') {
-        return storeResult(formData, "dental");
-      } else if (selectedMenu === 'x-ray') {
-        return storeResult(formData, "xray");
-      } else {
-        return Promise.reject(new Error(t("ai_page.An_error_occurred:_selected_menu_is_not_set.")));
-      }
-    },
-    onSuccess: (result) => {
-      if (result) {
-        navigate('/diagnosis-list', { state: { id: id } });
-        console.log('Result saved successfully.');
-      } else {
-        alert('Failed to save the result. Redirecting to AI menu...');
-        navigate('/AI-menu');
-      }
-    },
-    onError: (error: any) => {
-      console.error('Error saving result:', error);
-      showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again."));
-    },
-  });
-
-
-  // 진단 가능한 항목에 대한 설명
   const symptomsInfo: Record<string, string> = {
     "Gingivitis & Plaque": t("ai_page.reuslts.symptoms_of_gingivitis_and_plaque"),
     "Periodontitis": t("ai_page.reuslts.symptoms_of_periodontitis"),
@@ -84,142 +35,104 @@ const AIXrayAnalysis: React.FC = () => {
     "Gingivitis": t("ai_page.reuslts.symptoms_of_gingivitis"),
     "Healthy": t("ai_page.reuslts.no_issues_detected_healthy"),
   };
-  
+
   const getSymptomDescription = (label: string) =>
-    symptomsInfo[label] || t("ai_page.Diagnosis_information_not_available.");
-  
-  // Teachable Machine 모델 로드 함수
-  const loadModel = async () => {
-    if (!model) {
-      try {
-        let modelURL = "";
-        let metadataURL = "";
+    symptomsInfo[label] || t("ai_page.Diagnosis_information_not_available");
 
-        if (selectedMenu === 'x-ray') {
-          // 기존 모델 경로
-          modelURL = "/ai_model/xray/model.json";
-          metadataURL = "/ai_model/xray/metadata.json";
-        } else if (selectedMenu === 'ai-analysis') {
-          // 새로운 모델 경로
-          modelURL = "/ai_model/dental/model.json";
-          metadataURL = "/ai_model/dental/metadata.json";
-        } else {
-          // 기본 모델 경로 (필요에 따라 설정)
-          modelURL = "/ai_model/default/model.json";
-          metadataURL = "/ai_model/default/metadata.json";
-        }
-
-        const loadedModel = await tmImage.load(modelURL, metadataURL);
-        setModel(loadedModel);
-        return loadedModel; // 모델 로드 후 반환
-      } catch (error) {
-        console.error("Failed to load model:", error);
-        showModalFunction(t("ai_page.Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection."));
-      }
-    }
-    return model; // 이미 로드된 모델이 있으면 반환
+  const showModalFunction = (message: string) => {
+    setModalInfo({ isVisible: true, message });
   };
 
-  // 이미지 업로드 핸들러
+  const loadModel = async () => {
+    if (model) return model;
+    try {
+      const modelPath = selectedMenu === 'x-ray'
+        ? "/ai_model/xray"
+        : "/ai_model/dental";
+      const loadedModel = await tmImage.load(`${modelPath}/model.json`, `${modelPath}/metadata.json`);
+      setModel(loadedModel);
+      return loadedModel;
+    } catch (error) {
+      console.error("Failed to load model:", error);
+      showModalFunction(t("ai_page.Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection."));
+    }
+  };
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
+    if (event.target.files && event.target.files[0]) {
       setSelectedImage(event.target.files[0]);
-      setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image."));
+      setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image"));
       setIsAnalyzed(false);
     }
   };
 
-  // 이미지 분석 함수
   const analyzeImage = async () => {
     if (!selectedImage) {
-      setShowModal(true); // 이미지를 업로드하지 않았을 때 모달 표시
-      showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
+      showModalFunction(t("ai_page.Please_upload_an_image_before_analysis"));
       return;
     }
 
     setLoading(true);
-    const loadedModel = await loadModel(); // 모델을 로드하고 가져옴
+    const loadedModel = await loadModel();
 
     if (loadedModel && selectedImage) {
-      const imageElement = document.createElement("img");
-      imageElement.src = window.URL.createObjectURL(selectedImage); // 파일에서 생성된 URL 사용
+      const imageElement = new Image();
+      imageElement.src = URL.createObjectURL(selectedImage);
       imageElement.onload = async () => {
-        const prediction = await loadedModel.predict(imageElement);
-        const highestPrediction = prediction.reduce((prev, current) =>
+        const predictions = await loadedModel.predict(imageElement);
+        const highestPrediction = predictions.reduce((prev, current) =>
           prev.probability > current.probability ? prev : current
         );
 
-        console.log(
-          "Current prediction:",
-          highestPrediction.className,
-          "Probability:",
-          highestPrediction.probability
-        );
-
-        // 번역된 라벨 설정
-        const predictionKey = highestPrediction.className.replace(/ /g, "_");
-        const translatedLabel =
+        setLabel(
           highestPrediction.probability > 0.95
-            ? t(`ai_page.reuslts.${predictionKey}`, { defaultValue: t("ai_page.reuslts.Normal") })
-            : t("ai_page.reuslts.Normal");
-
-
-        setLabel(translatedLabel); // 번역된 라벨을 상태에 저장
-        setLoading(false);
+            ? t(`ai_page.reuslts.${highestPrediction.className.replace(/ /g, "_")}`, { defaultValue: t("ai_page.reuslts.Normal") })
+            : t("ai_page.reuslts.Normal")
+        );
         setIsAnalyzed(true);
+        setLoading(false);
       };
     } else {
       setLoading(false);
     }
   };
 
+  const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
+    mutationFn: (formData: FormData) =>
+      selectedMenu === 'ai-analysis'
+        ? storeResult(formData, "dental")
+        : storeResult(formData, "xray"),
+    onSuccess: () => navigate('/diagnosis-list', { state: { id: petId } }),
+    onError: () => showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again.")),
+  });
 
-
-  // 서버에 저장하는 함수
   const saveResult = () => {
-    if (selectedImage && isAnalyzed) {
-      if (selectedMenu) {
-        const formData = new FormData();
-        formData.append(
-          'json',
-          new Blob([JSON.stringify({ petId: id, result: label })], { type: 'application/json' })
-        );
-        formData.append('file', selectedImage);
-  
-        saveResultMutate(formData);
-      } else {
-        showModalFunction(t("ai_page.An_error_occurred:_selected_menu_is_not_set."));
-      }
-    } else {
+    if (!selectedImage || !isAnalyzed) {
       showModalFunction(t("ai_page.Please_analyze_the_image_before_saving."));
+      return;
     }
+
+    const formData = new FormData();
+    formData.append(
+      'json',
+      new Blob([JSON.stringify({ petId, result: label })], { type: 'application/json' })
+    );
+    formData.append('file', selectedImage);
+
+    saveResultMutate(formData);
   };
 
-  // 분석 재실행 버튼
-  const clickReset = () => {
-    setLabel('');
+  const resetAnalysis = () => {
+    setLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
     setSelectedImage(null);
     setIsAnalyzed(false);
-  }
-  
-  
-  // 제목 설정
-  const getTitle = () => {
-    if (selectedMenu === 'x-ray') {
-      return t("ai_page.ai_xray_analysis");
-    } else if (selectedMenu === 'ai-analysis') {
-      return t("ai_page.ai_dental_examination");
-    } else {
-      return t("ai_page.ai_analysis");
-    }
   };
 
   return (
     <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
-      <TopTitle title={getTitle()} back={true} />
-  
+      <TopTitle title={t(`ai_page.${selectedMenu === 'x-ray' ? 'ai_xray_analysis' : 'ai_dental_examination'}`)} back={true} />
+
       <div className="mt-6 w-full max-w-sm mx-auto rounded-md overflow-hidden p-2 flex flex-col items-center">
-        {/* 숨겨진 파일 업로드 인풋 */}
         <input
           id="file-upload"
           type="file"
@@ -227,11 +140,10 @@ const AIXrayAnalysis: React.FC = () => {
           onChange={handleImageUpload}
           className="hidden"
         />
-        {/* 이미지 선택 전에는 업로드 버튼, 선택 후에는 업로드된 이미지 */}
         <label htmlFor="file-upload" className="cursor-pointer">
           {selectedImage ? (
             <img
-              src={window.URL.createObjectURL(selectedImage)}
+              src={URL.createObjectURL(selectedImage)}
               alt="Uploaded X-ray"
               className="w-64 h-64 rounded-md object-fill"
             />
@@ -244,14 +156,11 @@ const AIXrayAnalysis: React.FC = () => {
           )}
         </label>
       </div>
-  
-      {/* 분석 버튼: 분석이 진행 중이거나 완료된 경우 숨김 */}
+
       {!isAnalyzed && (
-        <div className="mt-6 w-full max-w-lg mx-auto rounded-md overflow-hidden">
+        <div className="mt-6 w-full max-w-lg mx-auto">
           <button
-            className={`w-full text-white text-lg py-2 px-4 rounded-full ${
-              loading ? 'cursor-wait' : ''
-            }`}
+            className={`w-full text-white text-lg py-2 px-4 rounded-full ${loading ? 'cursor-wait' : ''}`}
             style={{ backgroundColor: '#0147E5' }}
             onClick={analyzeImage}
             disabled={loading}
@@ -260,113 +169,64 @@ const AIXrayAnalysis: React.FC = () => {
           </button>
         </div>
       )}
-  
-      {/* 분석 결과 표시 */}
+
       {isAnalyzed && (
         <>
-          <div id="label-container" className="mt-4 text-lg font-semibold">
-            {/* 진단명 */}
+          <div className="mt-4 text-lg font-semibold">
             <p>{t("ai_page.Analysis_results")}: {label}</p>
           </div>
-  
-          <div className="mt-4 p-4 bg-gray-800 text-white rounded-xl shadow-md max-w-sm mx-auto">
-            {/* 진단 결과 설명 */}
-            <p
-              className="overflow-hidden text-sm"
-              style={{
-                display: '-webkit-box',
-                WebkitLineClamp: showFullText ? undefined : 3,
-                WebkitBoxOrient: 'vertical',
-              }}
-              >
+
+          <div className="mt-4 p-4 bg-gray-800 rounded-xl max-w-sm mx-auto">
+            <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-3'}`}>
               {getSymptomDescription(label)}
             </p>
-            <div className="flex justify-center mt-2">
-              {/* 더 보기 버튼, 줄이기 버튼 */}
-              {!showFullText ? (
-                <button
-                  className="mt-2 w-1/2 text-black text-base font-semibold py-2 px-4 rounded-xl"
-                  style={{ backgroundColor: '#FFFFFF' }}
-                  onClick={() => setShowFullText(true)}
-                  >
-                  {t("ai_page.See_more")}
-                </button>
-              ) : (
-                <button
-                  className="mt-2 w-1/2 text-black text-base font-semibold py-2 px-4 rounded-xl"
-                  style={{ backgroundColor: '#FFFFFF' }}
-                  onClick={() => setShowFullText(false)}
-                  >
-                  {t("ai_page.See_less")}
-                </button>
-              )}
-            </div>
+            <button
+              className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
+              style={{ backgroundColor: '#FFFFFF' }}
+              onClick={() => setShowFullText(!showFullText)}
+            >
+              {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
+            </button>
           </div>
-  
-          {/* Retest 및 Save 버튼을 수평으로 배치 */}
+
           <div className="flex w-full max-w-sm justify-between mt-10 mb-16">
             <button
               className="w-[48%] h-14 text-white text-base py-2 px-4 rounded-full border-2"
               style={{ backgroundColor: '#252932', borderColor: '#35383F' }}
-              onClick={clickReset}
+              onClick={resetAnalysis}
             >
               Retest
             </button>
             <button
-              className={`w-[48%] h-14 text-white text-base py-2 px-4 rounded-full ${
-                isSaving ? 'cursor-wait' : ''
-              }`}
+              className={`w-[48%] h-14 text-white text-base py-2 px-4 rounded-full ${isSaving ? 'cursor-wait' : ''}`}
               style={{ backgroundColor: isSaving ? '#555' : '#0147E5' }}
               onClick={saveResult}
               disabled={isSaving}
             >
-              {isSaving ? 'Saving...' : 'Save'}
+              {isSaving ? t("ai_page.Saving...") : t("ai_page.Save")}
             </button>
           </div>
         </>
       )}
-  
-      {/* 이미지 업로드 요청 모달 */}
-      {showModal && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex items-center justify-center w-full">
-          <div className="bg-white p-6 rounded-lg text-black text-center mx-3w-[70%] max-w-[550px]">
-            <p>
-              {Alert.split('\n').map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
+
+      {(showModal || modalInfo.isVisible) && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
+          <div className="bg-white p-6 rounded-lg text-black text-center w-[70%] max-w-[550px]">
+            <p>{modalInfo.isVisible ? modalInfo.message : t("ai_page.Please_upload_an_image_before_analysis")}</p>
             <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg w-1/2"
-              onClick={() => setShowModal(false)}
-              >
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+              onClick={() => {
+                setShowModal(false);
+                setModalInfo({ isVisible: false, message: '' });
+              }}
+            >
               {t("OK")}
             </button>
           </div>
         </div>
       )}
-
-
-      {modalInfo.isVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
-            <div className="bg-white text-black p-6 rounded-lg text-center w-[70%] max-w-[550px]">
-                <div> &nbsp;</div>
-                <p>{modalInfo.message}</p>
-                <div> &nbsp;</div>
-                <button
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                    onClick={()=>setModalInfo({ isVisible: false, message: '' })}
-                    >
-                    {t("OK")}
-                </button>
-            </div>
-        </div>
-      )}
     </div>
   );
-  
 };
 
 export default AIXrayAnalysis;
