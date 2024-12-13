@@ -91,27 +91,55 @@ const GameBoard: React.FC<GameBoardProps> = ({
     addSLToken,
     removeDice,
     removeSLToken,
+    autoSwitch,
   } = useUserStore();
   const [timeUntilRefill, setTimeUntilRefill] = useState("");
   const [isRefilling, setIsRefilling] = useState(false); // 리필 중 상태 관리
+  // timeUntilRefill 최신값을 보관할 ref 생성
+  const timeUntilRefillRef = useRef(timeUntilRefill);
+
+  // timeUntilRefill이 변경될 때마다 ref.current에 최신 값 반영
+  useEffect(() => {
+    timeUntilRefillRef.current = timeUntilRefill;
+  }, [timeUntilRefill]);
+
+
+    // Refill Dice API 호출 함수
+  const handleRefillDice = async () => {
+    try {
+      setIsRefilling(true);
+      await refillDice();
+      // refillDice 호출 후 fetchUserData를 통해 diceRefilledAt이 갱신된다고 가정
+      // 여기서 별도로 diceRefilledAt을 조정할 필요 없음
+      setIsRefilling(false);
+    } catch (error: any) {
+      console.error("주사위 리필 실패:", error);
+      setIsRefilling(false);
+    }
+  };
+
+  const handleAutoSwitch = async () => {
+    try {
+      await autoSwitch();
+    } catch (error: any) {
+      console.error("오토 스위치 변경 실패:", error);
+    }
+  };
 
   useEffect(() => {
     const updateRefillTime = () => {
       if (diceRefilledAt) {
-
-        // KST로 직접 파싱 (ISO 8601 형식에 시간대 정보 포함)
         const refillTime = dayjs.tz(diceRefilledAt, "Asia/Seoul");
         const now = dayjs().tz("Asia/Seoul");
         const diff = refillTime.diff(now);
 
-
-        // diff <= 0이고 diceCount가 0일 때만 fetchUserData 호출
         if (diff <= 0 && diceCount === 0) {
           setTimeUntilRefill("Refill dice");
         } else if (diff > 0) {
           const remainingDuration = dayjs.duration(diff);
           const minutes = remainingDuration.minutes();
-          setTimeUntilRefill(` ${minutes}m`);
+          const seconds = remainingDuration.seconds();
+          setTimeUntilRefill(`${minutes}m ${seconds}s`);
         } else {
           setTimeUntilRefill("Waiting");
         }
@@ -121,27 +149,32 @@ const GameBoard: React.FC<GameBoardProps> = ({
     };
 
     updateRefillTime();
-    const interval = setInterval(updateRefillTime, 60000); // 1분마다 업데이트
+    const interval = setInterval(updateRefillTime, 1000);
     return () => clearInterval(interval);
-  }, [diceRefilledAt, fetchUserData, diceCount, items.autoNftCount]);
+  }, [diceRefilledAt, diceCount]); 
+  // fetchUserData, items.autoNftCount 의존성 제거(필요하면 남기되 최소화)
 
-  // isAuto가 true일 때 1초마다 diceRef.current.roll() 호출
   useEffect(() => {
     let autoInterval: NodeJS.Timeout;
 
     if (isAuto) {
       console.log("Auto mode 활성화됨");
-      // 즉시 주사위 굴리기
-      if (diceCount > 0 && !buttonDisabled) {
-        diceRef.current?.roll();
-      }
-      // 5초마다 주사위 굴리기
       autoInterval = setInterval(() => {
+        // 이곳에서 최신 timeUntilRefill 값 참조
+        const currentTimeUntilRefill = timeUntilRefillRef.current; 
+
         if (diceCount > 0 && !buttonDisabled) {
           console.log("Auto rolling dice");
           diceRef.current?.roll();
+        } else if (diceCount === 0) {
+          if (currentTimeUntilRefill === "Refill dice" && !isRefilling) {
+            console.log("Auto mode: Attempting to refill dice...");
+            handleRefillDice().catch((err) => console.error("오토 리필 실패:", err));
+          } else {
+            console.log("Auto mode: Waiting for dice to be refillable...");
+          }
         }
-      }, 1000); // 1초
+      }, 1000);
     } else {
       console.log("Auto mode 비활성화됨");
     }
@@ -152,7 +185,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
         console.log("Auto rolling 중지됨");
       }
     };
-  }, [isAuto, diceCount, buttonDisabled, diceRef]);
+  }, [isAuto, diceCount, buttonDisabled, diceRef,]); 
+  // timeUntilRefill 제거
+
 
   // Mapping from front-end tile IDs to server tile sequences
   const tileIdToSequenceMap: { [key: number]: number } = {
@@ -253,156 +288,142 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
 
 
-      // Refill Dice API 호출 함수
-  const handleRefillDice = async () => {
+  // 테스트용 아이템 추가/삭제 핸들러
+  const handleAddGold = async () => {
     try {
-      setIsRefilling(true); // 리필 중 상태 활성화
-      await refillDice();
-      console.log("주사위 리필 성공");
-      setIsRefilling(false); // 리필 완료
-    } catch (error: any) {
-      console.error("주사위 리필 실패:", error);
-      // 추가적인 에러 처리 (예: 사용자에게 알림)
-      setIsRefilling(false); // 리필 완료
+      await addGoldItem();
+      alert("Gold NFT가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("Gold NFT 추가에 실패했습니다.");
+      // 에러는 useUserStore에서 처리하므로 여기서는 별도 처리 불필요
     }
   };
 
- // 테스트용 아이템 추가/삭제 핸들러
- const handleAddGold = async () => {
-  try {
-    await addGoldItem();
-    alert("Gold NFT가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("Gold NFT 추가에 실패했습니다.");
-    // 에러는 useUserStore에서 처리하므로 여기서는 별도 처리 불필요
-  }
-};
+  const handleRemoveGold = async () => {
+    try {
+      await removeGoldItem();
+      alert("Gold NFT가 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("Gold NFT 삭제에 실패했습니다.");
+    }
+  };
 
-const handleRemoveGold = async () => {
-  try {
-    await removeGoldItem();
-    alert("Gold NFT가 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("Gold NFT 삭제에 실패했습니다.");
-  }
-};
+  const handleAddSilver = async () => {
+    try {
+      await addSilverItem();
+      alert("Silver NFT가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("Silver NFT 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddSilver = async () => {
-  try {
-    await addSilverItem();
-    alert("Silver NFT가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("Silver NFT 추가에 실패했습니다.");
-  }
-};
+  const handleRemoveSilver = async () => {
+    try {
+      await removeSilverItem();
+      alert("Silver NFT가 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("Silver NFT 삭제에 실패했습니다.");
+    }
+  };
 
-const handleRemoveSilver = async () => {
-  try {
-    await removeSilverItem();
-    alert("Silver NFT가 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("Silver NFT 삭제에 실패했습니다.");
-  }
-};
+  const handleAddBronze = async () => {
+    try {
+      await addBronzeItem();
+      alert("Bronze NFT가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("Bronze NFT 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddBronze = async () => {
-  try {
-    await addBronzeItem();
-    alert("Bronze NFT가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("Bronze NFT 추가에 실패했습니다.");
-  }
-};
+  const handleRemoveBronze = async () => {
+    try {
+      await removeBronzeItem();
+      alert("Bronze NFT가 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("Bronze NFT 삭제에 실패했습니다.");
+    }
+  };
 
-const handleRemoveBronze = async () => {
-  try {
-    await removeBronzeItem();
-    alert("Bronze NFT가 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("Bronze NFT 삭제에 실패했습니다.");
-  }
-};
+  const handleAddReward = async () => {
+    try {
+      await addRewardItem();
+      alert("Reward NFT가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("Reward NFT 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddReward = async () => {
-  try {
-    await addRewardItem();
-    alert("Reward NFT가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("Reward NFT 추가에 실패했습니다.");
-  }
-};
+  const handleRemoveReward = async () => {
+    try {
+      await removeRewardItem();
+      alert("Reward NFT가 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("Reward NFT 삭제에 실패했습니다.");
+    }
+  };
 
-const handleRemoveReward = async () => {
-  try {
-    await removeRewardItem();
-    alert("Reward NFT가 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("Reward NFT 삭제에 실패했습니다.");
-  }
-};
+  const handleAddAuto = async () => {
+    try {
+      await addAutoItem();
+      alert("Auto NFT가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("Auto NFT 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddAuto = async () => {
-  try {
-    await addAutoItem();
-    alert("Auto NFT가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("Auto NFT 추가에 실패했습니다.");
-  }
-};
+  const handleRemoveAuto = async () => {
+    try {
+      await removeAutoItem();
+      alert("Auto NFT가 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("Auto NFT 삭제에 실패했습니다.");
+    }
+  };
 
-const handleRemoveAuto = async () => {
-  try {
-    await removeAutoItem();
-    alert("Auto NFT가 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("Auto NFT 삭제에 실패했습니다.");
-  }
-};
+  const handleAddAll = async () => {
+    try {
+      await addAllItems();
+      alert("모든 NFT가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("모든 NFT 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddAll = async () => {
-  try {
-    await addAllItems();
-    alert("모든 NFT가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("모든 NFT 추가에 실패했습니다.");
-  }
-};
+  const handleAddDice = async () => {
+    try {
+      await addDice();
+      alert("주사위가 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("주사위 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddDice = async () => {
-  try {
-    await addDice();
-    alert("주사위가 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("주사위 추가에 실패했습니다.");
-  }
-};
+  const handleRemoveDice = async () => {
+    try {
+      await removeDice();
+      alert("주사위가 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("주사위 삭제에 실패했습니다.");
+    }
+  };
 
-const handleRemoveDice = async () => {
-  try {
-    await removeDice();
-    alert("주사위가 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("주사위 삭제에 실패했습니다.");
-  }
-}
+  const handleAddSLToken = async () => {
+    try {
+      await addSLToken();
+      alert("SL Token이 성공적으로 추가되었습니다!");
+    } catch (error) {
+      alert("SL Token 추가에 실패했습니다.");
+    }
+  };
 
-const handleAddSLToken = async () => {
-  try {
-    await addSLToken();
-    alert("SL Token이 성공적으로 추가되었습니다!");
-  } catch (error) {
-    alert("SL Token 추가에 실패했습니다.");
-  }
-}
-
-const handleRemoveSLToken = async () => {
-  try {
-    await removeSLToken();
-    alert("SL Token이 성공적으로 삭제되었습니다!");
-  } catch (error) {
-    alert("SL Token 삭제에 실패했습니다.");
-  }
-}
+  const handleRemoveSLToken = async () => {
+    try {
+      await removeSLToken();
+      alert("SL Token이 성공적으로 삭제되었습니다!");
+    } catch (error) {
+      alert("SL Token 삭제에 실패했습니다.");
+    }
+  };
 
   return (
     <div className="grid grid-cols-6 grid-rows-6 gap-1 text-xs md:text-base relative">
@@ -462,13 +483,17 @@ const handleRemoveSLToken = async () => {
                 {reward.type === "STAR" && (
                   <div className="flex flex-col items-center">
                     <img src={Images.Star} alt="star" className="h-6" />
-                    <span className="mt-1 ">+{formatNumber(reward.value*items.boardRewardTimes)}</span>
+                    <span className="mt-1 ">
+                      +{formatNumber(reward.value * items.boardRewardTimes)}
+                    </span>
                   </div>
                 )}
                 {reward.type === "DICE" && (
                   <div className="flex flex-col items-center">
                     <img src={Images.Dice} alt="dice" className="h-6" />
-                    <span className="mt-1">+{formatNumber(reward.value*items.boardRewardTimes)}</span>
+                    <span className="mt-1">
+                      +{formatNumber(reward.value * items.boardRewardTimes)}
+                    </span>
                   </div>
                 )}
                 {reward.type === "lottery" && (
@@ -478,7 +503,9 @@ const handleRemoveSLToken = async () => {
                       alt="lottery"
                       className="h-6"
                     />
-                    <span className="mt-1">+{formatNumber(reward.value*items.ticketTimes)}</span>
+                    <span className="mt-1">
+                      +{formatNumber(reward.value * items.ticketTimes)}
+                    </span>
                   </div>
                 )}
               </motion.div>
@@ -557,16 +584,12 @@ const handleRemoveSLToken = async () => {
               <div className="flex flex-col mt-4 gap-4">
                 <div className="flex flex-col bg-[#1F1E27] p-5 rounded-3xl border-2 border-[#35383F] font-medium gap-2">
                   <div className="flex flex-row items-center gap-2">
-                    <IoDice className="w-6 h-6" />
-                    <p>Dice Generation : x{items.timeDiceTimes}</p>
-                  </div>
-                  <div className="flex flex-row items-center gap-2">
                     <IoGameController className="w-6 h-6" />
-                    <p>Game Board Rewards : x{items.boardRewardTimes}</p>
+                    <p>Game Board Points : x{items.boardRewardTimes}</p>
                   </div>
                   <div className="flex flex-row items-center gap-2">
                     <IoTicket className="w-6 h-6" />
-                    <p>Raffle Tickets Rewards: x{items.ticketTimes}</p>
+                    <p>Raffle Tickets : x{items.ticketTimes}</p>
                   </div>
                   <div className="flex flex-row items-center gap-2">
                     <PiSpinnerBallFill className="w-6 h-6" />
@@ -584,126 +607,122 @@ const handleRemoveSLToken = async () => {
             </DialogContent>
           </Dialog>
 
-{/**테스트용 마스터 컨텐츠 */}
-<Dialog>
-        <DialogTrigger>
-          <div className="absolute text-white -right-11 -top-8 md:-right-24 md:-top-20 font-semibold text-xs md:text-sm md:space-y-1">
-            <GiCardJoker className=" w-8 h-8  " />
-          </div>
-        </DialogTrigger>
-        <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh md:h-auto overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
-          <div className="flex flex-col gap-4 p-4">
-            {/* 추가 버튼 */}
-            <div className="flex flex-col gap-2">
-            <button
-                onClick={handleAddDice}
-                className="bg-green-400 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                Dice + 100
-              </button>
-              <button
-                onClick={handleAddSLToken}
-                className="bg-green-400 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                SL Token + 100
-              </button>
-              <button
-                onClick={handleAddGold}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                Gold NFT + 1
-              </button>
-              <button
-                onClick={handleAddSilver}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                Silver NFT + 1
-              </button>
-              <button
-                onClick={handleAddBronze}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                Bronze NFT + 1
-              </button>
-              <button
-                onClick={handleAddAuto}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                Auto NFT + 1
-              </button>
-              <button
-                onClick={handleAddReward}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-              >
-                Reward NFT + 1
-              </button>
-              <button
-                onClick={handleAddAll}
-                className="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded"
-              >
-                All NFTs + 1
-              </button>
-            
-            </div>
+          {/**테스트용 마스터 컨텐츠 */}
+          <Dialog>
+            <DialogTrigger>
+              <div className="absolute text-white -right-11 -top-8 md:-right-24 md:-top-20 font-semibold text-xs md:text-sm md:space-y-1">
+                <GiCardJoker className=" w-8 h-8  " />
+              </div>
+            </DialogTrigger>
+            <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh md:h-auto overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
+              <div className="flex flex-col gap-4 p-4">
+                {/* 추가 버튼 */}
+                <div className="flex flex-col gap-2">
+                  <button
+                    onClick={handleAddDice}
+                    className="bg-green-400 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    Dice + 100
+                  </button>
+                  <button
+                    onClick={handleAddSLToken}
+                    className="bg-green-400 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    SL Token + 100
+                  </button>
+                  <button
+                    onClick={handleAddGold}
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    Gold NFT + 1
+                  </button>
+                  <button
+                    onClick={handleAddSilver}
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    Silver NFT + 1
+                  </button>
+                  <button
+                    onClick={handleAddBronze}
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    Bronze NFT + 1
+                  </button>
+                  <button
+                    onClick={handleAddAuto}
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    Auto NFT + 1
+                  </button>
+                  <button
+                    onClick={handleAddReward}
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                  >
+                    Reward NFT + 1
+                  </button>
+                  <button
+                    onClick={handleAddAll}
+                    className="bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded"
+                  >
+                    All NFTs + 1
+                  </button>
+                </div>
 
-            {/* 삭제 버튼 */}
-            <div className="flex flex-col gap-2 mt-4">
-              <button
-                onClick={handleRemoveDice}
-                className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Dice - 100
-              </button>
-              <button
-                onClick={handleRemoveSLToken}
-                className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                SL Token - 100
-              </button>
-              <button
-                onClick={handleRemoveGold}
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Gold NFT - 1
-              </button>
-              <button
-                onClick={handleRemoveSilver}
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Silver NFT - 1
-              </button>
-              <button
-                onClick={handleRemoveBronze}
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Bronze NFT - 1
-              </button>
-              <button
-                onClick={handleRemoveAuto}
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Auto NFT - 1
-              </button>
-              <button
-                onClick={handleRemoveReward}
-                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-              >
-                Reward NFT - 1
-              </button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+                {/* 삭제 버튼 */}
+                <div className="flex flex-col gap-2 mt-4">
+                  <button
+                    onClick={handleRemoveDice}
+                    className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    Dice - 100
+                  </button>
+                  <button
+                    onClick={handleRemoveSLToken}
+                    className="bg-red-400 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    SL Token - 100
+                  </button>
+                  <button
+                    onClick={handleRemoveGold}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    Gold NFT - 1
+                  </button>
+                  <button
+                    onClick={handleRemoveSilver}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    Silver NFT - 1
+                  </button>
+                  <button
+                    onClick={handleRemoveBronze}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    Bronze NFT - 1
+                  </button>
+                  <button
+                    onClick={handleRemoveAuto}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    Auto NFT - 1
+                  </button>
+                  <button
+                    onClick={handleRemoveReward}
+                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                  >
+                    Reward NFT - 1
+                  </button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           {/* 수정된 Auto 스위치 부분 */}
           <div className=" absolute flex flex-col items-center text-white -right-11 md:-right-24 md:-bottom-24 -bottom-14 ">
             <Switch
               className="w-[26px] h-4 md:h-6 md:w-11 text-[#0147E5]"
               checked={isAuto} // isAuto 상태에 따라 스위치의 체크 상태를 설정
-              onCheckedChange={() => {
-                console.log("Auto Switch toggled");
-                setIsAuto(!isAuto);
-              }} // 스위치 토글 시 isAuto 상태를 반전
+              onCheckedChange={handleAutoSwitch} // 스위치 토글 시 isAuto 상태를 반전
               disabled={items.autoNftCount < 1} // items.autoNftCount가 1 미만일 때 스위치 비활성화
             />
             <p className="text-xs font-semibold md:text-sm">Auto</p>
@@ -728,7 +747,7 @@ const handleRemoveSLToken = async () => {
         <div className="flex flex-row text-white items-center justify-center gap-1 mt-6">
           {timeUntilRefill === "Refill dice" ? (
             <motion.div
-            onClick={handleRefillDice}
+              onClick={handleRefillDice}
               className="flex flex-row items-center justify-center gap-1 cursor-pointer "
               animate={{
                 opacity: [1, 0.5, 1], // 반짝이는 효과

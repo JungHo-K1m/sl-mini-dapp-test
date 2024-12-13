@@ -5,6 +5,7 @@ import { fetchHomeData } from '@/entities/User/api/userApi';
 import api from '@/shared/api/axiosInstance';
 import { rollDiceAPI, RollDiceResponseData } from '@/features/DiceEvent/api/rollDiceApi';
 import { refillDiceAPI } from '@/features/DiceEvent/api/refillDiceApi'; // 분리된 API 함수 임포트
+import { autoAPI } from '@/features/DiceEvent/api/autoApi';
 
 
 // 월간 보상 정보 인터페이스
@@ -102,6 +103,8 @@ interface UserState {
 
   pet: Pet; // pet 속성 추가
   setPet: (update: Partial<Pet>) => void; // pet 속성 업데이트 함수 추가
+
+  autoSwitch: () => Promise<void>;
 
 
   // **추가된 함수들**
@@ -201,7 +204,7 @@ export const useUserStore = create<UserState>((set, get) => ({
       lotteryCount: typeof value === 'function' ? value(state.lotteryCount) : value,
     })),
 
-  userLv: 1,
+  userLv: 100,
   setUserLv: (userLv) => set({ userLv }),
 
   characterType: null, // 수정된 부분: 초기값을 null로 설정
@@ -327,7 +330,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         diceCount: nowDice.dice,
         starPoints: rank.star,
         lotteryCount: rank.ticket,
-        userLv: pet.level || 1, // 서버에서 받은 레벨 설정, 기본값 1
+        userLv: pet.level || 100, // 서버에서 받은 레벨 설정, 기본값 1
         characterType: pet.type ? pet.type.toLowerCase() as 'dog' | 'cat' : null, // 수정된 부분: pet.type이 null일 수 있음
   
         slToken: rank.slToken,
@@ -462,7 +465,7 @@ export const useUserStore = create<UserState>((set, get) => ({
       diceCount: 0,
       starPoints: 0,
       lotteryCount: 0,
-      userLv: 1,
+      userLv: 100,
       characterType: null, // 수정된 부분: characterType 초기화
       slToken: 0,
       rank: 0,
@@ -527,19 +530,46 @@ export const useUserStore = create<UserState>((set, get) => ({
   refillDice: async () => {
     set({ error: null });
     try {
-      const data: RollDiceResponseData = await refillDiceAPI();
+      const data = await refillDiceAPI();
 
-      // 주사위 리필 후 사용자 데이터 갱신
-      await get().fetchUserData();
-
+      const { nowDice, rank }  = data;
+      
+      // 주사위 리필 후 diceCount만 업데이트
+      set({
+        diceCount: nowDice.dice,
+        diceRefilledAt: rank.diceRefilledAt,
+        isLoading: false,
+        error: null,
+      });
+  
       console.log('주사위 리필 성공:', data);
     } catch (error: any) {
       console.error('주사위 리필 중 에러 발생:', error);
       set({ error: error.message || '주사위 리필에 실패했습니다.' });
-      throw error; // 에러를 다시 던져 컴포넌트에서 처리할 수 있도록 함
+      throw error; 
     }
   },
 
+  
+  autoSwitch: async () => {
+    set({ error: null });
+    try {
+      const data = await autoAPI();
+
+      const { isAuto }  = data;
+    
+      set({
+        isAuto
+      });
+  
+      console.log('스위치 변경 성공:', data);
+    } catch (error: any) {
+      console.error('스위치 변경 중 에러 발생:', error);
+      set({ error: error.message || '스위치 변경에 실패했습니다.' });
+      throw error; 
+    }
+  },
+  
     
 
    // 테스트용 아이템 추가 함수들

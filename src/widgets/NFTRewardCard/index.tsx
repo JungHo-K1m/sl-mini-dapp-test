@@ -14,7 +14,7 @@ const NFTRewardCard: React.FC<NFTReward> = ({ imgSrc, altText, title, rewards })
       <img src={imgSrc} alt={altText} className="w-6 h-6" />
       <p className="font-semibold">{title}</p>
     </div>
-    <div className="pl-8 text-sm space-y-1">
+    <div className="pl-6 text-sm space-y-1">
       {rewards.map((reward, index) => (
         <div key={index} className="flex flex-row items-center gap-2">
           {reward.icon}
@@ -32,9 +32,8 @@ const NFTRewardList: React.FC = () => {
       altText: 'Gold',
       title: 'Gold NFT',
       rewards: [
-        { icon: <IoDice className="w-5 h-5" />, description: 'Dice Generation : x4' },
-        { icon: <IoGameController className="w-5 h-5" />, description: 'Game Board Rewards : x20' },
-        { icon: <IoTicket className="w-5 h-5" />, description: 'Raffle Tickets Rewards: x60' },
+        { icon: <IoGameController className="w-5 h-5" />, description: 'Game Board Points : x30' },
+        { icon: <IoTicket className="w-5 h-5" />, description: 'Raffle Tickets : x6' },
       ],
     },
     {
@@ -42,9 +41,8 @@ const NFTRewardList: React.FC = () => {
       altText: 'Silver',
       title: 'Silver NFT',
       rewards: [
-        { icon: <IoDice className="w-5 h-5" />, description: 'Dice Generation : x3' },
-        { icon: <IoGameController className="w-5 h-5" />, description: 'Game Board Rewards : x15' },
-        { icon: <IoTicket className="w-5 h-5" />, description: 'Raffle Tickets Rewards: x30' },
+        { icon: <IoGameController className="w-5 h-5" />, description: 'Game Board Points : x20' },
+        { icon: <IoTicket className="w-5 h-5" />, description: 'Raffle Tickets : x4' },
       ],
     },
     {
@@ -52,9 +50,8 @@ const NFTRewardList: React.FC = () => {
       altText: 'Bronze',
       title: 'Bronze NFT',
       rewards: [
-        { icon: <IoDice className="w-5 h-5" />, description: 'Dice Generation : x2' },
-        { icon: <IoGameController className="w-5 h-5" />, description: 'Game Board Rewards : x10' },
-        { icon: <IoTicket className="w-5 h-5" />, description: 'Raffle Tickets Rewards: x10' },
+        { icon: <IoGameController className="w-5 h-5" />, description: 'Game Board Points : x10' },
+        { icon: <IoTicket className="w-5 h-5" />, description: 'Raffle Tickets : x2' },
       ],
     },
     {

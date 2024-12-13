@@ -77,6 +77,7 @@ const DiceEventPage: React.FC = () => {
 
   // 레벨 업 감지: userLv가 이전 레벨보다 커질 때만 팝업 표시
   useEffect(() => {
+    console.log("userlv :", userLv, "prevlevel :", prevLevel)
     if (userLv > prevLevel) {
       setShowLevelUpDialog(true);
     }
@@ -262,7 +263,7 @@ const DiceEventPage: React.FC = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-6">
-                  <p className="font-jalnan">Get Rewarded</p>
+                  <p className="font-jalnan text-center">Get Rewarded</p>
                   {currentReward && (
                     <div className="flex flex-row items-center gap-2">
                       <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">

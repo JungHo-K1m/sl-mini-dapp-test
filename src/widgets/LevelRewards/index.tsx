@@ -15,7 +15,7 @@ const levelRewards: LevelReward[] = [
   { level: 3, dice: 15, points: 2000, bgColor: '#DD2726' },
   { level: 4, dice: 20, points: 3000, bgColor: '#DD2726' },
   { level: 5, dice: 30, points: 5000, tickets: 3, bgColor: '#F59E0B' },
-  { level: 6, dice: 40, points: 7000, tickets: 2, bgColor: '#F59E0B' },
+  { level: 6, dice: 40, points: 7000, tickets: 3, bgColor: '#F59E0B' },
   { level: 7, dice: 50, points: 10000, tickets: 3, bgColor: '#F59E0B' },
   { level: 8, dice: 60, points: 15000, tickets: 4, bgColor: '#F59E0B' },
   { level: 9, dice: 70, points: 20000, tickets: 5, bgColor: '#F59E0B' },

@@ -129,6 +129,16 @@ import LevelEffect17 from './LvEffect_17.png';
 import LevelEffect18 from './LvEffect_18.png';
 import LevelEffect19 from './LvEffect_19.png';
 import LevelEffect20 from './LvEffect_20.png';
+import SpinDice1 from "./spindice1.png";
+import SpinDice2 from "./spindice2.png";
+import SpinDice5 from "./spindice5.png";
+import SpinDice10 from "./spindice10.png";
+import spinStar1000 from "./spinstar1000.png";
+import spinStar2000 from "./spinstar2000.png";
+import spinStar4000 from "./spinstar4000.png";
+import spinStar5000 from "./spinstar5000.png";
+import spinRapple1 from "./spinrapple1.png"
+import spinToken10 from "./spintoken10.png";
 
 
 
@@ -262,7 +272,17 @@ const Images = {
   LevelEffect17,
   LevelEffect18,
   LevelEffect19,
-  LevelEffect20
+  LevelEffect20,
+  SpinDice1,
+  SpinDice2,
+  SpinDice5,
+  SpinDice10,
+  spinStar1000,
+  spinStar2000,
+  spinStar4000,
+  spinStar5000,
+  spinRapple1,
+  spinToken10
 };
 
 export default Images;
