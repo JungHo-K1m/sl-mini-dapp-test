@@ -24,10 +24,10 @@ const PolicyDetailPage: React.FC = () => {
     return(
         <div className="flex flex-col items-center text-white mx-6 min-h-screen">
             <TopTitle title="Policy" back={true} />
-            
+
             {/* 정책 내용 */}
             <div
-                className="bg-white text-black p-4 rounded-md shadow-md mt-4 w-full max-w-2xl overflow-y-auto"
+                className="text-white mx-4 mt-4"
                 dangerouslySetInnerHTML={{ __html: content }}
             />
         </div>
