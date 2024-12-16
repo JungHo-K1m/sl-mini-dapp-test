@@ -350,7 +350,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
             data={data}
             outerBorderColor="#E52025"
             onStopSpinning={handleSpinEnd}
-            spinDuration={0.5}
+            spinDuration={0.3}
             outerBorderWidth={20}
             radiusLineColor="none"
             pointerProps={{

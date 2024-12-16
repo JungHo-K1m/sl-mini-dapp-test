@@ -102,7 +102,7 @@ const AIXrayAnalysis: React.FC = () => {
       selectedMenu === 'ai-analysis'
         ? storeResult(formData, "dental")
         : storeResult(formData, "xray"),
-    onSuccess: () => navigate('/diagnosis-list', { state: { id: petId } }),
+    onSuccess: () => navigate('/AI-menu', { state: { id: petId } }),
     onError: () => showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again.")),
   });
 

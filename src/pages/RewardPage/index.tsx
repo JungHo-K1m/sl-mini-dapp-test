@@ -85,48 +85,7 @@ const Reward: React.FC = () => {
   return (
     <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full ">
       <TopTitle title="Rewards" />
-      <div className="flex flex-row items-center justify-between mb-11 font-semibold">
-        {/* "Last month's Results" 클릭 시 다른 페이지로 이동 */}
-        <div
-          className="text-center cursor-pointer"
-          onClick={() => navigate('/previous-rewards')}
-          role="button"
-          tabIndex={0}
-          // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
-        >
-          Last month's
-          <br />
-          Results
-        </div>
-
-        {/* "This month's Awards" 클릭 시 랭킹 어워드 섹션으로 스크롤 */}
-        <ScrollLink
-          to="rankingAwardsSection"
-          smooth={true}
-          duration={500}
-          className="text-center cursor-pointer"
-          role="button"
-          tabIndex={0}
-        >
-          This month's
-          <br />
-          Awards
-        </ScrollLink>
-
-        {/* "Ranking Status" 클릭 시 리더보드 섹션으로 스크롤 */}
-        <ScrollLink
-          to="leaderBoardSection"
-          smooth={true}
-          duration={500}
-          className="text-center cursor-pointer"
-          role="button"
-          tabIndex={0}
-        >
-          Ranking
-          <br />
-          Status
-        </ScrollLink>
-      </div>
+   
 
       {/** 클릭 시 이전 랭킹(상품)결과로 이동 */}
       <div
@@ -134,7 +93,7 @@ const Reward: React.FC = () => {
         onClick={() => navigate('/previous-rewards')}
         role="button"
         tabIndex={0}
-        // onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
+        onKeyPress={(e) => { if (e.key === 'Enter') navigate('/previous-rewards'); }}
       >
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">Previous Rewards</p>

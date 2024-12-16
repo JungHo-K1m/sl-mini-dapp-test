@@ -104,7 +104,7 @@ export const useDiceGame = () => {
           showReward('lottery', 1);
         }
 
-        if (currentPosition !== endPosition) {
+        if (currentPosition !== (endPosition % 20)) {
           setTimeout(moveStep, 300);
         } else {
           // 보상 적용 제거
@@ -121,9 +121,10 @@ export const useDiceGame = () => {
             case 8:
               setTimeout(() => {
                 // 홈을 지났을 때 래플권만 증가
-                setPosition(5);
-                setMoving(false);
-                onMoveComplete(5); // 최종 위치 전달
+                   movePiece(8, 25, (finalPos) => {
+                       setMoving(false);
+                       onMoveComplete(finalPos); // finalPos == 25 % 20 => 5
+                     });
               }, 300);
               break;
             case 13:
