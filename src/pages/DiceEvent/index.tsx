@@ -1,5 +1,3 @@
-
-
 // src/pages/DiceEventPage.tsx
 import React, { useEffect, useState, useRef } from "react";
 import UserLevel from "@/entities/User/components/UserLevel";
@@ -16,41 +14,40 @@ import RPSGame from "../RPSGame";
 import SpinGame from "../SpinGame";
 import { useUserStore } from "@/entities/User/model/userModel";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/shared/components/ui";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/shared/components/ui";
 import { formatNumber } from "@/shared/utils/formatNumber";
 import LevelRewards from "@/widgets/LevelRewards";
+import LeaderBoard from "@/widgets/LeaderBoard";
+import { HiX } from "react-icons/hi";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const levelRewards = [
   // 2~9 레벨 보상 예시
-  { level: 2, dice: 10, points: 1000, },
-  { level: 3, dice: 15, points: 2000, },
-  { level: 4, dice: 20, points: 3000, },
-  { level: 5, dice: 30, points: 5000, tickets: 3, },
-  { level: 6, dice: 40, points: 7000, tickets: 3, },
-  { level: 7, dice: 50, points: 10000, tickets: 3, },
-  { level: 8, dice: 60, points: 15000, tickets: 4, },
-  { level: 9, dice: 70, points: 20000, tickets: 5, },
-  
+  { level: 2, dice: 10, points: 1000 },
+  { level: 3, dice: 15, points: 2000 },
+  { level: 4, dice: 20, points: 3000 },
+  { level: 5, dice: 30, points: 5000, tickets: 3 },
+  { level: 6, dice: 40, points: 7000, tickets: 3 },
+  { level: 7, dice: 50, points: 10000, tickets: 3 },
+  { level: 8, dice: 60, points: 15000, tickets: 4 },
+  { level: 9, dice: 70, points: 20000, tickets: 5 },
+
   // 10~14 레벨 보상 예시
-  { level: 10, dice: 100, points: 30000, tickets: 7, },
-  { level: 11, dice: 100, points: 30000, tickets: 7, },
-  { level: 12, dice: 100, points: 30000, tickets: 7, },
-  { level: 13, dice: 100, points: 30000, tickets: 7, },
-  { level: 14, dice: 100, points: 30000, tickets: 7, },
+  { level: 10, dice: 100, points: 30000, tickets: 7 },
+  { level: 11, dice: 100, points: 30000, tickets: 7 },
+  { level: 12, dice: 100, points: 30000, tickets: 7 },
+  { level: 13, dice: 100, points: 30000, tickets: 7 },
+  { level: 14, dice: 100, points: 30000, tickets: 7 },
 
   // 15~19 레벨 보상 예시
-  { level: 15, dice: 200, points: 50000, tickets: 15, },
-  { level: 16, dice: 200, points: 50000, tickets: 15, },
-  { level: 17, dice: 200, points: 50000, tickets: 15, },
-  { level: 18, dice: 200, points: 50000, tickets: 15, },
-  { level: 19, dice: 200, points: 50000, tickets: 15, },
+  { level: 15, dice: 200, points: 50000, tickets: 15 },
+  { level: 16, dice: 200, points: 50000, tickets: 15 },
+  { level: 17, dice: 200, points: 50000, tickets: 15 },
+  { level: 18, dice: 200, points: 50000, tickets: 15 },
+  { level: 19, dice: 200, points: 50000, tickets: 15 },
 
   // 20 레벨 보상 예시
-  { level: 20, dice: 500, points: 100000, tickets: 100, },
+  { level: 20, dice: 500, points: 100000, tickets: 100 },
 ];
 
 const DiceEventPage: React.FC = () => {
@@ -77,7 +74,7 @@ const DiceEventPage: React.FC = () => {
 
   // 레벨 업 감지: userLv가 이전 레벨보다 커질 때만 팝업 표시
   useEffect(() => {
-    console.log("userlv :", userLv, "prevlevel :", prevLevel)
+    console.log("userlv :", userLv, "prevlevel :", prevLevel);
     if (userLv > prevLevel) {
       setShowLevelUpDialog(true);
     }
@@ -85,7 +82,7 @@ const DiceEventPage: React.FC = () => {
   }, [userLv, prevLevel]);
 
   // 현재 레벨 보상 찾기
-  const currentReward = levelRewards.find(r => r.level === userLv);
+  const currentReward = levelRewards.find((r) => r.level === userLv);
 
   const getCharacterImageSrc = () => {
     const index = Math.floor((userLv - 1) / 2);
@@ -243,7 +240,21 @@ const DiceEventPage: React.FC = () => {
             delta={delta}
           />
           <br />
-          <MyRankingWidget />
+          <Dialog>
+            <DialogTrigger className="w-full flex justify-center">
+              <MyRankingWidget className="max-w-[332px] md:max-w-full" />
+            </DialogTrigger>
+            <DialogContent className=" flex flex-col bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold  overflow-y-auto  max-h-[80%]">
+              <DialogHeader className="flex w-full items-end">
+                <DialogClose>
+                <HiX className="w-5 h-5" />
+                </DialogClose>
+              </DialogHeader>
+              <MyRankingWidget />
+              <LeaderBoard />
+            </DialogContent>
+          </Dialog>
+
           <br />
           <Attendance />
           <MissionWidget />
@@ -268,11 +279,15 @@ const DiceEventPage: React.FC = () => {
                     <div className="flex flex-row items-center gap-2">
                       <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
                         <img src={Images.Dice} alt="dice" className="w-6 h-6" />
-                        <p className=" font-semibold text-xs">+{currentReward.dice}</p>
+                        <p className=" font-semibold text-xs">
+                          +{currentReward.dice}
+                        </p>
                       </div>
                       <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
                         <img src={Images.Star} alt="star" className="w-6 h-6" />
-                        <p className=" font-semibold text-xs">+{formatNumber(currentReward.points)}</p>
+                        <p className=" font-semibold text-xs">
+                          +{formatNumber(currentReward.points)}
+                        </p>
                       </div>
                       {currentReward.tickets && (
                         <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
@@ -281,7 +296,9 @@ const DiceEventPage: React.FC = () => {
                             alt="rapple"
                             className="w-6 h-6"
                           />
-                          <p className=" font-semibold text-xs">+{currentReward.tickets}</p>
+                          <p className=" font-semibold text-xs">
+                            +{currentReward.tickets}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -297,7 +314,11 @@ const DiceEventPage: React.FC = () => {
             </DialogContent>
           </Dialog>
 
-          <br /><br /><br /><br /><br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <div className="hidden md:block md:mb-40"> &nbsp;</div>
         </>
       )}
