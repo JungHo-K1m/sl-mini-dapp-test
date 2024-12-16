@@ -1,5 +1,3 @@
-// src/pages/LeaderboardPage/index.tsx
-
 import React, { useEffect } from 'react';
 import { useLeaderboardStore } from '@/entities/Leaderboard/model/leaderboardModel';
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
@@ -30,6 +28,10 @@ const Leaderboard: React.FC = () => {
     }
     return str.slice(0, num) + '...';
   };
+
+  // 디버깅을 위한 콘솔 로그
+  console.log('Current Page:', currentPage);
+  console.log('Total Pages:', totalPages);
 
   if (isLoading && leaderBoard.length === 0) {
     return <LoadingSpinner />;
@@ -82,17 +84,23 @@ const Leaderboard: React.FC = () => {
       </div>
 
       {/* View More Button */}
-      {currentPage < totalPages && (
-        <button
-          onClick={handleViewMore}
-          className={`border rounded-full mt-6 flex items-center justify-center w-[80px] h-7 font-medium text-xs mb-8 ${
-            isLoading ? 'bg-gray-500 cursor-not-allowed' : 'hover:bg-blue-500'
-          } text-white`}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Loading...' : 'View More'}
-        </button>
-      )}
+      <div className='flex w-full items-center justify-center'>
+      <button
+        onClick={handleViewMore}
+        className={` border rounded-full mt-6 flex items-center justify-center  w-[80px] h-7 font-medium text-xs mb-8 text-white ${
+          currentPage >= totalPages-1
+            ? 'hidden' // 더 이상 페이지가 없으면 숨김
+            : isLoading
+            ? 'bg-gray-500 cursor-not-allowed' // 로딩 중일 때 스타일
+            : '' // 기본 호버 스타일
+        }`}
+        disabled={isLoading || currentPage >= totalPages}
+      >
+        {isLoading ? 'Loading...' : 'View More'}
+      </button></div>
+
+     
+
 
       {/* 추가적인 로딩 스피너 (View More 클릭 시) */}
       {isLoading && leaderBoard.length > 0 && <LoadingSpinner />}

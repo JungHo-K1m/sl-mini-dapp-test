@@ -12,7 +12,7 @@ interface RewardItemProps {
 
 const RewardItem: React.FC<RewardItemProps> = ({ rank, award, isTop }) => {
   return isTop ? (
-    <div className="h-16 w-full rounded-3xl first-to-third-pace-box flex flex-row items-center justify-center gap-4 ">
+    <div className="h-16 w-full rounded-3xl first-to-third-pace-box flex flex-row items-center justify-center gap-4 text-sm">
       <p>{rank}</p>
       <div className="flex flex-row gap-1 font-medium items-center">
         <img src={Images.TokenReward} alt="token-reward" className="w-6 h-6" />

@@ -141,6 +141,7 @@ import spinToken10 from "./spintoken10.png";
 import firstPoints from "./first-star.png";
 import firstSL from "./first-sl.png";
 import firstDice from "./first-dice.png";
+import AirDrop from "./airdrop.png";
 
 
 const Images = {
@@ -286,6 +287,7 @@ const Images = {
   firstDice,
   firstPoints,
   firstSL,
+  AirDrop,
 };
 
 export default Images;

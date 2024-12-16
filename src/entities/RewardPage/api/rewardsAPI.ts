@@ -10,7 +10,9 @@ import { LeaderHomeData } from '../types';
  */
 export const fetchLeaderHomeAPI = async (): Promise<LeaderHomeData> => {
   try {
-    const response = await api.get('/leader/home');
+    const response = await api.get('/leader/home', {
+
+    });
     if (response.data.code !== 'OK') {
       throw new Error(response.data.message || 'Failed to fetch leader home data');
     }
@@ -20,4 +22,3 @@ export const fetchLeaderHomeAPI = async (): Promise<LeaderHomeData> => {
     throw error;
   }
 };
-

@@ -23,25 +23,12 @@ const PolicyDetailPage: React.FC = () => {
 
     return(
         <div 
-            className="flex flex-col items-center bg-transparent text-white mx-0 p-0 min-h-screen w-screen"
-            style={{
-                margin: 0,
-                padding: 0,
-                border: "none",
-                background: "transparent",
-              }}>
+            className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
             <TopTitle title="Policy" back={true} />
 
             {/* 정책 내용 */}
             <div
-                className="w-full bg-transparent p-4"
-                style={{
-                    background: "transparent",
-                    margin: 0,
-                    padding: 0,
-                    border: "none",
-                    boxShadow: "none",
-                }}
+                className="text-white mx-4 mt-4"
                 dangerouslySetInnerHTML={{ __html: content }}
             />
         </div>

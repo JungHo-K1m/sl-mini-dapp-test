@@ -314,8 +314,6 @@ export const useUserStore = create<UserState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const data = await fetchHomeData();
-
-      console.log(data)
       if (!data) {
         throw new Error('No data returned from /home API');
       }

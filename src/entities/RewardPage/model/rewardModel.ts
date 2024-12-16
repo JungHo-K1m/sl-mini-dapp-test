@@ -6,6 +6,7 @@ import {
   LeaderHomeData,
   RankingAward,
   DrawAward,
+  AirDropAward,
 } from '../types';
 
 // 리워드 상태 인터페이스
@@ -13,6 +14,7 @@ interface RewardState {
   // 리워드 데이터
   rankingAwards: RankingAward[];
   drawAwards: DrawAward[];
+  airDropAwards: AirDropAward[] | null;
   rank: {
     rank: number;
     star: number;
@@ -33,6 +35,7 @@ export const useRewardStore = create<RewardState>((set, get) => ({
   // 초기 상태
   rankingAwards: [],
   drawAwards: [],
+  airDropAwards: null,
   rank: {
     rank: 0,
     star: 0,
@@ -50,10 +53,11 @@ export const useRewardStore = create<RewardState>((set, get) => ({
     try {
       const data: LeaderHomeData = await fetchLeaderHomeAPI();
 
-      console.log(data);
+      console.log('Fetched LeaderHomeData:', data);
       set({
         rankingAwards: data.rankingAwards,
         drawAwards: data.drawAwards,
+        airDropAwards: data.airDropAwards,
         rank: data.rank,
         isLoadingHome: false,
         errorHome: null,
