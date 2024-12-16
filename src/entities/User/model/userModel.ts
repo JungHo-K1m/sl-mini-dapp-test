@@ -6,7 +6,7 @@ import api from '@/shared/api/axiosInstance';
 import { rollDiceAPI, RollDiceResponseData } from '@/features/DiceEvent/api/rollDiceApi';
 import { refillDiceAPI } from '@/features/DiceEvent/api/refillDiceApi'; // 분리된 API 함수 임포트
 import { autoAPI } from '@/features/DiceEvent/api/autoApi';
-import { completeTutorialAPI } from '@/features/DiceEvent/api/completeTutorialApi';
+import { completeTutorialAPI} from '@/features/DiceEvent/api/completeTutorialApi';
 
 
 // 월간 보상 정보 인터페이스
