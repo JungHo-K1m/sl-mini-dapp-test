@@ -69,12 +69,12 @@ const MyAssets: React.FC = () => {
                         onClick={()=>navigate('/wallet')}>
                         <BiWallet className="w-6 h-6" />
                     </button>
-                    {/* 설정 페이지 이동 - 추후 수정 예정 */}
-                    {/* <button 
+                    {/* 설정 페이지 이동 */}
+                    <button 
                         className="w-8 h-8 rounded-full flex items-center justify-center"
-                        onClick={()=>navigate('/')}>
+                        onClick={()=>navigate('/settings')}>
                         <IoSettingsOutline className="w-6 h-6" />
-                    </button> */}
+                    </button>
                 </div>
             </div>
 

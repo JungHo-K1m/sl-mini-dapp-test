@@ -30,6 +30,8 @@ import MyNfts from "./pages/MyNFTs";
 import RewardHistory from "./pages/RewardHistory";
 import PreviousRewards from "@/pages/PreviousRewards";
 import FirstRewardPage from "./pages/FirstReward";
+import SettingsPage from "./pages/SettingsPage";
+import PolicyDetailPage from "./pages/PolicyDetail";
 
 
 // QueryClient 설정
@@ -176,6 +178,9 @@ const App:React.FC = () =>{
                 <Route path="/my-nfts" element={<DiceEventLayout hidden={true}><MyNfts /></DiceEventLayout>} />
                 <Route path="/reward-history" element={<DiceEventLayout hidden={true}><RewardHistory /></DiceEventLayout>} />
                 <Route path="/first-reward" element={<DiceEventLayout hidden={true}><FirstRewardPage /></DiceEventLayout>} />
+                <Route path="/settings" element={<DiceEventLayout hidden={true}><SettingsPage /></DiceEventLayout>} />
+                <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
+
             </Routes>
         )}
     </QueryClientProvider>

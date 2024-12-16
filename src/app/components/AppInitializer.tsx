@@ -229,10 +229,17 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
             if (!lineToken) throw new Error("라인 Access Token을 가져오지 못했습니다.");
   
             const isInitial = await userAuthenticationWithServer(lineToken);
-            if (isInitial) {
+            if (isInitial === undefined) {
+              throw new Error("사용자 인증에 실패했습니다.");
+            } else if (isInitial === true) {
+              console.log("신규 사용자: 캐릭터 선택 페이지로 이동");
               navigate("/choose-character");
+              return;
             } else {
-              await getUserInfo();
+              // 기존 사용자
+              console.log("기존 사용자: 사용자 데이터 확인 중...");
+              await fetchUserData();
+              navigate("/dice-event");
             }
           }
         }
