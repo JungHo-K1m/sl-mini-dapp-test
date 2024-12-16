@@ -19,6 +19,8 @@ export interface DrawAward {
 export interface AirDropAward {
   winnerNum: number | null;
   slRewards: number;
+  usdtRewards: number | null;
+  nftType: "GOLD" | "SILVER" | "BRONZE" | null;
 }
 
 export type Award = RankingAward | DrawAward | AirDropAward;
