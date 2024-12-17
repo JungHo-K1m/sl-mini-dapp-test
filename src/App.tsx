@@ -112,7 +112,7 @@ const App:React.FC = () =>{
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
         <ScrollToTop />
         <TourProvider
             steps={steps}
@@ -146,49 +146,46 @@ const App:React.FC = () =>{
                 // controls: (base) => ({ ...base, marginTop: 100 }),
                 close: (base) => ({ ...base, right: "auto", left: 8, top: 8 }),
             }} >
-            <Router>
-                {!isInitialized && (
-                    // 앱 초기화 진행 컴포넌트 사용
-                    <AppInitializer onInitialized={() => setIsInitialized(true)} />
-                )}
-                {isInitialized && (
-                    <Routes>
-                        {/* DiceEventLayout Pages */}
-                        <Route path="/" element={<Navigate to="/" />} />
-                        <Route path="/dice-event" element={<DiceEventLayout><DiceEvent /></DiceEventLayout>} />
-                        <Route path="/AI-menu" element={<DiceEventLayout><AIMenu /></DiceEventLayout>} />
-                        <Route path="/mission" element={<DiceEventLayout><MissionPage /></DiceEventLayout>} />
-                        <Route path="/reward" element={<DiceEventLayout><Reward /></DiceEventLayout>} />
-                        <Route path="/invite-friends" element={<DiceEventLayout><InviteFriends /></DiceEventLayout>} />
-                        <Route path="/my-assets" element={<DiceEventLayout><MyAssets /></DiceEventLayout>} />
-                        <Route path="/wallet" element={<DiceEventLayout><WalletPage /></DiceEventLayout>} />
-                        <Route path="/wallet-list" element={<DiceEventLayout><WalletList /></DiceEventLayout>} />
-                        <Route path="/test" element={<DiceEventLayout><SlotMachine /></DiceEventLayout>} />
-                        <Route path="/previous-rewards" element={<DiceEventLayout><PreviousRewards /></DiceEventLayout>} />
+            {!isInitialized && (
+                // 앱 초기화 진행 컴포넌트 사용
+                <AppInitializer onInitialized={() => setIsInitialized(true)} />
+            )}
+            {isInitialized && (
+                <Routes>
+                    {/* DiceEventLayout Pages */}
+                    <Route path="/" element={<Navigate to="/dice-event" />} />
+                    <Route path="/dice-event" element={<DiceEventLayout><DiceEvent /></DiceEventLayout>} />
+                    <Route path="/AI-menu" element={<DiceEventLayout><AIMenu /></DiceEventLayout>} />
+                    <Route path="/mission" element={<DiceEventLayout><MissionPage /></DiceEventLayout>} />
+                    <Route path="/reward" element={<DiceEventLayout><Reward /></DiceEventLayout>} />
+                    <Route path="/invite-friends" element={<DiceEventLayout><InviteFriends /></DiceEventLayout>} />
+                    <Route path="/my-assets" element={<DiceEventLayout><MyAssets /></DiceEventLayout>} />
+                    <Route path="/wallet" element={<DiceEventLayout><WalletPage /></DiceEventLayout>} />
+                    <Route path="/wallet-list" element={<DiceEventLayout><WalletList /></DiceEventLayout>} />
+                    <Route path="/test" element={<DiceEventLayout><SlotMachine /></DiceEventLayout>} />
+                    <Route path="/previous-rewards" element={<DiceEventLayout><PreviousRewards /></DiceEventLayout>} />
 
 
-                        {/* Hidden Pages */}
-                        <Route path="/choose-character" element={<DiceEventLayout hidden={true}><SelectCharacterPage /></DiceEventLayout>} />
-                        <Route path="/select-pet" element={<DiceEventLayout hidden={true}><SelectPet /></DiceEventLayout>} />
-                        <Route path="/regist-pet" element={<DiceEventLayout hidden={true}><PetRegister /></DiceEventLayout>} />
-                        <Route path="/edit-pet" element={<DiceEventLayout hidden={true}><EditPet /></DiceEventLayout>} />
-                        <Route path="/diagnosis-list" element={<DiceEventLayout hidden={true}><DiagnosisRecords /></DiceEventLayout>} />
-                        <Route path="/diagnosis-detail" element={<DiceEventLayout hidden={true}><DiagnosisDetail /></DiceEventLayout>} />
-                        <Route path="/ai-xray-analysis" element={<DiceEventLayout hidden={true}><AIXrayAnalysis /></DiceEventLayout>} />
-                        <Route path="/my-nfts" element={<DiceEventLayout hidden={true}><MyNfts /></DiceEventLayout>} />
-                        <Route path="/reward-history" element={<DiceEventLayout hidden={true}><RewardHistory /></DiceEventLayout>} />
-                        <Route path="/first-reward" element={<DiceEventLayout hidden={true}><FirstRewardPage /></DiceEventLayout>} />
-                        <Route path="/settings" element={<DiceEventLayout hidden={true}><SettingsPage /></DiceEventLayout>} />
-                        <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
+                    {/* Hidden Pages */}
+                    <Route path="/choose-character" element={<DiceEventLayout hidden={true}><SelectCharacterPage /></DiceEventLayout>} />
+                    <Route path="/select-pet" element={<DiceEventLayout hidden={true}><SelectPet /></DiceEventLayout>} />
+                    <Route path="/regist-pet" element={<DiceEventLayout hidden={true}><PetRegister /></DiceEventLayout>} />
+                    <Route path="/edit-pet" element={<DiceEventLayout hidden={true}><EditPet /></DiceEventLayout>} />
+                    <Route path="/diagnosis-list" element={<DiceEventLayout hidden={true}><DiagnosisRecords /></DiceEventLayout>} />
+                    <Route path="/diagnosis-detail" element={<DiceEventLayout hidden={true}><DiagnosisDetail /></DiceEventLayout>} />
+                    <Route path="/ai-xray-analysis" element={<DiceEventLayout hidden={true}><AIXrayAnalysis /></DiceEventLayout>} />
+                    <Route path="/my-nfts" element={<DiceEventLayout hidden={true}><MyNfts /></DiceEventLayout>} />
+                    <Route path="/reward-history" element={<DiceEventLayout hidden={true}><RewardHistory /></DiceEventLayout>} />
+                    <Route path="/first-reward" element={<DiceEventLayout hidden={true}><FirstRewardPage /></DiceEventLayout>} />
+                    <Route path="/settings" element={<DiceEventLayout hidden={true}><SettingsPage /></DiceEventLayout>} />
+                    <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
 
-                    </Routes>
-                )}
-
-            </Router>
+                </Routes>
+            )}
         </TourProvider>
 
         
-    </QueryClientProvider>
+    </>
   );
 }
 
