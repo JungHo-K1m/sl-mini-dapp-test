@@ -41,7 +41,7 @@ const LevelRewards: React.FC = () => {
             </div>
             <div className="flex flex-row justify-center items-center gap-2 w-full">
               <div className="w-20 h-20 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-2xl flex items-center justify-center">
-                <div className="flex-col gap-1 w-[76px] h-[76px] logo-bg rounded-2xl flex items-center justify-center">
+                <div className="flex-col gap-1 w-[76px] h-[76px]  rounded-2xl flex items-center justify-center">
                   <img
                     src={Images.Dice}
                     className="w-8 h-8"
@@ -51,7 +51,7 @@ const LevelRewards: React.FC = () => {
                 </div>
               </div>
               <div className="w-20 h-20 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-2xl flex items-center justify-center">
-                <div className="flex-col gap-1 w-[76px] h-[76px] logo-bg rounded-2xl flex items-center justify-center">
+                <div className="flex-col gap-1 w-[76px] h-[76px]  rounded-2xl flex items-center justify-center">
                   <img
                     src={Images.Star}
                     className="w-8 h-8"
@@ -62,7 +62,7 @@ const LevelRewards: React.FC = () => {
               </div>
               {reward.tickets && (
                 <div className="w-20 h-20 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-2xl flex items-center justify-center">
-                  <div className="flex-col gap-1 w-[76px] h-[76px] logo-bg rounded-2xl flex items-center justify-center">
+                  <div className="flex-col gap-1 w-[76px] h-[76px] rounded-2xl flex items-center justify-center">
                     <img
                       src={Images.LotteryTicket}
                       className="w-8 h-8"
