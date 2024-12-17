@@ -1,8 +1,8 @@
 import Images from '@/shared/assets/images';
-import { FaChevronLeft } from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineCheck } from 'react-icons/hi';
+import { IoChevronBackOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import './WalletPage.css';
 import getWallets from '@/entities/Asset/api/getWalletList';
@@ -144,15 +144,13 @@ const WalletPage: React.FC = () => {
 
   return (
     <div className="flex flex-col text-white mb-32 mx-6 min-h-screen">
-      <div className="flex items-center w-full mt-3 mb-8 relative">
-        {/* 뒤로가기 버튼 */}
-        <FaChevronLeft
-          className="text-xl cursor-pointer"
-          onClick={() => navigate("/my-assets")}
-          aria-label="뒤로가기"
-        />
-        <h1 className="text-xl font-bold flex-grow text-center">{t("wallet_page.wallet")}</h1>
-        <div className="w-5"></div>
+      <div
+        className={`h-14 flex items-center  w-full font-bold text-xl mb-8 "justify-between"`}
+        onClick={() => navigate("/my-asset")}
+        >
+        <IoChevronBackOutline className={`w-6 h-6`} />
+        <p>Wallet</p>
+        <div className={`w-6 h-6`} ></div>
       </div>
       <div>
         <h2 className="text-lg font-semibold">{t("wallet_page.wallet_section")}</h2>

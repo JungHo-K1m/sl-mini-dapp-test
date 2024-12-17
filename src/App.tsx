@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter as Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./shared/components/ui/scrollTop";
 import AppInitializer from "./app/components/AppInitializer";
 import { TourProvider } from "@reactour/tour";
@@ -33,9 +32,6 @@ import FirstRewardPage from "./pages/FirstReward";
 import SettingsPage from "./pages/SettingsPage";
 import PolicyDetailPage from "./pages/PolicyDetail";
 
-
-// QueryClient 설정
-const queryClient = new QueryClient();
 
 // 튜토리얼
 const steps = [
@@ -90,7 +86,7 @@ const steps = [
       ),
       stepInteraction: false,
     },
-  ];
+];
   
 
 const App:React.FC = () =>{
@@ -183,8 +179,6 @@ const App:React.FC = () =>{
                 </Routes>
             )}
         </TourProvider>
-
-        
     </>
   );
 }

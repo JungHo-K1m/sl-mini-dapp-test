@@ -28,7 +28,7 @@ const PolicyDetailPage: React.FC = () => {
 
             {/* 정책 내용 */}
             <div
-                className="text-white mx-4 mt-4"
+                className="text-white mx-4 my-4"
                 dangerouslySetInnerHTML={{ __html: content }}
             />
         </div>
