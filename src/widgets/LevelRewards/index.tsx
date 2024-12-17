@@ -34,7 +34,7 @@ const LevelRewards: React.FC = () => {
           <div key={reward.level} className="flex flex-col gap-4">
             <div className="flex flex-row items-center gap-2 ">
               <div
-                className="w-6 h-6 rounded-full"
+                className="w-6 h-6"
                 style={{ backgroundColor: reward.bgColor }}
               ></div>
               <p>Level {reward.level}</p>
