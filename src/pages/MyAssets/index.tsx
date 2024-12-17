@@ -151,7 +151,7 @@ const MyAssets: React.FC = () => {
 
                     {/* 사용자 이름, 레벨 */}
                     <div className="ml-4">
-                        <p className="text-sm font-bold">{userId}</p>
+                        {/* <p className="text-sm font-bold">{userId}</p> */}
                         <TruncateMiddle text={userId} maxLength={20} />
                         <p className="text-sm text-red-500">Lv.{userLv}</p>
                     </div>
