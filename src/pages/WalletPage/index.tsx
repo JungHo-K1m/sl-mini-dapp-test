@@ -146,7 +146,7 @@ const WalletPage: React.FC = () => {
     <div className="flex flex-col text-white mb-32 mx-6 min-h-screen">
       <div
         className={`h-14 flex items-center w-full font-bold text-xl mb-8 justify-between`}
-        onClick={() => navigate("/my-asset")}
+        onClick={() => navigate("/my-assets")}
         >
         <IoChevronBackOutline className={`w-6 h-6`} />
         <p>Wallet</p>
