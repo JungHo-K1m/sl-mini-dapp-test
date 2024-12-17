@@ -117,21 +117,21 @@ const EditPet: React.FC = () => {
                     placeholder={t("ai_page.Please_enter_name")}
                     value={petName}
                     onChange={(e) => setPetName(e.target.value)}
-                    className="w-full p-4 rounded-md mb-4 bg-gray-900 text-white border border-[#35383F] focus:outline-none"
+                    className="w-full p-4 rounded-md mb-4 bg-gray-900 text-white border border-[#35383F] focus:outline-none text-base font-normal"
                 />
             </div>
 
             {/* 삭제 및 수정 버튼을 하단에 고정 */}
             <div className="w-full max-w-md absolute bottom-16 left-1/2 transform -translate-x-1/2 flex justify-between gap-4">
                 <button
-                    className="w-1/2 py-4 rounded-full text-lg font-semibold text-[#DD2726] border-4"
+                    className="w-1/2 py-4 rounded-full text-base font-medium text-[#DD2726] border-4"
                     style={{ backgroundColor: "#0D1226", borderColor:"#DD2726" }}
                     onClick={deleteBtn}
                     >
                     {t("ai_page.Delete")}
                 </button>
                 <button
-                    className="w-1/2 py-4 rounded-full text-lg font-semibold"
+                    className="w-1/2 py-4 rounded-full text-base font-medium"
                     style={{ backgroundColor: "#0147E5" }}
                     onClick={editBtn}
                     >

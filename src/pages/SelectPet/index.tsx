@@ -84,7 +84,7 @@ const SelectPet: React.FC = () => {
                 <FaPen className="text-white" />
               </button>
             </div>
-            <div className="mt-2 mb-6 text-center font-semibold text-lg w-full">{pet.name}</div>
+            <div className="mt-2 mb-6 text-center font-normal text-sm w-full">{pet.name}</div>
           </div>
         ))}
 

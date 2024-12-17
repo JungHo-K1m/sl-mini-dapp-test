@@ -33,7 +33,7 @@ const DiagnosisDetail: React.FC = () => {
             </div>
 
             <div className="w-full">
-                <div id="label-container" className="mt-4 text-lg md:text-xl lg:text-2xl font-semibold">
+                <div id="label-container" className="mt-4 text-base md:text-xl lg:text-2xl font-semibold">
                     {/* 진단 결과 라벨 번역 */}
                     <p>
                         {t("ai_page.Analysis_results")}: {t(`ai_page.reuslts.${label}`)}
@@ -42,7 +42,7 @@ const DiagnosisDetail: React.FC = () => {
 
                 <div className="mt-4 p-4 bg-gray-800 text-white rounded-xl shadow-md max-w-2xl lg:max-w-3xl mx-auto">
                     <p
-                        className="overflow-hidden text-sm md:text-base lg:text-lg"
+                        className="overflow-hidden text-sm md:text-base lg:text-lg font-normal"
                         style={{
                             display: "-webkit-box",
                             WebkitLineClamp: showFullText ? undefined : 3,

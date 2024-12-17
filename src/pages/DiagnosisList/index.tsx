@@ -114,7 +114,7 @@ const DiagnosisRecords: React.FC = () => {
             <div className="flex justify-start w-full mt-8 h-11 relative">
                 <div className="relative w-1/2 max-w-xs"> {/* 너비를 절반으로 조정 */}
                     <select
-                        className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full"
+                        className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
                         value={selectedFilter}
                         onChange={(e) => setSelectedFilter(e.target.value)}
                     >
@@ -139,8 +139,8 @@ const DiagnosisRecords: React.FC = () => {
                             key={index} className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                             onClick={() => navigate('/diagnosis-detail', { state: { img: record.diagnosisImgUrl, result: record.result } })}>
                             <div>
-                                <p className="font-semibold">{`${record.diagnosisAt}  ${record.type}`}</p>
-                                <p className="text-sm text-gray-400">{record.result}</p>
+                                <p className="font-semibold text-base">{`${record.diagnosisAt}  ${record.type}`}</p>
+                                <p className="text-sm font-normal text-gray-400">{record.result}</p>
                             </div>
                             <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                         </div>

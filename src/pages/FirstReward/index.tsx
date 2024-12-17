@@ -12,7 +12,7 @@ const FirstRewardPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-20">
         {/* 상단 메시지 */}
-        <h1 className="text-center mt-36 text-lg font-semibold">
+        <h1 className="text-center mt-36 text-xl font-semibold">
             As a new member, <br />
             you're starting your journey with
         </h1>
@@ -41,7 +41,7 @@ const FirstRewardPage: React.FC = () => {
         </div>
 
         {/* 보상 내역 */}
-        <h2 className="text-lg font-semibold mb-4 mt-16 text-left w-full">Your rewards include:</h2>
+        <h2 className="text-lg font-medium mb-4 mt-16 text-left w-full">Your rewards include:</h2>
         <div className="flex flex-col items-start bg-[#1F283C] rounded-2xl px-4 py-6 w-full">
             <div className="flex flex-col gap-2 text-base w-full">
                 <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ const FirstRewardPage: React.FC = () => {
                         alt="calendar-icon"
                         className="w-6 h-6"
                     />
-                    <p className="text-left">Daily Attendance : 1,000 Point</p>
+                    <p className="text-left text-base font-medium">Daily Attendance : 1,000 Point</p>
                 </div>
                 <div className="flex items-center gap-2">
                     <img
@@ -58,12 +58,12 @@ const FirstRewardPage: React.FC = () => {
                         alt="gift-icon"
                         className="w-6 h-6"
                     />
-                    <p className="text-left">
+                    <p className="text-left text-base font-medium">
                         Welcome gift for joining
                     </p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <p className="text-left ml-9">
+                    <p className="text-left ml-9 text-base font-medium">
                         : 7,777 Point + 10SL Token + 30 Dice
                     </p>
                 </div>
@@ -72,7 +72,7 @@ const FirstRewardPage: React.FC = () => {
     {/* 보상 받기 버튼 */}
     <div className="w-full absolute bottom-16 left-1/2 transform -translate-x-1/2">
         <button
-            className="w-full py-4 rounded-full text-lg font-semibold"
+            className="w-full py-4 rounded-full text-base font-medium"
             onClick={handleReceiveReward}
             style={{backgroundColor: '#0147E5'}}
         >

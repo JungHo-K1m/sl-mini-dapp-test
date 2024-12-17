@@ -94,14 +94,14 @@ const PetRegister: React.FC = () => {
                 placeholder={t("ai_page.Please_enter_name")}
                 value={petName}
                 onChange={(e) => setPetName(e.target.value)}
-                className="w-full p-4 rounded-md mb-4 bg-gray-900 text-white border border-[#35383F] focus:outline-none"
+                className="w-full p-4 rounded-md mb-4 bg-gray-900 text-white border border-[#35383F] focus:outline-none text-base font-normal"
             />
         </div>
 
         {/* 등록 버튼 - 페이지 하단에 고정 */}
         <div className="w-full max-w-md absolute bottom-16 left-1/2 transform -translate-x-1/2">
             <button
-                className="w-full py-4 rounded-full text-lg font-semibold"
+                className="w-full py-4 rounded-full text-base font-medium"
                 style={{
                 backgroundColor: petName && petImage && !isPending ? '#0147E5' : '#555',
                 cursor: petName && petImage && !isPending ? 'pointer' : 'not-allowed',

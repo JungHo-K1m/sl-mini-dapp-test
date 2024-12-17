@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ScrollToTop from "./shared/components/ui/scrollTop";
 import AppInitializer from "./app/components/AppInitializer";
 import { TourProvider } from "@reactour/tour";
