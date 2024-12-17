@@ -31,7 +31,10 @@ import RewardHistory from "./pages/RewardHistory";
 import PreviousRewards from "@/pages/PreviousRewards";
 import FirstRewardPage from "./pages/FirstReward";
 import SettingsPage from "./pages/SettingsPage";
-import PolicyDetailPage from "./pages/PolicyDetail";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ElectronicCommercePolicy from "./pages/CommercePolicy";
+import CollectingPersonalInfo from "./pages/PersonalInfo";
 
 
 // 튜토리얼
@@ -175,7 +178,10 @@ const App:React.FC = () =>{
                     <Route path="/reward-history" element={<DiceEventLayout hidden={true}><RewardHistory /></DiceEventLayout>} />
                     <Route path="/first-reward" element={<DiceEventLayout hidden={true}><FirstRewardPage /></DiceEventLayout>} />
                     <Route path="/settings" element={<DiceEventLayout hidden={true}><SettingsPage /></DiceEventLayout>} />
-                    <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
+                    <Route path="/terms-of-service" element={<DiceEventLayout hidden={true}><TermsOfService /></DiceEventLayout>} />
+                    <Route path="/privacy-policy" element={<DiceEventLayout hidden={true}><PrivacyPolicy /></DiceEventLayout>} />
+                    <Route path="/electronic-commerce-policy" element={<DiceEventLayout hidden={true}><ElectronicCommercePolicy /></DiceEventLayout>} />
+                    <Route path="/collecting-personal-info" element={<DiceEventLayout hidden={true}><CollectingPersonalInfo /></DiceEventLayout>} />
 
                 </Routes>
             )}

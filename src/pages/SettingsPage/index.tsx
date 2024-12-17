@@ -18,7 +18,7 @@ const SettingsPage: React.FC =() => {
                 {/* 서비스 이용 약관 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/policy-detail')}>
+                    onClick={() => navigate('/terms-of-service')}>
                     <div>
                         <p className="font-semibold">Terms of Service</p>
                     </div>
@@ -27,7 +27,7 @@ const SettingsPage: React.FC =() => {
                 {/* 개인정보 처리 방침 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/policy-detail')}>
+                    onClick={() => navigate('/privacy-policy')}>
                     <div>
                         <p className="font-semibold">Privacy Policy</p>
                     </div>
@@ -36,7 +36,7 @@ const SettingsPage: React.FC =() => {
                 {/* 전자상거래 이용약관 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/policy-detail')}>
+                    onClick={() => navigate('/electronic-commerce-policy')}>
                     <div>
                         <p className="font-semibold">Electronic Commerce Policy</p>
                     </div>
@@ -45,7 +45,7 @@ const SettingsPage: React.FC =() => {
                 {/* 개인정보 수집 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/policy-detail')}>
+                    onClick={() => navigate('/collecting-personal-info')}>
                     <div>
                         <p className="font-semibold">Collecting Personal Information</p>
                     </div>
