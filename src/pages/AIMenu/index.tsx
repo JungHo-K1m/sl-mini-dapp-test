@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect  } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
-import useUserStore from "@/shared/store/useInfoStore";
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 import getMyslToken from '@/entities/Asset/api/getSL';
 

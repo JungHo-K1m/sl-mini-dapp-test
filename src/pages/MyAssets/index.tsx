@@ -5,16 +5,74 @@ import { FaChevronRight } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import Images from '@/shared/assets/images';
 import { useTranslation } from "react-i18next";
-import useUserStore from "@/shared/store/useInfoStore";
+import { useUserStore } from "@/entities/User/model/userModel";
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 
 const MyAssets: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { email, userLv, characterImage } = useUserStore();
+    const { userId, userLv, characterType } = useUserStore();
     const [loading, setLoading] = useState(true);
     const [nft, setNFT] = useState(0);
     const [showModal, setShowModal] = useState(false);
+
+    const getCharacterImageSrc = () => {
+        const index = Math.floor((userLv - 1) / 2);
+    
+        const catImages = [
+          Images.CatLv1to2,
+          Images.CatLv3to4,
+          Images.CatLv5to6,
+          Images.CatLv7to8,
+          Images.CatLv9to10,
+          Images.CatLv11to12,
+          Images.CatLv13to14,
+          Images.CatLv15to16,
+          Images.CatLv17to18,
+          Images.CatLv19to20,
+        ];
+    
+        const dogImages = [
+          Images.DogLv1to2,
+          Images.DogLv3to4,
+          Images.DogLv5to6,
+          Images.DogLv7to8,
+          Images.DogLv9to10,
+          Images.DogLv11to12,
+          Images.DogLv13to14,
+          Images.DogLv15to16,
+          Images.DogLv17to18,
+          Images.DogLv19to20,
+        ];
+    
+        if (characterType === "cat") {
+          return catImages[index] || catImages[catImages.length - 1];
+        } else {
+          return dogImages[index] || dogImages[dogImages.length - 1];
+        }
+      };
+    
+    const charactorImageSrc = getCharacterImageSrc();
+
+    let levelClassName = '';
+    let mainColor = '';
+  
+    if (userLv >= 1 && userLv <= 4) {
+      levelClassName = 'lv1to4-box';
+      mainColor = '#dd2726';
+    } else if (userLv >= 5 && userLv <= 8) {
+      levelClassName = 'lv5to8-box';
+      mainColor = '#f59e0b';
+    } else if (userLv >= 9 && userLv <= 12) {
+      levelClassName = 'lv9to12-box';
+      mainColor = '#facc15';
+    } else if (userLv >= 13 && userLv <= 16) {
+      levelClassName = 'lv13to16-box';
+      mainColor = '#22c55e';
+    } else if (userLv >= 17 && userLv <= 20) {
+      levelClassName = 'lv17to20-box';
+      mainColor = '#0147e5';
+    }
 
     // 페이지 진입 후 0.2초 뒤 loading을 false로 변경 => 추후 nft 정보, 보상내역 정보 API 받아오는 시간 동안으로 변경
     useEffect(() => {
@@ -52,16 +110,22 @@ const MyAssets: React.FC = () => {
             {/* 상단 사용자 정보 */}
             <div className="flex items-center justify-between w-full mt-6">
                 <div className="flex items-center">
-                    <img
-                        src={characterImage}
-                        alt="User Profile"
-                        className="w-10 h-10 rounded-full"
-                    />
+                    {/* 이미지 */}
+                    <div className={`flex flex-col items-center justify-center rounded-full w-9 h-9 md:w-10 md:h-10 ${levelClassName}`}>
+                        <img
+                            src={charactorImageSrc}
+                            alt="User Profile"
+                            className="w-10 h-10 rounded-full"
+                        />
+                    </div>
+
+                    {/* 사용자 이름, 레벨 */}
                     <div className="ml-4">
-                        <p className="text-sm font-bold">{email}</p>
+                        <p className="text-sm font-bold">{userId}</p>
                         <p className="text-sm text-red-500">Lv.{userLv}</p>
                     </div>
                 </div>
+
                 <div className="flex items-center gap-4">
                     {/* 지갑 페이지 이동 */}
                     <button 
