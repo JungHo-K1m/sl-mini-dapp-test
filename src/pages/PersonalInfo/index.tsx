@@ -7,8 +7,9 @@ const CollectingPersonalInfo: React.FC = () => {
         <div className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
             <TopTitle title="Policy" back={true} />
 
+            {/* 본문 내용 */}
             <div className="text-left w-full mt-4">
-                <p className="text-xl font-semibold">Consent to Collection and Use of Personal Information</p>
+                <p className="text-xl font-semibold">Consent to Collection and Use of Personal Information</p><br />
 
                 <p className="text-base font-semibold">Purpose of Collection and Use of Personal Information:</p>
                 <p className="text-base">
