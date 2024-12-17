@@ -8,6 +8,36 @@ import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/entities/User/model/userModel";
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 
+interface TruncateMiddleProps {
+    text: any;
+    maxLength: number;
+    className?: string;
+  }
+  
+  // 주소 중간 생략
+  const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
+    text,
+    maxLength,
+    className,
+  }) => {
+    const truncateMiddle = (str: string, maxLen: number): string => {
+      if (str.length <= maxLen) return str;
+  
+      const charsToShow = maxLen - 3; // 3 characters for "..."
+      const frontChars = Math.ceil(charsToShow / 2);
+      const backChars = Math.floor(charsToShow / 2);
+  
+      return (
+        str.substr(0, frontChars) + '...' + str.substr(str.length - backChars)
+      );
+    };
+  
+    const truncatedText = truncateMiddle(text, maxLength);
+  
+    return <div className={`text-sm font-bold ${className}`}>{truncatedText}</div>;
+  };
+  
+
 const MyAssets: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -122,6 +152,7 @@ const MyAssets: React.FC = () => {
                     {/* 사용자 이름, 레벨 */}
                     <div className="ml-4">
                         <p className="text-sm font-bold">{userId}</p>
+                        <TruncateMiddle text={userId} maxLength={20} />
                         <p className="text-sm text-red-500">Lv.{userLv}</p>
                     </div>
                 </div>
