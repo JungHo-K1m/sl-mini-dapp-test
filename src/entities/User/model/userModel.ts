@@ -313,9 +313,20 @@ export const useUserStore = create<UserState>((set, get) => ({
   fetchUserData: async () => {
     set({ isLoading: true, error: null });
     try {
-      const data = await fetchHomeData();
+      let data = await fetchHomeData();
       if (!data) {
-        throw new Error('No data returned from /home API');
+        // 데이터가 없는 경우 토큰 갱신
+        console.warn('No data returned from /home API, trying token refresh...');
+        const tokenRefreshed = await get().refreshToken();
+        
+        if (tokenRefreshed) {
+          data = await fetchHomeData();
+          if (!data) {
+            throw new Error('No data returned even after token refresh');
+          }
+        } else {
+          throw new Error('No data returned and token refresh failed');
+        }
       }
   
       // 서버 응답에서 필요한 데이터 추출
