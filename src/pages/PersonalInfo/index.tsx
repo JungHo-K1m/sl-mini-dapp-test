@@ -8,9 +8,10 @@ const CollectingPersonalInfo: React.FC = () => {
             <TopTitle title="Policy" back={true} />
 
             <div className="text-left w-full mt-4">
-                <p className="text-xl">Consent to Collection and Use of Personal Information</p>
-                <p className="text-base"><br />
-                    <strong>Purpose of Collection and Use of Personal Information:</strong><br />
+                <p className="text-xl font-semibold">Consent to Collection and Use of Personal Information</p>
+
+                <p className="text-base font-semibold">Purpose of Collection and Use of Personal Information:</p>
+                <p className="text-base">
                     Your email information is collected to deliver Newsletters. The collected
                     personal information will not be used for any purpose other than the
                     specified purpose, and in the event of any change in the purpose of the
@@ -25,14 +26,14 @@ const CollectingPersonalInfo: React.FC = () => {
                     <strong>Period of Use and Retention:</strong> 2 years
                 </p><br />
 
-                <p className="text-base">
-                    <strong>Right to Refuse Consent:</strong><br />
+                <p className="text-base font-semibold">Right to Refuse Consent:</p>
+                <p className="text-base font-light">
                     You have the right to refuse to consent to the collection and use of your
                     personal data, and if you do not agree, you will not be able to receive the
                     newsletter.
                 </p><br />
 
-                <p className="text-[#555] text-sm">
+                <p className="text-[#555] text-sm font-semibold">
                     This consent is required for newsletter subscription. Please read the
                     information carefully before proceeding.
                 </p>
