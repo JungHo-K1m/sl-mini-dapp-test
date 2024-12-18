@@ -5,67 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Consent to Collection and Use of Personal Information</title>
     <style>
-      body {
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* 스크롤 제거 */
         font-family: Arial, sans-serif;
-        line-height: 1.6;
-        margin: 20px;
-        color: #ffffff;
         background-color: #0D1226;
+        color: #f0f0f0;
+        line-height: 1.6;
+        width: 100%;
+        height: 100%;
       }
+
+      .container {
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
       h1 {
-        font-size: 1.5rem;
-        font-weight: 600;
+        font-size: 1.8rem;
+        font-weight: 700;
         margin-bottom: 1rem;
+        color: #1E90FF; /* 강조된 파란색 */
       }
+
       h2 {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         font-weight: 600;
         margin-top: 1.5rem;
         margin-bottom: 0.5rem;
       }
+
       p {
         font-size: 1rem;
         margin: 0.5rem 0;
       }
+
       .font-light {
         font-weight: 300;
       }
+
       .font-semibold {
         font-weight: 600;
       }
+
       .text-gray {
-        color: #555;
+        color: #AAAAAA;
         font-size: 0.875rem;
       }
     </style>
   </head>
   <body>
-    <h1>Consent to Collection and Use of Personal Information</h1>
+    <div class="container">
+      <h1>Consent to Collection and Use of Personal Information</h1>
 
-    <h2>Purpose of Collection and Use of Personal Information:</h2>
-    <p>
-      Your email information is collected to deliver Newsletters. The collected
-      personal information will not be used for any purpose other than the
-      specified purpose, and in the event of any change in the purpose of the
-      collection, you will be notified in advance for your consent.
-    </p>
+      <h2>Purpose of Collection and Use of Personal Information:</h2>
+      <p>
+        Your email information is collected to deliver newsletters. The collected
+        personal information will not be used for any purpose other than the
+        specified purpose, and in the event of any change in the purpose of the
+        collection, you will be notified in advance for your consent.
+      </p>
 
-    <h2>Personal Information Collected:</h2>
-    <p class="font-semibold">Email</p>
+      <h2>Personal Information Collected:</h2>
+      <p class="font-semibold">Email</p>
 
-    <h2>Period of Use and Retention:</h2>
-    <p class="font-semibold">2 years</p>
+      <h2>Period of Use and Retention:</h2>
+      <p class="font-semibold">2 years</p>
 
-    <h2>Right to Refuse Consent:</h2>
-    <p class="font-light">
-      You have the right to refuse to consent to the collection and use of your
-      personal data, and if you do not agree, you will not be able to receive the
-      newsletter.
-    </p>
+      <h2>Right to Refuse Consent:</h2>
+      <p class="font-light">
+        You have the right to refuse to consent to the collection and use of your
+        personal data, and if you do not agree, you will not be able to receive the
+        newsletter.
+      </p>
 
-    <p class="text-gray font-semibold">
-      This consent is required for newsletter subscription. Please read the
-      information carefully before proceeding.
-    </p>
+      <p class="text-gray font-semibold">
+        This consent is required for newsletter subscription. Please read the
+        information carefully before proceeding.
+      </p>
+    </div>
   </body>
 </html>
