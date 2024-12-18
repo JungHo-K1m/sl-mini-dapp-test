@@ -35,6 +35,7 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ElectronicCommercePolicy from "./pages/CommercePolicy";
 import CollectingPersonalInfo from "./pages/PersonalInfo";
+import PolicyDetailPage from "./pages/PolicyDetail";
 
 
 // 튜토리얼
@@ -182,6 +183,7 @@ const App:React.FC = () =>{
                     <Route path="/privacy-policy" element={<DiceEventLayout hidden={true}><PrivacyPolicy /></DiceEventLayout>} />
                     <Route path="/electronic-commerce-policy" element={<DiceEventLayout hidden={true}><ElectronicCommercePolicy /></DiceEventLayout>} />
                     <Route path="/collecting-personal-info" element={<DiceEventLayout hidden={true}><CollectingPersonalInfo /></DiceEventLayout>} />
+                    <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
 
                 </Routes>
             )}
