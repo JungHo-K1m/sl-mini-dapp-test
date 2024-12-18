@@ -5,55 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Consent to Collection and Use of Personal Information</title>
     <style>
-      html, body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* 스크롤 제거 */
-        font-family: Arial, sans-serif;
-        background-color: #0D1226;
-        color: #f0f0f0;
-        line-height: 1.6;
-        width: 100%;
-        height: 100%;
-      }
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* 전체 높이 차지 */
+            overflow-y: auto; /* 필요한 경우 스크롤 활성화 */
+        }   
+        .container {
+            padding: 20px;
+            box-sizing: border-box; /* 내부 패딩 포함 */
+            height: 100%; /* 컨테이너 높이 설정 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* 콘텐츠가 짤리지 않도록 분배 */
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1E90FF; /* 강조된 파란색 */
+        }
 
-      .container {
-        padding: 20px;
-        max-width: 800px;
-        margin: 0 auto;
-      }
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-      h1 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        color: #1E90FF; /* 강조된 파란색 */
-      }
+        p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
 
-      h2 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
+        .font-light {
+            font-weight: 300;
+        }
 
-      p {
-        font-size: 1rem;
-        margin: 0.5rem 0;
-      }
+        .font-semibold {
+            font-weight: 600;
+        }
 
-      .font-light {
-        font-weight: 300;
-      }
-
-      .font-semibold {
-        font-weight: 600;
-      }
-
-      .text-gray {
-        color: #AAAAAA;
-        font-size: 0.875rem;
-      }
+        .text-gray {
+            color: #AAAAAA;
+            font-size: 0.875rem;
+        }
     </style>
   </head>
   <body>

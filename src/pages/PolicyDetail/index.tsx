@@ -10,7 +10,7 @@ const PolicyDetailPage: React.FC = () => {
           <TopTitle title="Policy" back={true} />
 
           {/* 정책 내용 */}
-          <div className="w-full h-screen mb-4">
+          <div className="w-full h-[calc(100vh-4rem)] mb-4">
             <iframe
               src={iframeSrc}
               title="Policy Detail"
