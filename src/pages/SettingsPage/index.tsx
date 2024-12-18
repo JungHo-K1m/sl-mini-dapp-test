@@ -27,7 +27,7 @@ const SettingsPage: React.FC =() => {
                 {/* 개인정보 처리 방침 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/policy-detail')}>
+                    onClick={() => navigate('/privacy-policy')}>
                     <div>
                         <p className="font-semibold">Privacy Policy</p>
                     </div>
@@ -45,7 +45,7 @@ const SettingsPage: React.FC =() => {
                 {/* 개인정보 수집 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/collecting-personal-info')}>
+                    onClick={() => navigate('/policy-detail')}>
                     <div>
                         <p className="font-semibold">Collecting Personal Information</p>
                     </div>

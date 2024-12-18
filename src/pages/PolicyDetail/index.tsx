@@ -9,7 +9,7 @@ const PolicyDetailPage: React.FC = () => {
   useEffect(() => {
     const handleResizeMessage = (event: MessageEvent) => {
       if (event.data?.type === "resizeIframe" && event.data.height) {
-        setIframeHeight(`${event.data.height}px`);
+        setIframeHeight(`${event.data.height + 16}px`);
       }
     };
 
@@ -25,7 +25,7 @@ const PolicyDetailPage: React.FC = () => {
           <TopTitle title="Policy" back={true} />
 
           {/* 정책 내용 */}
-          <div className="w-full mb-4">
+          <div className="w-full">
             <iframe
               src={iframeSrc}
               title="Policy Detail"
