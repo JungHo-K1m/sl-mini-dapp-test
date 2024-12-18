@@ -11,7 +11,7 @@ const SettingsPage: React.FC =() => {
 
 
     return(
-        <div className="flex flex-col items-center text-white min-h-screen">
+        <div className="flex flex-col items-center text-white px-6 min-h-screen">
             <TopTitle title="Settings" back={true} />
 
             <div className="w-full">

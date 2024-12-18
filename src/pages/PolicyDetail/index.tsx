@@ -21,7 +21,7 @@ const PolicyDetailPage: React.FC = () => {
   }, []);
 
   return(
-      <div className="flex flex-col items-center bg-transparent text-white min-h-screen mb-5">
+      <div className="flex flex-col items-center bg-transparent text-white px-6 min-h-screen mb-5">
           <TopTitle title="Policy" back={true} />
 
           {/* 정책 내용 */}

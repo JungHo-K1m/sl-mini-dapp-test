@@ -34,7 +34,7 @@ const RewardHistory: React.FC = () => {
     });
 
     return (
-        <div className="flex flex-col text-white mb-32 min-h-screen">
+        <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
             <TopTitle title={t("asset_page.Rewards_History")} back={true} />
 
             {/* 필터링 버튼 */}

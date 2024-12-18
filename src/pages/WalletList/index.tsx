@@ -253,7 +253,7 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
     };
 
     return (
-        <div className="flex flex-col text-white mb-32 min-h-screen">
+        <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
             <TopTitle title={t("wallet_page.wallet")} back={true} />
 
             {/* 필터링된 거래소 표시 */}
