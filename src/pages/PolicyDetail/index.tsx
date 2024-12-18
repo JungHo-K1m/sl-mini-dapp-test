@@ -9,7 +9,11 @@ const PolicyDetailPage: React.FC = () => {
   useEffect(() => {
     const handleResizeMessage = (event: MessageEvent) => {
       if (event.data?.type === "resizeIframe" && event.data.height) {
-        setIframeHeight(`${event.data.height + 16}px`);
+        const newHeight = `${event.data.height + 16}px`; // 동적 높이 + 여백
+        if (newHeight !== iframeHeight) {
+          // 높이가 변경된 경우에만 업데이트
+          setIframeHeight(newHeight);
+        }
       }
     };
 
@@ -18,7 +22,7 @@ const PolicyDetailPage: React.FC = () => {
     return () => {
       window.removeEventListener("message", handleResizeMessage);
     };
-  }, []);
+  }, [iframeHeight]); // iframeHeight를 의존성으로 추가
 
   return(
       <div className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
