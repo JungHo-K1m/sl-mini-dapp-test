@@ -143,7 +143,7 @@ const WalletPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col text-white mb-32 mx-6 min-h-screen">
+    <div className="flex flex-col text-white mb-32 min-h-screen">
       <div
         className={`h-14 flex items-center w-full font-bold text-xl mb-8 justify-between`}
         onClick={() => navigate("/my-assets")}

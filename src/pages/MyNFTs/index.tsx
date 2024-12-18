@@ -20,7 +20,7 @@ const MyNfts: React.FC = () => {
       ];
 
     return (
-        <div className="flex flex-col text-white mb-2  mx-6 min-h-screen">
+        <div className="flex flex-col text-white mb-2 min-h-screen">
             <TopTitle title={t("asset_page.My_NFT_Collection")} back={true} />
 
             {/* NFT 컬렉션 */}
