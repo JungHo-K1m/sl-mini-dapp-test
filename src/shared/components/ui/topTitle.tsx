@@ -1,27 +1,45 @@
-import { IoChevronBackOutline } from "react-icons/io5";
-import { useNavigate  } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { TopTitle } from "@/shared/components/ui";
 
-interface TopTitleProps {
-  title: string;
-  className?: string;
-  back?: boolean;
-}
+const PolicyDetailPage: React.FC = () => {
+  const [iframeHeight, setIframeHeight] = useState<string>("0px");
+  const iframeSrc = "/policies/personalInfo.html";
 
-const TopTitle: React.FC<TopTitleProps> = ({ title, className, back }) => {
+  useEffect(() => {
+    const handleResizeMessage = (event: MessageEvent) => {
+      if (event.data?.type === "resizeIframe" && event.data.height) {
+        const newHeight = `${event.data.height + 16}px`; // 동적 높이 + 여백
+        if (newHeight !== iframeHeight) {
+          setIframeHeight(newHeight); // 높이가 변경된 경우에만 업데이트
+        }
+      }
+    };
 
-  const navigate = useNavigate();
+    window.addEventListener("message", handleResizeMessage);
 
+    return () => {
+      window.removeEventListener("message", handleResizeMessage);
+    };
+  }, [iframeHeight]);
 
   return (
-    <div
-      className={`h-14 flex items-center  w-full font-bold text-xl mb-8 ${className} ${back ? "justify-between" :"justify-center"}`}
-      onClick={() => back && navigate(-1)}
-    >
-      <IoChevronBackOutline className={`w-6 h-6 ${back ? "" : "hidden"}`} />
-      <p>{title}</p>
-      <div className={`w-6 h-6 ${back ? "" : "hidden"}`} ></div>
+    <div className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
+      <TopTitle title="Policy" back={true} />
+
+      {/* 정책 내용 */}
+      <div className="w-full">
+        <iframe
+          src={iframeSrc}
+          title="Policy Detail"
+          style={{
+            border: "none",
+            width: "100%",
+            height: iframeHeight,
+          }}
+        />
+      </div>
     </div>
   );
 };
 
-export { TopTitle };
+export default PolicyDetailPage;

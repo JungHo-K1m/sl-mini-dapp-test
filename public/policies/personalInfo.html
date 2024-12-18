@@ -60,9 +60,10 @@
           parent.postMessage({ type: "resizeIframe", height }, "*");
         }
       
-        window.addEventListener("load", sendHeightToParent);
+        // DOMContentLoaded로 시점을 조정
+        window.addEventListener("DOMContentLoaded", sendHeightToParent);
+        window.addEventListener("resize", sendHeightToParent); // 콘텐츠 크기 변경 시 재계산
       </script>
-      
   </head>
   <body>
     <div class="container">
