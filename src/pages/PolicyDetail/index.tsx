@@ -3,36 +3,23 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { TopTitle } from '@/shared/components/ui';
 
 const PolicyDetailPage: React.FC = () => {
-    const [content, setContent] = useState<string>("");
-  
-    // HTML 파일 불러오기
-    useEffect(() => {
-      const fetchContent = async () => {
-        try {
-          const response = await fetch("/policies/personalInfo.html");
-          const htmlContent = await response.text();
-          setContent(htmlContent);
-        } catch (error) {
-          console.error("Failed to load policy content:", error);
-        }
-      };
-  
-      fetchContent();
-    }, []);
+  const [iframeSrc] = useState<string>("/policies/personalInfo.html");
 
+  return(
+      <div className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
+          <TopTitle title="Policy" back={true} />
 
-    return(
-        <div 
-            className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
-            <TopTitle title="Policy" back={true} />
-
-            {/* 정책 내용 */}
-            <div
-                className="text-white mx-4 my-4"
-                dangerouslySetInnerHTML={{ __html: content }}
+          {/* 정책 내용 */}
+          <div className="w-full h-screen border border-gray-300 rounded-md">
+            <iframe
+              src={iframeSrc}
+              title="Policy Detail"
+              className="w-full h-full"
+              style={{ border: "none" }}
             />
-        </div>
-    );
+          </div>
+      </div>
+  );
 };
 
 export default PolicyDetailPage;
