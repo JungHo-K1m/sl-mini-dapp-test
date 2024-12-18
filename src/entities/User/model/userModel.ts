@@ -67,6 +67,8 @@ interface UserState {
   rank: number;
   setRank: (rank: number) => void;
 
+  previousRank : number;
+
   monthlyPrize: MonthlyPrize;
   setMonthlyPrize: (monthlyPrize: MonthlyPrize) => void;
 
@@ -226,7 +228,13 @@ export const useUserStore = create<UserState>((set, get) => ({
     })),
 
   rank: 0,
-  setRank: (rank) => set({ rank }),
+  setRank: (rank) =>
+    set((state) => ({
+      previousRank: state.rank, // 현재 랭크를 이전 랭크로 저장
+      rank, // 새 랭크 업데이트
+    })),
+
+  previousRank: 0,
 
   monthlyPrize: {
     year: 0,
@@ -266,7 +274,8 @@ export const useUserStore = create<UserState>((set, get) => ({
       const data = await rollDiceAPI(gauge, sequence);
   
       // 서버 응답에서 level과 exp를 상태에 직접 설정
-      set({
+      set((state) =>({
+        previousRank: state.rank, // 이전 랭크 저장
         rank: data.rank,
         starPoints: data.star,
         lotteryCount: data.ticket,
@@ -280,7 +289,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         },
         isLoading: false,
         error: null,
-      });
+      }));
   
       return data; // 데이터를 반환합니다.
     } catch (error: any) {
@@ -356,6 +365,7 @@ export const useUserStore = create<UserState>((set, get) => ({
   
         slToken: rank.slToken,
         rank: rank.rank,
+        previousRank: rank.rank,
         diceRefilledAt: rank.diceRefilledAt, // 추가된 부분: diceRefilledAt 설정
   
         items: {

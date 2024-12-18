@@ -18,9 +18,9 @@ export interface RangeRankingData {
   userId: string;
   rank: number;
   slRewards: number;
-  usdtRewards: number;
+  usdcRewards: number;
   nftType: string | null; // GOLD/SILVER/BRONZE/null
-  selectedRewardType?: string | null; // USDT/SL/NULL
+  selectedRewardType?: string | null; // USDC/SL/NULL
   itsMe?: boolean; // 추가된 필드
 }
 

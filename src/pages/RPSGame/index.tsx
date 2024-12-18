@@ -168,7 +168,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
               </p>
             </div>
             <div className="bg-[#21212f] rounded-full flex items-center justify-center h-8 w-11 text-sm font-semibold text-white">
-              x{winMultiplier}
+              x{winMultiplier*3 >27 ? 27 : winMultiplier*3}
             </div>
           </div>
 

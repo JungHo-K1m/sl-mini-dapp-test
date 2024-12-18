@@ -4,7 +4,7 @@ export interface RankingAward {
   rangeStart: number;
   rangeEnd: number;
   slRewards: number;
-  usdtRewards: number | null;
+  usdcRewards: number | null;
   nftType: "GOLD" | "SILVER" | "BRONZE" | null;
 }
 
@@ -12,15 +12,15 @@ export interface DrawAward {
   rangeStart: number;
   rangeEnd: number;
   slRewards: number;
-  usdtRewards: number | null;
+  usdcRewards: number | null;
   nftType: "GOLD" | "SILVER" | "BRONZE" | null;
 }
 
 export interface AirDropAward {
   winnerNum: number | null;
   slRewards: number;
-  usdtRewards: number | null;
-  nftType: "GOLD" | "SILVER" | "BRONZE" | null;
+  usdcRewards?: number | null;
+  nftType?: "GOLD" | "SILVER" | "BRONZE" | null;
 }
 
 export type Award = RankingAward | DrawAward | AirDropAward;

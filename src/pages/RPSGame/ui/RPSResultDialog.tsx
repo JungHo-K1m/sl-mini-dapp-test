@@ -162,7 +162,7 @@ const RPSResultDialog: React.FC<RPSResultDialogProps> = ({
             onContinue={onContinue}
             onQuit={onQuit}
             consecutiveWins={consecutiveWins}
-            winMultiplier={winMultiplier}
+            winMultiplier={winMultiplier*3}
           />
         ) : (
           <ResultLose winnings={winnings} onQuit={onQuit} />

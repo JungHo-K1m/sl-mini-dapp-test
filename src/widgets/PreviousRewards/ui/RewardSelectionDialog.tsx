@@ -18,11 +18,11 @@ interface RewardSelectionDialogProps {
   open: boolean;
   onClose: () => void;
   data: PlayerData | null;
-  onSelect: (type: "USDT" | "SL") => void;
+  onSelect: (type: "USDC" | "SL") => void;
 }
 
 const RewardSelectionDialog: React.FC<RewardSelectionDialogProps> = ({ open, onClose, data, onSelect }) => {
-  const [selectedReward, setSelectedReward] = useState<"USDT" | "SL" | null>(null);
+  const [selectedReward, setSelectedReward] = useState<"USDC" | "SL" | null>(null);
 
   // 다이어로그가 닫힐 때 selectedReward를 초기화
   useEffect(() => {
@@ -31,7 +31,7 @@ const RewardSelectionDialog: React.FC<RewardSelectionDialogProps> = ({ open, onC
     }
   }, [open]);
 
-  const handleRewardClick = (type: "USDT" | "SL") => {
+  const handleRewardClick = (type: "USDC" | "SL") => {
     setSelectedReward(type); // 선택한 보상을 상태에 저장
   };
 
@@ -77,16 +77,16 @@ const RewardSelectionDialog: React.FC<RewardSelectionDialogProps> = ({ open, onC
 
           <p className='text-center font-semibold text-xl'>OR</p>
 
-          {/* USDT 보상 선택 영역 */}
+          {/* USDC 보상 선택 영역 */}
           <div
             className={`flex flex-row p-5 items-center justify-around border-2 rounded-2xl cursor-pointer ${
-              selectedReward === "USDT" ? "border-[#0147E5] box-bg" : "border-[#737373]"
+              selectedReward === "USDC" ? "border-[#0147E5] box-bg" : "border-[#737373]"
             }`}
-            onClick={() => handleRewardClick("USDT")}
+            onClick={() => handleRewardClick("USDC")}
           >
             <div className='flex flex-col items-center gap-1 justify-center'>
-              <img src={Images.Usdt} alt="usdt" className="w-7 h-7" />
-              <p className='text-sm font-semibold'>+{data && (data.usdtRewards ?? 0).toLocaleString()}</p>
+              <img src={Images.USDC} alt="USDC" className="w-7 h-7" />
+              <p className='text-sm font-semibold'>+{data && (data.usdcRewards ?? 0).toLocaleString()}</p>
             </div>
             {/* NFT 보상이 있는 경우에만 + 아이콘과 NFT 정보 표시 */}
             {showNFT && (

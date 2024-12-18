@@ -26,13 +26,11 @@ interface RankingSectionProps {
   isLoadingRange: boolean;
   rangeError: string | null;
   handleRangeClick: (start: number, end: number) => void;
-  isLoadingInitial?: boolean; // 추가된 prop (RankingSection에서는 필요 없음)
-  errorInitial?: string | null; // 추가된 prop (RankingSection에서는 필요 없음)
 }
 
 const RankingSection: React.FC<RankingSectionProps> = ({
-  myData,
-  topRankings,
+  myData = null, // 기본값 설정
+  topRankings = [], // 기본값 설정
   isReceived,
   onGetReward,
   dialogOpen,
@@ -44,24 +42,22 @@ const RankingSection: React.FC<RankingSectionProps> = ({
   handleRangeClick,
 }) => {
 
-  // useEffect(() => {
-  //   console.log("RankingSection myData:", myData);
-  // }, [myData]);
+  useEffect(() => {
+    console.log("RankingSection myData:", myData);
+  }, [myData]);
 
   return (
-    <div className="p-6 bg-[#0D1226] text-white w-full h-full">
+    <div className="p-6 bg-[#0D1226] text-white w-full ">
       {myData ? (
         <>
           {/* 랭킹이 1000위 안에 들지 못한 경우 */}
           {myData.rank > 1000 ? (
-            <>
-              <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
+            <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
               <p className="font-semibold text-sm text-center">
                 Your Rank: #<span className="text-[#FDE047] font-bold">{myData.rank}</span><br/>
-                Keep playing and try agin next time!
+                Keep playing and try again next time!
               </p>
-        </div>
-            </>
+            </div>
           ) : (
             // 랭킹이 1000위 이내인 경우
             <>
@@ -74,14 +70,14 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                     Received
                   </div>
                 )}
-                <p>{myData.rank}</p>
+                <p>#{myData.rank}</p>
                 <div className="flex flex-col gap-1">
                   <p>{myData.userId}</p>
                   <div className="flex flex-row items-center gap-1">
                     <img
                       src={
-                        myData.selectedRewardType === "USDT"
-                          ? Images.Usdt
+                        myData.selectedRewardType === "USDC"
+                          ? Images.USDC
                           : Images.TokenReward
                       }
                       alt="token"
@@ -90,7 +86,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                     <p className="text-sm font-semibold">
                       {(myData.slRewards ?? 0).toLocaleString()}{" "}
                       <span className="font-normal text-[#a3a3a3]">
-                        (or {(myData.usdtRewards ?? 0).toLocaleString()} USDT)
+                        (or {(myData.usdcRewards ?? 0).toLocaleString()} USDC)
                       </span>{" "}
                       {myData.nftType ? `+ ${myData.nftType} NFT` : ""}
                     </p>
@@ -117,46 +113,50 @@ const RankingSection: React.FC<RankingSectionProps> = ({
         <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
           <p className="font-semibold text-sm text-center">
             You didn't rank this time. <br />
-           Keep playing and try agin next time!
+            Keep playing and try again next time!
           </p>
         </div>
       )}
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
-        {topRankings.slice(0, 20).map((r) => {
-          const rReceived =
-            r.selectedRewardType === "USDT" || r.selectedRewardType === "SL";
-          return (
-            <div
-              key={r.rank}
-              className={`relative flex flex-row items-center p-4 border-b gap-4 `}
-            >
-              <p>{r.rank}</p>
-              <div className="flex flex-col gap-1">
-                <p>{r.userId}</p>
-                <div className={`flex flex-row items-center gap-1`}>
-                  <img
-                    src={
-                      r.selectedRewardType === "USDT"
-                        ? Images.Usdt
-                        : Images.TokenReward
-                    }
-                    alt="token"
-                    className="w-5 h-5"
-                  />
-                  <p className={`text-sm font-semibold`}>
-                    {r.slRewards.toLocaleString()}{" "}
-                    <span className="font-normal text-[#a3a3a3]">
-                      (or {r.usdtRewards.toLocaleString()} USDT)
-                    </span>{" "}
-                    {r.nftType ? `+ ${r.nftType} NFT` : ""}
-                  </p>
+        {topRankings.length > 0 ? (
+          topRankings.slice(0, 20).map((r) => {
+            const rReceived =
+              r.selectedRewardType === "USDC" || r.selectedRewardType === "SL";
+            return (
+              <div
+                key={r.rank}
+                className={`relative flex flex-row items-center p-4 border-b gap-4`}
+              >
+                <p>#{r.rank}</p>
+                <div className="flex flex-col gap-1">
+                  <p>{r.userId}</p>
+                  <div className="flex flex-row items-center gap-1">
+                    <img
+                      src={
+                        r.selectedRewardType === "USDC"
+                          ? Images.USDC
+                          : Images.TokenReward
+                      }
+                      alt="token"
+                      className="w-5 h-5"
+                    />
+                    <p className="text-sm font-semibold">
+                      {(r.slRewards ?? 0).toLocaleString()}{" "}
+                      <span className="font-normal text-[#a3a3a3]">
+                        (or {(r.usdcRewards ?? 0).toLocaleString()} USDC)
+                      </span>{" "}
+                      {r.nftType ? `+ ${r.nftType} NFT` : ""}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <p className="text-center text-sm">No rankings available</p>
+        )}
       </div>
 
       {/* Dialogs */}
@@ -180,8 +180,8 @@ const RankingSection: React.FC<RankingSectionProps> = ({
             <DialogHeader>
               <DialogTitle>{dialogTitle}</DialogTitle>
             </DialogHeader>
-            {isLoadingRange && <div>Loading...</div>}
-            {rangeError && <div className="text-red-500">{rangeError}</div>}
+            {isLoadingRange && <LoadingSpinner />}
+            {rangeError && <ErrorMessage message={rangeError} />}
             {!isLoadingRange &&
               !rangeError &&
               dialogRankings.map((r) => (
@@ -191,7 +191,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                     r.itsMe ? "text-[#FDE047] font-bold" : ""
                   }`}
                 >
-                  <p>{r.rank}</p>
+                  <p>#{r.rank}</p>
                   <p>{r.userId}</p>
                 </div>
               ))}

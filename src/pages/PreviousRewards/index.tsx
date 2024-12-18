@@ -25,7 +25,7 @@ interface RewardData {
   rank: number;
   userId: string;
   slRewards: number;
-  usdtRewards: number;
+  usdcRewards: number;
   nftType: string | null;
   selectedRewardType: string | null;
   itsMe?: boolean; // 추가된 필드
@@ -104,10 +104,10 @@ const PreviousRewards: React.FC = () => {
   };
 
   const myData = myRanking && myRanking.length > 0 ? myRanking[0] : null;
-  const isReceived = myData?.selectedRewardType === "USDT" || myData?.selectedRewardType === "SL";
+  const isReceived = myData?.selectedRewardType === "USDC" || myData?.selectedRewardType === "SL";
 
   const currentRaffleItem = raffleMyRankings && raffleMyRankings.length > 0 ? raffleMyRankings[currentRaffleIndex] : null;
-  const raffleIsReceived = currentRaffleItem?.selectedRewardType === "USDT" || currentRaffleItem?.selectedRewardType === "SL";
+  const raffleIsReceived = currentRaffleItem?.selectedRewardType === "USDC" || currentRaffleItem?.selectedRewardType === "SL";
 
   // dialogRankings, dialogRaffleRankings -> PlayerData 형태 변환
   const dialogRankingsPlayerData = dialogRankings.map(r => ({
@@ -138,7 +138,7 @@ const PreviousRewards: React.FC = () => {
     }
   };
 
-  const handleSelectRewardType = async (type: "USDT" | "SL", overrideData?: RewardData) => {
+  const handleSelectRewardType = async (type: "USDC" | "SL", overrideData?: RewardData) => {
     const targetData = overrideData ?? selectedMyData;
     if (!targetData) return;
 
@@ -241,7 +241,7 @@ const PreviousRewards: React.FC = () => {
                 rank: myData.rank,
                 userId: myData.userId,
                 slRewards: myData.slRewards ?? 0,
-                usdtRewards: myData.usdtRewards ?? 0,
+                usdcRewards: myData.usdcRewards ?? 0,
                 nftType: myData.nftType ?? null,
                 selectedRewardType: myData.selectedRewardType ?? null,
                 itsMe: myData.itsMe ?? false, // 추가된 필드
@@ -286,7 +286,7 @@ const PreviousRewards: React.FC = () => {
               rank: currentRaffleItem.rank,
               userId: currentRaffleItem.userId,
               slRewards: currentRaffleItem.slRewards,
-              usdtRewards: currentRaffleItem.usdtRewards,
+              usdcRewards: currentRaffleItem.usdcRewards,
               nftType: currentRaffleItem.nftType ?? null,
               selectedRewardType: currentRaffleItem.selectedRewardType ?? null,
               itsMe: currentRaffleItem.itsMe ?? false, // 추가된 필드

@@ -8,13 +8,12 @@ const TermsOfService: React.FC = () => {
             <TopTitle title="Policy" back={true} />
 
             {/* 제목 */}
-            <p className="text-xl font-semibold">Terms of Service</p><br />
+            <p className="text-xl font-semibold">Terms of Service</p>
             
             {/* 본문 내용 */}
             <div className="text-left w-full mt-4">
-
-                <p className="text-base font-semibold mt-6 underline">Last Update: Nov 25th, 2024</p><br /><br />
-                <p className="text-base font-semibold mt-6">Welcome to LUCKY DICE!</p><br /><br />
+                <p className="text-base font-semibold mt-6 underline">Last Update: Nov 25th, 2024</p>
+                <p className="text-base font-semibold mt-6">Welcome to LUCKY DICE!</p>
                 <p className="text-base">
                     LUCKY DICE (“the Company”) is an NFT-based game focused on animal health diagnostics powered by medical AI. 
                     It is owned and operated by SAVE THE LIFE FOUNDATION. These Terms of Service (“Terms”) govern your access to and use of the website(s), 

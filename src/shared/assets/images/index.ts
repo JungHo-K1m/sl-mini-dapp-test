@@ -103,7 +103,6 @@ import SLToken from "./slToken.png";
 import bitget_logo from "./bitget_logo.png";
 import kraken_logo from "./kraken_logo.png";
 import gate_io_logo from "./gate_io.png";
-import Usdt from "./usdt.png";
 import LinkedIn from "./LinkedIn.png";
 import MissionCompleted from "./mission-completed.png";
 import Calender from "./calendar.png";
@@ -142,6 +141,7 @@ import firstPoints from "./first-star.png";
 import firstSL from "./first-sl.png";
 import firstDice from "./first-dice.png";
 import AirDrop from "./airdrop.png";
+import USDC from "./usdc.png";
 
 
 const Images = {
@@ -249,7 +249,6 @@ const Images = {
   bitget_logo,
   kraken_logo,
   gate_io_logo,
-  Usdt,
   LinkedIn,
   MissionCompleted,
   Calender,
@@ -288,6 +287,7 @@ const Images = {
   firstPoints,
   firstSL,
   AirDrop,
+  USDC,
 };
 
 export default Images;
