@@ -54,6 +54,23 @@
             font-size: 0.875rem;
         }
     </style>
+    <script>
+        function sendHeightToParent() {
+          const body = document.body;
+          const html = document.documentElement;
+          const height = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+          );
+          parent.postMessage({ type: "resizeIframe", height }, "*");
+        }
+  
+        window.addEventListener("load", sendHeightToParent);
+        window.addEventListener("resize", sendHeightToParent);
+      </script>
   </head>
   <body>
     <div class="container">

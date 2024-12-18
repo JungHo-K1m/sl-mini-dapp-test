@@ -3,19 +3,37 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { TopTitle } from '@/shared/components/ui';
 
 const PolicyDetailPage: React.FC = () => {
-  const [iframeSrc] = useState<string>("/policies/personalInfo.html");
+  const [iframeHeight, setIframeHeight] = useState<string>("0px");
+  const iframeSrc = "/policies/personalInfo.html";
+
+  useEffect(() => {
+    const handleResizeMessage = (event: MessageEvent) => {
+      if (event.data?.type === "resizeIframe" && event.data.height) {
+        setIframeHeight(`${event.data.height}px`);
+      }
+    };
+
+    window.addEventListener("message", handleResizeMessage);
+
+    return () => {
+      window.removeEventListener("message", handleResizeMessage);
+    };
+  }, []);
 
   return(
       <div className="flex flex-col items-center bg-transparent text-white mx-6 min-h-screen">
           <TopTitle title="Policy" back={true} />
 
           {/* 정책 내용 */}
-          <div className="w-full h-screen mb-4">
+          <div className="w-full mb-4">
             <iframe
               src={iframeSrc}
               title="Policy Detail"
-              className="w-full h-full"
-              style={{ border: "none" }}
+              style={{
+                border: "none",
+                width: "100%",
+                height: iframeHeight, // 동적으로 높이 설정
+              }}
             />
           </div>
       </div>
