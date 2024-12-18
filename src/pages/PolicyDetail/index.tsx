@@ -36,7 +36,7 @@ const PolicyDetailPage: React.FC = () => {
               }}
             />
           </div>
-          <div className="mb-8"> </div>
+          <div className="w-full h-5"></div>
       </div>
   );
 };
