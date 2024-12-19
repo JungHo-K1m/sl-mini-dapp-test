@@ -41,13 +41,13 @@ const RewardHistory: React.FC = () => {
 
     // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
-        // 자산 필터
-        const assetIncluded = selectedAssets.some((asset) =>
-            reward.points.endsWith(asset)
-        );
+        // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
+        const assetIncluded =
+            selectedAssets.length === 0 || selectedAssets.some((asset) => reward.points.endsWith(asset));
 
-        // 증감 필터
+        // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
+            selectedChanges.length === 0 ||
             (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
             (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
 
@@ -57,19 +57,19 @@ const RewardHistory: React.FC = () => {
     // DatePicker용 Custom Input
     const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
         ({ value, onClick, placeholder }, ref) => (
-        <div
-            className="flex items-center w-full px-4 py-2 bg-gray-800 text-white rounded-lg cursor-pointer focus:ring focus:ring-blue-500"
-            onClick={onClick}
+            <div
+                className="flex items-center w-full px-4 py-2 bg-gray-800 text-white rounded-lg cursor-pointer focus:ring focus:ring-blue-500"
+                onClick={onClick}
             >
-            <input
-            ref={ref}
-            value={value}
-            readOnly
-            placeholder={placeholder}
-            className="bg-transparent outline-none w-full text-white"
-            />
-            <FaCalendarAlt className="text-blue-500 ml-2" />
-        </div>
+                <input
+                    ref={ref}
+                    value={value}
+                    readOnly
+                    placeholder={placeholder}
+                    className="bg-transparent outline-none w-full text-white"
+                />
+                <FaCalendarAlt className="text-blue-500 ml-2" />
+            </div>
         )
     );
     CustomDateInput.displayName = "CustomDateInput";
@@ -83,7 +83,7 @@ const RewardHistory: React.FC = () => {
                 <div
                     className="flex items-center justify-between cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)}
-                    >
+                >
                     <div className="flex items-center">
                         <p className="text-lg font-semibold">Filter Option</p>
                     </div>
@@ -96,41 +96,42 @@ const RewardHistory: React.FC = () => {
                     animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
-                    >
+                >
                     <div className="mt-4 mx-3">
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-col gap-2">
                             {["USDC", "SL", "Point"].map((asset) => (
                                 <label key={asset} className="flex items-center text-sm">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedAssets.includes(asset)}
-                                    onChange={() => handleAssetChange(asset)}
-                                    className="mr-2"
-                                />
-                                {asset}
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedAssets.includes(asset)}
+                                        onChange={() => handleAssetChange(asset)}
+                                        className="mr-2"
+                                    />
+                                    {asset}
                                 </label>
                             ))}
                         </div>
 
                         {/* 증감 필터 */}
                         <p className="text-lg font-medium text-left mt-4 mb-2">Change Types</p>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-col gap-2">
                             {["Increase", "Decrease"].map((change) => (
                                 <label key={change} className="flex items-center text-sm">
-                                <input
-                                    type="checkbox"
-                                    checked={selectedChanges.includes(change)}
-                                    onChange={() => handleChangeType(change)}
-                                    className="mr-2"
-                                />
-                                {change}
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedChanges.includes(change)}
+                                        onChange={() => handleChangeType(change)}
+                                        className="mr-2"
+                                    />
+                                    {change}
                                 </label>
                             ))}
                         </div>
+
                         {/* 날짜 범위 선정 */}
-                        <p className="text-lg font-medium text-left">Date Ranges</p>
+                        <p className="text-lg font-medium text-left mt-4">Date Ranges</p>
                         <div className="flex items-center gap-4 mt-4">
                             {/* Start Date Picker */}
                             <div className="w-full">
@@ -138,15 +139,14 @@ const RewardHistory: React.FC = () => {
                                     selected={startDate}
                                     onChange={(date) => {
                                         setStartDate(date);
-                                        // StartDate가 변경되면 EndDate 초기화 (범위 밖 선택 방지)
                                         if (endDate && date && date > endDate) {
-                                        setEndDate(null);
+                                            setEndDate(null);
                                         }
                                     }}
                                     placeholderText="Start Date"
                                     customInput={<CustomDateInput placeholder="Start Date" />}
                                     dateFormat="yyyy-MM-dd"
-                                    maxDate={endDate || undefined} // EndDate 이전 날짜만 선택 가능
+                                    maxDate={endDate || undefined}
                                 />
                             </div>
 
@@ -158,7 +158,7 @@ const RewardHistory: React.FC = () => {
                                     placeholderText="End Date"
                                     customInput={<CustomDateInput placeholder="End Date" />}
                                     dateFormat="yyyy-MM-dd"
-                                    minDate={startDate || undefined} // StartDate 이후 날짜만 선택 가능
+                                    minDate={startDate || undefined}
                                 />
                             </div>
                         </div>
