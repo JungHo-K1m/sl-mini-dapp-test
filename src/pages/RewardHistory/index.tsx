@@ -83,28 +83,35 @@ const RewardHistory: React.FC = () => {
                     >
                     <div className="mt-4 mx-3">
                         {/* 날짜 범위 선정 */}
+                        <p className="text-lg font-medium text-left">Date Ranges</p>
                         <div className="flex items-center gap-4 mt-4">
                             {/* Start Date Picker */}
                             <div className="w-full">
-                                <label className="block text-sm mb-1">Start Date</label>
                                 <DatePicker
                                     selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
+                                    onChange={(date) => {
+                                        setStartDate(date);
+                                        // StartDate가 변경되면 EndDate 초기화 (범위 밖 선택 방지)
+                                        if (endDate && date && date > endDate) {
+                                        setEndDate(null);
+                                        }
+                                    }}
                                     placeholderText="Start Date"
                                     customInput={<CustomDateInput placeholder="Start Date" />}
                                     dateFormat="yyyy-MM-dd"
+                                    maxDate={endDate || undefined} // EndDate 이전 날짜만 선택 가능
                                 />
                             </div>
 
                             {/* End Date Picker */}
                             <div className="w-full">
-                                <label className="block text-sm mb-1">End Date</label>
                                 <DatePicker
                                     selected={endDate}
                                     onChange={(date) => setEndDate(date)}
                                     placeholderText="End Date"
                                     customInput={<CustomDateInput placeholder="End Date" />}
                                     dateFormat="yyyy-MM-dd"
+                                    minDate={startDate || undefined} // StartDate 이후 날짜만 선택 가능
                                 />
                             </div>
                         </div>
