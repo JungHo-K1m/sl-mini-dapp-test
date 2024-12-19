@@ -13,6 +13,10 @@ const RewardHistory: React.FC = () => {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
 
+    // 필터 상태
+    const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
+    const [selectedChanges, setSelectedChanges] = useState<string[]>(["Increase"]);
+
     // 더미 데이터
     const rewardHistory = [
         { id: 1, description: "Joined Telegram", date: "17-10-2024", points: "+150SL" },
@@ -22,20 +26,32 @@ const RewardHistory: React.FC = () => {
         { id: 5, description: "Game Lose", date: "17-10-2024", points: "-150P" },
     ];
 
-    // 상태
-    const [transactionFilter, setTransactionFilter] = useState("all"); // all, earned, used
-    const [typeFilter, setTypeFilter] = useState("all"); // all, SL, P
+    // 체크박스 필터 핸들러
+    const handleAssetChange = (asset: string) => {
+        setSelectedAssets((prev) =>
+            prev.includes(asset) ? prev.filter((a) => a !== asset) : [...prev, asset]
+        );
+    };
+
+    const handleChangeType = (change: string) => {
+        setSelectedChanges((prev) =>
+            prev.includes(change) ? prev.filter((c) => c !== change) : [...prev, change]
+        );
+    };
 
     // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
-        // 거래 유형 필터
-        if (transactionFilter === "earned" && !reward.points.startsWith("+")) return false;
-        if (transactionFilter === "used" && !reward.points.startsWith("-")) return false;
+        // 자산 필터
+        const assetIncluded = selectedAssets.some((asset) =>
+            reward.points.endsWith(asset)
+        );
 
-        // 재화 유형 필터
-        if (typeFilter !== "all" && !reward.points.endsWith(typeFilter)) return false;
+        // 증감 필터
+        const changeIncluded =
+            (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
+            (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
 
-        return true;
+        return assetIncluded && changeIncluded;
     });
 
     // DatePicker용 Custom Input
@@ -82,6 +98,37 @@ const RewardHistory: React.FC = () => {
                     className="overflow-hidden"
                     >
                     <div className="mt-4 mx-3">
+                        {/* 자산 종류 필터 */}
+                        <p className="text-lg font-medium text-left mb-2">Asset Types</p>
+                        <div className="flex items-center gap-4">
+                            {["USDC", "SL", "Point"].map((asset) => (
+                                <label key={asset} className="flex items-center text-sm">
+                                <input
+                                    type="checkbox"
+                                    checked={selectedAssets.includes(asset)}
+                                    onChange={() => handleAssetChange(asset)}
+                                    className="mr-2"
+                                />
+                                {asset}
+                                </label>
+                            ))}
+                        </div>
+
+                        {/* 증감 필터 */}
+                        <p className="text-lg font-medium text-left mt-4 mb-2">Change Types</p>
+                        <div className="flex items-center gap-4">
+                            {["Increase", "Decrease"].map((change) => (
+                                <label key={change} className="flex items-center text-sm">
+                                <input
+                                    type="checkbox"
+                                    checked={selectedChanges.includes(change)}
+                                    onChange={() => handleChangeType(change)}
+                                    className="mr-2"
+                                />
+                                {change}
+                                </label>
+                            ))}
+                        </div>
                         {/* 날짜 범위 선정 */}
                         <p className="text-lg font-medium text-left">Date Ranges</p>
                         <div className="flex items-center gap-4 mt-4">
