@@ -98,40 +98,44 @@ const RewardHistory: React.FC = () => {
                     </div>
                     {isOpen ? <FaChevronUp className="text-lg" /> : <FaChevronDown className="text-lg" />}
                 </div>
-                {/* 재화 종류(USDC, SL, Point) */}
-                <div>
+                {isOpen && (
+                    <div className="mt-4">
+                         {/* 재화 종류(USDC, SL, Point) */}
+                        <div>
 
-                </div>
-                {/* 내역 종류(증감) */}
-                <div>
+                        </div>
+                        {/* 내역 종류(증감) */}
+                        <div>
 
-                </div>
-                {/* 날짜 범위 선정 */}
-                <div className="flex items-center gap-4">
-                    {/* Start Date Picker */}
-                    <div className="w-full">
-                        <label className="block text-sm mb-1">Start Date</label>
-                        <DatePicker
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            placeholderText="Select Start Date"
-                            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
-                            dateFormat="yyyy-MM-dd"
-                        />
+                        </div>
+                        {/* 날짜 범위 선정 */}
+                        <div className="flex items-center gap-4 mt-4">
+                            {/* Start Date Picker */}
+                            <div className="w-full">
+                                <label className="block text-sm mb-1">Start Date</label>
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    placeholderText="Select Start Date"
+                                    className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
+                                    dateFormat="yyyy-MM-dd"
+                                />
+                            </div>
+
+                            {/* End Date Picker */}
+                            <div className="w-full">
+                                <label className="block text-sm mb-1">End Date</label>
+                                <DatePicker
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    placeholderText="Select End Date"
+                                    className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
+                                    dateFormat="yyyy-MM-dd"
+                                />
+                            </div>
+                        </div>
                     </div>
-
-                    {/* End Date Picker */}
-                    <div className="w-full">
-                        <label className="block text-sm mb-1">End Date</label>
-                        <DatePicker
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                            placeholderText="Select End Date"
-                            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
-                            dateFormat="yyyy-MM-dd"
-                        />
-                    </div>
-                </div>
+                )}
             </div>
 
 
