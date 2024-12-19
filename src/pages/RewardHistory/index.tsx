@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslation } from "react-i18next";
-import { TopTitle } from '@/shared/components/ui';
+import { motion } from "framer-motion";
+import { TopTitle } from "@/shared/components/ui";
 
 const RewardHistory: React.FC = () => {
     const { t } = useTranslation();
@@ -40,74 +41,26 @@ const RewardHistory: React.FC = () => {
         <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
             <TopTitle title={t("asset_page.Rewards_History")} back={true} />
 
-            {/* 필터링 버튼 */}
-            {/* <div className="flex justify-start w-full mt-8 h-11 gap-4"> */}
-                {/* 수익/지출 필터 */}
-                {/* <div className="relative w-40 max-w-xs">
-                    <select
-                        className={`px-6 py-2 rounded-full appearance-none w-full text-sm ${
-                            transactionFilter === "all"
-                                ? "bg-[#1F1E27] text-white"
-                                : "bg-white text-black"
-                        }`}
-                        value={transactionFilter}
-                        onChange={(e) => setTransactionFilter(e.target.value)}
-                        >
-                        <option value="all">{t("asset_page.all_transaction")}</option>
-                        <option value="earned">{t("asset_page.earned")}</option>
-                        <option value="used">{t("asset_page.used")}</option>
-                    </select>
-                    <FaChevronDown
-                        className={`absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none ${
-                            transactionFilter === "all" ? "text-white" : "text-black"
-                        }`}
-                    />
-                </div> */}
-
-                {/* 재화 유형 필터 */}
-                {/* <div className="relative w-32 max-w-xs">
-                    <select
-                         className={`px-6 py-2 rounded-full appearance-none w-full text-sm ${
-                            typeFilter === "all"
-                                ? "bg-[#1F1E27] text-white"
-                                : "bg-white text-black"
-                        }`}
-                        value={typeFilter}
-                        onChange={(e) => setTypeFilter(e.target.value)}
-                    >
-                        <option value="all">{t("asset_page.all_type")}</option>
-                        <option value="SL">{t("asset_page.sl")}</option>
-                        <option value="P">{t("asset_page.point")}</option>
-                    </select>
-                    <FaChevronDown
-                        className={`absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none ${
-                            transactionFilter === "all" ? "text-white" : "text-black"
-                        }`}
-                    />
-                </div>
-            </div> */}
-
             {/* 드롭다운 필터로 수정 중 */}
             <div>
                 <div
                     className="flex items-center justify-between cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)}
-                    >
+                >
                     <div className="flex items-center">
                         <p className="text-lg font-semibold">Filter Option</p>
                     </div>
                     {isOpen ? <FaChevronUp className="text-lg" /> : <FaChevronDown className="text-lg" />}
                 </div>
-                {isOpen && (
+
+                {/* 애니메이션이 적용된 영역 */}
+                <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                >
                     <div className="mt-4">
-                         {/* 재화 종류(USDC, SL, Point) */}
-                        <div>
-
-                        </div>
-                        {/* 내역 종류(증감) */}
-                        <div>
-
-                        </div>
                         {/* 날짜 범위 선정 */}
                         <div className="flex items-center gap-4 mt-4">
                             {/* Start Date Picker */}
@@ -135,10 +88,8 @@ const RewardHistory: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                )}
+                </motion.div>
             </div>
-
-
 
             {/* 보상 내역 */}
             <div className="w-full mt-3">
