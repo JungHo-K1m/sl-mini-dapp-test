@@ -200,15 +200,14 @@ const MyAssets: React.FC = () => {
             <div className="mt-10 w-full">
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-bold">{t("asset_page.My_NFT_Collection")}</h2>
-                    {nft !== 0 && (
-                        <button
+                    
+                    <button
                             className="flex items-center text-white text-xs"
                             onClick={() => navigate("/my-nfts")}
                             aria-label="View All NFTs"
                         >
                             {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
                         </button>
-                    )}
                 </div>
                 <div className="mt-4 w-full">
                     {nft === 0 ? (
