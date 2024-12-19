@@ -211,7 +211,7 @@ const MyAssets: React.FC = () => {
                 </div>
                 <div className="mt-4 w-full">
                     {nft === 0 ? (
-                        <div className="mt-20 h-[150px] flex flex-col items-center justify-center">
+                        <div className="my-20 h-[150px] flex flex-col items-center justify-center">
                             <p className="text-center text-[#737373] text-sm font-medium">
                                 {/* {t("asset_page.no_nft")}<br />
                                 {t("asset_page.own_nft")} */}

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FaChevronLeft, FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
 
 const RewardHistory: React.FC = () => {
-    const navigate = useNavigate();
     const { t } = useTranslation();
+    const [isOpen, setIsOpen] = useState(false);
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
 
     // 더미 데이터
     const rewardHistory = [
@@ -83,6 +86,55 @@ const RewardHistory: React.FC = () => {
                     />
                 </div>
             </div>
+
+            {/* 드롭다운 필터로 수정 중 */}
+            <div className="mb-8">
+                <div
+                    className="flex items-center justify-between cursor-pointer"
+                    onClick={() => setIsOpen(!isOpen)}
+                    >
+                    <div className="flex items-center">
+                        <p className="text-lg font-semibold">Filter Option</p>
+                    </div>
+                    {isOpen ? <FaChevronUp className="text-lg" /> : <FaChevronDown className="text-lg" />}
+                </div>
+                {/* 재화 종류(USDC, SL, Point) */}
+                <div>
+
+                </div>
+                {/* 내역 종류(증감) */}
+                <div>
+
+                </div>
+                {/* 날짜 범위 선정 */}
+                <div className="flex items-center gap-4">
+                    {/* Start Date Picker */}
+                    <div className="w-full">
+                        <label className="block text-sm mb-1">Start Date</label>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            placeholderText="Select Start Date"
+                            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
+                            dateFormat="yyyy-MM-dd"
+                        />
+                    </div>
+
+                    {/* End Date Picker */}
+                    <div className="w-full">
+                        <label className="block text-sm mb-1">End Date</label>
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            placeholderText="Select End Date"
+                            className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
+                            dateFormat="yyyy-MM-dd"
+                        />
+                    </div>
+                </div>
+            </div>
+
+
 
             {/* 보상 내역 */}
             <div className="w-full mt-6">
