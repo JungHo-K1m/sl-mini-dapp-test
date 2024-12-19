@@ -52,16 +52,16 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopCli
               ))}
             </div>
           ) : (
-            <div>
-              <p className="text-base font-semibold text-[#737373] mt-2">
+            <div className="flex flex-col items-center justify-center mt-8">
+              <p className="text-base font-semibold text-[#737373]">
                 No NFTs in this category
               </p>
-              <div className="mt-6 text-center">
+              <div className="mt-6 text-center mb-8">
                 <button
-                  className="bg-[#0147E5] text-white text-base font-medium px-6 py-3 rounded-lg"
-                  onClick={onShopClick}
-                >
-                  Shop NFT
+                    className="bg-[#0147E5] text-white text-base font-medium px-6 py-3 rounded-full"
+                    onClick={onShopClick}
+                    >
+                    Shop NFT
                 </button>
               </div>
             </div>
