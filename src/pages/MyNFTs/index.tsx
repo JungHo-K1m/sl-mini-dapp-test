@@ -24,7 +24,7 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopCli
     };
 
     return (
-        <div className="mb-4">
+        <div className="mb-8">
             <div
                 className="flex items-center justify-between cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
@@ -41,7 +41,7 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopCli
             </div>
 
             {isOpen && (
-            <div className="mt-2">
+            <div className="mt-4">
                 {nfts.length > 0 ? (
                 <div className="grid grid-cols-2 gap-4">
                     {nfts.map((nft) => (
@@ -117,37 +117,37 @@ const MyNfts: React.FC = () => {
         },
     ];
 
-  return (
-    <div className="flex flex-col text-white mb-2 px-6 min-h-screen">
-        <TopTitle title={t("asset_page.My_NFT_Collection")} back={true} />
+    return (
+        <div className="flex flex-col text-white mb-2 px-6 min-h-screen">
+            <TopTitle title={t("asset_page.My_NFT_Collection")} back={true} />
 
-        <div className="mt-6">
-            {nftData.map((category) => (
-                <NftCategory
-                    key={category.category}
-                    title={category.category}
-                    count={category.count}
-                    nfts={category.nfts}
-                    onShopClick={() => setShowModal(true)} // Shop 버튼 클릭 시 모달 표시
-                />
-            ))}
-        </div>
-
-        {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
-            <div className="bg-white text-black p-6 rounded-lg text-center w-[70%] max-w-[550px]">
-                <p>We're preparing for the service.</p>
-                <button
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                    onClick={() => setShowModal(false)}
-                >
-                {t("OK")}
-            </button>
+            <div className="mt-6">
+                {nftData.map((category) => (
+                    <NftCategory
+                        key={category.category}
+                        title={category.category}
+                        count={category.count}
+                        nfts={category.nfts}
+                        onShopClick={() => setShowModal(true)} // Shop 버튼 클릭 시 모달 표시
+                    />
+                ))}
             </div>
+
+            {showModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
+                <div className="bg-white text-black p-6 rounded-lg text-center w-[70%] max-w-[550px]">
+                    <p>We're preparing for the service.</p>
+                    <button
+                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        onClick={() => setShowModal(false)}
+                    >
+                    {t("OK")}
+                </button>
+                </div>
+            </div>
+            )}
         </div>
-        )}
-    </div>
-  );
+    );
 };
 
 export default MyNfts;

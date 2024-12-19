@@ -68,24 +68,58 @@ const MyRankingWidget: React.FC<MyRankingWidgetProps> = ({ className, titleHidde
     }
   }, [slToken]);
 
-  // 애니메이션 variants
-  const scaleAndGlow = {
-    initial: { scale: 1, filter: 'brightness(1)' },
-    animate: {
-      scale: [1, 1.5, 1], 
-      filter: ['brightness(1)', 'brightness(2)', 'brightness(1)'],
-      transition: { duration: 0.6 }
+// 숫자에 대한 애니메이션 variants
+const scaleAndGlow = {
+  initial: { 
+    scale: 1, 
+    filter: 'brightness(1)', 
+    rotate: 0
+  },
+  animate: {
+    scale: [1, 1.5, 1.2, 1],
+    filter: [
+      'brightness(1)', 
+      'brightness(2)', 
+      'brightness(1.5)', 
+      'brightness(1)'
+    ],
+    rotate: [0, 5, -5, 0],
+    // 텍스트일 경우, text-shadow로 glow 효과 주기
+    transitionEnd: {
+      // transitionEnd에서 text-shadow 설정을 통해
+      // 애니메이션 후 상태를 조정할 수도 있습니다.
+    },
+    transition: {
+      duration: 1.0,
+      ease: 'easeInOut'
     }
-  };
+  }
+};
 
-  const scaleAndGlowImage = {
-    initial: { scale: 1, filter: 'brightness(1)' },
-    animate: {
-      scale: [1, 1.3, 1],
-      filter: ['brightness(1)', 'brightness(2)', 'brightness(1)'],
-      transition: { duration: 0.6 }
+// 이미지에 대한 애니메이션 variants
+const scaleAndGlowImage = {
+  initial: { 
+    scale: 1, 
+    filter: 'brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))', 
+    rotate: 0
+  },
+  animate: {
+    scale: [1, 1.3, 1.1, 1],
+    // drop-shadow로 부드러운 빛 번짐 효과
+    filter: [
+      'brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))',
+      'brightness(2) drop-shadow(0 0 10px rgba(255,255,255,0.8))',
+      'brightness(1.5) drop-shadow(0 0 5px rgba(255,255,255,0.5))',
+      'brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))'
+    ],
+    rotate: [0, 3, -3, 0],
+    transition: {
+      duration: 1.0,
+      ease: 'easeInOut'
     }
-  };
+  }
+};
+
 
   return (
     <div
