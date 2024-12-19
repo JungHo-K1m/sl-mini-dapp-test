@@ -175,12 +175,12 @@ const MyAssets: React.FC = () => {
 
             {/* NFT 상점 이동 영역 - 추후 수정 예정 */}
             <div 
-                className="rounded-2xl p-4 mt-6 w-full flex items-center justify-between"
+                className="rounded-2xl p-5 mt-6 w-full flex items-center justify-between"
                 style={{
                     background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
                 }}>
-                <div>
-                    <h3 className="text-base font-semibold">{t("asset_page.Shop_Unique_NFTs_Now!")}</h3>
+                <div className="pl-3">
+                    <h3 className="text-base font-semibold mb-[6px]">{t("asset_page.Shop_Unique_NFTs_Now!")}</h3>
                     <p className="text-sm font-medium text-gray-200">
                     {t("asset_page.Start_collecting_rare_and")}
                     </p>
@@ -202,16 +202,16 @@ const MyAssets: React.FC = () => {
                     <h2 className="text-lg font-bold">{t("asset_page.My_NFT_Collection")}</h2>
                     
                     <button
-                            className="flex items-center text-white text-xs"
-                            onClick={() => navigate("/my-nfts")}
-                            aria-label="View All NFTs"
+                        className="flex items-center text-white text-xs"
+                        onClick={() => navigate("/my-nfts")}
+                        aria-label="View All NFTs"
                         >
-                            {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
-                        </button>
+                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
+                    </button>
                 </div>
                 <div className="mt-4 w-full">
                     {nft === 0 ? (
-                        <div className="my-20 h-[150px] flex flex-col items-center justify-center">
+                        <div className="mt-20 mb-36 h-[150px] flex flex-col items-center justify-center">
                             <p className="text-center text-[#737373] text-sm font-medium">
                                 {/* {t("asset_page.no_nft")}<br />
                                 {t("asset_page.own_nft")} */}
@@ -219,7 +219,7 @@ const MyAssets: React.FC = () => {
                                 Own NFT and Boost your rank!
                             </p>
                             <button
-                                className="w-1/2 py-4 rounded-full text-base font-medium mt-6"
+                                className="w-1/2 py-4 rounded-full text-base font-medium mt-12"
                                 style={{ backgroundColor: '#0147E5' }}
                                 onClick={()=>setShowModal(true)}
                                 >

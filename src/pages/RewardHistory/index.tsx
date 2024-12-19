@@ -111,7 +111,7 @@ const RewardHistory: React.FC = () => {
                     <div className="mt-4 mx-3">
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
-                        <div className="flex flex-col gap-2 ml-1">
+                        <div className="flex flex-col gap-2 ml-3">
                             {["USDC", "SL", "Point"].map((asset) => (
                                 <label key={asset} className="flex items-center text-base font-medium">
                                     <input
@@ -127,7 +127,7 @@ const RewardHistory: React.FC = () => {
 
                         {/* 증감 필터 */}
                         <p className="text-lg font-medium text-left mt-4 mb-2">Change Types</p>
-                        <div className="flex flex-col gap-2 ml-1">
+                        <div className="flex flex-col gap-2 ml-3">
                             {["Increase", "Decrease"].map((change) => (
                                 <label key={change} className="flex items-center text-base font-medium">
                                     <input
@@ -202,6 +202,10 @@ const RewardHistory: React.FC = () => {
                     ) : (
                         <p className="text-center text-sm text-gray-400">No records found</p>
                     )}
+                    {/* 레퍼럴 보상 내역(요약본) */}
+                    <div className="flex justify-between items-center py-2 border-b border-[#35383F]">
+
+                    </div>
                 </div>
             </div>
         </div>
