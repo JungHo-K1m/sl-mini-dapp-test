@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FaCalendarAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { TopTitle } from "@/shared/components/ui";
@@ -37,6 +38,26 @@ const RewardHistory: React.FC = () => {
         return true;
     });
 
+    // DatePicker용 Custom Input
+    const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
+        ({ value, onClick, placeholder }, ref) => (
+        <div
+            className="flex items-center w-full px-4 py-2 bg-gray-800 text-white rounded-lg cursor-pointer focus:ring focus:ring-blue-500"
+            onClick={onClick}
+            >
+            <input
+            ref={ref}
+            value={value}
+            readOnly
+            placeholder={placeholder}
+            className="bg-transparent outline-none w-full text-white"
+            />
+            <FaCalendarAlt className="text-blue-500 ml-2" />
+        </div>
+        )
+    );
+    CustomDateInput.displayName = "CustomDateInput";
+
     return (
         <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
             <TopTitle title={t("asset_page.Rewards_History")} back={true} />
@@ -46,7 +67,7 @@ const RewardHistory: React.FC = () => {
                 <div
                     className="flex items-center justify-between cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)}
-                >
+                    >
                     <div className="flex items-center">
                         <p className="text-lg font-semibold">Filter Option</p>
                     </div>
@@ -59,8 +80,8 @@ const RewardHistory: React.FC = () => {
                     animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
-                >
-                    <div className="mt-4">
+                    >
+                    <div className="mt-4 mx-3">
                         {/* 날짜 범위 선정 */}
                         <div className="flex items-center gap-4 mt-4">
                             {/* Start Date Picker */}
@@ -69,8 +90,8 @@ const RewardHistory: React.FC = () => {
                                 <DatePicker
                                     selected={startDate}
                                     onChange={(date) => setStartDate(date)}
-                                    placeholderText="Select Start Date"
-                                    className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
+                                    placeholderText="Start Date"
+                                    customInput={<CustomDateInput placeholder="Start Date" />}
                                     dateFormat="yyyy-MM-dd"
                                 />
                             </div>
@@ -81,8 +102,8 @@ const RewardHistory: React.FC = () => {
                                 <DatePicker
                                     selected={endDate}
                                     onChange={(date) => setEndDate(date)}
-                                    placeholderText="Select End Date"
-                                    className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring focus:ring-blue-500"
+                                    placeholderText="End Date"
+                                    customInput={<CustomDateInput placeholder="End Date" />}
                                     dateFormat="yyyy-MM-dd"
                                 />
                             </div>
