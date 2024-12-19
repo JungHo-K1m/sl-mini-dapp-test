@@ -142,6 +142,7 @@ import firstSL from "./first-sl.png";
 import firstDice from "./first-dice.png";
 import AirDrop from "./airdrop.png";
 import USDC from "./usdc.png";
+import AutoNFT from "./autoNFT.png"
 
 
 const Images = {
@@ -288,6 +289,7 @@ const Images = {
   firstSL,
   AirDrop,
   USDC,
+  AutoNFT,
 };
 
 export default Images;

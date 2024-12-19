@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaChevronLeft, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from "@/shared/components/ui";
+import Images from "@/shared/assets/images";
 
 interface NftCategoryProps {
   title: string;
@@ -12,6 +13,15 @@ interface NftCategoryProps {
 const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // 카테고리 제목에 따라 이미지 매핑
+  const categoryImages: { [key: string]: string } = {
+    "Gold NFT": Images.Gold,
+    "Silver NFT": Images.Silver,
+    "Bronze NFT": Images.Bronze,
+    "Reward NFT": Images.RewardNFT,
+    "Auto NFT": Images.AutoNFT,
+  };
+
   return (
     <div className="mb-4">
       {/* 카테고리 헤더 */}
@@ -20,6 +30,11 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts }) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center">
+            <img
+                src={categoryImages[title]}
+                alt={title}
+                className="w-6 h-6 mr-2 object-contain"
+            />
           <p className="text-lg font-semibold">{`${title} (${count})`}</p>
         </div>
         {isOpen ? (
