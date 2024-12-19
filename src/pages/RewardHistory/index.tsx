@@ -17,13 +17,13 @@ const RewardHistory: React.FC = () => {
     const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
     const [selectedChanges, setSelectedChanges] = useState<string[]>(["Increase"]);
 
-    // 더미 데이터
-    const rewardHistory = [
-        { id: 1, description: "Joined Telegram", date: "17-10-2024", points: "+150SL" },
-        { id: 2, description: "AI Dental Examination", date: "17-10-2024", points: "-150SL" },
-        { id: 3, description: "Subscribe to Email", date: "17-10-2024", points: "+150SL" },
-        { id: 4, description: "Game Win", date: "17-10-2024", points: "+150P" },
-        { id: 5, description: "Game Lose", date: "17-10-2024", points: "-150P" },
+     // 더미 데이터
+     const rewardHistory = [
+        { id: 1, description: "Joined Telegram", date: "2024-12-01", points: "+150SL" },
+        { id: 2, description: "AI Dental Examination", date: "2024-12-05", points: "-150SL" },
+        { id: 3, description: "Subscribe to Email", date: "2024-12-10", points: "+150SL" },
+        { id: 4, description: "Game Win", date: "2024-12-20", points: "+150P" },
+        { id: 5, description: "Game Lose", date: "2024-12-25", points: "-150P" },
     ];
 
     // 체크박스 필터 핸들러
@@ -39,7 +39,15 @@ const RewardHistory: React.FC = () => {
         );
     };
 
-    // 필터링된 데이터
+    // 날짜 필터 함수
+    const isWithinDateRange = (rewardDate: string) => {
+        const date = new Date(rewardDate);
+        if (startDate && date < startDate) return false; // Start Date보다 이전 날짜 제외
+        if (endDate && date > endDate) return false; // End Date보다 이후 날짜 제외
+        return true;
+    };
+
+     // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
@@ -51,7 +59,10 @@ const RewardHistory: React.FC = () => {
             (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
             (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
 
-        return assetIncluded && changeIncluded;
+        // 날짜 필터
+        const dateIncluded = isWithinDateRange(reward.date);
+
+        return assetIncluded && changeIncluded && dateIncluded;
     });
 
     // DatePicker용 Custom Input
@@ -68,7 +79,7 @@ const RewardHistory: React.FC = () => {
                     placeholder={placeholder}
                     className="bg-transparent outline-none w-full text-white"
                 />
-                <FaCalendarAlt className="text-blue-500 ml-2" />
+                <FaCalendarAlt className="text-white ml-2" />
             </div>
         )
     );
@@ -100,9 +111,9 @@ const RewardHistory: React.FC = () => {
                     <div className="mt-4 mx-3">
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 ml-1">
                             {["USDC", "SL", "Point"].map((asset) => (
-                                <label key={asset} className="flex items-center text-sm">
+                                <label key={asset} className="flex items-center text-base font-medium">
                                     <input
                                         type="checkbox"
                                         checked={selectedAssets.includes(asset)}
@@ -116,9 +127,9 @@ const RewardHistory: React.FC = () => {
 
                         {/* 증감 필터 */}
                         <p className="text-lg font-medium text-left mt-4 mb-2">Change Types</p>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 ml-1">
                             {["Increase", "Decrease"].map((change) => (
-                                <label key={change} className="flex items-center text-sm">
+                                <label key={change} className="flex items-center text-base font-medium">
                                     <input
                                         type="checkbox"
                                         checked={selectedChanges.includes(change)}
