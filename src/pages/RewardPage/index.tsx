@@ -146,7 +146,7 @@ const Reward: React.FC = () => {
             <h1 className="z-30">
               This Month's
               <br />
-              NFT AirDrop!
+              AirDrop Event
             </h1>
             <img
               src={Images.AirDrop}
@@ -168,8 +168,8 @@ const Reward: React.FC = () => {
                         ? "Top 5 Winners"
                         : award.winnerNum <= 10
                           ? "Lucky 10 Winners"
-                          : "Remaining NFT Holders"
-                    : "Remaining NFT Holders & Top 100 AI Users"}
+                          : "Active Participants"
+                    : "Active Participants"}
                 </p>
                 <div className="flex flex-row gap-1 items-center">
                   <img src={Images.TokenReward} alt="token-reward" className="w-6 h-6" />

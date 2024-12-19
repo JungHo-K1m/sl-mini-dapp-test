@@ -40,7 +40,7 @@ const Attendance: React.FC = () => {
 
   return (
     <div>
-      <h1 className="flex items-center justify-center text-white font-jalnan text-3xl">Attendance</h1>
+      <h1 className="mt-6 flex items-center justify-center text-white font-jalnan text-3xl">Attendance</h1>
       <div
         id="attendance"
         className="grid grid-cols-7 gap-2 bg-box mt-4 w-[332px] px-8 md:w-[595.95px] min-h-24 md:h-32 text-white text-xs "
@@ -49,7 +49,7 @@ const Attendance: React.FC = () => {
           <AttendanceDay key={index} day={day} status={getStatus(day)} />
         ))}
       </div>
-      <p className="flex items-start justify-start w-full font-medium text-xs md:text-sm mt-2 px-2 mb-8 text-white">
+      <p className="flex items-start justify-start w-full font-medium text-xs md:text-sm mt-2 px-2  text-white">
         * Rewards: 1,000 Star Points
       </p>
     </div>

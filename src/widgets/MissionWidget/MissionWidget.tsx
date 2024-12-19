@@ -14,7 +14,7 @@ const MissionWidget: React.FC = () => {
 
   return (
     <div
-      className="mt-8 flex flex-col items-center justify-center cursor-pointer"
+      className="mt-6 flex flex-col items-center justify-center cursor-pointer"
       onClick={handleMissionClick}
     >
       <h1 className="font-jalnan text-white text-3xl">Mission</h1>

@@ -161,43 +161,59 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
-        {raffleTopRankings.length > 0 ? (
-          raffleTopRankings.slice(0, 20).map((r) => {
-            const raffleTopReceived =
-              r.selectedRewardType === "USDC" || r.selectedRewardType === "SL";
-            return (
-              <div
-                key={r.rank}
-                className={`relative flex flex-row items-center p-4 border-b gap-4`}
-              >
-                <p>#{r.rank}</p>
-                <div className="flex flex-col gap-1">
-                  <p>{r.userId}</p>
-                  <div className="flex flex-row items-center gap-1">
-                    <img
-                      src={
-                        r.selectedRewardType === "USDC"
-                          ? Images.USDC
-                          : Images.TokenReward
-                      }
-                      alt="token"
-                      className="w-5 h-5"
-                    />
-                    <p className="text-sm font-semibold">
-                      {(r.slRewards ?? 0).toLocaleString()}{" "}
-                      <span className="font-normal text-[#a3a3a3]">
-                        (or {(r.usdcRewards ?? 0).toLocaleString()} USDC)
-                      </span>{" "}
-                      {r.nftType ? `+ ${r.nftType} NFT` : ""}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <p className="text-center text-sm">No rankings available</p>
-        )}
+      {raffleTopRankings.length > 0 ? (
+  raffleTopRankings.slice(0, 20).map((r) => {
+    const raffleTopReceived =
+      r.selectedRewardType === "USDC" || r.selectedRewardType === "SL";
+    return (
+      <div
+        key={r.rank}
+        className={`relative flex flex-row items-center p-4 border-b gap-4`}
+      >
+        <p>#{r.rank}</p>
+        <div className="flex flex-col gap-1">
+          <p>{r.userId}</p>
+          <div className="flex flex-row items-center gap-1">
+            {r.selectedRewardType === "USDC" ? (
+              <>
+                <img
+                  src={Images.USDC}
+                  alt="token"
+                  className="w-5 h-5"
+                />
+                <p className="text-sm font-semibold">
+                  {(r.usdcRewards ?? 0).toLocaleString()}{" "}
+                  <span className="font-normal text-[#a3a3a3]">
+                    (or {(r.slRewards ?? 0).toLocaleString()} SL)
+                  </span>
+                  {r.nftType ? ` + ${r.nftType} NFT` : ""}
+                </p>
+              </>
+            ) : (
+              <>
+                <img
+                  src={Images.TokenReward}
+                  alt="token"
+                  className="w-5 h-5"
+                />
+                <p className="text-sm font-semibold">
+                  {(r.slRewards ?? 0).toLocaleString()}{" "}
+                  <span className="font-normal text-[#a3a3a3]">
+                    (or {(r.usdcRewards ?? 0).toLocaleString()} USDC)
+                  </span>
+                  {r.nftType ? ` + ${r.nftType} NFT` : ""}
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  })
+) : (
+  <p className="text-center text-sm">No rankings available</p>
+)}
+
       </div>
 
       {/* Dialogs */}
