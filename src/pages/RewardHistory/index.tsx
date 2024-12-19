@@ -41,9 +41,9 @@ const RewardHistory: React.FC = () => {
             <TopTitle title={t("asset_page.Rewards_History")} back={true} />
 
             {/* 필터링 버튼 */}
-            <div className="flex justify-start w-full mt-8 h-11 gap-4">
+            {/* <div className="flex justify-start w-full mt-8 h-11 gap-4"> */}
                 {/* 수익/지출 필터 */}
-                <div className="relative w-40 max-w-xs">
+                {/* <div className="relative w-40 max-w-xs">
                     <select
                         className={`px-6 py-2 rounded-full appearance-none w-full text-sm ${
                             transactionFilter === "all"
@@ -62,10 +62,10 @@ const RewardHistory: React.FC = () => {
                             transactionFilter === "all" ? "text-white" : "text-black"
                         }`}
                     />
-                </div>
+                </div> */}
 
                 {/* 재화 유형 필터 */}
-                <div className="relative w-32 max-w-xs">
+                {/* <div className="relative w-32 max-w-xs">
                     <select
                          className={`px-6 py-2 rounded-full appearance-none w-full text-sm ${
                             typeFilter === "all"
@@ -85,10 +85,10 @@ const RewardHistory: React.FC = () => {
                         }`}
                     />
                 </div>
-            </div>
+            </div> */}
 
             {/* 드롭다운 필터로 수정 중 */}
-            <div className="mb-8">
+            <div>
                 <div
                     className="flex items-center justify-between cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)}
@@ -141,7 +141,7 @@ const RewardHistory: React.FC = () => {
 
 
             {/* 보상 내역 */}
-            <div className="w-full mt-6">
+            <div className="w-full mt-3">
                 <div>
                     {filteredHistory.length > 0 ? (
                         filteredHistory.map((reward) => (
