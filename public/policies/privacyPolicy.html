@@ -20,6 +20,23 @@
             margin: 10px 0 10px 20px;
         }
     </style>
+    <script>
+        function sendHeightToParent() {
+          const body = document.body;
+          const html = document.documentElement;
+          const height = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+          );
+          parent.postMessage({ type: "resizeIframe", height }, "*");
+        }
+  
+        window.addEventListener("load", sendHeightToParent);
+        window.addEventListener("resize", sendHeightToParent);
+      </script>
 </head>
 <body>
     <h1>Lucky Dice Privacy Policy</h1>
