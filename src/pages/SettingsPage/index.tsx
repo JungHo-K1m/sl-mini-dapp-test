@@ -9,6 +9,11 @@ const SettingsPage: React.FC =() => {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
+    // navigate에 policyType을 전달
+    const handleNavigation = (policyType: string) => {
+        navigate('/policy-detail', { state: { policyType } });
+    };
+
 
     return(
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
@@ -18,7 +23,7 @@ const SettingsPage: React.FC =() => {
                 {/* 서비스 이용 약관 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/terms-of-service')}>
+                    onClick={() => handleNavigation('service')}>
                     <div>
                         <p className="font-semibold">Terms of Service</p>
                     </div>
@@ -27,7 +32,7 @@ const SettingsPage: React.FC =() => {
                 {/* 개인정보 처리 방침 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/privacy-policy')}>
+                    onClick={() => handleNavigation('privacy')}>
                     <div>
                         <p className="font-semibold">Privacy Policy</p>
                     </div>
@@ -36,21 +41,21 @@ const SettingsPage: React.FC =() => {
                 {/* 전자상거래 이용약관 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/electronic-commerce-policy')}>
+                    onClick={() => handleNavigation('commerce')}>
                     <div>
                         <p className="font-semibold">Electronic Commerce Policy</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
                 {/* 개인정보 수집 */}
-                <div 
+                {/* <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/policy-detail')}>
+                    onClick={() => handleNavigation('personal')}>
                     <div>
                         <p className="font-semibold">Collecting Personal Information</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                </div>
+                </div> */}
             </div>
 
         </div>

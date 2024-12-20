@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { TopTitle } from "@/shared/components/ui";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
 
 const PolicyDetailPage: React.FC = () => {
+  const location = useLocation();
   const [iframeHeight, setIframeHeight] = useState<string>("0px");
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
-  const iframeSrc = "/policies/personalInfo.html";
+
+  // 전달된 정책 타입을 가져옴
+  const policyType = location.state?.policyType || 'service';
+
+  // 정책 타입에 따라 HTML 파일 경로 설정
+  const policyFiles: { [key: string]: string } = {
+      service: "/policies/termsOfService.html",
+      privacy: "/policies/privacyPolicy.html",
+      commerce: "/policies/electronicCommerce.html",
+      // personal: "/policies/personalInfo.html",
+  };
+
+  const iframeSrc = policyFiles[policyType] || policyFiles.service;
 
   useEffect(() => {
     const handleResizeMessage = (event: MessageEvent) => {
