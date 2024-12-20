@@ -19,6 +19,17 @@
         }
         ul {
             margin: 10px 0 10px 20px;
+        } 
+        .table-image-container {
+            display: flex;
+            justify-content: center; /* 이미지 가운데 정렬 */
+            align-items: center;
+            margin: 20px 0; /* 상하 여백 */
+        }
+      
+        .table-image {
+            max-width: 100%; /* 이미지가 화면 너비를 초과하지 않도록 설정 */
+            height: auto;    /* 비율 유지 */
         }
     </style>
     <script>
@@ -118,22 +129,13 @@
     <h2>Article 4 (Outsourcing of Personal Information Processing)</h2>
     <p>The Company entrusts some tasks necessary to provide services to external companies in relation to the processing of personal information, as follows:</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Outsourcee</th>
-                <th>Outsourced Business</th>
-                <th>Period</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>LINE</td>
-                <td>User verification</td>
-                <td>Until membership withdrawal or end of contract period</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-image-container">
+        <img 
+            src="/public/outsourcing.png" 
+            alt="Table describing outsourcing of personal information processing" 
+            class="table-image"
+        />
+    </div>
 
     <p>
         The Company and the outsourcee enter into a written agreement including matters related to responsibilities 
