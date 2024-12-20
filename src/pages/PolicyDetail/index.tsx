@@ -61,6 +61,7 @@ const PolicyDetailPage: React.FC = () => {
         <iframe
           src={iframeSrc}
           title="Policy Detail"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           onLoad={handleIframeLoad} // iframe 로드 완료 시 호출
           style={{
             border: "none",
