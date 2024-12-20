@@ -1,14 +1,15 @@
 // src/pages/RewardPage/index.tsx
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TopTitle } from "@/shared/components/ui";
 import "./Reward.css";
 import Images from "@/shared/assets/images";
 import { useRewardStore } from "@/entities/RewardPage/model/rewardModel";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
-import RewardItem from "@/widgets/RewardItem"; // RewardItem 컴포넌트 임포트
-import { Link } from "react-router-dom"; // Link 임포트 추가
+import RewardItem from "@/widgets/RewardItem"; 
+import { Link } from "react-router-dom"; 
 import { formatNumber } from "@/shared/utils/formatNumber";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Reward: React.FC = () => {
   const {
@@ -21,8 +22,10 @@ const Reward: React.FC = () => {
     errorHome,
   } = useRewardStore();
 
+  const [showMoreRanking, setShowMoreRanking] = useState(false);
+  const [showMoreRaffle, setShowMoreRaffle] = useState(false);
+
   useEffect(() => {
-    // Reward 페이지가 로드될 때 리워드 데이터를 불러옵니다.
     fetchLeaderHome();
   }, [fetchLeaderHome]);
 
@@ -34,15 +37,12 @@ const Reward: React.FC = () => {
     return <div className="text-center text-red-500">Error: {errorHome}</div>;
   }
 
-  // 랭킹 상품 데이터 배열 정의
-  const rankingProducts = rankingAwards.slice(0, 3); // 상위 3개
-  const rankingOthers = rankingAwards.slice(3); // 그 외
+  const rankingProducts = rankingAwards.slice(0, 3); 
+  const rankingOthers = rankingAwards.slice(3); 
 
-  // 추첨권 경품 데이터 배열 정의
-  const raffleProducts = drawAwards.slice(0, 3); // 상위 3개
-  const raffleOthers = drawAwards.slice(3); // 그 외
+  const raffleProducts = drawAwards.slice(0, 3); 
+  const raffleOthers = drawAwards.slice(3); 
 
-  // 문자열을 자르는 헬퍼 함수
   const truncateString = (str: string, num: number): string => {
     if (str.length <= num) {
       return str;
@@ -54,7 +54,6 @@ const Reward: React.FC = () => {
     <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full ">
       <TopTitle title="Rewards" />
 
-      {/** 클릭 시 이전 랭킹(상품)결과로 이동 */}
       <Link to="/previous-rewards" className="first-to-third-pace-box h-36 rounded-3xl mb-14 flex flex-row items-center justify-around p-5 cursor-pointer">
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">Previous Rewards</p>
@@ -91,14 +90,33 @@ const Reward: React.FC = () => {
           />
         )}
 
-        {/* 4위 이후 랭킹 보상 */}
-        {rankingOthers.map((award, index) =>
-          <RewardItem
-            key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
-            rank={award.rangeStart === award.rangeEnd ? award.rangeStart : `${award.rangeStart}-${award.rangeEnd}`}
-            award={award}
-            isTop={false}
-          />
+        {/* AnimatePresence로 4위 이후 랭킹 보상 슬라이드 인 애니메이션 */}
+        <AnimatePresence>
+          {showMoreRanking && rankingOthers.map((award, index) => (
+            <motion.div
+              key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
+              className="w-full"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <RewardItem
+                rank={award.rangeStart === award.rangeEnd ? award.rangeStart : `${award.rangeStart}-${award.rangeEnd}`}
+                award={award}
+                isTop={false}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+
+        {rankingOthers.length > 0 && !showMoreRanking && (
+          <button
+            onClick={() => setShowMoreRanking(true)}
+            className="border border-[#ffffff] text-white text-xs font-semibold px-4 py-2 rounded-full mt-4"
+          >
+            View More
+          </button>
         )}
       </div>
 
@@ -127,14 +145,33 @@ const Reward: React.FC = () => {
           />
         )}
 
-        {/* 4위 이후 래플 보상 */}
-        {raffleOthers.map((award, index) =>
-          <RewardItem
-            key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
-            rank={award.rangeStart === award.rangeEnd ? award.rangeStart : `${award.rangeStart}-${award.rangeEnd}`}
-            award={award}
-            isTop={false}
-          />
+        {/* AnimatePresence로 4위 이후 래플 보상 슬라이드 인 애니메이션 */}
+        <AnimatePresence>
+          {showMoreRaffle && raffleOthers.map((award, index) => (
+            <motion.div
+              key={`${award.rangeStart}-${award.rangeEnd}-${index}`}
+              className="w-full"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <RewardItem
+                rank={award.rangeStart === award.rangeEnd ? award.rangeStart : `${award.rangeStart}-${award.rangeEnd}`}
+                award={award}
+                isTop={false}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+
+        {raffleOthers.length > 0 && !showMoreRaffle && (
+          <button
+            onClick={() => setShowMoreRaffle(true)}
+            className="border border-[#ffffff] text-white text-xs font-semibold px-4 py-2 rounded-full mt-4"
+          >
+            View More
+          </button>
         )}
       
       </div>

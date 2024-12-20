@@ -1,3 +1,5 @@
+/**src\pages\PreviousRewards\index.tsx */
+
 import React, { useEffect, useState, useCallback } from "react";
 import { TopTitle } from "@/shared/components/ui";
 import "./PreviousRewards.css";
@@ -18,8 +20,6 @@ import { useRaffleFeatureStore } from '@/features/PreviousRewards/model/raffleFe
 import { selectRankingReward, selectRaffleReward } from "@/features/PreviousRewards/api/rewardApi";
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
 
-import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // LoadingSpinner 임포트
-import ErrorMessage from "@/shared/components/ui/ErrorMessage"; // 에러 메시지 컴포넌트 임포트 (선택 사항)
 
 interface RewardData {
   rank: number;

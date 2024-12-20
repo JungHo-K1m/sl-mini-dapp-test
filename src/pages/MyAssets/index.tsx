@@ -80,7 +80,7 @@ const MyAssets: React.FC = () => {
         } else {
           return dogImages[index] || dogImages[dogImages.length - 1];
         }
-      };
+    };
     
     const charactorImageSrc = getCharacterImageSrc();
 
@@ -176,6 +176,7 @@ const MyAssets: React.FC = () => {
             {/* NFT 상점 이동 영역 - 추후 수정 예정 */}
             <div 
                 className="rounded-2xl p-5 mt-6 w-full flex items-center justify-between"
+                onClick={()=>setShowModal(true)}
                 style={{
                     background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
                 }}>

@@ -19,9 +19,12 @@ const Board: React.FC<BoardProps> = ({
 }) => {
   const { x, y } = calculateTilePosition(position, initialX, initialY, delta);
 
+  // position이 10보다 큰 경우 좌우 반전 스타일 적용
+  const flipStyle = position > 10 ? { transform: 'scaleX(-1)' } : {};
+
   return (
     <motion.div
-      className={`absolute z-40`} // selectingTile 상태에 따라 z-index 조정
+      className={`absolute z-40`}
       initial={{ x: initialX, y: initialY }}
       animate={{ x, y }}
       transition={{
@@ -42,6 +45,7 @@ const Board: React.FC<BoardProps> = ({
         src={charactorImageSrc}
         alt="charactorImageSrc"
         className="w-12 h-12 md:w-20 md:h-20"
+        style={flipStyle}
       />
     </motion.div>
   );

@@ -102,8 +102,8 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                 disabled={isReceived}
               >
                 {myData.selectedRewardType === null
-                  ? "Get Rewarded"
-                  : `Reward Selected (${myData.selectedRewardType})`}
+                  ? "Select your reward"
+                  : `Reward Issued (${myData.selectedRewardType})`}
               </button>
             </>
           )}

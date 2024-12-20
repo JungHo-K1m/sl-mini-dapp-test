@@ -127,7 +127,7 @@ const scaleAndGlowImage = {
       role="button"
     >
       <h1 className={`font-jalnan text-3xl ${titleHidden ? "hidden" : "block"}`}>My Rank</h1>
-      <div className={`bg-box mt-4 px-8 w-full h-24 md:h-32 flex font-semibold ${titleHidden?"mt-0":""}`}>
+      <div className={`bg-box  px-8 w-full h-24 md:h-32 flex font-semibold ${titleHidden?"mt-0":"mt-4"}`}>
         {/* My Rank 섹션 */}
         <div className="relative w-[121px] h-full flex flex-col items-center justify-center gap-2">
           <p className="text-base font-semibold">My Rank</p>

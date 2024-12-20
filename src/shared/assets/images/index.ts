@@ -143,6 +143,9 @@ import firstDice from "./first-dice.png";
 import AirDrop from "./airdrop.png";
 import USDC from "./usdc.png";
 import AutoNFT from "./autoNFT.png"
+import Spring from "./spring.png";
+import Summer from "./summer.png";
+import Fall from "./fall.png";
 
 
 const Images = {
@@ -290,6 +293,9 @@ const Images = {
   AirDrop,
   USDC,
   AutoNFT,
+  Spring,
+  Summer,
+  Fall,
 };
 
 export default Images;

@@ -93,8 +93,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
                   <li>
                     <strong>Enter Your Bet Amount</strong>
                     <ul className="list-disc pl-5">
-                      <li>You can bet up to your total balance.</li>
-                      <li>Maximum bet is {allowedBetting} stars.</li>
+                      <li>Maximum bet is half of your total stars.</li>
                     </ul>
                   </li>
                   <li>
