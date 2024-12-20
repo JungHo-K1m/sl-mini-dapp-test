@@ -207,7 +207,7 @@ const MyAssets: React.FC = () => {
                         onClick={() => navigate("/my-nfts")}
                         aria-label="View All NFTs"
                         >
-                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
+                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
                 <div className="mt-4 w-full">
@@ -260,14 +260,14 @@ const MyAssets: React.FC = () => {
                         className="flex items-center text-white text-xs"
                         onClick={() => navigate("/reward-history")}
                         >
-                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-4 h-4" />
+                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
-                <div className="mt-4 bg-[#1F1E27] rounded-lg border border-[#35383F] p-4">
+                <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] p-4">
                     {rewardHistory.map((reward) => (
                         <div
                             key={reward.id}
-                            className="flex justify-between items-center py-2 border-b border-[#35383F]"
+                            className="flex justify-between items-center border-b border-[#35383F]"
                             >
                             <div>
                                 <p className="text-sm font-medium">{reward.description}</p>
