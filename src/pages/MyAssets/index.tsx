@@ -263,11 +263,11 @@ const MyAssets: React.FC = () => {
                         {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
-                <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] p-4">
+                <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] py-3 px-4">
                     {rewardHistory.map((reward) => (
                         <div
                             key={reward.id}
-                            className="flex justify-between items-center border-b border-[#35383F]"
+                            className="flex justify-between items-center border-b py-2 border-[#35383F]"
                             >
                             <div>
                                 <p className="text-sm font-medium">{reward.description}</p>
