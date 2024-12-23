@@ -98,7 +98,7 @@ const FriendRewards: React.FC = () => {
                                 placeholder="Search Name..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full px-4 py-2 pr-10 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500 mb-4"
+                                className="w-full h-14 px-4 py-2 pr-10 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500 mb-4"
                             />
                             <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         </div>
