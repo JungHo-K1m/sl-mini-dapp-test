@@ -50,22 +50,26 @@ const RewardHistory: React.FC = () => {
     };
 
      // 필터링된 데이터
-    const filteredHistory = rewardHistory.filter((reward) => {
+     const filteredHistory = rewardHistory.filter((reward) => {
+        // 포인트에서 숫자와 자산명을 분리
+        const assetType = reward.points.replace(/^[+-]?\d+/, "").trim();
+    
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
-            selectedAssets.length === 0 || selectedAssets.some((asset) => reward.points.endsWith(asset));
-
+            selectedAssets.length === 0 || selectedAssets.includes(assetType);
+    
         // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
             selectedChanges.length === 0 ||
             (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
             (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
-
+    
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
-
+    
         return assetIncluded && changeIncluded && dateIncluded;
     });
+    
 
     // DatePicker용 Custom Input
     const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
@@ -215,7 +219,7 @@ const RewardHistory: React.FC = () => {
                         <p className={`text-sm font-bold text-blue-400`}>
                             +150P ..
                         </p>
-                        <FaChevronRight className="ml-1 w-2 h-2" />
+                        <FaChevronRight className="w-2 h-2" />
                     </div>
                 </div>
             </div>

@@ -47,24 +47,27 @@ const FriendRewards: React.FC = () => {
         return true;
     };
 
-     // 필터링된 데이터
+    // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
+        // 포인트에서 숫자와 자산명을 분리
+        const assetType = reward.points.replace(/^[+-]?\d+/, "").trim();
+    
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
-            selectedAssets.length === 0 || selectedAssets.some((asset) => reward.points.endsWith(asset));
-
+            selectedAssets.length === 0 || selectedAssets.includes(assetType);
+    
         // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
             selectedChanges.length === 0 ||
             (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
             (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
-
+    
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
-
+    
         return assetIncluded && changeIncluded && dateIncluded;
     });
-
+    
     // DatePicker용 Custom Input
     const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
         ({ value, onClick, placeholder }, ref) => (
@@ -188,10 +191,6 @@ const FriendRewards: React.FC = () => {
                     ) : (
                         <p className="text-center text-sm text-gray-400">No records found</p>
                     )}
-                    {/* 레퍼럴 보상 내역(요약본) */}
-                    <div className="flex justify-between items-center py-2 border-b border-[#35383F]">
-
-                    </div>
                 </div>
             </div>
         </div>
