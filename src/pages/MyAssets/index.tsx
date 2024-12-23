@@ -192,7 +192,7 @@ const MyAssets: React.FC = () => {
                 <img
                     src={Images.cart}
                     alt="Shop NFTs"
-                    className="w-20 h-20"
+                    className="w-[90px] h-[90px]"
                 />
             </div>
             
