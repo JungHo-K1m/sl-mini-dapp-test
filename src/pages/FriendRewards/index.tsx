@@ -92,13 +92,13 @@ const FriendRewards: React.FC = () => {
                     <div className="mt-4 mx-3">
                         {/* 친구 이름 검색 */}
                         <p className="text-lg font-medium text-left mb-2">Search Friend</p>
-                        <div className="relative w-full">
+                        <div className="relative w-full mb-4">
                             <input
                                 type="text"
                                 placeholder="Search Name..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full h-14 px-4 py-2 pr-14 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500 mb-4"
+                                className="w-full h-14 px-4 py-2 pr-14 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500"
                             />
                             <FaSearch
                                 className="absolute right-5 text-gray-400 w-5 h-5"
