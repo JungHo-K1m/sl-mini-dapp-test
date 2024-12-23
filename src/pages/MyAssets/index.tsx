@@ -264,20 +264,22 @@ const MyAssets: React.FC = () => {
                     </button>
                 </div>
                 <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] py-3 px-4">
-                    {rewardHistory.map((reward) => (
+                    {rewardHistory.map((reward, index) => (
                         <div
                             key={reward.id}
-                            className="flex justify-between items-center border-b py-2 border-[#35383F]"
-                            >
+                            className={`flex justify-between items-center py-2 ${
+                                index !== rewardHistory.length - 1 ? "border-b border-[#35383F]" : ""
+                            }`}
+                        >
                             <div>
                                 <p className="text-sm font-medium">{reward.description}</p>
                                 <p className="text-xs text-gray-400">{reward.date}</p>
                             </div>
                             <p
                                 className={`text-sm font-bold ${
-                                reward.points.startsWith("+") ? "text-blue-400" : "text-red-400"
+                                    reward.points.startsWith("+") ? "text-blue-400" : "text-red-400"
                                 }`}
-                                >
+                            >
                                 {reward.points}
                             </p>
                         </div>
