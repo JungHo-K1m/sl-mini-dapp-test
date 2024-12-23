@@ -50,8 +50,8 @@ const AgreementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center text-white min-h-screen px-6 relative">
-      <h1 className="text-2xl font-bold mb-6">Welcome to the<br/>Scan My Pet!</h1>
-      <div className="w-full max-w-md p-6 rounded-lg">
+      <h1 className="text-2xl font-bold text-center mb-6">Welcome to the<br/>Scan My Pet!</h1>
+      <div className="w-full max-w-md py-6 rounded-lg">
         <div className="flex items-center mb-4">
           <input
             type="checkbox"
