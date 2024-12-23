@@ -16,7 +16,7 @@ const RewardHistory: React.FC = () => {
     const [endDate, setEndDate] = useState<Date | null>(null);
 
     // 필터 상태
-    const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
+    const [selectedAssets, setSelectedAssets] = useState<string[]>(["point"]);
     const [selectedChanges, setSelectedChanges] = useState<string[]>(["Increase"]);
 
      // 더미 데이터
@@ -51,36 +51,33 @@ const RewardHistory: React.FC = () => {
 
     // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
-        // 포인트에서 숫자와 자산명을 분리
-        const assetType = reward.points.match(/[a-zA-Z]+/)?.[0] || ""; // 자산명만 추출
-
-        // 필터 로직에 로그 추가
-        console.log("Filtering reward:", reward);
-        console.log("Extracted asset type:", assetType);
-        console.log("Selected assets:", selectedAssets);
+        // 포인트에서 숫자와 자산명을 소문자로 추출
+        const assetType = reward.points.match(/[a-zA-Z]+/)?.[0].toLowerCase() || ""; 
 
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
-            selectedAssets.length === 0 || selectedAssets.includes(assetType);
-        console.log("Asset included:", assetIncluded);
+            selectedAssets.length === 0 ||
+            selectedAssets.map((asset) => asset.toLowerCase()).includes(assetType);
 
         // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
             selectedChanges.length === 0 ||
             (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
             (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
-        console.log("Change included:", changeIncluded);
 
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
-        console.log("Date included:", dateIncluded);
 
-        const result = assetIncluded && changeIncluded && dateIncluded;
-        console.log("Filter result for this reward:", result);
+        // 로그 추가
+        console.log("Reward:", reward);
+        console.log("Extracted Asset Type:", assetType);
+        console.log("Asset Included:", assetIncluded);
+        console.log("Change Included:", changeIncluded);
+        console.log("Date Included:", dateIncluded);
 
-        // 모든 조건이 true일 때 데이터 포함
-        return result;
+        return assetIncluded && changeIncluded && dateIncluded;
     });
+
 
 
     
