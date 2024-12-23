@@ -52,24 +52,25 @@ const RewardHistory: React.FC = () => {
     // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
         // 포인트에서 숫자와 자산명을 분리
-        const assetType = reward.points.replace(/^[+-]?\d+/, "").trim(); // 숫자와 부호 제거 후 자산명 추출
-    
+        const assetType = reward.points.match(/[a-zA-Z]+/)?.[0] || ""; // 자산명만 추출
+        
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
             selectedAssets.length === 0 || selectedAssets.includes(assetType);
-    
+
         // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
             selectedChanges.length === 0 ||
-                (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
-                (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
-    
+            (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
+            (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
+
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
-    
+
         // 모든 조건이 true일 때 데이터 포함
         return assetIncluded && changeIncluded && dateIncluded;
     });
+
     
     
 
