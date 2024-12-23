@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/shared/components/ui";
-import { HiX } from "react-icons/hi"; // Ensure react-icons is installed
+import { HiX } from "react-icons/hi";
 import { TopTitle } from "@/shared/components/ui";
 import "./MissionPage.css";
 import Images from "@/shared/assets/images";
@@ -18,12 +18,13 @@ import {
   Mission,
 } from "@/entities/Mission/model/missionModel";
 import { formatNumber } from "@/shared/utils/formatNumber";
-import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
+import LoadingSpinner from "@/shared/components/ui/loadingSpinner";   // ★ 로딩 스피너
+import { preloadImages } from "@/shared/utils/preloadImages";         // ★ 이미지 프리로딩 함수
 
 interface OneTimeMissionCardProps {
   mission: Mission;
   onClear: (id: number) => void;
-  onMissionCleared: (mission: Mission) => void; // New prop
+  onMissionCleared: (mission: Mission) => void;
 }
 
 const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
@@ -37,15 +38,13 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
 
   const handleClick = () => {
     if (!mission.isCleared) {
-      // Open the redirect URL in a new tab
+      // 미션 이동 링크 열기
       if (mission.redirectUrl) {
         window.open(mission.redirectUrl, "_blank");
       }
-
-      // Call the API to clear the mission
+      // 미션 클리어 API 호출
       onClear(mission.id);
-
-      // Trigger the dialog with reward data
+      // 보상 다이얼로그 오픈
       onMissionCleared(mission);
     }
   };
@@ -63,9 +62,8 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
         if (e.key === "Enter") handleClick();
       }}
     >
-      {/* Semi-transparent background layer */}
       {mission.isCleared && (
-        <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10"></div>
+        <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10" />
       )}
 
       <div className="relative flex flex-col items-center justify-center z-0">
@@ -81,9 +79,9 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
         </div>
       </div>
 
-      {/* "Completed" Badge */}
+      {/* Completed Badge */}
       {mission.isCleared && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
           <img
             src={Images.MissionCompleted}
             alt="Mission Completed"
@@ -122,39 +120,87 @@ const DailyMissionCard: React.FC<DailyMissionProps> = ({
 };
 
 const MissionPage: React.FC = () => {
+  // ---------------------------
+  // 1) 이미지 로딩 상태
+  // ---------------------------
+  const [isLoading, setIsLoading] = useState(true);
+
+  // ---------------------------
+  // 2) 미션 스토어
+  // ---------------------------
   const { missions, loading, error, fetchMissions, clearMission } =
     useMissionStore();
 
-  // State for AlertDialog
+  // ---------------------------
+  // 3) 보상 다이얼로그
+  // ---------------------------
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [rewardData, setRewardData] = useState<{
     diceReward: number;
     starReward: number;
-    amount?: number; // For monetary rewards if any
+    amount?: number;
     spinType: string;
   } | null>(null);
 
+  // ---------------------------
+  // 4) Preload할 이미지 목록 구성
+  //    - missionImageMap에 들어있는 이미지들 + 기본 이미지들
+  // ---------------------------
+  const mappedImages = Object.values(missionImageMap).flatMap((item) => {
+    // item.imageKey가 Images 내부에 있는 key 라고 가정
+    return Images[item.imageKey] ? [Images[item.imageKey]] : [];
+  });
+
+  const imagesToLoad = [
+    Images.MissionCompleted,
+    Images.TokenReward,
+    Images.LargeTwitter,
+    Images.Star,
+    Images.Dice,
+    Images.InviteFriend,
+    ...mappedImages,
+  ];
+
+  // ---------------------------
+  // 5) 이미지 프리로딩 후 isLoading = false
+  // ---------------------------
+  useEffect(() => {
+    const loadAllImages = async () => {
+      try {
+        await preloadImages(imagesToLoad);
+      } catch (error) {
+        console.error("이미지 로딩 실패:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadAllImages();
+  }, [imagesToLoad]);
+
+  // ---------------------------
+  // 6) 미션 데이터 불러오기 (기존 로직)
+  // ---------------------------
   useEffect(() => {
     fetchMissions();
   }, [fetchMissions]);
 
-  // Handler to open dialog with reward data
+  // ---------------------------
+  // 7) 미션 클리어 시 보상 처리
+  // ---------------------------
   const handleMissionCleared = (mission: Mission) => {
     setRewardData({
       diceReward: mission.diceReward,
       starReward: mission.starReward,
-      spinType: "MISSION", // Adjust based on your logic
+      spinType: "MISSION",
     });
     setIsDialogOpen(true);
   };
 
-  // Handler to close dialog
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
     setRewardData(null);
   };
 
-  // Modify clearMission to accept a callback
   const handleClearMission = async (id: number) => {
     await clearMission(id);
     const clearedMission = missions.find((m) => m.id === id);
@@ -163,28 +209,27 @@ const MissionPage: React.FC = () => {
     }
   };
 
-  // Utility function to get prize display name
-  const getPrizeDisplayName = (spinType: string | undefined) => {
-    switch (spinType) {
-      case "DICE":
-        return "Dice";
-      case "STAR":
-        return "Star";
-      // Add more cases as needed
-      default:
-        return "Reward";
-    }
-  };
+  // ---------------------------
+  // 8) 이미지 로딩 중이면 Spinner 표시
+  // ---------------------------
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
+  // ---------------------------
+  // 9) 로딩 끝난 후 실제 페이지 렌더
+  // ---------------------------
   return (
     <div className="flex flex-col text-white mx-6 mb-20 md:mb-96">
       <TopTitle title="Mission" />
 
       <h1 className="font-semibold text-lg ml-[2px] mb-4">One-Time Missions</h1>
 
-      {loading && <LoadingSpinner/>}
+      {/* 미션 스토어 로딩 or 에러 */}
+      {loading && <LoadingSpinner />}
       {error && <p className="text-red-500">{error}</p>}
 
+      {/* 미션 리스트 */}
       <div className="grid grid-cols-2 gap-3">
         {missions.map((mission) =>
           mission.name !== "Leave a Supportive Comment on SL X" ? (
@@ -192,7 +237,7 @@ const MissionPage: React.FC = () => {
               key={mission.id}
               mission={mission}
               onClear={handleClearMission}
-              onMissionCleared={handleMissionCleared} // Pass the handler
+              onMissionCleared={handleMissionCleared}
             />
           ) : (
             <div className="col-span-2" key={mission.id}>
@@ -202,12 +247,9 @@ const MissionPage: React.FC = () => {
                 }`}
                 onClick={() => {
                   if (!mission.isCleared) {
-                    // Open the redirect URL in a new tab
                     if (mission.redirectUrl) {
                       window.open(mission.redirectUrl, "_blank");
                     }
-
-                    // Call the API to clear the mission
                     handleClearMission(mission.id);
                   }
                 }}
@@ -216,17 +258,13 @@ const MissionPage: React.FC = () => {
                 tabIndex={0}
                 onKeyPress={(e) => {
                   if (e.key === "Enter" && !mission.isCleared) {
-                    // Open the redirect URL in a new tab
                     if (mission.redirectUrl) {
                       window.open(mission.redirectUrl, "_blank");
                     }
-
-                    // Call the API to clear the mission
                     handleClearMission(mission.id);
                   }
                 }}
               >
-                {/* Semi-transparent background layer */}
                 {mission.isCleared && (
                   <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10"></div>
                 )}
@@ -248,9 +286,8 @@ const MissionPage: React.FC = () => {
                   />
                 </div>
 
-                {/* "Completed" Badge */}
                 {mission.isCleared && (
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  text-white font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
                     <img
                       src={Images.MissionCompleted}
                       alt="Mission Completed"
@@ -261,12 +298,10 @@ const MissionPage: React.FC = () => {
                 )}
               </div>
 
-             
-                <p className="text-xs mb-8 mt-2 text-white">
-                  * If the mission is not performed correctly, you may be excluded
-                  from the final reward.
-                </p>
-        
+              <p className="text-xs mb-8 mt-2 text-white">
+                * If the mission is not performed correctly, you may be excluded
+                from the final reward.
+              </p>
             </div>
           )
         )}
@@ -282,10 +317,10 @@ const MissionPage: React.FC = () => {
         />
       </Link>
 
-      {/* Added spacing for layout purposes */}
+      {/* 페이지 하단 여백 */}
       <div className="my-10"></div>
 
-      {/* AlertDialog for Rewards */}
+      {/* 미션 보상 다이얼로그 */}
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none max-w-[90%] md:max-w-lg">
           <AlertDialogHeader>
@@ -305,7 +340,7 @@ const MissionPage: React.FC = () => {
               <div className="mt-20 w-28 h-28 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-[24px] flex items-center justify-center">
                 <div className="w-[110px] h-[110px] logo-bg rounded-[24px] flex items-center flex-col justify-center gap-2">
                   <img
-                    src={Images.Dice} // Dice image
+                    src={Images.Dice}
                     className="w-10 h-10"
                     alt="Dice Reward"
                   />
@@ -317,11 +352,10 @@ const MissionPage: React.FC = () => {
               <div className="mt-20 w-28 h-28 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-[24px] flex items-center justify-center">
                 <div className="w-[110px] h-[110px] logo-bg rounded-[24px] flex items-center flex-col justify-center gap-2">
                   <img
-                    src={Images.Star} // Star image
+                    src={Images.Star}
                     className="w-10 h-10"
                     alt="Star Reward"
                   />
-
                   <p className="font-semibold text-lg">
                     +{rewardData && formatNumber(rewardData.starReward)}
                   </p>
@@ -329,9 +363,7 @@ const MissionPage: React.FC = () => {
               </div>
             </div>
             <div className="text-center space-y-2">
-              <p className="text-xl font-semibold">
-                Congratulations! <br />
-              </p>
+              <p className="text-xl font-semibold">Congratulations!</p>
               <p className="text-[#a3a3a3]">
                 This reward has been added to <br />
                 your account.

@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { useNavigationStore } from '@/shared/store/navigationStore';
 
 interface MonthlyPrizeProps {
-  month: number;              // 예) 1 ~ 12
-  prizeType: string;          // 예) 'SL', 'GL' 등
-  amount: number;             // 예) 30000
-  eventFinishTime: string | null; // 이벤트 종료 시간 (예: '2024-12-31T23:59:59'), 없으면 null
+  month: number;            // 1 ~ 12
+  prizeType: string;        // 예: 'SL', 'GL'
+  amount: number;           // 예: 30000
+  eventFinishTime: string;  // 이벤트 종료 시간 (예: '2024-12-31T23:59:59')
 }
 
 const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
@@ -31,33 +31,32 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
   const [timeLeft, setTimeLeft] = useState('');
 
   useEffect(() => {
-    // eventFinishTime이 없으면 표시하지 않음
-    if (!eventFinishTime) {
-      setTimeLeft('');
-      return;
-    }
-
-    // 존재한다면, 해당 시간을 이용해 카운트다운 설정
     const endDate = new Date(eventFinishTime);
 
-    const timer = setInterval(() => {
+    // 즉시 계산 + 1초 간격 갱신
+    const updateCountdown = () => {
       const now = Date.now();
       const distance = endDate.getTime() - now;
 
       if (distance < 0) {
-        clearInterval(timer);
         setTimeLeft('Event has ended');
         return;
       }
 
-      // 일/시간/분 계산
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((distance / (1000 * 60)) % 60);
 
       setTimeLeft(`Time Left: ${days}d ${hours}h ${minutes}m`);
-    }, 1000);
+    };
 
+    // 컴포넌트 마운트 시 1회 즉시 계산
+    updateCountdown();
+
+    // 이후 1초마다 갱신
+    const timer = setInterval(updateCountdown, 1000);
+
+    // 언마운트 시 인터벌 해제
     return () => clearInterval(timer);
   }, [eventFinishTime]);
 
@@ -72,10 +71,11 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
   return (
     <div
       onClick={handleRankingClick}
-      className="relative z-10 flex flex-col items-center justify-center
-                 w-48 h-36 md:w-[340px] md:h-44
-                 text-white border-2 border-[#BBA361] rounded-3xl
-                 overflow-visible gap-1
+      className="
+        relative z-10 flex flex-col items-center justify-center
+        w-48 h-36 md:w-[340px] md:h-44
+        text-white border-2 border-[#BBA361] rounded-3xl
+        overflow-visible gap-1 bg-neutral-900 
       "
     >
       {/* 월 라벨 */}
@@ -88,11 +88,20 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
         {monthNames[month - 1]}
       </div>
 
-      {/* 상품 이미지 */}
-      <img
+      {/* 상품 이미지 (Framer Motion 적용) */}
+      <motion.img
         src={Images.PrizeImage}
         alt="token logo"
         className="h-14 mt-2"
+        animate={{
+          // 살짝 커졌다 돌아오는 확대 애니메이션
+          rotate: [0, 5, 0, -5, 0],
+        }}
+        transition={{
+          duration: 2.5,       // 한 사이클 2.5초
+          repeat: Infinity,    // 무한 반복
+          repeatType: 'reverse', // 앞뒤로 반복 (1->1.08->1->1.08...)
+        }}
       />
 
       {/* 상품 정보 */}
@@ -103,12 +112,10 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
         </p>
       </div>
 
-      {/* 남은 기간 표시 (eventFinishTime이 없으면 표시 안 함) */}
-      {timeLeft && (
-        <div className="text-[10px] font-light">
-          {timeLeft}
-        </div>
-      )}
+      {/* 남은 기간 표시 (카운트다운) */}
+      <div className="text-[10px] font-light">
+        {timeLeft}
+      </div>
 
       {/* 첫 번째 이미지 애니메이션 */}
       <motion.img

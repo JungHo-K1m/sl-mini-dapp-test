@@ -11,8 +11,8 @@ import {
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
-import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // 로딩 스피너 임포트
-import ErrorMessage from "@/shared/components/ui/ErrorMessage"; // 에러 메시지 컴포넌트 임포트
+import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
+import ErrorMessage from "@/shared/components/ui/ErrorMessage";
 
 interface RankingSectionProps {
   myData: PlayerData | null;
@@ -41,7 +41,6 @@ const RankingSection: React.FC<RankingSectionProps> = ({
   rangeError,
   handleRangeClick,
 }) => {
-
   useEffect(() => {
     console.log("RankingSection myData:", myData);
   }, [myData]);
@@ -50,16 +49,19 @@ const RankingSection: React.FC<RankingSectionProps> = ({
     <div className="p-6 bg-[#0D1226] text-white w-full ">
       {myData ? (
         <>
-          {/* 랭킹이 1000위 안에 들지 못한 경우 */}
+          {/* 여기서부터 랭킹 조건 분기 */}
           {myData.rank > 1000 ? (
+            // 1000등 밖인 경우
             <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
               <p className="font-semibold text-sm text-center">
-                Your Rank: #<span className="text-[#FDE047] font-bold">{myData.rank}</span><br/>
+                Your Rank: #
+                <span className="text-[#FDE047] font-bold">{myData.rank}</span>
+                <br />
                 Keep playing and try again next time!
               </p>
             </div>
-          ) : (
-            // 랭킹이 1000위 이내인 경우
+          ) : myData.rank <= 20 ? (
+            // 1~20등까지 보상 버튼 노출
             <>
               <p className="font-semibold">
                 Congratulations! Here’s your reward:
@@ -106,10 +108,20 @@ const RankingSection: React.FC<RankingSectionProps> = ({
                   : `Reward Issued (${myData.selectedRewardType})`}
               </button>
             </>
+          ) : (
+            // 21~1000등 사이인 경우 (보상 버튼 비노출)
+            <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
+              <p className="font-semibold text-sm text-center">
+                Your Rank: #
+                <span className="text-[#FDE047] font-bold">{myData.rank}</span>
+                <br />
+                Keep playing and try again next time!
+              </p>
+            </div>
           )}
         </>
       ) : (
-        // 랭킹 데이터가 없는 경우
+        // myData가 null인 경우 (랭킹 데이터 자체가 없는 경우)
         <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
           <p className="font-semibold text-sm text-center">
             You didn't rank this time. <br />
@@ -120,60 +132,52 @@ const RankingSection: React.FC<RankingSectionProps> = ({
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
-      {topRankings.length > 0 ? (
-  topRankings.slice(0, 20).map((r) => {
-    const rReceived =
-      r.selectedRewardType === "USDC" || r.selectedRewardType === "SL";
-    return (
-      <div
-        key={r.rank}
-        className={`relative flex flex-row items-center p-4 border-b gap-4`}
-      >
-        <p>#{r.rank}</p>
-        <div className="flex flex-col gap-1">
-          <p>{r.userId}</p>
-          <div className="flex flex-row items-center gap-1">
-            {/* selectedRewardType에 따른 이미지 및 문구 순서 변경 */}
-            {r.selectedRewardType === "USDC" ? (
-              <>
-                <img
-                  src={Images.USDC}
-                  alt="token"
-                  className="w-5 h-5"
-                />
-                <p className="text-sm font-semibold">
-                  {(r.usdcRewards ?? 0).toLocaleString()}{" "}
-                  <span className="font-normal text-[#a3a3a3]">
-                    (or {(r.slRewards ?? 0).toLocaleString()} SL)
-                  </span>
-                  {r.nftType ? ` + ${r.nftType} NFT` : ""}
-                </p>
-              </>
-            ) : (
-              <>
-                <img
-                  src={Images.TokenReward}
-                  alt="token"
-                  className="w-5 h-5"
-                />
-                <p className="text-sm font-semibold">
-                  {(r.slRewards ?? 0).toLocaleString()}{" "}
-                  <span className="font-normal text-[#a3a3a3]">
-                    (or {(r.usdcRewards ?? 0).toLocaleString()} USDC)
-                  </span>
-                  {r.nftType ? ` + ${r.nftType} NFT` : ""}
-                </p>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  })
-) : (
-  <p className="text-center text-sm">No rankings available</p>
-)}
-
+        {topRankings.length > 0 ? (
+          topRankings.slice(0, 20).map((r) => {
+            return (
+              <div
+                key={r.rank}
+                className={`relative flex flex-row items-center p-4 border-b gap-4`}
+              >
+                <p>#{r.rank}</p>
+                <div className="flex flex-col gap-1">
+                  <p>{r.userId}</p>
+                  <div className="flex flex-row items-center gap-1">
+                    {r.selectedRewardType === "USDC" ? (
+                      <>
+                        <img src={Images.USDC} alt="token" className="w-5 h-5" />
+                        <p className="text-sm font-semibold">
+                          {(r.usdcRewards ?? 0).toLocaleString()}{" "}
+                          <span className="font-normal text-[#a3a3a3]">
+                            (or {(r.slRewards ?? 0).toLocaleString()} SL)
+                          </span>
+                          {r.nftType ? ` + ${r.nftType} NFT` : ""}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          src={Images.TokenReward}
+                          alt="token"
+                          className="w-5 h-5"
+                        />
+                        <p className="text-sm font-semibold">
+                          {(r.slRewards ?? 0).toLocaleString()}{" "}
+                          <span className="font-normal text-[#a3a3a3]">
+                            (or {(r.usdcRewards ?? 0).toLocaleString()} USDC)
+                          </span>
+                          {r.nftType ? ` + ${r.nftType} NFT` : ""}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-center text-sm">No rankings available</p>
+        )}
       </div>
 
       {/* Dialogs */}

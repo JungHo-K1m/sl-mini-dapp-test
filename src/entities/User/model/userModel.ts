@@ -15,7 +15,7 @@ interface MonthlyPrize {
   month: number;
   prizeType: string;
   amount: number;
-  eventFinishTime: string | null; // 추가된 부분: 이벤트 종료 시간
+  eventFinishTime: string; // 추가된 부분: 이벤트 종료 시간
 }
 
 // 주간 출석 정보 인터페이스
@@ -242,7 +242,7 @@ export const useUserStore = create<UserState>((set, get) => ({
     month: 0,
     prizeType: '',
     amount: 0,
-    eventFinishTime: null,
+    eventFinishTime: "",
   },
   setMonthlyPrize: (monthlyPrize) => set({ monthlyPrize }),
 
@@ -508,7 +508,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         month: 0,
         prizeType: '',
         amount: 0,
-        eventFinishTime: null,
+        eventFinishTime: "",
       },
       weekAttendance: {
         mon: null,
