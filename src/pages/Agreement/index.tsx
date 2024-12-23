@@ -49,9 +49,9 @@ const AgreementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-900 text-white px-6 relative">
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 relative">
       <h1 className="text-2xl font-bold mb-6">Welcome</h1>
-      <div className="w-full max-w-md bg-blue-800 p-6 rounded-lg shadow-lg">
+      <div className="w-full max-w-md p-6 rounded-lg">
         <div className="flex items-center mb-4">
           <input
             type="checkbox"
@@ -114,7 +114,7 @@ const AgreementPage: React.FC = () => {
 
       {/* 하단 고정 버튼 */}
       <button
-        className={`w-full max-w-md py-3 text-lg font-bold rounded-lg fixed bottom-4 left-1/2 transform -translate-x-1/2 ${
+        className={`w-full max-w-md py-3 text-lg font-bold rounded-full fixed bottom-4 left-1/2 transform -translate-x-1/2 ${
           isAllChecked ? "bg-[#0147E5] text-white" : "bg-gray-500 text-gray-300"
         }`}
         disabled={!isAllChecked}
@@ -125,15 +125,15 @@ const AgreementPage: React.FC = () => {
 
       {/* 모달 */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white w-full max-w-md p-6 rounded-lg overflow-y-auto max-h-[80%]">
+        <div className="fixed inset-0 flex items-center justify-center bg-[#0D1226] bg-opacity-50 z-50">
+          <div className=" w-full max-w-md p-6 rounded-lg overflow-y-auto max-h-[80%] bg-[#0D1226]">
             <iframe
               src={modalContent}
               title="Policy Document"
               className="w-full h-[60vh] border-none"
             ></iframe>
             <button
-              className="mt-4 px-4 py-2 bg-[#0147E5] text-white rounded-lg w-full"
+              className="mt-4 px-4 py-2 bg-[#0147E5] text-white rounded-full w-full"
               onClick={handleCloseModal}
             >
               Close
