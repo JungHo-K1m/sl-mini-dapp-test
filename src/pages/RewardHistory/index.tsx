@@ -53,23 +53,35 @@ const RewardHistory: React.FC = () => {
     const filteredHistory = rewardHistory.filter((reward) => {
         // 포인트에서 숫자와 자산명을 분리
         const assetType = reward.points.match(/[a-zA-Z]+/)?.[0] || ""; // 자산명만 추출
-        
+
+        // 필터 로직에 로그 추가
+        console.log("Filtering reward:", reward);
+        console.log("Extracted asset type:", assetType);
+        console.log("Selected assets:", selectedAssets);
+
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
             selectedAssets.length === 0 || selectedAssets.includes(assetType);
+        console.log("Asset included:", assetIncluded);
 
         // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
             selectedChanges.length === 0 ||
             (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
             (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
+        console.log("Change included:", changeIncluded);
 
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
+        console.log("Date included:", dateIncluded);
+
+        const result = assetIncluded && changeIncluded && dateIncluded;
+        console.log("Filter result for this reward:", result);
 
         // 모든 조건이 true일 때 데이터 포함
-        return assetIncluded && changeIncluded && dateIncluded;
+        return result;
     });
+
 
     
     
