@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -92,13 +92,17 @@ const FriendRewards: React.FC = () => {
                     <div className="mt-4 mx-3">
                         {/* 친구 이름 검색 */}
                         <p className="text-lg font-medium text-left mb-2">Search Friend</p>
-                        <input
-                            type="text"
-                            placeholder="Enter friend's name"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring focus:ring-blue-500 mb-4"
-                        />
+                        <div className="relative w-full">
+                            <input
+                                type="text"
+                                placeholder="Search Name..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full px-4 py-2 pr-10 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500 mb-4"
+                            />
+                            <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                        </div>
+
 
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
