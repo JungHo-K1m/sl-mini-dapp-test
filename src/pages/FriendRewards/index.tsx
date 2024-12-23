@@ -88,7 +88,7 @@ const FriendRewards: React.FC = () => {
                     animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
-                >
+                    >
                     <div className="mt-4 mx-3">
                         {/* 친구 이름 검색 */}
                         <p className="text-lg font-medium text-left mb-2">Search Friend</p>
@@ -100,10 +100,14 @@ const FriendRewards: React.FC = () => {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full h-14 px-4 py-2 pr-14 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500 mb-4"
                             />
-                            <FaSearch className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <FaSearch
+                                className="absolute right-5 text-gray-400 w-5 h-5"
+                                style={{
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                }}
+                            />
                         </div>
-
-
 
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
