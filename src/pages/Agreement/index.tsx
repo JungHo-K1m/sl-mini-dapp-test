@@ -49,8 +49,8 @@ const AgreementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-6 relative">
-      <h1 className="text-2xl font-bold mb-6">Welcome</h1>
+    <div className="flex flex-col items-center justify-center text-white min-h-screen px-6 relative">
+      <h1 className="text-2xl font-bold mb-6">Welcome to the<br/>Scan My Pet!</h1>
       <div className="w-full max-w-md p-6 rounded-lg">
         <div className="flex items-center mb-4">
           <input
@@ -60,7 +60,7 @@ const AgreementPage: React.FC = () => {
             onChange={handleCheckAll}
             className="w-5 h-5 mr-2"
           />
-          <label htmlFor="allTerms" className="font-semibold text-sm">
+          <label htmlFor="allTerms" className="font-semibold text-lg">
             Agree to all terms and conditions
           </label>
         </div>
@@ -74,7 +74,7 @@ const AgreementPage: React.FC = () => {
             className="w-5 h-5 mr-2"
           />
           <button
-            className="font-semibold text-sm text-left underline"
+            className="font-medium text-base text-left underline"
             onClick={() => handleOpenModal("termsOfService.html")}
           >
             Terms of Service
@@ -89,7 +89,7 @@ const AgreementPage: React.FC = () => {
             className="w-5 h-5 mr-2"
           />
           <button
-            className="font-semibold text-sm text-left underline"
+            className="font-medium text-base text-left underline"
             onClick={() => handleOpenModal("privacyPolicy.html")}
           >
             Privacy Policy
@@ -104,7 +104,7 @@ const AgreementPage: React.FC = () => {
             className="w-5 h-5 mr-2"
           />
           <button
-            className="font-semibold text-sm text-left underline"
+            className="font-medium text-base text-left underline"
             onClick={() => handleOpenModal("electronicCommerce.html")}
           >
             Electronic Commerce Policy
@@ -114,7 +114,7 @@ const AgreementPage: React.FC = () => {
 
       {/* 하단 고정 버튼 */}
       <button
-        className={`w-full max-w-md py-3 text-lg font-bold rounded-full fixed bottom-4 left-1/2 transform -translate-x-1/2 ${
+        className={`w-[80%] max-w-md py-3 text-lg font-bold rounded-full fixed bottom-4 left-1/2 transform -translate-x-1/2 ${
           isAllChecked ? "bg-[#0147E5] text-white" : "bg-gray-500 text-gray-300"
         }`}
         disabled={!isAllChecked}
