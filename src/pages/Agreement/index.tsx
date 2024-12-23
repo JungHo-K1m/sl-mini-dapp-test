@@ -44,7 +44,7 @@ const AgreementPage: React.FC = () => {
 
   const handleNext = () => {
     if (isAllChecked) {
-      navigate("/character-selection"); // 캐릭터 선택 페이지로 이동
+      navigate("/choose-character"); // 캐릭터 선택 페이지로 이동
     }
   };
 

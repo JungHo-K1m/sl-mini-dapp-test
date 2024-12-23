@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaChevronDown, FaChevronUp, FaChevronRight } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -8,8 +7,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { TopTitle } from "@/shared/components/ui";
 
-const RewardHistory: React.FC = () => {
-    const navigate = useNavigate();
+const FriendRewards: React.FC = () => {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -21,11 +19,11 @@ const RewardHistory: React.FC = () => {
 
      // 더미 데이터
      const rewardHistory = [
-        { id: 1, description: "Joined Telegram", date: "2024-12-01", points: "+150SL" },
-        { id: 2, description: "AI Dental Examination", date: "2024-12-05", points: "-150SL" },
-        { id: 3, description: "Subscribe to Email", date: "2024-12-10", points: "+150SL" },
-        { id: 4, description: "Game Win", date: "2024-12-20", points: "+150P" },
-        { id: 5, description: "Game Lose", date: "2024-12-25", points: "-150P" },
+        { id: 1, description: "Joined Telegram", date: "2024-12-01", points: "+150SL", from: "James" },
+        { id: 2, description: "AI Dental Examination", date: "2024-12-05", points: "+200SL", from: "Oscar" },
+        { id: 3, description: "Subscribe to Email", date: "2024-12-10", points: "+150SL", from: "James" },
+        { id: 4, description: "Game Win", date: "2024-12-20", points: "+150P", from: "Ramos" },
+        { id: 5, description: "Game Lose", date: "2024-12-25", points: "+150P", from: "Ruel" },
     ];
 
     // 체크박스 필터 핸들러
@@ -89,7 +87,7 @@ const RewardHistory: React.FC = () => {
 
     return (
         <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
-            <TopTitle title={t("asset_page.Rewards_History")} back={true} />
+            <TopTitle title="Friend Referral Rewards" back={true} />
 
             {/* 드롭다운 필터로 수정 중 */}
             <div>
@@ -111,6 +109,8 @@ const RewardHistory: React.FC = () => {
                     className="overflow-hidden"
                 >
                     <div className="mt-4 mx-3">
+                        {/* 친구 이름 검색 */}
+
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
                         <div className="flex flex-col gap-2 ml-3">
@@ -123,22 +123,6 @@ const RewardHistory: React.FC = () => {
                                         className="mr-2"
                                     />
                                     {asset}
-                                </label>
-                            ))}
-                        </div>
-
-                        {/* 증감 필터 */}
-                        <p className="text-lg font-medium text-left mt-4 mb-2">Change Types</p>
-                        <div className="flex flex-col gap-2 ml-3">
-                            {["Increase", "Decrease"].map((change) => (
-                                <label key={change} className="flex items-center text-base font-medium">
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedChanges.includes(change)}
-                                        onChange={() => handleChangeType(change)}
-                                        className="mr-2"
-                                    />
-                                    {change}
                                 </label>
                             ))}
                         </div>
@@ -189,7 +173,7 @@ const RewardHistory: React.FC = () => {
                                 className="flex justify-between items-center py-2 border-b border-[#35383F]"
                             >
                                 <div>
-                                    <p className="text-sm font-medium">{reward.description}</p>
+                                    <p className="text-sm font-medium">{reward.from}</p>
                                     <p className="text-xs text-gray-400">{reward.date}</p>
                                 </div>
                                 <p
@@ -205,17 +189,8 @@ const RewardHistory: React.FC = () => {
                         <p className="text-center text-sm text-gray-400">No records found</p>
                     )}
                     {/* 레퍼럴 보상 내역(요약본) */}
-                    <div 
-                        className="flex justify-between items-center py-2 border-b border-[#35383F]"
-                        onClick={() => navigate("/referral-rewards")}>
-                        <div>
-                            <p className="text-sm font-medium">Friend Referral Rewards</p>
-                            <p className="text-xs text-gray-400">17-12-2024</p>
-                        </div>
-                        <p className={`text-sm font-bold text-blue-400`}>
-                            +150P ..
-                        </p>
-                        <FaChevronRight className="ml-1 w-2 h-2" />
+                    <div className="flex justify-between items-center py-2 border-b border-[#35383F]">
+
                     </div>
                 </div>
             </div>
@@ -223,4 +198,4 @@ const RewardHistory: React.FC = () => {
     );
 };
 
-export default RewardHistory;
+export default FriendRewards;

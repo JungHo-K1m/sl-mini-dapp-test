@@ -33,6 +33,7 @@ import FirstRewardPage from "./pages/FirstReward";
 import SettingsPage from "./pages/SettingsPage";
 import PolicyDetailPage from "./pages/PolicyDetail";
 import AgreementPage from "./pages/Agreement";
+import FriendRewards from "./pages/FriendRewards";
 
 
 // 튜토리얼
@@ -178,6 +179,7 @@ const App:React.FC = () =>{
                     <Route path="/settings" element={<DiceEventLayout hidden={true}><SettingsPage /></DiceEventLayout>} />
                     <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
                     <Route path="/policy-agreement" element={<DiceEventLayout hidden={true}><AgreementPage /></DiceEventLayout>} />
+                    <Route path="/referral-rewards" element={<DiceEventLayout hidden={true}><FriendRewards /></DiceEventLayout>} />
                 </Routes>
             )}
         </TourProvider>
