@@ -49,10 +49,10 @@ const RewardHistory: React.FC = () => {
         return true;
     };
 
-     // 필터링된 데이터
-     const filteredHistory = rewardHistory.filter((reward) => {
+    // 필터링된 데이터
+    const filteredHistory = rewardHistory.filter((reward) => {
         // 포인트에서 숫자와 자산명을 분리
-        const assetType = reward.points.replace(/^[+-]?\d+/, "").trim();
+        const assetType = reward.points.replace(/^[+-]?\d+/, "").trim(); // 숫자와 부호 제거 후 자산명 추출
     
         // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const assetIncluded =
@@ -61,14 +61,16 @@ const RewardHistory: React.FC = () => {
         // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
         const changeIncluded =
             selectedChanges.length === 0 ||
-            (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
-            (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
+                (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
+                (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
     
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
     
+        // 모든 조건이 true일 때 데이터 포함
         return assetIncluded && changeIncluded && dateIncluded;
     });
+    
     
 
     // DatePicker용 Custom Input
@@ -216,10 +218,10 @@ const RewardHistory: React.FC = () => {
                             <p className="text-sm font-medium">Friend Referral Rewards</p>
                             <p className="text-xs text-gray-400">17-12-2024</p>
                         </div>
-                        <p className={`text-sm font-bold text-blue-400`}>
-                            +150P ..
-                        </p>
-                        <FaChevronRight className="w-2 h-2" />
+                        <div className="flex items-center gap-2 ml-auto">
+                            <p className="text-sm font-bold text-blue-400">+150P</p>
+                            <FaChevronRight className="w-2 h-2" />
+                        </div>
                     </div>
                 </div>
             </div>

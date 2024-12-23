@@ -56,16 +56,11 @@ const FriendRewards: React.FC = () => {
         const assetIncluded =
             selectedAssets.length === 0 || selectedAssets.includes(assetType);
     
-        // 증감 필터 (선택된 항목이 없으면 모든 데이터 포함)
-        const changeIncluded =
-            selectedChanges.length === 0 ||
-            (selectedChanges.includes("Increase") && reward.points.startsWith("+")) ||
-            (selectedChanges.includes("Decrease") && reward.points.startsWith("-"));
     
         // 날짜 필터
         const dateIncluded = isWithinDateRange(reward.date);
     
-        return assetIncluded && changeIncluded && dateIncluded;
+        return assetIncluded && dateIncluded;
     });
     
     // DatePicker용 Custom Input
