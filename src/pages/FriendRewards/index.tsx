@@ -15,10 +15,10 @@ const FriendRewards: React.FC = () => {
 
     // 필터 상태
     const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
-    const [selectedChanges, setSelectedChanges] = useState<string[]>(["Increase"]);
+    const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
 
-     // 더미 데이터
-     const rewardHistory = [
+    // 더미 데이터
+    const rewardHistory = [
         { id: 1, description: "Joined Telegram", date: "2024-12-01", points: "+150SL", from: "James" },
         { id: 2, description: "AI Dental Examination", date: "2024-12-05", points: "+200SL", from: "Oscar" },
         { id: 3, description: "Subscribe to Email", date: "2024-12-10", points: "+150SL", from: "James" },
@@ -26,44 +26,28 @@ const FriendRewards: React.FC = () => {
         { id: 5, description: "Game Lose", date: "2024-12-25", points: "+150P", from: "Ruel" },
     ];
 
-    // 체크박스 필터 핸들러
     const handleAssetChange = (asset: string) => {
         setSelectedAssets((prev) =>
             prev.includes(asset) ? prev.filter((a) => a !== asset) : [...prev, asset]
         );
     };
 
-    const handleChangeType = (change: string) => {
-        setSelectedChanges((prev) =>
-            prev.includes(change) ? prev.filter((c) => c !== change) : [...prev, change]
-        );
-    };
-
-    // 날짜 필터 함수
     const isWithinDateRange = (rewardDate: string) => {
         const date = new Date(rewardDate);
-        if (startDate && date < startDate) return false; // Start Date보다 이전 날짜 제외
-        if (endDate && date > endDate) return false; // End Date보다 이후 날짜 제외
+        if (startDate && date < startDate) return false;
+        if (endDate && date > endDate) return false;
         return true;
     };
 
     // 필터링된 데이터
     const filteredHistory = rewardHistory.filter((reward) => {
-        // 포인트에서 숫자와 자산명을 분리
         const assetType = reward.points.replace(/^[+-]?\d+/, "").trim();
-    
-        // 자산 필터 (선택된 항목이 없으면 모든 데이터 포함)
-        const assetIncluded =
-            selectedAssets.length === 0 || selectedAssets.includes(assetType);
-    
-    
-        // 날짜 필터
+        const assetIncluded = selectedAssets.length === 0 || selectedAssets.includes(assetType);
         const dateIncluded = isWithinDateRange(reward.date);
-    
-        return assetIncluded && dateIncluded;
+        const searchIncluded = reward.from.toLowerCase().includes(searchTerm.toLowerCase()); // 검색어 필터링
+        return assetIncluded && dateIncluded && searchIncluded;
     });
-    
-    // DatePicker용 Custom Input
+
     const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
         ({ value, onClick, placeholder }, ref) => (
             <div
@@ -87,7 +71,7 @@ const FriendRewards: React.FC = () => {
         <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
             <TopTitle title="Friend Referral Rewards" back={true} />
 
-            {/* 드롭다운 필터로 수정 중 */}
+            {/* 드롭다운 필터 */}
             <div>
                 <div
                     className="flex items-center justify-between cursor-pointer"
@@ -99,7 +83,6 @@ const FriendRewards: React.FC = () => {
                     {isOpen ? <FaChevronUp className="text-lg" /> : <FaChevronDown className="text-lg" />}
                 </div>
 
-                {/* 애니메이션이 적용된 영역 */}
                 <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
@@ -108,6 +91,14 @@ const FriendRewards: React.FC = () => {
                 >
                     <div className="mt-4 mx-3">
                         {/* 친구 이름 검색 */}
+                        <p className="text-lg font-medium text-left mb-2">Search Friend</p>
+                        <input
+                            type="text"
+                            placeholder="Enter friend's name"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring focus:ring-blue-500 mb-4"
+                        />
 
                         {/* 자산 종류 필터 */}
                         <p className="text-lg font-medium text-left mb-2">Asset Types</p>
@@ -128,7 +119,6 @@ const FriendRewards: React.FC = () => {
                         {/* 날짜 범위 선정 */}
                         <p className="text-lg font-medium text-left mt-4">Date Ranges</p>
                         <div className="flex items-center gap-4 mt-4">
-                            {/* Start Date Picker */}
                             <div className="w-full">
                                 <DatePicker
                                     selected={startDate}
@@ -144,8 +134,6 @@ const FriendRewards: React.FC = () => {
                                     maxDate={endDate || undefined}
                                 />
                             </div>
-
-                            {/* End Date Picker */}
                             <div className="w-full">
                                 <DatePicker
                                     selected={endDate}
@@ -174,13 +162,7 @@ const FriendRewards: React.FC = () => {
                                     <p className="text-sm font-medium">{reward.from}</p>
                                     <p className="text-xs text-gray-400">{reward.date}</p>
                                 </div>
-                                <p
-                                    className={`text-sm font-bold ${
-                                        reward.points.startsWith("+") ? "text-blue-400" : "text-red-400"
-                                    }`}
-                                >
-                                    {reward.points}
-                                </p>
+                                <p className="text-sm font-bold text-blue-400">{reward.points}</p>
                             </div>
                         ))
                     ) : (
