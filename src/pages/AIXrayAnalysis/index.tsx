@@ -205,7 +205,7 @@ const AIXrayAnalysis: React.FC = () => {
               onClick={saveResult}
               disabled={isSaving}
             >
-              {isSaving ? t("ai_page.Saving...") : t("ai_page.Save")}
+              {isSaving ? t("ai_page.Saving") : t("ai_page.Save")}
             </button>
           </div>
         </>
