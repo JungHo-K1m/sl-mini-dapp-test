@@ -8,6 +8,8 @@ import RPSResultDialog from "./ui/RPSResultDialog";
 import RPSGameStart from "./ui/RPSGameStart";
 import { useRPSGameStore } from "./store";
 import { useUserStore } from "@/entities/User/model/userModel";
+import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // ★ 로딩 스피너
+import { preloadImages } from "@/shared/utils/preloadImages"; // ★ 이미지 프리로딩 함수
 
 interface RPSGameProps {
   onGameEnd: (result: "win" | "lose", winnings: number) => void;
@@ -21,6 +23,48 @@ const rpsImages = {
 };
 
 const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
+  // -----------------------
+  // 1) 로딩 상태 관리
+  // -----------------------
+  const [isLoading, setIsLoading] = useState(true);
+
+  // -----------------------
+  // 필요한 이미지 모두 담기
+  // -----------------------
+  const imagesToLoad = [
+    Images.BGRPSGame,
+    Images.RPSGameExample,
+    Images.RPSGame,
+    Images.Rock,
+    Images.Paper,
+    Images.Scissors,
+    Images.RockButton,
+    Images.PaperButton,
+    Images.ScissorsButton,
+    Images.Star,
+    // 혹시 RPSGameStart, RPSResultDialog 등에서 추가로 쓰는 이미지도 여기 포함
+  ];
+
+  // -----------------------
+  // 이미지 프리로드
+  // -----------------------
+  useEffect(() => {
+    const loadAllImages = async () => {
+      try {
+        await preloadImages(imagesToLoad);
+      } catch (error) {
+        console.error("이미지 로딩 실패:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadAllImages();
+  }, []);
+
+  // -----------------------
+  // RPS 게임 관련 상태
+  // -----------------------
   const {
     betAmount,
     winMultiplier,
@@ -41,32 +85,34 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     currentRound,
     handleRPSGameEnd,
     totalRounds,
+    fetchAllowedBetting,
   } = useRPSGameStore();
 
   const { starPoints } = useUserStore();
 
-  // 모든 슬롯 상태 관리: spinning | stopped
+  // -----------------------
+  // 슬롯 애니메이션 상태
+  // -----------------------
   const [slotStates, setSlotStates] = useState<("spinning" | "stopped")[]>([
     "stopped",
     "stopped",
     "stopped",
   ]);
-
-  // 최소 하나의 슬롯이라도 spinning이면 true
   const isAnySlotSpinning = slotStates.some((state) => state === "spinning");
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  // 게임 시작 시 모든 슬롯을 spinning, isAnimating을 true로 만든다.
+  // -----------------------
+  // 게임 흐름
+  // -----------------------
   const handleGameStart = () => {
     startGame();
     setSlotStates(["spinning", "spinning", "spinning"]);
-    setIsAnimating(true); // 게임 시작 시 애니메이션 시작
+    setIsAnimating(true);
     console.log("Game started with betAmount:", betAmount);
   };
 
   const handleSpin = async (userChoice: string) => {
     if (isSpinning || !isAnySlotSpinning) return; 
-    // 이미 스핀 중이거나 더 이상 회전하는 슬롯이 없으면 return
     spin();
 
     setTimeout(async () => {
@@ -75,19 +121,17 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
         if (response) {
           stopSpin(userChoice, response.computerChoice);
 
-          // 현재 라운드의 슬롯만 정지
+          // 현재 라운드 슬롯만 정지
           setSlotStates((prev) => {
             const newStates = [...prev];
             newStates[currentRound - 1] = "stopped";
             return newStates;
           });
           
-          // 만약 모든 슬롯이 멈췄다면(마지막 라운드 끝)
+          // 모든 라운드 다 돌았다면 애니메이션 종료
           if (currentRound >= totalRounds) {
-            // 모든 슬롯 정지 후 애니메이션 종료
             setIsAnimating(false);
           }
-
         } else {
           throw new Error("Failed to play round.");
         }
@@ -101,7 +145,6 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
 
   const handleContinue = () => {
     if (consecutiveWins >= totalRounds) {
-      // 마지막 라운드까지 끝났으면 quit
       handleQuit();
     } else {
       continueGame();
@@ -115,13 +158,17 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     console.log(`Game ended with ${gameResult}:`, lastReward);
   };
 
-  const fetchAllowedBetting = useRPSGameStore((state) => state.fetchAllowedBetting);
-
+  // -----------------------
+  // allowedBetting 불러오기
+  // -----------------------
   useEffect(() => {
-    console.log("Component mounted");
     fetchAllowedBetting();
+    console.log("Component mounted");
   }, [fetchAllowedBetting]);
 
+  // -----------------------
+  // 가로 스크롤 막기
+  // -----------------------
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     return () => {
@@ -129,6 +176,16 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     };
   }, []);
 
+  // -----------------------
+  // 2) 로딩 중이면 스피너, 아니라면 실제 화면
+  // -----------------------
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  // -----------------------
+  // 실제 RPS 게임 화면
+  // -----------------------
   return (
     <div
       className="flex flex-col z-50 bg-white h-screen justify-items-center drop-shadow overflow-x-hidden"
@@ -159,7 +216,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
         </motion.div>
       ) : (
         <div className="flex flex-col items-center justify-center h-full w-[600px] overflow-hidden mx-auto">
-          {/* 배팅 금액과 배율 표시 */}
+          {/* 배팅 금액, 배율 */}
           <div className="flex flex-row items-center justify-center h-[86px] w-[264px] border-2 border-[#21212f] rounded-3xl bg-white gap-3">
             <div className="flex flex-row items-center gap-1">
               <img src={Images.Star} alt="Star" className="w-9 h-9" />
@@ -168,11 +225,11 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
               </p>
             </div>
             <div className="bg-[#21212f] rounded-full flex items-center justify-center h-8 w-11 text-sm font-semibold text-white">
-              x{winMultiplier*3 >27 ? 27 : winMultiplier*3}
+              x{winMultiplier * 3 > 27 ? 27 : winMultiplier * 3}
             </div>
           </div>
 
-          {/* 게임 보드 및 애니메이션 */}
+          {/* 게임 보드 */}
           <motion.div
             initial={{ y: 300, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -187,6 +244,8 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
               alt="RPS Game"
               className="w-[352px] mx-auto"
             />
+
+            {/* 슬롯(라운드) 3개 표시 */}
             {[...Array(3)].map((_, index) => (
               <div
                 key={index}
@@ -248,6 +307,8 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
                 </motion.div>
               </div>
             ))}
+
+            {/* 가위바위보 선택 버튼 */}
             <div
               style={{
                 position: "absolute",
@@ -290,6 +351,8 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
           </motion.div>
         </div>
       )}
+
+      {/* 결과 다이얼로그 */}
       <RPSResultDialog
         isOpen={isDialogOpen}
         onClose={closeDialog}

@@ -98,7 +98,7 @@ const UserLevel: React.FC<{
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-center rounded-3xl w-32 h-36 md:w-48 md:h-44 ${levelClassName}`}
+      className={`relative flex flex-col items-center justify-center rounded-3xl w-32 h-36 md:w-[240px] md:h-44 ${levelClassName}`}
       style={{ position: 'relative' }}
     >
       <Snowfall style={{ borderRadius:"24px" }} snowflakeCount={10} images={images} />

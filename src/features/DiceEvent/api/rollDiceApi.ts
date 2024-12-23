@@ -19,7 +19,6 @@ export const rollDiceAPI = async (gauge: number, sequence: number): Promise<Roll
   const response = await api.post('/roll-dice', { gauge, sequence });
 
   if (response.data.code === 'OK') {
-    console.log('rollDiceAPI: 서버 응답 데이터:', response.data.data);
     return response.data.data;
   } else {
     console.error('rollDiceAPI Error:', response.data.message);

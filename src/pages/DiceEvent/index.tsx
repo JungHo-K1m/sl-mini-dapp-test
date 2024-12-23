@@ -74,7 +74,6 @@ const DiceEventPage: React.FC = () => {
 
   // 레벨 업 감지: userLv가 이전 레벨보다 커질 때만 팝업 표시
   useEffect(() => {
-    console.log("userlv :", userLv, "prevlevel :", prevLevel);
     if (userLv > prevLevel) {
       setShowLevelUpDialog(true);
     }
@@ -196,11 +195,14 @@ const DiceEventPage: React.FC = () => {
               </DialogContent>
             </Dialog>
 
-            <MonthlyPrize
+ 
+    <MonthlyPrize
               month={monthlyPrize.month}
               prizeType={monthlyPrize.prizeType}
               amount={monthlyPrize.amount}
+              eventFinishTime={monthlyPrize.eventFinishTime}
             />
+
           </div>
           <GameBoard
             position={position}

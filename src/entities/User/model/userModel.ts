@@ -15,6 +15,7 @@ interface MonthlyPrize {
   month: number;
   prizeType: string;
   amount: number;
+  eventFinishTime: string | null; // 추가된 부분: 이벤트 종료 시간
 }
 
 // 주간 출석 정보 인터페이스
@@ -241,6 +242,7 @@ export const useUserStore = create<UserState>((set, get) => ({
     month: 0,
     prizeType: '',
     amount: 0,
+    eventFinishTime: null,
   },
   setMonthlyPrize: (monthlyPrize) => set({ monthlyPrize }),
 
@@ -387,6 +389,7 @@ export const useUserStore = create<UserState>((set, get) => ({
           month: monthlyPrize.month,
           prizeType: monthlyPrize.prizeType,
           amount: monthlyPrize.amount,
+          eventFinishTime: monthlyPrize.eventFinishTime, // 추가된 부분: eventFinish
         },
   
         weekAttendance: {
@@ -505,6 +508,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         month: 0,
         prizeType: '',
         amount: 0,
+        eventFinishTime: null,
       },
       weekAttendance: {
         mon: null,
@@ -572,8 +576,6 @@ export const useUserStore = create<UserState>((set, get) => ({
         isLoading: false,
         error: null,
       });
-  
-      console.log('주사위 리필 성공:', data);
     } catch (error: any) {
       console.error('주사위 리필 중 에러 발생:', error);
       set({ error: error.message || '주사위 리필에 실패했습니다.' });

@@ -174,31 +174,24 @@ const GameBoard: React.FC<GameBoardProps> = ({
     let autoInterval: NodeJS.Timeout;
 
     if (isAuto) {
-      console.log("Auto mode 활성화됨");
       autoInterval = setInterval(() => {
         // 이곳에서 최신 timeUntilRefill 값 참조
         const currentTimeUntilRefill = timeUntilRefillRef.current; 
 
         if (diceCount > 0 && !buttonDisabled) {
-          console.log("Auto rolling dice");
           diceRef.current?.roll();
         } else if (diceCount === 0) {
           if (currentTimeUntilRefill === "Refill dice" && !isRefilling) {
-            console.log("Auto mode: Attempting to refill dice...");
             handleRefillDice().catch((err) => console.error("오토 리필 실패:", err));
           } else {
-            console.log("Auto mode: Waiting for dice to be refillable...");
           }
         }
       }, 1000);
-    } else {
-      console.log("Auto mode 비활성화됨");
-    }
+    } 
 
     return () => {
       if (autoInterval) {
         clearInterval(autoInterval);
-        console.log("Auto rolling 중지됨");
       }
     };
   }, [isAuto, diceCount, buttonDisabled, diceRef,]); 

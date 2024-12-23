@@ -146,6 +146,8 @@ import AutoNFT from "./autoNFT.png"
 import Spring from "./spring.png";
 import Summer from "./summer.png";
 import Fall from "./fall.png";
+import GiveawayBG from "./giveaway-bg.png";
+import GiveawayEffect from "./giveaway-effect.png";
 
 
 const Images = {
@@ -296,6 +298,8 @@ const Images = {
   Spring,
   Summer,
   Fall,
+  GiveawayBG,
+  GiveawayEffect,
 };
 
 export default Images;

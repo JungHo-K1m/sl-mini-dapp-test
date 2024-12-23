@@ -1,20 +1,19 @@
 // src/pages/SpinGame/index.tsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Images from "@/shared/assets/images";
+import { preloadImages } from "@/shared/utils/preloadImages";
+import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // ★ 이 로딩 스피너 사용
+import { motion } from "framer-motion";
+import { useUserStore } from "@/entities/User/model/userModel";
+import { formatNumber } from "@/shared/utils/formatNumber";
+import { IoGameController } from "react-icons/io5";
 import { Wheel } from "react-custom-roulette";
 import {
   AlertDialog,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
 } from "@/shared/components/ui";
-import { HiX } from "react-icons/hi";
 import api from "@/shared/api/axiosInstance";
-import { useUserStore } from "@/entities/User/model/userModel";
-import { formatNumber } from "@/shared/utils/formatNumber";
-import { motion } from "framer-motion";
-import { IoGameController } from "react-icons/io5";
 
 const data = [
   {
@@ -129,6 +128,7 @@ const data = [
   },
 ];
 
+// 스핀 시작 컴포넌트
 const SpinGameStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   return (
     <div
@@ -152,7 +152,8 @@ const SpinGameStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
       />
       <div className="border-2 border-[#21212f] rounded-3xl text-center bg-white text-[#171717] font-medium w-[342px] h-[110px] flex items-center justify-center mt-4">
         <p>
-          ※ Note ※<br /> If you leave without spinning the roulette, <br />
+          ※ Note ※
+          <br /> If you leave without spinning the roulette, <br />
           you will lose your turn.
         </p>
       </div>
@@ -166,6 +167,7 @@ const SpinGameStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
   );
 };
 
+// 실제 스핀 컴포넌트
 const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -183,16 +185,23 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
     if (isSpinning) return;
 
     try {
-      setIsSpinning(true); 
+      setIsSpinning(true);
 
       // /play-spin API 호출
       const response = await api.get("/play-spin");
       console.log("Server response:", response.data);
       if (response.data.code === "OK") {
         const { spinType, amount, baseAmount } = response.data.data;
-        console.log("Received spinType:", spinType, "amount:", amount, "baseAmount:", baseAmount);
+        console.log(
+          "Received spinType:",
+          spinType,
+          "amount:",
+          amount,
+          "baseAmount:",
+          baseAmount
+        );
 
-        // data 배열에서 spinType과 amount가 모두 일치하는 인덱스 찾기
+        // data 배열에서 spinType과 baseAmount 가 모두 일치하는 인덱스 찾기
         const foundIndex = data.findIndex(
           (item) =>
             item.prize.type === spinType.toUpperCase() &&
@@ -205,7 +214,9 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
           setPrizeData({ spinType, amount });
           setMustSpin(true);
         } else {
-          console.error("No matching prize found for given spinType and amount");
+          console.error(
+            "No matching prize found for given spinType and baseAmount"
+          );
           window.location.reload();
         }
       } else {
@@ -408,10 +419,12 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
               <p>Your rewards include : </p>
               <div className="rounded-3xl border-2 border-[#35383f] bg-[#1f1e27] p-5 mt-2">
                 <div className="flex flex-row items-center gap-2">
-                  <img src={Images.RewardNFT} alt="rewardNFT" className="w-6 h-6" />
-                  <p className="font-semibold">
-                    Reward NFT
-                  </p>
+                  <img
+                    src={Images.RewardNFT}
+                    alt="rewardNFT"
+                    className="w-6 h-6"
+                  />
+                  <p className="font-semibold">Reward NFT</p>
                 </div>
                 <div className="flex flex-row items-center gap-1 mt-2 ml-6">
                   <IoGameController className="text-xl" />
@@ -434,12 +447,62 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   );
 };
 
+// 메인 SpinGame 컴포넌트
 const SpinGame: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   const [showSpin, setShowSpin] = useState(false);
+
+  // 이미지 로딩 여부 (true일 때 로딩 중)
+  const [isLoading, setIsLoading] = useState(true);
+
+  // preload할 이미지 목록
+  const imagesToLoad = [
+    Images.BGSpinGame,
+    Images.SpinExample,
+    Images.Spin,
+    Images.SpinPin,
+    Images.RewardNFT,
+    Images.Star,
+    Images.Dice,
+    Images.TokenReward,
+    Images.LotteryTicket,
+    Images.Boom,
+    // data 객체 안에 쓰인 이미지들도 모두 추가
+    Images.spinStar2000,
+    Images.SpinDice10,
+    Images.spinStar4000,
+    Images.SpinDice5,
+    Images.spinStar1000,
+    Images.SpinDice2,
+    Images.spinStar5000,
+    Images.SpinDice1,
+    Images.spinToken10,
+    Images.spinRapple1,
+    // 필요한 이미지가 더 있다면 모두 추가...
+  ];
+
+  useEffect(() => {
+    // 컴포넌트가 마운트되면 이미지 모두 로딩
+    const loadAllImages = async () => {
+      try {
+        await preloadImages(imagesToLoad);
+      } catch (error) {
+        console.error("이미지 로딩 실패:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadAllImages();
+  }, []);
 
   const handleStartClick = () => {
     setShowSpin(true);
   };
+
+  // 로딩 중이면 LoadingSpinner 보여주고, 끝나면 실제 화면
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="flex flex-col z-50 h-screen w-full items-center min-w-[600px]">
