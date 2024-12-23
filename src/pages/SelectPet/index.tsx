@@ -1,5 +1,6 @@
 import React from 'react';
-import { FaPen, FaChevronLeft } from 'react-icons/fa';
+import { FaPen } from 'react-icons/fa';
+import { IoChevronBackOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from 'react-router-dom';
 import useMainPageStore from '@/shared/store/useMainPageStore';
 import { getPetList } from '@/entities/Pet/api/getPetList';
@@ -60,7 +61,14 @@ const SelectPet: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
-      <TopTitle title={t("ai_page.Select_Pet")} back={true} />
+      <div
+        className={`h-14 flex items-center w-full font-bold text-xl mb-8 justify-between`}
+        onClick={() => navigate("/AI-menu")}
+        >
+        <IoChevronBackOutline className={`w-6 h-6`} />
+        <p>Select Pet</p>
+        <div className={`w-6 h-6`} ></div>
+      </div>
 
       <div className="grid grid-cols-2 gap-6 mt-11 w-full max-w-md">
         {/* 반려동물 목록 */}
