@@ -18,16 +18,6 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   const initializedRef = useRef(false);
   const [cookies] = useCookies(["refreshToken"]); 
 
-  // 쿠키에서 특정 쿠키값 가져오기
-  const getCookie = (name: string): string | null => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-      return parts.pop()?.split(";").shift() || null;
-    }
-    return null;
-  };
-
   // 토큰이 있을 때, 사용자 정보 가져오기
   const getUserInfo = async () =>{
     try {
@@ -81,16 +71,19 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   
         // 액세스 토큰 존재 여부 확인
         let accessToken = localStorage.getItem("accessToken");
-  
+        console.log("액세스 토큰 확인");
         if (accessToken) {
           // 액세스 토큰이 존재하는 경우, 사용자 정보 가져오기 api 사용
+          console.log("local access Token: ", accessToken);
           await getUserInfo();
         } else {
           // 액세스 토큰이 존재하지 않는 경우, 리프레시 토큰 확인
-          // const refreshToken = getCookie("refreshToken");
+          console.log("액세스 토큰 없음");
+          console.log("리프레시 토큰 확인");
           const refreshToken = cookies.refreshToken;
           if (refreshToken) {
             // 리프레시 토큰이 존재하는 경우
+            console.log("리프레시 토큰 있넴");
             console.log("refresh Token: ", refreshToken);
             try {
               // 액세스 토큰 재발급 및 로컬 스토리지 저장
@@ -106,6 +99,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
               handleError(error, navigate);
             }
           } else {
+            console.log("리프레시 토큰 없넴");
             // 리프레시 토큰도 존재하지 않는 경우
             if (!liff.isLoggedIn()) {
               // 라인 로그인 진행
@@ -120,6 +114,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   
             // 사용자 검증 진행
             const isInitial = await userAuthenticationWithServer(lineToken);
+            console.log("사용자 검증 진행");
             if (isInitial === undefined) {
               throw new Error("사용자 인증에 실패했습니다.");
             } else if (isInitial === true) {
