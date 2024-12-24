@@ -9,6 +9,8 @@ const WalletConnect: React.FC = () => {
         console.log("초기화 시작");
         const sdk = await DappPortalSDK.init({
             clientId: process.env.VITE_LINE_CLIENT_ID || "",
+            chainId: '1001',
+            
         });
         console.log("clientId 확인:", import.meta.env.VITE_LINE_CLIENT_ID);
         console.log("SDK 초기화 완료:", sdk);
