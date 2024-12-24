@@ -190,7 +190,7 @@ const WalletPage: React.FC = () => {
               }`}
               disabled={!selectedWallet}
               // onClick={handleDeleteWallet}
-              onClick={()=>navigate("/policy-agreement")}
+              onClick={()=>navigate("/sdk-test")}
             >
               {t("wallet_page.delete")}
             </button>
