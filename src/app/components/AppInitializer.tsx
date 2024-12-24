@@ -83,6 +83,8 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
           const refreshToken = cookies.refreshToken;
           if (refreshToken) {
             // 리프레시 토큰이 존재하는 경우
+            console.log("Document Cookies: ", document.cookie);
+
             console.log("리프레시 토큰 있넴");
             console.log("refresh Token: ", refreshToken);
             try {
@@ -100,6 +102,8 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
             }
           } else {
             console.log("리프레시 토큰 없넴");
+            console.log("Document Cookies: ", document.cookie);
+
             // 리프레시 토큰도 존재하지 않는 경우
             if (!liff.isLoggedIn()) {
               // 라인 로그인 진행
