@@ -88,6 +88,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
           const refreshToken = getCookie("refreshToken");
           if (refreshToken) {
             // 리프레시 토큰이 존재하는 경우
+            console.log("refresh Token: ", refreshToken);
             try {
               // 액세스 토큰 재발급 및 로컬 스토리지 저장
               const refreshSuccessful = await useUserStore.getState().refreshToken();
