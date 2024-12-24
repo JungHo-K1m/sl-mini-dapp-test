@@ -113,12 +113,11 @@ const DentalAnalysis: React.FC = () => {
                                         - 강아지나 고양이가 아닌 경우: "NOPE"이라고 답변하라.
                                         - 강아지나 고양이가 맞는 경우: 해당 이미지가 강아지/고양이의 치아 이미지인지 판단하라.
                                         - 치아 이미지가 아닌 경우: "Non dental"이라고 답변하라.
-                                        2. 치아 이미지가 맞는 경우, 질병을 판별하여 아래의 형식으로 답변한다.
+                                        2. 치아 이미지가 맞는 경우, 아래 질병을 판별하여 "진단명" : "설명"으로 답변한다.
                                         - 클래스 : "Gingivitis & Plaque","Periodontitis", "Normal"
 
                                         [케이스 별 답변: 아래 경우 중 하나로만 답변]
-                                        "NOPE", "Non dental", "Gingivitis & Plaque","Periodontitis", "Normal"
-                                        *질병이 발견된 경우에는 설명 추가하여 "진단명": "설명"으로 답변`
+                                        "NOPE", "Non dental", "Gingivitis & Plaque","Periodontitis", "Normal"`
                             },
                             {
                                 type: "image_url",
@@ -149,6 +148,7 @@ const DentalAnalysis: React.FC = () => {
 
             // 4) 응답(JSON) 파싱
             const responseData = await response.json();
+            console.log("openAI 응답: ", responseData);
             // 모델이 최종 생성한 텍스트
             const assistantMessage = responseData?.choices?.[0]?.message?.content?.trim() || "(No response)";
 
