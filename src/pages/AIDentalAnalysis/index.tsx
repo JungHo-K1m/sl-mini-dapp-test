@@ -114,7 +114,8 @@ const DentalAnalysis: React.FC = () => {
                                         - 강아지나 고양이가 맞는 경우: 해당 이미지가 강아지/고양이의 치아 이미지인지 판단하라.
                                         - 치아 이미지가 아닌 경우: "Non dental"이라고 답변하라.
                                         2. 치아 이미지가 맞는 경우, 아래 질병을 판별하여 "진단명" : "설명"으로 답변한다.
-                                        - 클래스 : "Gingivitis & Plaque","Periodontitis", "Normal"`
+                                        - 클래스 : "Gingivitis & Plaque","Periodontitis", "Normal"
+                                        답변은 "NOPE" ,"Non dental", "진단명":"설명" 중 하나로만 한다. 이때, "진단명":"설명"은 2번의 결과이다.`
                             },
                             {
                                 type: "image_url",
