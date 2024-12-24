@@ -43,7 +43,7 @@ const DentalAnalysis: React.FC = () => {
         // 페이지 최초 로드 시 모달 표시
         setModalInfo({
             isVisible: true,
-            message: "반려동물 치아의 실제 사진을 업로드하세요.\n현재 베타 테스트 모드로 성능이 최적이 아닐 수 있습니다."
+            message: t("ai_page.Please_upload_actual_photo")
         });
     }, []);
 
@@ -84,10 +84,7 @@ const DentalAnalysis: React.FC = () => {
     };
 
     const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
-        mutationFn: (formData: FormData) =>
-        selectedMenu === 'ai-analysis'
-            ? storeResult(formData, "dental")
-            : storeResult(formData, "xray"),
+        mutationFn: (formData: FormData) => storeResult(formData, "dental"),
         onSuccess: () => navigate('/AI-menu', { state: { id: petId } }),
         onError: () => showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again.")),
     });
@@ -118,7 +115,7 @@ const DentalAnalysis: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
-            <TopTitle title={t(`ai_page.${selectedMenu === 'x-ray' ? 'ai_xray_analysis' : 'ai_dental_examination'}`)} back={true} />
+            <TopTitle title={t('ai_page.ai_dental_examination')} back={true} />
 
             <div className="mt-6 w-full max-w-sm mx-auto rounded-md overflow-hidden p-2 flex flex-col items-center">
                 <input

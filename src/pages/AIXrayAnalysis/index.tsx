@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as tmImage from '@teachablemachine/image';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,6 @@ const AIXrayAnalysis: React.FC = () => {
   const petId = petData?.id || '';
 
   const symptomsInfo: Record<string, string> = {
-    "Gingivitis & Plaque": t("ai_page.reuslts.symptoms_of_gingivitis_and_plaque"),
     "Periodontitis": t("ai_page.reuslts.symptoms_of_periodontitis"),
     "Normal": t("ai_page.reuslts.no_issues_detected"),
     "Decrease in dental bone density": t("ai_page.reuslts.decrease_in_dental_bone_density"),
@@ -43,12 +42,18 @@ const AIXrayAnalysis: React.FC = () => {
     setModalInfo({ isVisible: true, message });
   };
 
+  useEffect(() => {
+      // 페이지 최초 로드 시 모달 표시
+      setModalInfo({
+          isVisible: true,
+          message: t("ai_page.Please_upload_actual_photo")
+      });
+  }, []);
+
   const loadModel = async () => {
     if (model) return model;
     try {
-      const modelPath = selectedMenu === 'x-ray'
-        ? "/ai_model/xray"
-        : "/ai_model/dental";
+      const modelPath = "/ai_model/xray";
       const loadedModel = await tmImage.load(`${modelPath}/model.json`, `${modelPath}/metadata.json`);
       setModel(loadedModel);
       return loadedModel;
@@ -68,7 +73,7 @@ const AIXrayAnalysis: React.FC = () => {
 
   const analyzeImage = async () => {
     if (!selectedImage) {
-      showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
+      showModalFunction(t("ai_page.Please_upload_x_ray_image."));
       return;
     }
 
@@ -98,10 +103,7 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
-    mutationFn: (formData: FormData) =>
-      selectedMenu === 'ai-analysis'
-        ? storeResult(formData, "dental")
-        : storeResult(formData, "xray"),
+    mutationFn: (formData: FormData) => storeResult(formData, "xray"),
     onSuccess: () => navigate('/AI-menu', { state: { id: petId } }),
     onError: () => showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again.")),
   });
@@ -130,7 +132,7 @@ const AIXrayAnalysis: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
-      <TopTitle title={t(`ai_page.${selectedMenu === 'x-ray' ? 'ai_xray_analysis' : 'ai_dental_examination'}`)} back={true} />
+      <TopTitle title={t('ai_page.ai_xray_analysis')} back={true} />
 
       <div className="mt-6 w-full max-w-sm mx-auto rounded-md overflow-hidden p-2 flex flex-col items-center">
         <input
