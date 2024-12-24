@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from '@tanstack/react-query';
 import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
-import useMainPageStore from '@/shared/store/useMainPageStore';
 import { TopTitle } from '@/shared/components/ui';
 
 const DentalAnalysis: React.FC = () => {
@@ -20,7 +19,6 @@ const DentalAnalysis: React.FC = () => {
     const [showModal, setShowModal] = useState(true);
     const [modalInfo, setModalInfo] = useState({ isVisible: false, message: '' });
 
-    const { selectedMenu } = useMainPageStore();
     const petData = location.state as { id: string };
     const petId = petData?.id || '';
 

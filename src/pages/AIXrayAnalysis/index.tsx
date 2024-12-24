@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from '@tanstack/react-query';
 import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
-import useMainPageStore from '@/shared/store/useMainPageStore';
 import { TopTitle } from '@/shared/components/ui';
 
 const AIXrayAnalysis: React.FC = () => {
@@ -22,7 +21,6 @@ const AIXrayAnalysis: React.FC = () => {
   const [showModal, setShowModal] = useState(true);
   const [modalInfo, setModalInfo] = useState({ isVisible: false, message: '' });
 
-  const { selectedMenu } = useMainPageStore();
   const petData = location.state as { id: string };
   const petId = petData?.id || '';
 
@@ -46,7 +44,7 @@ const AIXrayAnalysis: React.FC = () => {
       // 페이지 최초 로드 시 모달 표시
       setModalInfo({
           isVisible: true,
-          message: t("ai_page.Please_upload_actual_photo")
+          message: t("ai_page.Please_upload_x_ray_image")
       });
   }, []);
 
@@ -73,7 +71,7 @@ const AIXrayAnalysis: React.FC = () => {
 
   const analyzeImage = async () => {
     if (!selectedImage) {
-      showModalFunction(t("ai_page.Please_upload_x_ray_image."));
+      showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
       return;
     }
 
