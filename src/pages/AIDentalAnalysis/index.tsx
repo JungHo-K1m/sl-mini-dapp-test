@@ -101,7 +101,7 @@ const DentalAnalysis: React.FC = () => {
 
             // 2) ChatCompletion API에 보낼 메시지 (분석 가이드라인 + Base64 이미지)
             const requestBody = {
-                model: "gpt-4", // gpt-4 권한이 없으면 gpt-3.5-turbo 등
+                model: "gpt-4o",
                 messages: [
                     {
                         role: "user",
