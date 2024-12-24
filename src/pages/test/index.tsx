@@ -16,12 +16,12 @@ const WalletConnect: React.FC = () => {
       console.log("walletProvider 가져오기: ",walletProvider);
 
       // 지갑 연결 요청
-    //   const accounts = (await walletProvider.request({
-    //     method: "kaia_requestAccounts", // Wallet 연결 요청
-    //   })) as string[]; // 반환 값을 string 배열로 단언
+      const accounts = (await walletProvider.request({
+        method: "kaia_requestAccounts", // Wallet 연결 요청
+      })) as string[]; // 반환 값을 string 배열로 단언
 
-    //   setAccount(accounts[0]); // 첫 번째 계정 저장
-    //   console.log("지갑 연결 성공:", accounts[0]);
+      setAccount(accounts[0]); // 첫 번째 계정 저장
+      console.log("지갑 연결 성공:", accounts[0]);
     } catch (error) {
       console.error("지갑 연결 실패 또는 clientId 오류:", error);
     }
