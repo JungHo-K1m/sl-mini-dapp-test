@@ -53,6 +53,37 @@ const DentalAnalysis: React.FC = () => {
         setIsAnalyzed(false);
         }
     };
+    
+    // File -> Base64 문자열로 변환
+    async function convertFileToBase64(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                // 결과 예: "data:image/png;base64,iVBORw0KGgo..."
+                // 우리는 "data:image/png;base64," 다음부터 추출할 수도 있고,
+                // 그대로 content에 사용해도 됩니다.
+                const result = reader.result as string;
+                // 여기서는 "data:image/png;base64," 부분을 제거
+                const base64String = result.split(",")[1];
+                if (base64String) {
+                resolve(base64String);
+                } else {
+                reject("Failed to convert file to base64.");
+                }
+            };
+            reader.onerror = (error) => reject(error);
+        });
+    }
+    
+    // 이미지 확장자 추출 (mimeType 기반)
+    function getImageExtension(file: File): string {
+        // 예: file.type === "image/jpeg", "image/png" 등
+        const mimeType = file.type;
+        const extension = mimeType.split("/")[1] || "jpeg";
+        return extension;
+    }
+  
 
     // 이미지 분석 함수
     const analyzeImage = async () => {
@@ -60,26 +91,78 @@ const DentalAnalysis: React.FC = () => {
             showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
             return;
         }
-
+    
         setLoading(true);
-
-        if (selectedImage) {
-            const imageElement = new Image();
-            imageElement.src = URL.createObjectURL(selectedImage);
-            
-            try{
-                // 이미지 분석 api 호출
-
-
-                setIsAnalyzed(true);
-                setLoading(false);
-            } catch(error: any){
-
-            }
-        } else {
-            setLoading(false);
+    
+        try {
+        // 1) File을 Base64 문자열로 변환
+        const base64Data = await convertFileToBase64(selectedImage);
+    
+        // 2) ChatCompletion API에 보낼 메시지 구성
+        //    - prompt(분석 가이드라인) + 이미지(Base64) 전달
+        const requestBody = {
+            model: "gpt-4o", // gpt-4 접근 권한이 없다면 gpt-3.5-turbo 사용
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        {
+                            type: "text",
+                            text: `제공된 이미지에 대해 다음과 같이 분석하라:
+                                    1. 강아지인지 고양이인지 판단하라.
+                                        - 강아지나 고양이가 아닌 경우: "NOPE"이라고 답변하라.
+                                        - 강아지나 고양이가 맞는 경우: 해당 이미지가 강아지/고양이의 치아 이미지인지 판단하라.
+                                        - 치아 이미지가 아닌 경우: "Non dental"이라고 답변하라.
+                                    2. 치아 이미지가 맞는 경우, 질병을 판별하여 아래의 형식으로 답변한다.
+                                        - 클래스 : "Gingivitis & Plaque","Periodontitis", "Normal"
+                                    
+                                    [케이스 별 답변: 아래 경우 중 하나로만 답변]
+                                    "NOPE", "None-Dental", "Gingivitis & Plaque","Periodontitis", "Normal"
+                                    *질병이 발견된 경우에는 설명 추가`
+                        },
+                        {
+                            type: "image_url",
+                            image_url: {
+                                url: `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`
+                            }
+                        }
+                    ]
+                },
+            ],
+            max_tokens: 300
+        };
+    
+        // 3) OpenAI API 호출
+        const OPENAI_API_KEY = import.meta.env.VITE_OPEN_AI_API_KEY;
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${OPENAI_API_KEY}`
+            },
+            body: JSON.stringify(requestBody)
+        });
+    
+        if (!response.ok) {
+            throw new Error(`OpenAI API Error: ${response.status} ${response.statusText}`);
+        }
+    
+        // 4) 응답(JSON) 파싱
+        const responseData = await response.json();
+        const assistantMessage = responseData?.choices?.[0]?.message?.content || "(No response)";
+    
+        // 5) 분석 결과를 label 상태에 저장
+        //    OpenAI 답변을 그대로 사용하거나 파싱하여 적절히 처리
+        setLabel(assistantMessage);
+        setIsAnalyzed(true);
+        } catch (error: any) {
+        console.error("OpenAI Error:", error);
+        showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+        } finally {
+        setLoading(false);
         }
     };
+  
 
     const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
         mutationFn: (formData: FormData) => storeResult(formData, "dental"),
