@@ -7,7 +7,6 @@ import { getPetList } from '@/entities/Pet/api/getPetList';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Pet } from '@/entities/Pet/model/types';
 import { useTranslation } from "react-i18next";
-import { TopTitle } from '@/shared/components/ui';
 
 const SelectPet: React.FC = () => {
   const navigate = useNavigate();
@@ -34,8 +33,10 @@ const SelectPet: React.FC = () => {
 
   // 반려동물 선택 시 페이지 이동 함수
   const handlePetSelect = (petId: number) => {
-    if (selectedMenu === 'x-ray' || selectedMenu === 'ai-analysis') {
+    if (selectedMenu === 'x-ray') {
       navigate(`/ai-xray-analysis`, { state: { id: petId } });
+    } else if(selectedMenu === 'ai-analysis'){
+      navigate(`/ai-dental-analysis`, { state: { id: petId } });
     } else if (selectedMenu === 'records') {
       navigate(`/diagnosis-list`, { state: { id: petId } });
     }

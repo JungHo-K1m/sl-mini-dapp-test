@@ -23,6 +23,7 @@ import EditPet from "@/pages/EditPet";
 import DiagnosisRecords from "@/pages/DiagnosisList";
 import DiagnosisDetail from "@/pages/DiagnosisDetail";
 import AIXrayAnalysis from "@/pages/AIXrayAnalysis";
+import DentalAnalysis from "./pages/AIDentalAnalysis";
 import DiceEventLayout from "./app/layout/DiceEventLayout";
 import WalletList from "./pages/WalletList";
 import MyAssets from "./pages/MyAssets";
@@ -173,6 +174,7 @@ const App:React.FC = () =>{
                     <Route path="/diagnosis-list" element={<DiceEventLayout hidden={true}><DiagnosisRecords /></DiceEventLayout>} />
                     <Route path="/diagnosis-detail" element={<DiceEventLayout hidden={true}><DiagnosisDetail /></DiceEventLayout>} />
                     <Route path="/ai-xray-analysis" element={<DiceEventLayout hidden={true}><AIXrayAnalysis /></DiceEventLayout>} />
+                    <Route path="/ai-dental-analysis" element={<DiceEventLayout hidden={true}><DentalAnalysis /></DiceEventLayout>} />
                     <Route path="/my-nfts" element={<DiceEventLayout hidden={true}><MyNfts /></DiceEventLayout>} />
                     <Route path="/reward-history" element={<DiceEventLayout hidden={true}><RewardHistory /></DiceEventLayout>} />
                     <Route path="/first-reward" element={<DiceEventLayout hidden={true}><FirstRewardPage /></DiceEventLayout>} />
