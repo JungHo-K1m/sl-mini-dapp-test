@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import liff from "@line/liff";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@/entities/User/model/userModel";
+import { useCookies } from "react-cookie"; 
 import userAuthenticationWithServer from "@/entities/User/api/userAuthentication";
 import i18n from "@/shared/lib/il8n";
 import SplashScreen from "./SplashScreen";
@@ -15,6 +16,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   const { fetchUserData } = useUserStore();
   const [showSplash, setShowSplash] = useState(true);
   const initializedRef = useRef(false);
+  const [cookies] = useCookies(["refreshToken"]); 
 
   // 쿠키에서 특정 쿠키값 가져오기
   const getCookie = (name: string): string | null => {
@@ -85,7 +87,8 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
           await getUserInfo();
         } else {
           // 액세스 토큰이 존재하지 않는 경우, 리프레시 토큰 확인
-          const refreshToken = getCookie("refreshToken");
+          // const refreshToken = getCookie("refreshToken");
+          const refreshToken = cookies.refreshToken;
           if (refreshToken) {
             // 리프레시 토큰이 존재하는 경우
             console.log("refresh Token: ", refreshToken);
@@ -141,7 +144,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     };
   
     initializeApp();
-  }, [fetchUserData, navigate, onInitialized]);
+  }, [cookies.refreshToken, fetchUserData, navigate, onInitialized]);
   
   
   
