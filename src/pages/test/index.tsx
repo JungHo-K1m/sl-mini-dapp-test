@@ -27,7 +27,7 @@ const WalletConnect: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
       <button onClick={connectWallet}>지갑 연결</button>
       {account && <p>연결된 계정: {account}</p>}
     </div>
