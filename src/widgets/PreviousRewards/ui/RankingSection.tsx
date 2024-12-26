@@ -52,7 +52,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
           {/* 여기서부터 랭킹 조건 분기 */}
           {myData.rank > 1000 ? (
             // 1000등 밖인 경우
-            <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
+            <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-24 justify-center items-center">
               <p className="font-semibold text-sm text-center">
                 Your Rank: #
                 <span className="text-[#FDE047] font-bold">{myData.rank}</span>
@@ -132,6 +132,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
+      <p className="font-semibold">Ranking Reward Winner</p>
         {topRankings.length > 0 ? (
           topRankings.slice(0, 20).map((r) => {
             return (

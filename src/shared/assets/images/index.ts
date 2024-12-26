@@ -148,6 +148,7 @@ import Summer from "./summer.png";
 import Fall from "./fall.png";
 import GiveawayBG from "./giveaway-bg.png";
 import GiveawayEffect from "./giveaway-effect.png";
+import SpinRapple1Black from "./spinRapple1Black.png";
 
 
 const Images = {
@@ -289,6 +290,7 @@ const Images = {
   spinStar5000,
   spinRapple1,
   spinToken10,
+  SpinRapple1Black,
   firstDice,
   firstPoints,
   firstSL,

@@ -98,7 +98,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
                   item.selectedRewardType === "SL";
                 return (
                   <SwiperSlide key={index}>
-                    <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-between">
+                    <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5  h-24 justify-between">
                       {isRaffleReceived && (
                         <div className="absolute top-2 right-2 bg-[#0147E5] rounded-full px-3 py-1 text-sm">
                           Received
@@ -166,6 +166,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
+      <p className="font-semibold">Raffle Winners</p>
         {raffleTopRankings.length > 0 ? (
           raffleTopRankings.slice(0, 20).map((r) => {
             const raffleTopReceived =

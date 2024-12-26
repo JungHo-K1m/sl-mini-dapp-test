@@ -27,13 +27,13 @@ const data = [
     style: { backgroundColor: "#FBA629" },
   },
   {
-    option: "10 Dice",
+    option: "1 Raffle Ticket",
     image: {
-      uri: `${Images.SpinDice10}`,
+      uri: `${Images.SpinRapple1Black}`,
       sizeMultiplier: 0.7,
       offsetY: 150,
     },
-    prize: { type: "DICE", amount: 10 },
+    prize: { type: "TICKET", amount: 1 },
     style: { backgroundColor: "#F3F3E9" },
   },
   {
@@ -47,13 +47,13 @@ const data = [
     style: { backgroundColor: "#2FAF74" },
   },
   {
-    option: "5 Dice",
+    option: "1 Raffle Ticket",
     image: {
-      uri: `${Images.SpinDice5}`,
+      uri: `${Images.spinRapple1}`,
       sizeMultiplier: 0.7,
       offsetY: 150,
     },
-    prize: { type: "DICE", amount: 5 },
+    prize: { type: "TICKET", amount: 1 },
     style: { backgroundColor: "#39A1E8" },
   },
   {
@@ -67,13 +67,13 @@ const data = [
     style: { backgroundColor: "#CA3D77" },
   },
   {
-    option: "2 Dice",
+    option: "1 Raffle Ticket",
     image: {
-      uri: `${Images.SpinDice2}`,
+      uri: `${Images.spinRapple1}`,
       sizeMultiplier: 0.7,
       offsetY: 150,
     },
-    prize: { type: "DICE", amount: 2 },
+    prize: { type: "TICKET", amount: 1 },
     style: { backgroundColor: "#FBA629" },
   },
   {
@@ -477,6 +477,7 @@ const SpinGame: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
     Images.SpinDice1,
     Images.spinToken10,
     Images.spinRapple1,
+    Images.SpinRapple1Black,
     // 필요한 이미지가 더 있다면 모두 추가...
   ];
 
