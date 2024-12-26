@@ -198,9 +198,9 @@ const MyAssets: React.FC = () => {
             
 
             {/* 내 NFT 컬렉션 */}
-            <div className="mt-10 w-full">
+            <div className="mt-9 w-full">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-lg font-bold">{t("asset_page.My_NFT_Collection")}</h2>
+                    <h2 className="text-lg font-semibold">{t("asset_page.My_NFT_Collection")}</h2>
                     
                     <button
                         className="flex items-center text-white text-xs"
@@ -253,16 +253,16 @@ const MyAssets: React.FC = () => {
             </div>
 
             {/* 클래임 */}
-            <div className="mt-10 w-full">
+            <div className="mt-8 w-full">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-lg font-bold">claimable Balance</h2>
+                    <h2 className="text-lg font-semibold">Claimable Balance</h2>
                     
                     <button
                         className="flex items-center text-white text-xs"
                         onClick={() => navigate("/my-nfts")}
                         aria-label="View Claim History"
                         >
-                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
+                        View Claim History <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
 
@@ -292,17 +292,15 @@ const MyAssets: React.FC = () => {
                     <span className="text-lg font-bold">20.00USDC</span>
                 </div>
                 <button
-                    className="w-full mt-3 py-3 rounded-full text-base font-medium bg-[#0147E5] text-white"
+                    className="w-full h-14 mt-3 py-4 rounded-full text-base font-medium bg-[#0147E5] text-white"
                     onClick={() => alert('Claim Rewards Clicked!')}
                     >
                     Claim Rewards
                 </button>
-
-
             </div>
 
             {/* 보상 내역 */}
-            <div className="mt-10 w-full">
+            <div className="mt-8 w-full">
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-semibold">{t("asset_page.Rewards_History")}</h2>
                     <button
