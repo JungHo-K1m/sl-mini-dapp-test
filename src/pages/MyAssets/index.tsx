@@ -267,7 +267,7 @@ const MyAssets: React.FC = () => {
                 </div>
 
                  {/* SL Balance */}
-                <div className="flex items-center justify-between h-14 py-3 border background-[#1F1E27] border-[#35383F]">
+                <div className="flex items-center justify-between h-14 py-4 px-5 border-[2px] rounded-full background-[#1F1E27] border-[#35383F] mt-4">
                     <div className="flex items-center">
                         <img
                             src={Images.SLToken} // SL 이미지 경로를 설정
@@ -280,7 +280,7 @@ const MyAssets: React.FC = () => {
                 </div>
 
                 {/* USDC Balance */}
-                <div className="flex items-center justify-between h-14 py-3 border background-[#1F1E27] border-[#35383F] mt-2">
+                <div className="flex items-center justify-between h-14 py-4 px-5 border-[2px] rounded-full background-[#1F1E27] border-[#35383F] mt-2">
                     <div className="flex items-center">
                         <img
                             src={Images.USDC} // USDC 이미지 경로를 설정
