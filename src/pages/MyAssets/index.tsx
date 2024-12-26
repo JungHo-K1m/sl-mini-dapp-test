@@ -252,6 +252,55 @@ const MyAssets: React.FC = () => {
                 </div>
             </div>
 
+            {/* 클래임 */}
+            <div className="mt-10 w-full">
+                <div className="flex justify-between items-center">
+                    <h2 className="text-lg font-bold">claimable Balance</h2>
+                    
+                    <button
+                        className="flex items-center text-white text-xs"
+                        onClick={() => navigate("/my-nfts")}
+                        aria-label="View Claim History"
+                        >
+                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
+                    </button>
+                </div>
+
+                 {/* SL Balance */}
+                <div className="flex items-center justify-between py-3 border-b border-[#35383F]">
+                    <div className="flex items-center">
+                        <img
+                            src={Images.SLToken} // SL 이미지 경로를 설정
+                            alt="SL Icon"
+                            className="w-6 h-6 mr-1"
+                        />
+                        <span className="text-base font-medium text-gray-300">SL</span>
+                    </div>
+                    <span className="text-lg font-bold">750SL</span>
+                </div>
+
+                {/* USDC Balance */}
+                <div className="flex items-center justify-between py-3">
+                    <div className="flex items-center">
+                        <img
+                            src={Images.USDC} // USDC 이미지 경로를 설정
+                            alt="USDC Icon"
+                            className="w-6 h-6 mr-1"
+                        />
+                        <span className="text-base font-medium text-gray-300">USDC</span>
+                    </div>
+                    <span className="text-lg font-bold">20.00USDC</span>
+                </div>
+                <button
+                    className="w-full mt-6 py-3 rounded-full text-base font-medium bg-[#0147E5] text-white"
+                    onClick={() => alert('Claim Rewards Clicked!')}
+                    >
+                    Claim Rewards
+                </button>
+
+
+            </div>
+
             {/* 보상 내역 */}
             <div className="mt-10 w-full">
                 <div className="flex justify-between items-center">
