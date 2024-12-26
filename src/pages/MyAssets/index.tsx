@@ -267,7 +267,7 @@ const MyAssets: React.FC = () => {
                 </div>
 
                  {/* SL Balance */}
-                <div className="flex items-center justify-between py-3 border-b border-[#35383F]">
+                <div className="flex items-center justify-between h-14 py-3 border background-[#1F1E27] border-[#35383F]">
                     <div className="flex items-center">
                         <img
                             src={Images.SLToken} // SL 이미지 경로를 설정
@@ -280,7 +280,7 @@ const MyAssets: React.FC = () => {
                 </div>
 
                 {/* USDC Balance */}
-                <div className="flex items-center justify-between py-3">
+                <div className="flex items-center justify-between h-14 py-3 border background-[#1F1E27] border-[#35383F] mt-2">
                     <div className="flex items-center">
                         <img
                             src={Images.USDC} // USDC 이미지 경로를 설정
@@ -292,7 +292,7 @@ const MyAssets: React.FC = () => {
                     <span className="text-lg font-bold">20.00USDC</span>
                 </div>
                 <button
-                    className="w-full mt-6 py-3 rounded-full text-base font-medium bg-[#0147E5] text-white"
+                    className="w-full mt-3 py-3 rounded-full text-base font-medium bg-[#0147E5] text-white"
                     onClick={() => alert('Claim Rewards Clicked!')}
                     >
                     Claim Rewards
