@@ -44,16 +44,15 @@ const ClaimHistory: React.FC = () => {
                             <p className="text-lg font-medium">{item.token}</p>
                             <p className="text-xs font-normal text-gray-400">{item.date}</p>
                         </div>
-                        <div className="flex flex-col items-end gap-1">
-                            <p className="text-lg font-semibold">{item.amount}</p>
-                            <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-4">
+                            <div className="flex flex-col items-end">
+                                <p className="text-lg font-semibold">{item.amount}</p>
                                 <span className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(item.status)}`}>
                                     {item.status}
                                 </span>
                             </div>
+                            <FaChevronRight className="w-4 h-4 text-gray-400" />
                         </div>
-                        
-                        <FaChevronRight className="w-4 h-4" />
                     </div>
                 ))}
             </div>
