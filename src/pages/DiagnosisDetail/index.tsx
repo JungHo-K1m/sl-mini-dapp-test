@@ -36,7 +36,7 @@ const DiagnosisDetail: React.FC = () => {
                 <div id="label-container" className="mt-4 text-base md:text-xl lg:text-2xl font-semibold">
                     {/* 진단 결과 라벨 번역 */}
                     <p>
-                        {t("ai_page.Analysis_results")}: {t(`ai_page.reuslts.${label}`)}
+                        {t("ai_page.Analysis_results")}: {label}
                     </p>
                 </div>
 

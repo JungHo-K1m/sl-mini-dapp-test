@@ -7,35 +7,36 @@ import Images from '@/shared/assets/images';
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/entities/User/model/userModel";
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
+import { ClaimModal } from "@/shared/components/ui/claimModal";
 
 interface TruncateMiddleProps {
     text: any;
     maxLength: number;
     className?: string;
-  }
+}
   
-  // 주소 중간 생략
-  const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
+// 주소 중간 생략
+const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
     text,
     maxLength,
     className,
-  }) => {
+    }) => {
     const truncateMiddle = (str: string, maxLen: number): string => {
-      if (str.length <= maxLen) return str;
-  
-      const charsToShow = maxLen - 3; // 3 characters for "..."
-      const frontChars = Math.ceil(charsToShow / 2);
-      const backChars = Math.floor(charsToShow / 2);
-  
-      return (
-        str.substr(0, frontChars) + '...' + str.substr(str.length - backChars)
-      );
+        if (str.length <= maxLen) return str;
+
+        const charsToShow = maxLen - 3; // 3 characters for "..."
+        const frontChars = Math.ceil(charsToShow / 2);
+        const backChars = Math.floor(charsToShow / 2);
+
+        return (
+            str.substr(0, frontChars) + '...' + str.substr(str.length - backChars)
+        );
     };
-  
+
     const truncatedText = truncateMiddle(text, maxLength);
-  
+
     return <div className={`text-sm font-bold ${className}`}>{truncatedText}</div>;
-  };
+};
   
 
 const MyAssets: React.FC = () => {
@@ -45,6 +46,7 @@ const MyAssets: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [nft, setNFT] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const [claimModalOpen, setClaimModalOpen] = useState(false);
 
     const getCharacterImageSrc = () => {
         const index = Math.floor((userLv - 1) / 2);
@@ -310,7 +312,7 @@ const MyAssets: React.FC = () => {
                 </div>
                 <button
                     className="w-full h-14 mt-3 py-4 rounded-full text-base font-medium bg-[#0147E5] text-white"
-                    onClick={() => alert('Claim Rewards Clicked!')}
+                    onClick={() => setClaimModalOpen(true)}
                     >
                     Claim Rewards
                 </button>
@@ -365,6 +367,10 @@ const MyAssets: React.FC = () => {
                     </div>
                 </div>
             )}
+            <ClaimModal 
+                open={claimModalOpen}
+                onClose={() => setClaimModalOpen(false)}
+            />
         </div>
     );
 };
