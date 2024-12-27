@@ -50,9 +50,10 @@ const ClaimHistory: React.FC = () => {
                                 <span className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(item.status)}`}>
                                     {item.status}
                                 </span>
-                                <FaChevronRight className="w-4 h-4" />
                             </div>
                         </div>
+                        
+                        <FaChevronRight className="w-4 h-4" />
                     </div>
                 ))}
             </div>
