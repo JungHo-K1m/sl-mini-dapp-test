@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { TopTitle } from '@/shared/components/ui';
 import { FaChevronRight } from "react-icons/fa";
-import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 
 const ClaimHistory: React.FC = () => {
     const navigate = useNavigate();
@@ -18,11 +17,11 @@ const ClaimHistory: React.FC = () => {
     const getStatusColor = (status: string) => {
         switch (status) {
             case "Completed":
-                return "bg-green-500 text-white";
+                return "bg-[#DCFCE7] text-[#166534]";
             case "Pending":
-                return "bg-yellow-500 text-black";
+                return "bg-[#FEF9C3] text-[#713F12]";
             case "Failed":
-                return "bg-red-500 text-white";
+                return "bg-[#FEE2E2] text-[#991B1B]";
             default:
                 return "bg-gray-500 text-white";
         }
@@ -34,7 +33,7 @@ const ClaimHistory: React.FC = () => {
             <TopTitle title="Claim History" back={true} />
 
             {/* 히스토리 목록 */}
-            <div className="w-full mt-6">
+            <div className="w-full">
                 {claimHistory.map((item) => (
                     <div
                         key={item.id}
@@ -45,12 +44,14 @@ const ClaimHistory: React.FC = () => {
                             <p className="text-lg font-medium">{item.token}</p>
                             <p className="text-xs font-normal text-gray-400">{item.date}</p>
                         </div>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-col items-end gap-1">
                             <p className="text-lg font-semibold">{item.amount}</p>
-                            <span className={`px-3 py-1 h-5 text-xs font-medium rounded-full ${getStatusColor(item.status)}`}>
-                                {item.status}
-                            </span>
-                            <FaChevronRight className="ml-1 w-5 h-5" />
+                            <div className="flex items-center gap-2">
+                                <span className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(item.status)}`}>
+                                    {item.status}
+                                </span>
+                                <FaChevronRight className="w-4 h-4" />
+                            </div>
                         </div>
                     </div>
                 ))}
