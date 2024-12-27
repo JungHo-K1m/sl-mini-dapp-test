@@ -259,7 +259,7 @@ const MyAssets: React.FC = () => {
                     
                     <button
                         className="flex items-center text-white text-xs"
-                        onClick={() => navigate("/my-nfts")}
+                        onClick={() => navigate("/claim-history")}
                         aria-label="View Claim History"
                         >
                         View Claim History <FaChevronRight className="ml-1 w-2 h-2" />

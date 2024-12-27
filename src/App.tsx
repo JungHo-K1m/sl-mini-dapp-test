@@ -36,6 +36,7 @@ import PolicyDetailPage from "./pages/PolicyDetail";
 import AgreementPage from "./pages/Agreement";
 import FriendRewards from "./pages/FriendRewards";
 import WalletConnect from "./pages/test";
+import ClaimHistory from "./pages/ClaimHistory";
 
 
 // 튜토리얼
@@ -183,6 +184,7 @@ const App:React.FC = () =>{
                     <Route path="/policy-detail" element={<DiceEventLayout hidden={true}><PolicyDetailPage /></DiceEventLayout>} />
                     <Route path="/policy-agreement" element={<DiceEventLayout hidden={true}><AgreementPage /></DiceEventLayout>} />
                     <Route path="/referral-rewards" element={<DiceEventLayout hidden={true}><FriendRewards /></DiceEventLayout>} />
+                    <Route path="/claim-history" element={<DiceEventLayout hidden={true}><ClaimHistory /></DiceEventLayout>} />
                     <Route path="/sdk-test" element={<DiceEventLayout hidden={true}><WalletConnect /></DiceEventLayout>} />
 
                 </Routes>
