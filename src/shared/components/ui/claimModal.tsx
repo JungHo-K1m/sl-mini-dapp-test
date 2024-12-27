@@ -4,6 +4,7 @@ import {
     Trigger as DialogTrigger,
     Portal as DialogPortal,
     Title as DialogTitle,
+    Description as DialogDescription,
     Overlay as DialogOverlay,
     Content as DialogContent,
   } from '@radix-ui/react-dialog';
@@ -85,7 +86,12 @@ export const ClaimModal: React.FC<ClaimModalProps> = ({ open, onClose }) => {
         
         {/* 필수 접근성 요소: DialogTitle */}
         <DialogTitle>Claim Tokens</DialogTitle>
-        
+
+        {/* 선택적 접근성 요소: DialogDescription(혹은 aria-describedby) */}
+        <DialogDescription>
+        Select a token and proceed with claiming.
+        </DialogDescription>
+
         {step === ClaimStep.SELECT_TOKEN && (
           <div>
             <h2>Select Token to Claim</h2>
