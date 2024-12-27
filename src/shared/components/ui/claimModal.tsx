@@ -3,6 +3,7 @@ import {
     Root as DialogRoot,
     Trigger as DialogTrigger,
     Portal as DialogPortal,
+    Title as DialogTitle,
     Overlay as DialogOverlay,
     Content as DialogContent,
   } from '@radix-ui/react-dialog';
@@ -81,6 +82,9 @@ export const ClaimModal: React.FC<ClaimModalProps> = ({ open, onClose }) => {
     <DialogRoot open={open} onOpenChange={handleClose}>
       <DialogOverlay  className="fixed inset-0 bg-black/50" />
       <DialogContent className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md">
+        
+        {/* 필수 접근성 요소: DialogTitle */}
+        <DialogTitle>Claim Tokens</DialogTitle>
         
         {step === ClaimStep.SELECT_TOKEN && (
           <div>
