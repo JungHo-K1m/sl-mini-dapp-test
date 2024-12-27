@@ -107,7 +107,7 @@ const MyAssets: React.FC = () => {
     // 페이지 진입 후 0.2초 뒤 loading을 false로 변경 => 추후 nft 정보, 보상내역 정보 API 받아오는 시간 동안으로 변경
     useEffect(() => {
         const timer = setTimeout(() => {
-        setLoading(false);
+            setLoading(false);
         }, 200); 
         return () => clearTimeout(timer);
     }, []);
@@ -116,6 +116,16 @@ const MyAssets: React.FC = () => {
         // 로딩 중일 때는 로딩스피너만 보여줌
         return <LoadingSpinner />;
     }
+
+
+    // 월 데이터를 숫자에서 영문으로 변환하는 헬퍼 함수
+    const getMonthName = (monthNumber: number): string => {
+        const months = [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        return months[monthNumber - 1] || "Unknown"; // 1월 = index 0
+    };
 
     // nft 더미 데이터
     const nftCollection: any[] = [
@@ -127,13 +137,20 @@ const MyAssets: React.FC = () => {
 
     // 보상 내역 더미 데이터
     const rewardHistory = [
-        { id: 1, description: "Joined Telegram", date: "17-10-2024", points: "+150SL" },
+        { id: 1, description: "Joined Telegram", date: "17-11-2024", points: "+150SL" },
         { id: 2, description: "AI Dental Examination", date: "17-10-2024", points: "-150SL" },
-        { id: 3, description: "Subscribe to Email", date: "17-10-2024", points: "+150SL" },
-        { id: 4, description: "Game Win", date: "17-10-2024", points: "+150P" },
-        { id: 5, description: "Game Lose", date: "17-10-2024", points: "-150P" },
+        { id: 3, description: "Subscribe to Email", date: "17-12-2024", points: "+150SL" },
+        { id: 4, description: "Game Win", date: "17-6-2024", points: "+150P" },
+        { id: 5, description: "Game Lose", date: "17-9-2024", points: "-150P" },
     ];
 
+
+    // 날짜를 포맷팅하는 함수
+    const formatDate = (date: string): string => {
+        const [day, month, year] = date.split("-").map(Number);
+        const monthName = getMonthName(month);
+        return `${day} ${monthName} ${year}`;
+    };
 
     return (  
         <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-32">
@@ -320,7 +337,7 @@ const MyAssets: React.FC = () => {
                         >
                             <div>
                                 <p className="text-sm font-medium">{reward.description}</p>
-                                <p className="text-xs text-gray-400">{reward.date}</p>
+                                <p className="text-xs text-gray-400">{formatDate(reward.date)}</p>
                             </div>
                             <p
                                 className={`text-sm font-bold ${
