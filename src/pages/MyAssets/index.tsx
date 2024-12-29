@@ -403,9 +403,9 @@ const MyAssets: React.FC = () => {
                                 onClick={() => {
                                     setClaimModalOpen(false);
                                     // 만약 지갑 연결이 필요한 경우:
-                                    // setWalletConnection(true);
+                                    setWalletConnection(true);
                                     // 아니면 바로 SL Claim 모달:
-                                    setSLClaim(true);
+                                    // setSLClaim(true);
                                 }}
                                 className="flex flex-col items-center justify-center w-[100px] h-[80px] ml-6 bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
                                 >
