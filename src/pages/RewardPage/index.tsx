@@ -30,7 +30,7 @@ const Reward: React.FC = () => {
   }, [fetchLeaderHome]);
 
   if (isLoadingHome ) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   if (errorHome) {

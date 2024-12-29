@@ -47,7 +47,7 @@ const PolicyDetailPage: React.FC = () => {
       {/* 로딩 스피너 표시 */}
       {isLoading && (
         <div className="flex justify-center items-center w-full h-screen">
-          <LoadingSpinner size={20} color="#4A90E2" duration={0.8} />
+          <LoadingSpinner size={20} color="#4A90E2" duration={0.8} className="h-screen"/>
         </div>
       )}
 

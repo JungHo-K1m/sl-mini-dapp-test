@@ -502,7 +502,7 @@ const SpinGame: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
 
   // 로딩 중이면 LoadingSpinner 보여주고, 끝나면 실제 화면
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   return (

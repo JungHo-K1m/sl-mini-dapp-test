@@ -66,7 +66,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
   if (isLoadingInitialRaffle) {
     return (
       <div className="flex justify-center items-center h-full">
-        <LoadingSpinner /> {/* 로딩 스피너 컴포넌트 사용 */}
+        <LoadingSpinner className="h-screen"/> {/* 로딩 스피너 컴포넌트 사용 */}
       </div>
     );
   }
@@ -242,7 +242,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
             <DialogHeader>
               <DialogTitle>{dialogTitle}</DialogTitle>
             </DialogHeader>
-            {isLoadingRaffleRange && <LoadingSpinner />}
+            {isLoadingRaffleRange && <LoadingSpinner className="h-screen"/>}
             {raffleRangeError && <ErrorMessage message={raffleRangeError} />}
             {!isLoadingRaffleRange &&
               !raffleRangeError &&

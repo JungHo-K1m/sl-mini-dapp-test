@@ -180,7 +180,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
   // 2) 로딩 중이면 스피너, 아니라면 실제 화면
   // -----------------------
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   // -----------------------

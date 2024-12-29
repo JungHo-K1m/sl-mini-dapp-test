@@ -202,7 +202,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
             <DialogHeader>
               <DialogTitle>{dialogTitle}</DialogTitle>
             </DialogHeader>
-            {isLoadingRange && <LoadingSpinner />}
+            {isLoadingRange && <LoadingSpinner className="h-screen"/>}
             {rangeError && <ErrorMessage message={rangeError} />}
             {!isLoadingRange &&
               !rangeError &&

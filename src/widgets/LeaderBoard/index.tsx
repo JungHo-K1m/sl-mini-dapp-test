@@ -34,7 +34,7 @@ const Leaderboard: React.FC = () => {
   console.log('Total Pages:', totalPages);
 
   if (isLoading && leaderBoard.length === 0) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   if (error) {
@@ -107,7 +107,7 @@ const Leaderboard: React.FC = () => {
       </div>
 
       {/* 추가적인 로딩 스피너 (View More 클릭 시) */}
-      {isLoading && leaderBoard.length > 0 && <LoadingSpinner />}
+      {isLoading && leaderBoard.length > 0 && <LoadingSpinner className="h-screen"/>}
     </div>
   );
 };

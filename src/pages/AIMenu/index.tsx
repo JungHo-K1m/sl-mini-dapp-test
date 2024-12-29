@@ -84,7 +84,7 @@ const AIMenu: React.FC = () => {
 
   if (loading) {
     // 로딩 중일 때는 로딩스피너만 보여줌
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   return (

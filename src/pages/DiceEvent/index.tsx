@@ -157,7 +157,7 @@ const DiceEventPage: React.FC = () => {
   }, []);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   if (error) {

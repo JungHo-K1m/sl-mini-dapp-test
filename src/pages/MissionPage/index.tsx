@@ -213,7 +213,7 @@ const MissionPage: React.FC = () => {
   // 8) 이미지 로딩 중이면 Spinner 표시
   // ---------------------------
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner className="h-screen"/>;
   }
 
   // ---------------------------

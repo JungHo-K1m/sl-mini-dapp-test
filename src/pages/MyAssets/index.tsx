@@ -11,6 +11,7 @@ import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 import {
     AlertDialog,
     AlertDialogContent,
+    AlertDialogDescription,
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/shared/components/ui';
@@ -128,7 +129,7 @@ const MyAssets: React.FC = () => {
 
     if (loading) {
         // 로딩 중일 때는 로딩스피너만 보여줌
-        return <LoadingSpinner />;
+        return <LoadingSpinner className="h-screen"/>;
     }
 
 
@@ -383,6 +384,9 @@ const MyAssets: React.FC = () => {
             <AlertDialog open={claimModalOpen}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Choose Token for Claim
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
@@ -395,7 +399,6 @@ const MyAssets: React.FC = () => {
                         <p className="text-base font-semibold text-gray-200 mt-4 mb-6 text-center">
                             Select the token you want to claim :
                         </p>
-
                         <div className="flex items-center w-[300px] h-[120px] rounded-2xl border-[#35383F] border-2 bg-[#181A20]">
                             {/* SL 버튼 */}
                             <button
@@ -444,6 +447,9 @@ const MyAssets: React.FC = () => {
             <AlertDialog open={walletConnection}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Connect Wallet
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
@@ -487,11 +493,13 @@ const MyAssets: React.FC = () => {
             </AlertDialog>
 
 
-
             {/* 3-1번 모달창 - SL토큰 클래임 */}
             <AlertDialog open={SLClaim}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Claim SL Token
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
@@ -537,11 +545,13 @@ const MyAssets: React.FC = () => {
             </AlertDialog>
 
 
-
             {/* 3-2번 모달창 - USDC 클래임 */}
             <AlertDialog open={USDCClaim}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Claim USDC
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
@@ -593,11 +603,13 @@ const MyAssets: React.FC = () => {
             </AlertDialog>
 
 
-
             {/* 4번 모달창 - 로딩 */}
             <AlertDialog open={loadingModal}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Loading
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
@@ -621,11 +633,13 @@ const MyAssets: React.FC = () => {
             </AlertDialog>
 
 
-
             {/* 5-1번 모달창 - 실패 */}
             <AlertDialog open={falied}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Claim Failed
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
@@ -639,11 +653,13 @@ const MyAssets: React.FC = () => {
             </AlertDialog>
 
 
-
             {/* 5-2번 모달창 - 성공 */}
             <AlertDialog open={success}>
                 <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
                     <AlertDialogHeader>
+                        <AlertDialogDescription className="sr-only">
+                            Claim Success
+                        </AlertDialogDescription>
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>

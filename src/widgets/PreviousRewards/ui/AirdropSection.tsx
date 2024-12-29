@@ -48,7 +48,7 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
   if (isLoadingAirdrop) {
     return (
       <div className="flex justify-center items-center h-full p-6">
-        <LoadingSpinner />
+        <LoadingSpinner className="h-screen"/>
       </div>
     );
   }

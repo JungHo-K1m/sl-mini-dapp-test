@@ -24,7 +24,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
 }) => {
   return (
     <div
-      className={`flex justify-center items-center h-screen ${className}`}
+      className={`flex justify-center items-center ${className}`}
       aria-label={ariaLabel}
       role="status"
     >
