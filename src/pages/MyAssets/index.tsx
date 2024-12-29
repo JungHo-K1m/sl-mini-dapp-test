@@ -391,7 +391,6 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
                     <div className="flex flex-col items-center justify-center">
                         <p className="text-base font-semibold text-gray-200 mt-4 mb-6 text-center">
                             Select the token you want to claim :
@@ -453,7 +452,6 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
                     <div className="flex flex-col items-center justify-center text-center space-y-6">
                         <p className="text-base font-semibold mt-4">
                             To claim SL, you need to connect <br />
@@ -502,7 +500,39 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
+                    <div className="px-6 pb-8">
+                        {/* 연결된 지갑 주소 표시 (예시) */}
+                        <p className="mb-2 mt-4 text-base font-semibold">
+                            Connected wallet address : <br />
+                            <span>0x0x3Aa5ebB10DC79...</span>
+                        </p>
+
+                        {/* 안내 문구 */}
+                        <p className="text-sm text-[#A3A3A3] mb-5 leading-5 font-normal">
+                            Note: A gas fee will be deducted from your claim. <br />
+                            Minimum claim amount is 100SL.
+                        </p>
+
+                        {/* 수량 입력 필드 */}
+                        <label className="block text-base font-semibold mb-1">Enter the amount of SL to claim :</label>
+                        <input
+                            type="number"
+                            placeholder="Enter the amount of SL"
+                            className="w-full rounded-2xl bg-[#181A20] border border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                        />
+
+                        {/* 버튼 (지갑 연결 or 실제 Claim) */}
+                        <button
+                            onClick={() => {
+                                // 실제로 SL을 Claim할 때 지갑 호출 로직
+                                setSLClaim(false);
+                                setLoadingModal(true) // 예: 로딩 모달 열기
+                            }}
+                            className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
+                        >
+                            Claim
+                        </button>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
 
@@ -520,7 +550,45 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
+                    <div className="px-6 pb-8 text-sm">
+                        {/* 지갑 주소 입력 */}
+                        <label className="block text-base  font-semibold mb-2">
+                            Enter the wallet address to receive USDC :
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="Enter the wallet address"
+                            className="w-full rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                        />
+
+                        {/* 안내 문구 */}
+                        <p className="text-sm font-normal text-[#A3A3A3] mb-5 leading-5">
+                            Note: A gas fee will be deducted from your claim. <br />
+                            Minimum claim amount is 100SL.
+                        </p>
+
+                        {/* USDC 수량 입력 */}
+                        <label className="block text-base font-semibold mb-1">
+                            Enter the amount of USDC to claim :
+                        </label>
+                        <input
+                            type="number"
+                            placeholder="Enter the amount of USDC"
+                            className="w-full rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                        />
+
+                        {/* Claim 버튼 */}
+                        <button
+                            onClick={() => {
+                            // 실제 Claim 로직
+                            // 예: setLoadingModal(true) → 로딩 모달 호출
+                            // setUsdcCaim(false);
+                            }}
+                            className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
+                        >
+                            Claim
+                        </button>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
 
