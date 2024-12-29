@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { BiWallet } from "react-icons/bi";
 import { FaChevronRight } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
+import { HiX } from 'react-icons/hi';
 import Images from '@/shared/assets/images';
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/entities/User/model/userModel";
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
-import { ClaimModal } from "@/shared/components/ui/claimModal";
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/shared/components/ui';
 
 interface TruncateMiddleProps {
     text: any;
@@ -47,6 +53,12 @@ const MyAssets: React.FC = () => {
     const [nft, setNFT] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [claimModalOpen, setClaimModalOpen] = useState(false);
+    const [walletConnection, setWalletConnection] = useState(false);
+    const [SLClaim, setSLClaim]= useState(false);
+    const [USDCClaim, setUsdcCaim] = useState(false);
+    const [loadingModal, setLoadingModal] = useState(false);
+    const [falied, setFailed] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const getCharacterImageSrc = () => {
         const index = Math.floor((userLv - 1) / 2);
@@ -145,7 +157,6 @@ const MyAssets: React.FC = () => {
         { id: 4, description: "Game Win", date: "17-6-2024", points: "+150P" },
         { id: 5, description: "Game Lose", date: "17-9-2024", points: "-150P" },
     ];
-
 
     // 날짜를 포맷팅하는 함수
     const formatDate = (date: string): string => {
@@ -367,10 +378,175 @@ const MyAssets: React.FC = () => {
                     </div>
                 </div>
             )}
-            <ClaimModal 
-                open={claimModalOpen}
-                onClose={() => setClaimModalOpen(false)}
-            />
+
+            {/* 1번 모달창 - 클래임할 토큰 선택  */}
+            <AlertDialog open={claimModalOpen}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>Claim Tokens</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setClaimModalOpen(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+                    <div className="px-6 pb-8 flex flex-col items-center justify-center">
+                        <p className="text-sm text-gray-200 mt-4 mb-6 text-center">
+                            Select the token you want to claim :
+                        </p>
+
+                        <div className="flex items-center space-x-8">
+                            {/* SL 버튼 */}
+                            <button
+                                onClick={() => {
+                                    setClaimModalOpen(false);
+                                    // 만약 지갑 연결이 필요한 경우:
+                                    // setWalletConnection(true);
+                                    // 아니면 바로 SL Claim 모달:
+                                    setSLClaim(true);
+                                }}
+                                className="flex flex-col items-center justify-center w-[110px] h-[110px] bg-[#1F1E27] rounded-2xl border-2 border-[#35383F] hover:border-[#0147E5] transition-colors"
+                                >
+                                <img
+                                    src={Images.SLToken}
+                                    alt="SL Token"
+                                    className="w-8 h-8 mb-2"
+                                />
+                                <p className="text-base font-semibold">SL</p>
+                            </button>
+
+                            <span className="text-white font-bold text-sm">OR</span>
+
+                            {/* USDC 버튼 */}
+                            <button
+                                onClick={() => {
+                                    // USDC 선택 시 로직 (예: 모달 닫고 USDC Claim 모달 열기)
+                                    setClaimModalOpen(false);
+                                    setUsdcCaim(true);
+                                }}
+                                className="flex flex-col items-center justify-center w-[110px] h-[110px] bg-[#1F1E27] rounded-2xl border-2 border-[#35383F] hover:border-[#0147E5] transition-colors"
+                                >
+                                <img
+                                    src={Images.USDC}
+                                    alt="USDC Icon"
+                                    className="w-8 h-8 mb-2"
+                                />
+                                <p className="text-base font-semibold">USDC</p>
+                            </button>
+                        </div>
+                    </div>
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+            {/* 2번 모달창 - 지갑 연결 */}
+            <AlertDialog open={walletConnection}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>Wallet Connection</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setWalletConnection(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+
+            {/* 3-1번 모달창 - SL토큰 클래임 */}
+            <AlertDialog open={SLClaim}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>SL Claim</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setSLClaim(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+
+            {/* 3-2번 모달창 - USDC 클래임 */}
+            <AlertDialog open={USDCClaim}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>USDC Claim</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setUsdcCaim(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+
+            {/* 4번 모달창 - 로딩 */}
+            <AlertDialog open={loadingModal}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>Processing</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setLoadingModal(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+
+            {/* 5-1번 모달창 - 실패 */}
+            <AlertDialog open={falied}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>Claim Falied</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setFailed(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+                </AlertDialogContent>
+            </AlertDialog>
+
+
+
+            {/* 5-2번 모달창 - 성공 */}
+            <AlertDialog open={success}>
+                <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center font-bold text-xl">
+                            <div className="flex flex-row items-center justify-between">
+                                <div> &nbsp;</div>
+                                <p>Claim Completed</p>
+                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setSuccess(false)} />
+                            </div>
+                        </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {/* 여기에 내용 */}
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 };

@@ -25,8 +25,8 @@ interface SelectedWallet {
 // 버튼 컴포넌트에서 사용할 props 인터페이스 정의
 interface WalletCardProps {
     text: string;
-    imgSrc: string;
-    market: string;   // 거래소 이름
+    imgSrc: string;     // 거래소 아이콘
+    market: string;     // 거래소 이름
 }
 
 interface TruncateMiddleProps {
@@ -64,12 +64,15 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
     const { t } = useTranslation();
 
     // 모든 거래소 정의
-    const allMarkets = ['ICP', 'BINANCE', 'OKX', 'OKX_WALLET', 'BYBIT', 'HTX', 'KUCOIN', 'MEXC', 'TRUST_WALLET', 'ONE_INCH', 'BITGET', 'KRAKEN', 'GATE_IO'];
+    const allMarkets = [
+        'ICP', 'BINANCE', 'OKX', 'OKX_WALLET', 'BYBIT', 'HTX', 'KUCOIN', 
+        'MEXC', 'TRUST_WALLET', 'ONE_INCH', 'BITGET', 'KRAKEN', 'GATE_IO'
+    ];
 
     // 거래소의 표시 이름을 관리하는 객체
     const DisplayNameList: Record<string, string> = {
         ICP: 'ICP',
-        BINANCE: 'BINANCE', // 오타 수정 ('BINACE' → 'BINANCE')
+        BINANCE: 'BINANCE',
         OKX: 'OKX',
         OKX_WALLET: 'OKX WALLET',
         BYBIT: 'BYBIT',
@@ -97,7 +100,8 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
     const [address, setAddress] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedWallet, setSelectedWallet] = useState<SelectedWallet>({
-        wallet: '', // 초기값 설정
+         // 초기값 설정
+        wallet: '',
         img: '',
         network: '',
         market: ''
