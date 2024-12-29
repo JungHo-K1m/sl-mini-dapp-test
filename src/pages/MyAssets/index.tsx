@@ -500,7 +500,7 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    <div className="px-6 pb-8">
+                    <div className="px-6 pb-8 flex flex-col items-center justify-center text-center">
                         {/* 연결된 지갑 주소 표시 (예시) */}
                         <p className="mb-2 mt-4 text-base font-semibold">
                             Connected wallet address : <br />
@@ -518,7 +518,7 @@ const MyAssets: React.FC = () => {
                         <input
                             type="number"
                             placeholder="Enter the amount of SL"
-                            className="w-full rounded-2xl bg-[#181A20] border border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                            className="w-full h-16 rounded-2xl bg-[#181A20] border border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
                         />
 
                         {/* 버튼 (지갑 연결 or 실제 Claim) */}
@@ -550,15 +550,15 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    <div className="px-6 pb-8 text-sm">
+                    <div className="px-6 pb-8 flex flex-col items-center justify-center text-center">
                         {/* 지갑 주소 입력 */}
-                        <label className="block text-base  font-semibold mb-2">
+                        <label className="block text-base font-semibold mb-2">
                             Enter the wallet address to receive USDC :
                         </label>
                         <input
                             type="text"
                             placeholder="Enter the wallet address"
-                            className="w-full rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                            className="w-full h-16 rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
                         />
 
                         {/* 안내 문구 */}
@@ -574,7 +574,7 @@ const MyAssets: React.FC = () => {
                         <input
                             type="number"
                             placeholder="Enter the amount of USDC"
-                            className="w-full rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                            className="w-full c rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
                         />
 
                         {/* Claim 버튼 */}
