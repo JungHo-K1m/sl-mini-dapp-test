@@ -526,7 +526,7 @@ const MyAssets: React.FC = () => {
                             onClick={() => {
                                 // 실제로 SL을 Claim할 때 지갑 호출 로직
                                 setSLClaim(false);
-                                setLoadingModal(true) // 예: 로딩 모달 열기
+                                setLoadingModal(true)
                             }}
                             className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
                         >
@@ -581,8 +581,8 @@ const MyAssets: React.FC = () => {
                         <button
                             onClick={() => {
                             // 실제 Claim 로직
-                            // 예: setLoadingModal(true) → 로딩 모달 호출
-                            // setUsdcCaim(false);
+                            setLoadingModal(true);
+                            setUsdcCaim(false);
                             }}
                             className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
                         >
@@ -612,7 +612,10 @@ const MyAssets: React.FC = () => {
                         <p className="text-xs text-gray-400 mb-4">Please wait.</p>
 
                         {/* LoadingSpinner 사용 */}
-                        <LoadingSpinner size={6}/>
+                        <LoadingSpinner 
+                            size={6}
+                            className="h-[100px]"  
+                        />
                     </div>
                 </AlertDialogContent>
             </AlertDialog>
