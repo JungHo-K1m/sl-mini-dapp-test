@@ -392,12 +392,12 @@ const MyAssets: React.FC = () => {
                         </AlertDialogTitle>
                     </AlertDialogHeader>
                     {/* 여기에 내용 */}
-                    <div className="px-6 pb-8 flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center">
                         <p className="text-base font-semibold text-gray-200 mt-4 mb-6 text-center">
                             Select the token you want to claim :
                         </p>
 
-                        <div className="flex items-center space-x-8 w-[300px] h-[120px] rounded-2xl border-[#35383F] border-2 bg-[#181A20]">
+                        <div className="flex items-center w-[300px] h-[120px] rounded-2xl border-[#35383F] border-2 bg-[#181A20]">
                             {/* SL 버튼 */}
                             <button
                                 onClick={() => {
@@ -407,7 +407,7 @@ const MyAssets: React.FC = () => {
                                     // 아니면 바로 SL Claim 모달:
                                     setSLClaim(true);
                                 }}
-                                className="flex flex-col items-center justify-center w-[100px] h-[80px] bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
+                                className="flex flex-col items-center justify-center w-[100px] h-[80px] ml-6 bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
                                 >
                                 <img
                                     src={Images.SLToken}
@@ -417,7 +417,7 @@ const MyAssets: React.FC = () => {
                                 <p className="text-sm font-semibold">SL</p>
                             </button>
 
-                            <span className="text-white font-semibold text-xl">OR</span>
+                            <span className="text-white font-semibold text-xl ml-3">OR</span>
 
                             {/* USDC 버튼 */}
                             <button
@@ -426,7 +426,7 @@ const MyAssets: React.FC = () => {
                                     setClaimModalOpen(false);
                                     setUsdcCaim(true);
                                 }}
-                                className="flex flex-col items-center justify-center w-[100px] h-[80px] bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
+                                className="flex flex-col items-center justify-center w-[100px] h-[80px] ml-6 bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
                                 >
                                 <img
                                     src={Images.USDC}
