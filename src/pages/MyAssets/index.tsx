@@ -397,7 +397,7 @@ const MyAssets: React.FC = () => {
                             Select the token you want to claim :
                         </p>
 
-                        <div className="flex items-center space-x-8 border-[#35383F] bg-[#181A20]">
+                        <div className="flex items-center space-x-8 w-[300px] h-[120px] rounded-2xl border-[#35383F] border-2 bg-[#181A20]">
                             {/* SL 버튼 */}
                             <button
                                 onClick={() => {
