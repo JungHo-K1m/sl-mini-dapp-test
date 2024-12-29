@@ -574,7 +574,7 @@ const MyAssets: React.FC = () => {
                         <input
                             type="number"
                             placeholder="Enter the amount of USDC"
-                            className="w-full c rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
+                            className="w-full h-16 rounded-2xl bg-[#181A20] border-2 border-[#35383F] px-3 py-2 mb-6 focus:outline-none focus:border-[#0147E5]"
                         />
 
                         {/* Claim 버튼 */}
@@ -606,7 +606,14 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
+                    <div className="px-6 pb-8 flex flex-col items-center justify-center text-center">
+                        {/* 상태 안내 문구 */}
+                        <p className="text-sm mt-4 mb-1">Processing SL claim...</p>
+                        <p className="text-xs text-gray-400 mb-4">Please wait.</p>
+
+                        {/* LoadingSpinner 사용 */}
+                        <LoadingSpinner size={6}/>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
 
