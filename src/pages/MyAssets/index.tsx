@@ -508,7 +508,7 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    <div className="px-6 pb-8 flex flex-col items-center justify-center text-center">
+                    <div className="flex flex-col items-center justify-center text-center">
                         {/* 연결된 지갑 주소 표시 (예시) */}
                         <p className="mb-2 mt-4 text-base font-semibold">
                             Connected wallet address : <br />
@@ -560,7 +560,7 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    <div className="px-6 pb-8 flex flex-col items-center justify-center text-center">
+                    <div className="flex flex-col items-center justify-center text-center">
                         {/* 지갑 주소 입력 */}
                         <label className="block text-base font-semibold mb-2">
                             Enter the wallet address to receive USDC :
@@ -618,7 +618,7 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    <div className="px-6 pb-8 flex flex-col items-center justify-center text-center">
+                    <div className="flex flex-col items-center justify-center text-center">
                         {/* 상태 안내 문구 */}
                         <p className="text-sm mt-4 mb-1">Processing SL claim...</p>
                         <p className="text-xs text-gray-400 mb-4">Please wait.</p>
@@ -626,7 +626,7 @@ const MyAssets: React.FC = () => {
                         {/* LoadingSpinner 사용 */}
                         <LoadingSpinner 
                             size={6}
-                            className="h-[100px]"  
+                            className="h-[80px]"  
                         />
                     </div>
                 </AlertDialogContent>
@@ -648,7 +648,40 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
+                    <div className="flex flex-col items-center justify-center text-center space-y-4">
+                        {/* 실패 안내 문구 */}
+                        <p className="text-base font-semibold mt-4">
+                            SL claim failed. Please try again later.
+                        </p>
+
+                        {/* 오류 메시지 */}
+                        <p className="text-sm font-normal text-[#A3A3A3]">
+                            Error message : Network error occurred
+                        </p>
+
+                        {/* 버튼들 */}
+                        <div className="flex flex-row items-center justify-center gap-4 mt-6">
+                            {/* Try Again 버튼 */}
+                            <button
+                                onClick={() => {
+                                    // 재시도 로직
+                                    setFailed(false);
+                                    setLoadingModal(true); // 다시 로딩 모달 띄울 수도 있음
+                                }}
+                                className="w-[120px] h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
+                                >
+                                Try Again
+                            </button>
+
+                            {/* Close 버튼 */}
+                            <button
+                                onClick={() => setFailed(false)}
+                                className="w-[120px] h-14 rounded-full border-[2px] border-[#737373] text-white text-base font-medium"
+                                >
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
 
@@ -668,7 +701,29 @@ const MyAssets: React.FC = () => {
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
-                    {/* 여기에 내용 */}
+                    <div className="flex flex-col items-center justify-center text-center space-y-4">
+                        {/* 성공 안내 문구 */}
+                        <p className="text-sm font-semibold mt-4">
+                            SL claim was successful!
+                        </p>
+                        
+                        <div className="text-base">
+                            {/* 예시: 기획안에 나온 Claim된 수량, Transaction ID 표시 */}
+                            Claimed SL amount : <span className="font-bold">500SL</span> <br />
+                            Transaction ID : <span className="font-bold">0X123456789...</span>
+                        </div>
+
+                        {/* View History 버튼 */}
+                        <button
+                            onClick={() => {
+                                setSuccess(false);
+                                navigate('/claim-history');
+                            }}
+                            className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium mt-4"
+                            >
+                            View History
+                        </button>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
         </div>
