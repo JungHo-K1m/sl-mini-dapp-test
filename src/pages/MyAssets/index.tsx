@@ -628,6 +628,31 @@ const MyAssets: React.FC = () => {
                             size={6}
                             className="h-[80px]"  
                         />
+                        <div className="flex flex-row items-center justify-center gap-4 mt-6">
+                            {/* 모달 확인용 버튼 */}
+                            <button
+                                onClick={() => {
+                                    // 성공 모달
+                                    setSuccess(true);
+                                    setLoadingModal(false);
+                                }}
+                                className="w-[120px] h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
+                                >
+                                성공 확인
+                            </button>
+
+                            {/* Close 버튼 */}
+                            <button
+                                onClick={() => {
+                                    // 실패 모달
+                                    setFailed(true);
+                                    setLoadingModal(false);
+                                }}
+                                className="w-[120px] h-14 rounded-full border-[2px] border-[#737373] text-white text-base font-medium"
+                                >
+                                실패 확인
+                            </button>
+                        </div>
                     </div>
                 </AlertDialogContent>
             </AlertDialog>
