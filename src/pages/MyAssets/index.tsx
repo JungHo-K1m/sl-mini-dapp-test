@@ -426,7 +426,7 @@ const MyAssets: React.FC = () => {
                                     setClaimModalOpen(false);
                                     setUsdcCaim(true);
                                 }}
-                                className="flex flex-col items-center justify-center w-[100px] h-[80px] ml-6 bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
+                                className="flex flex-col items-center justify-center w-[100px] h-[80px] ml-3 bg-[#1F1E27] rounded-2xl border-2 border-[#737373]"
                                 >
                                 <img
                                     src={Images.USDC}
@@ -454,7 +454,37 @@ const MyAssets: React.FC = () => {
                         </AlertDialogTitle>
                     </AlertDialogHeader>
                     {/* 여기에 내용 */}
+                    <div className="flex flex-col items-center justify-center text-center space-y-6">
+                        <p className="text-base font-semibold mt-4">
+                            To claim SL, you need to connect <br />
+                            your Kaikas wallet. <br />
+                            Would you like to connect your wallet?
+                        </p>
 
+                        <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 space-y-4 md:space-y-0 w-full mt-2">
+                            {/* Connect Wallet 버튼 */}
+                            <button
+                                onClick={() => {
+                                    // 여기에 실제 지갑 연결 로직
+                                    // 예: connectKaikasWallet()
+                                    // 모달 닫기 or 다음 단계 열기
+                                    setWalletConnection(false);
+                                    setSLClaim(true); // SLClaim 모달 열기
+                                }}
+                                className="w-full md:w-[180px] h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
+                                >
+                                Connect Wallet
+                            </button>
+
+                            {/* Cancel 버튼 */}
+                            <button
+                                onClick={() => setWalletConnection(false)}
+                                className="w-full md:w-[180px] h-14 rounded-full border-[2px] border-[#737373] text-white font-medium"
+                                >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
 
