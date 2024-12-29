@@ -461,7 +461,7 @@ const MyAssets: React.FC = () => {
                             Would you like to connect your wallet?
                         </p>
 
-                        <div className="flex flex-col md:flex-row items-center justify-center md:space-x-4 space-y-4 md:space-y-0 w-full mt-2">
+                        <div className="flex flex-row items-center justify-center gap-4 w-full">
                             {/* Connect Wallet 버튼 */}
                             <button
                                 onClick={() => {
