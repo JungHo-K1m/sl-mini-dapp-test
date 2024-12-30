@@ -1,27 +1,33 @@
 import React, { useState } from "react";
-import axios from "axios";
+import DappPortalSDK from "@linenext/dapp-portal-sdk"; // Default export로 SDK 가져오기
 
 const WalletConnect: React.FC = () => {
   const [account, setAccount] = useState<string | null>(null);
 
   const connectWallet = async () => {
     try {
-      const clientId = import.meta.env.VITE_LINE_CLIENT_ID || "";
-      console.log("사용 중인 clientId:", clientId);
+      console.log("초기화 시작");
 
-      // 직접 요청 보내기
-      const response = await axios.post(
-        "https://wallet.dappportal.io/api/v1/request-session/request",
-        {}, // 요청 본문
-        {
-          headers: {
-            "x-client-id": clientId, // 헤더에 clientId 추가
-          },
-        }
-      );
+      // SDK 초기화
+      const sdk = await DappPortalSDK.init({
+        clientId: import.meta.env.VITE_LINE_CLIENT_ID || "", // 환경 변수에서 clientId 가져오기
+        chainId: "1001", // 테스트 체인 ID
+      });
 
-      setAccount(response.data.accounts[0]); // 연결된 계정 설정
-      console.log("지갑 연결 성공:", response.data.accounts[0]);
+      console.log("clientId 확인:", import.meta.env.VITE_LINE_CLIENT_ID);
+      console.log("SDK 초기화 완료:", sdk);
+
+      // WalletProvider 가져오기
+      const walletProvider = sdk.getWalletProvider();
+      console.log("WalletProvider 가져오기 성공:", walletProvider);
+
+      // 지갑 연결 요청
+      const accounts = await walletProvider.request({
+        method: "kaia_requestAccounts", // 문서에 명시된 메서드
+      }) as string[];
+
+      setAccount(accounts[0]); // 첫 번째 계정 설정
+      console.log("지갑 연결 성공:", accounts[0]);
     } catch (error: any) {
       console.error("에러 발생:", error.message);
       console.error("에러 응답:", error.response?.data || "응답 없음");
