@@ -37,7 +37,6 @@ const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
   return <div className={`font-semibold ${className}`}>{truncatedText}</div>;
 };
 
-
 interface Friend {
   userId: string;
 }
@@ -125,15 +124,15 @@ const InviteFriends: React.FC = () => {
           <div className="flex flex-row justify-between items-center mb-[6px]">
             <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
             <div className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]">
-              total : {friends.length}
+              Total : <span className="text-[#FDE047]">{friends.length}</span>
             </div>
           </div>
           {friends.map((friend, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl flex flex-row items-center justify-start gap-4 h-16 text-[#171717] font-medium px-5"
+              className="bg-[#1F1E27] rounded-3xl border-2 border-[#35383F] flex flex-row items-center justify-start gap-4 h-16 text-base font-medium px-5"
             >
-              <p className="text-[#737373]">{index + 1}</p>
+              <p className="text-[#D4D4D4]">{index + 1}</p>
               <p>{friend.userId}</p>
             </div>
           ))}
