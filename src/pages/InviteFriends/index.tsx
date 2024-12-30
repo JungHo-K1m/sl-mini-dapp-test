@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TopTitle } from '@/shared/components/ui';
 import './InviteFriends.css';
 import Images from '@/shared/assets/images';
@@ -41,6 +42,7 @@ interface Friend {
 }
 
 const InviteFriends: React.FC = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [copySuccess, setCopySuccess] = useState<string>(''); // 클립보드 복사 결과 메시지
   const [referralLink, setReferralLink] = useState<string>(''); // 레퍼럴 코드 상태
@@ -97,15 +99,10 @@ const InviteFriends: React.FC = () => {
         <p className="text-sm text-green-500 mt-2">{copySuccess}</p>
       )}
       <div className="invite-reward-box w-[342px] md:w-[500px] h-72 rounded-3xl flex flex-col items-center justify-center mt-9 gap-4">
-        <div className="flex flex-row items-center gap-4">
-          <div className="flex flex-col items-center gap-2 justify-center">
-            <img src={Images.Dices} alt="dice" className="h-11" />
-            <p className="font-medium text-sm">5 Dice</p>
-          </div>
-          <p className="text-[40px]">+</p>
+        <div className="flex flex-row items-center">
           <div className="flex flex-col items-center gap-2 justify-center">
             <img src={Images.Star} alt="star" className="h-11" />
-            <p className="font-medium text-sm">3000 P</p>
+            <p className="font-medium text-sm">1000 P</p>
           </div>
         </div>
         <p className="text-sm ">
@@ -116,7 +113,9 @@ const InviteFriends: React.FC = () => {
           <br />
           {t("mission_page.of_your_invited_friend's_reward.")}
         </p>
-        <button className="h-14 w-[302px] rounded-full bg-[#21212f]">
+        <button 
+          className="h-14 w-[302px] rounded-full bg-[#21212f]"
+          onClick={()=>navigate("/invite-friends-list")}>
           {t('mission_page.Invite_Friends_and_Get_Reward')}
         </button>
       </div>

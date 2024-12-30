@@ -16,6 +16,7 @@ import WalletPage from "@/pages/WalletPage";
 import MissionPage from "@/pages/MissionPage";
 import Reward from "@/pages/RewardPage";
 import InviteFriends from "@/pages/InviteFriends";
+import InviteFriendsList from "./pages/InviteFriendsList";
 import SlotMachine from "@/pages/SlotMachine";
 import PetRegister from "@/pages/PetRegister";
 import SelectPet from "@/pages/SelectPet";
@@ -186,6 +187,7 @@ const App:React.FC = () =>{
                     <Route path="/referral-rewards" element={<DiceEventLayout hidden={true}><FriendRewards /></DiceEventLayout>} />
                     <Route path="/claim-history" element={<DiceEventLayout hidden={true}><ClaimHistory /></DiceEventLayout>} />
                     <Route path="/sdk-test" element={<DiceEventLayout hidden={true}><WalletConnect /></DiceEventLayout>} />
+                    <Route path="/invite-friends-list" element={<DiceEventLayout hidden={true}><InviteFriendsList /></DiceEventLayout>} />
 
                 </Routes>
             )}
