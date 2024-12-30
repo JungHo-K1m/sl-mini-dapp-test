@@ -6,6 +6,36 @@ import { BiCopy } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
 import getFriends from '@/entities/Mission/api/friends'; // 외부 API 호출 함수
 
+interface TruncateMiddleProps {
+  text: string;
+  maxLength: number;
+  className?: string;
+}
+
+// 주소 중간 생략
+const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
+  text,
+  maxLength,
+  className,
+}) => {
+  const truncateMiddle = (str: string, maxLen: number): string => {
+    if (str.length <= maxLen) return str;
+
+    const charsToShow = maxLen - 3; // 3 characters for "..."
+    const frontChars = Math.ceil(charsToShow / 2);
+    const backChars = Math.floor(charsToShow / 2);
+
+    return (
+      str.substr(0, frontChars) + '...' + str.substr(str.length - backChars)
+    );
+  };
+
+  const truncatedText = truncateMiddle(text, maxLength);
+
+  return <div className={`font-semibold ${className}`}>{truncatedText}</div>;
+};
+
+
 interface Friend {
   userId: string;
 }
@@ -33,7 +63,7 @@ const InviteFriends: React.FC = () => {
     const fetchFriendsData = async () => {
       try {
         const data = await getFriends(); // API 호출
-        setReferralLink(data.referralUrl); // 레퍼럴 코드 설정
+        setReferralLink(data.referralCode.referralUrl); // 레퍼럴 코드 설정
         setFriends(data.friends || []); // 친구 목록 설정 (없으면 빈 배열)
         setLoading(false); // 로딩 완료
       } catch (error) {
@@ -58,7 +88,9 @@ const InviteFriends: React.FC = () => {
         className="flex flex-row gap-2 items-center border border-white rounded-full w-56 md:w-80 h-16 justify-center mt-2 px-4"
         onClick={copyToClipboard}
       >
-        <p className="truncate">{referralLink}</p>
+        <p className="truncate">
+          <TruncateMiddle text={referralLink} maxLength={20} />
+        </p>
         <BiCopy className="min-w-5 min-h-5" />
       </button>
       {copySuccess && (
@@ -107,7 +139,7 @@ const InviteFriends: React.FC = () => {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-gray-400 mt-8">{t('mission_page.No_Friends')}</p> // 친구가 없을 경우
+        <p className="text-sm text-gray-400 mt-8">Invite Your Friends!</p> // 친구가 없을 경우
       )}
     </div>
   );
