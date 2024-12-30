@@ -34,7 +34,7 @@ const InviteFriends: React.FC = () => {
       try {
         const data = await getFriends(); // API 호출
         setReferralLink(data.referralUrl); // 레퍼럴 코드 설정
-        setFriends(data.friends); // 친구 목록 설정
+        setFriends(data.friends || []); // 친구 목록 설정 (없으면 빈 배열)
         setLoading(false); // 로딩 완료
       } catch (error) {
         console.error('Error fetching friends data:', error);
@@ -88,23 +88,27 @@ const InviteFriends: React.FC = () => {
           {t('mission_page.Invite_Friends_and_Get_Reward')}
         </button>
       </div>
-      <div className="flex flex-col mt-8 w-full gap-3">
-        <div className="flex flex-row justify-between items-center mb-[6px]">
-          <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
-          <div className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]">
-            total : {friends.length}
+      {friends.length > 0 ? ( // 친구 목록이 존재하는 경우에만 렌더링
+        <div className="flex flex-col mt-8 w-full gap-3">
+          <div className="flex flex-row justify-between items-center mb-[6px]">
+            <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
+            <div className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]">
+              total : {friends.length}
+            </div>
           </div>
+          {friends.map((friend, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-3xl flex flex-row items-center justify-start gap-4 h-16 text-[#171717] font-medium px-5"
+            >
+              <p className="text-[#737373]">{index + 1}</p>
+              <p>{friend.userId}</p>
+            </div>
+          ))}
         </div>
-        {friends.map((friend, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-3xl flex flex-row items-center justify-start gap-4 h-16 text-[#171717] font-medium px-5"
-          >
-            <p className="text-[#737373]">{index + 1}</p>
-            <p>{friend.userId}</p>
-          </div>
-        ))}
-      </div>
+      ) : (
+        <p className="text-sm text-gray-400 mt-8">{t('mission_page.No_Friends')}</p> // 친구가 없을 경우
+      )}
     </div>
   );
 };
