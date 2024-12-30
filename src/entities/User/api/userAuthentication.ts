@@ -5,7 +5,7 @@ export const userAuthenticationWithServer = async (lineIdToken: string): Promise
     try {
         const lineData = {
             lineToken: lineIdToken,
-            channelId: '2006540121'
+            channelId: '2006732321'
         }
         const response = await api.post('/auth/login/line', lineData);
 
