@@ -1,20 +1,23 @@
-// InviteFriends.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TopTitle } from '@/shared/components/ui';
 import './InviteFriends.css';
 import Images from '@/shared/assets/images';
-import { FaChevronLeft } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
 import { BiCopy } from 'react-icons/bi';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import getFriends from '@/entities/Mission/api/friends'; // 외부 API 호출 함수
+
+interface Friend {
+  userId: string;
+}
 
 const InviteFriends: React.FC = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const [copySuccess, setCopySuccess] = useState<string>('');
+  const [copySuccess, setCopySuccess] = useState<string>(''); // 클립보드 복사 결과 메시지
+  const [referralLink, setReferralLink] = useState<string>(''); // 레퍼럴 코드 상태
+  const [friends, setFriends] = useState<Friend[]>([]); // 친구 목록 상태
+  const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
 
-  const referralLink = 'https://pwa-slapp-13cs.vercel.app/telegramideded';
-
+  // 클립보드 복사 함수
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(referralLink);
@@ -25,14 +28,36 @@ const InviteFriends: React.FC = () => {
     }
   };
 
+  // 페이지 로드 시 API 호출
+  useEffect(() => {
+    const fetchFriendsData = async () => {
+      try {
+        const data = await getFriends(); // API 호출
+        setReferralLink(data.referralUrl); // 레퍼럴 코드 설정
+        setFriends(data.friends); // 친구 목록 설정
+        setLoading(false); // 로딩 완료
+      } catch (error) {
+        console.error('Error fetching friends data:', error);
+        setLoading(false); // 에러 시 로딩 종료
+      }
+    };
+
+    fetchFriendsData();
+  }, []);
+
+  // 로딩 상태 처리
+  if (loading) {
+    return <div className="text-white">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col mx-6 mb-44 text-white items-center min-h-screen">
-      <TopTitle title={t("mission_page.Invite_Friend")} back={true} />
-      <p>{t("mission_page.Referral_Code")}</p>
+      <TopTitle title={t('mission_page.Invite_Friend')} back={true} />
+      <p>{t('mission_page.Referral_Code')}</p>
       <button
         className="flex flex-row gap-2 items-center border border-white rounded-full w-56 md:w-80 h-16 justify-center mt-2 px-4"
         onClick={copyToClipboard}
-        >
+      >
         <p className="truncate">{referralLink}</p>
         <BiCopy className="min-w-5 min-h-5" />
       </button>
@@ -52,25 +77,33 @@ const InviteFriends: React.FC = () => {
           </div>
         </div>
         <p className="text-sm ">
-          {t("mission_page.You_can_receive_an")}{' '}
-          <span className="text-2xl font-semibold">{t("mission_page.additional_10%")}</span> <br />
+          {t('mission_page.You_can_receive_an')}{' '}
+          <span className="text-2xl font-semibold">
+            {t('mission_page.additional_10%')}
+          </span>{' '}
+          <br />
           {t("mission_page.of_your_invited_friend's_reward.")}
         </p>
         <button className="h-14 w-[302px] rounded-full bg-[#21212f]">
-          {t("mission_page.Invite_Friends_and_Get_Reward")}
+          {t('mission_page.Invite_Friends_and_Get_Reward')}
         </button>
       </div>
       <div className="flex flex-col mt-8 w-full gap-3">
         <div className="flex flex-row justify-between items-center mb-[6px]">
-          <p className="text-lg font-medium">{t("mission_page.Invited_Friends")}</p>
+          <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
           <div className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]">
-            total : 3
+            total : {friends.length}
           </div>
         </div>
-        <div className="bg-white rounded-3xl flex flex-row items-center justify-start gap-4 h-16 text-[#171717] font-medium px-5">
-          <p className="text-[#737373]">1</p>
-          <p>Olivia Smith</p>
-        </div>
+        {friends.map((friend, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-3xl flex flex-row items-center justify-start gap-4 h-16 text-[#171717] font-medium px-5"
+          >
+            <p className="text-[#737373]">{index + 1}</p>
+            <p>{friend.userId}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
