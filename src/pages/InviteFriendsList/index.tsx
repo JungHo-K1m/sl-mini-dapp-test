@@ -55,40 +55,40 @@ const InviteFriendsList: React.FC = () => {
                         View Details <FaChevronRight className="ml-1 w-3 h-3" />
                     </button>
                 </div>
-                <div className="bg-[#1F1E27] rounded-3xl border-2 border-[#35383F] flex flex-col justify-center gap-4 h-36 px-5">
-                    <div className="flex items-center gap-4">
+                <div className="bg-[#1F1E27] rounded-3xl border-2 border-[#35383F] flex flex-col justify-center gap-4 h-36 p-5 mt-3">
+                    <div className="flex items-center">
                         <img
                             src={Images.pointStar}
                             alt="Points Earned"
                             className="w-6 h-6"
                             />
-                        <p className="text-sm font-medium flex-1">Points Earned</p>
-                        <p className="text-[#34D399] text-lg font-bold">+1,500P</p>
+                        <p className="text-base font-medium flex-1 ml-1">Points Earned</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+1,500P</p>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center">
                         <img
                             src={Images.SLToken}
                             alt="SL Earned"
                             className="w-6 h-6"
                             />
-                        <p className="text-sm font-medium flex-1">SL Earned</p>
-                        <p className="text-[#34D399] text-lg font-bold">+50SL</p>
+                        <p className="text-base font-medium flex-1 ml-1">SL Earned</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+50SL</p>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center">
                         <img
                             src={Images.USDC}
                             alt="USDC Earned"
                             className="w-6 h-6"
                             />
-                        <p className="text-sm font-medium flex-1">USDC Earned</p>
-                        <p className="text-[#34D399] text-lg font-bold">+20.00USDC</p>
+                        <p className="text-base font-medium flex-1 ml-1">USDC Earned</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+20.00USDC</p>
                     </div>
                 </div>
             </div>
 
             {/* 초대한 친구 목록 */}
             {friends.length > 0 ? ( // 친구 목록이 존재하는 경우에만 렌더링
-                <div className="flex flex-col mt-8 w-full gap-3">
+                <div className="flex flex-col mt-12 w-full gap-3">
                     <div className="flex flex-row justify-between items-center mb-[6px]">
                         <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
                         <div className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]">
