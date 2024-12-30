@@ -5,7 +5,8 @@ import './InviteFriends.css';
 import Images from '@/shared/assets/images';
 import { BiCopy } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
-import getFriends from '@/entities/Mission/api/friends'; // 외부 API 호출 함수
+import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
+import getFriends from '@/entities/Mission/api/friends';
 
 interface TruncateMiddleProps {
   text: string;
@@ -79,7 +80,7 @@ const InviteFriends: React.FC = () => {
 
   // 로딩 상태 처리
   if (loading) {
-    return <div className="text-white">Loading...</div>;
+    return <LoadingSpinner className="h-screen" />;
   }
 
   return (

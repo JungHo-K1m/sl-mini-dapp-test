@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { TopTitle } from '@/shared/components/ui';
-
+import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 
 const InviteFriendsList: React.FC = () => {
 
