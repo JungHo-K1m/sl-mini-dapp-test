@@ -47,6 +47,13 @@ const InviteFriendsList: React.FC = () => {
         return <LoadingSpinner className="h-screen" />;
     }
 
+
+    // 숫자 콤마(,) 표기를 위한 변환: toLocaleString()
+    const formattedStar = star.toLocaleString(); 
+    const formattedSL = sl.toLocaleString();
+    const formattedUSDC = usdc.toLocaleString();
+
+
     return (
         <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-32">
             {/* 상단 타이틀 */}
@@ -72,7 +79,7 @@ const InviteFriendsList: React.FC = () => {
                             className="w-6 h-6"
                             />
                         <p className="text-base font-medium flex-1 ml-1">Points Earned</p>
-                        <p className="text-[#3B82F6] text-lg font-semibold">+{star}P</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+{formattedStar}P</p>
                     </div>
                     <div className="flex items-center">
                         <img
@@ -81,7 +88,7 @@ const InviteFriendsList: React.FC = () => {
                             className="w-6 h-6"
                             />
                         <p className="text-base font-medium flex-1 ml-1">SL Earned</p>
-                        <p className="text-[#3B82F6] text-lg font-semibold">+{sl}SLT</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+{formattedSL}SLT</p>
                     </div>
                     <div className="flex items-center">
                         <img
@@ -90,7 +97,7 @@ const InviteFriendsList: React.FC = () => {
                             className="w-6 h-6"
                             />
                         <p className="text-base font-medium flex-1 ml-1">USDC Earned</p>
-                        <p className="text-[#3B82F6] text-lg font-semibold">+{usdc}USDC</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+{formattedUSDC}USDC</p>
                     </div>
                 </div>
             </div>
