@@ -32,6 +32,20 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     }
   }
 
+  useEffect(()=>{
+    const url = window.location.href;
+    const parts  = url.split("/");
+    const referralCode = parts[parts.length - 1];
+
+    if (referralCode) {
+      console.log("레퍼럴 코드:", referralCode);
+      localStorage.setItem("referralCode", referralCode);
+    } else {
+      // (A) 코드가 없는 경우: 무언가 예외 처리
+      console.log("레퍼럴 코드가 없습니다.");
+    }
+  }, [])
+
   const handleTokenFlow = async () => {
     const accessToken = localStorage.getItem("accessToken");
   
