@@ -15,6 +15,41 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   const { fetchUserData } = useUserStore();
   const [showSplash, setShowSplash] = useState(true);
   const initializedRef = useRef(false);
+  const knownRoutes = [
+    "", 
+    "dice-event", 
+    "choose-character",
+    "policy-agreement",
+    "AI-menu",
+    "mission",
+    "reward",
+    "invite-friends",
+    "my-assets",
+    "wallet",
+    "wallet-list",
+    "test",
+    "previous-rewards",
+    "choose-character",
+    "select-pet",
+    "regist-pet",
+    "edit-pet",
+    "diagnosis-list",
+    "diagnosis-detail",
+    "ai-xray-analysis",
+    "ai-dental-analysis",
+    "my-nfts",
+    "reward-history",
+    "first-reward",
+    "settings",
+    "policy-detail",
+    "policy-agreement",
+    "referral-rewards",
+    "claim-history",
+    "sdk-test",
+    "invite-friends-list",
+  ];
+  const referralPattern = /^[A-Za-z0-9]{4,16}$/;
+
 
   // 토큰이 있을 때, 사용자 정보 가져오기
   const getUserInfo = async () =>{
@@ -35,14 +70,21 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   useEffect(()=>{
     const url = window.location.href;
     const parts  = url.split("/");
-    const referralCode = parts[parts.length - 1];
+    const lastPart  = parts[parts.length - 1];
 
-    if (referralCode) {
-      console.log("레퍼럴 코드:", referralCode);
-      localStorage.setItem("referralCode", referralCode);
+    // 1) 미리 정의된 라우트 목록에 속하면 레퍼럴 코드가 아님
+    if (knownRoutes.includes(lastPart)) {
+      console.log("기존 라우트로 인식. 레퍼럴 코드가 아님:", lastPart);
+      return;
+    }
+
+    // 2) 정규식으로 검사(패턴에 맞으면 코드로 저장)
+    if (referralPattern.test(lastPart)) {
+      console.log("레퍼럴 코드로 인식:", lastPart);
+      localStorage.setItem("referralCode", lastPart);
     } else {
-      // (A) 코드가 없는 경우: 무언가 예외 처리
-      console.log("레퍼럴 코드가 없습니다.");
+      // 여기서도 '코드가 아닌 어떤 특수 경로'일 가능성 있음
+      console.log("레퍼럴 코드 포맷이 아님:", lastPart);
     }
   }, [])
 
