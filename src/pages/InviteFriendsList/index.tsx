@@ -6,6 +6,7 @@ import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 import Images from '@/shared/assets/images';
 import { FaChevronRight } from "react-icons/fa";
 import getFriends from '@/entities/Mission/api/friends';
+import getFriendsReward from '@/entities/Asset/api/friendsReward';
 
 interface Friend {
     userId: string;
@@ -13,15 +14,23 @@ interface Friend {
 
 const InviteFriendsList: React.FC = () => {
     const navigate = useNavigate();
-      const { t } = useTranslation();
+    const { t } = useTranslation();
     const [friends, setFriends] = useState<Friend[]>([]); // 친구 목록 상태
     const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
+    const [star, setStar] = useState(0.0);
+    const [sl, setSL] = useState(0.0);
+    const [usdc, setUsdc] = useState(0.0);
+
 
     useEffect(() => {
         const fetchFriendsData = async () => {
             try {
                 const data = await getFriends(); // API 호출
+                const reward = await getFriendsReward(); 
                 setFriends(data.friends || []); // 친구 목록 설정 (없으면 빈 배열)
+                setStar(reward.starTotal);
+                setSL(reward.slTotal);
+                setUsdc(reward.usdcTotal);
                 setLoading(false); // 로딩 완료
             } catch (error) {
                 console.error('Error fetching friends data:', error);
@@ -63,7 +72,7 @@ const InviteFriendsList: React.FC = () => {
                             className="w-6 h-6"
                             />
                         <p className="text-base font-medium flex-1 ml-1">Points Earned</p>
-                        <p className="text-[#3B82F6] text-lg font-semibold">+1,500P</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+{star}P</p>
                     </div>
                     <div className="flex items-center">
                         <img
@@ -72,7 +81,7 @@ const InviteFriendsList: React.FC = () => {
                             className="w-6 h-6"
                             />
                         <p className="text-base font-medium flex-1 ml-1">SL Earned</p>
-                        <p className="text-[#3B82F6] text-lg font-semibold">+50SL</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+{sl}SLT</p>
                     </div>
                     <div className="flex items-center">
                         <img
@@ -81,7 +90,7 @@ const InviteFriendsList: React.FC = () => {
                             className="w-6 h-6"
                             />
                         <p className="text-base font-medium flex-1 ml-1">USDC Earned</p>
-                        <p className="text-[#3B82F6] text-lg font-semibold">+20.00USDC</p>
+                        <p className="text-[#3B82F6] text-lg font-semibold">+{usdc}USDC</p>
                     </div>
                 </div>
             </div>
