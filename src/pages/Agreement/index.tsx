@@ -49,7 +49,7 @@ const AgreementPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center text-white min-h-screen px-6 pt-[90px] relative">
+    <div className="flex flex-col items-center text-white min-h-screen px-6 pt-36 relative">
       <h1 className="text-2xl font-bold text-center mb-20">Welcome to the<br/>Scan My Pet!</h1>
       <div className="w-full max-w-md py-6 rounded-lg">
         <div className="flex items-center mb-4">
