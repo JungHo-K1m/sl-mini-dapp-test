@@ -137,9 +137,11 @@ const FriendRewards: React.FC = () => {
                                     transform: 'translateY(-50%)',
                                 }}
                             />
+                        </div>
+                        <div className="mt-3">
                             {/* 자동완성 결과 목록 */}
                             {searchText && filteredList.length > 0 && (
-                                <ul className="autoCompleteList mt-2">
+                                <ul className="autoCompleteList">
                                     {filteredList.map((friend, index) => (
                                         <li
                                             key={friend}
@@ -154,6 +156,7 @@ const FriendRewards: React.FC = () => {
                                     ))}
                                 </ul>
                             )}
+
                         </div>
 
                         {/* 자산 종류 필터 */}
