@@ -57,6 +57,22 @@ const SettingsPage: React.FC =() => {
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div> */}
             </div>
+            <div 
+                className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
+                onClick={() => navigate("/policy-")}>
+                <div>
+                    <p className="font-semibold">약관 동의 페이지</p>
+                </div>
+                <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+            </div>
+            <div 
+                className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
+                onClick={() => navigate("/first-reward")}>
+                <div>
+                    <p className="font-semibold">첫 보상 안내 페이지</p>
+                </div>
+                <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+            </div>
 
         </div>
     );
