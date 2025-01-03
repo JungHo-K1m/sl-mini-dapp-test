@@ -231,7 +231,7 @@ const RewardHistory: React.FC = () => {
                             <p className="text-sm font-medium">Friend Referral Rewards</p>
                             <p className="text-xs text-gray-400">17-12-2024</p>
                         </div>
-                        <div className="flex items-center gap-2 ml-auto">
+                        <div className="flex items-center gap-3 ml-auto">
                             <p className="text-sm font-bold text-blue-400">+150P..</p>
                             <FaChevronRight className="w-4 h-4" />
                         </div>

@@ -220,7 +220,7 @@ const FriendRewards: React.FC = () => {
                         filteredHistory.map((reward) => (
                             <div
                                 key={reward.id}
-                                className="flex justify-between items-center py-2 border-b border-[#35383F]"
+                                className="flex justify-between items-center py-4 border-b border-[#35383F]"
                             >
                                 <div>
                                     <p className="text-sm font-medium">{reward.from}</p>
