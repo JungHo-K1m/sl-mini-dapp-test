@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,16 +6,47 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { TopTitle } from "@/shared/components/ui";
+import getFriendsList from "@/entities/RewardPage/api/friendsList";
 
 const FriendRewards: React.FC = () => {
     const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
+    const [friendList, setFriendList] = useState<string[]>([]); // 받은 원본 친구 목록
+    const [filteredList, setFilteredList] = useState<string[]>([]); // 검색된 친구 목록
+    const [searchText, setSearchText] = useState<string>("");
 
     // 필터 상태
     const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
+
+    // 친구 목록 가져오기
+    useEffect(() => {
+        // 컴포넌트가 마운트되었을 때 친구 목록을 불러옴
+        const fetchFriends = async () => {
+            try {
+                const result = await getFriendsList(); 
+                setFriendList(result);
+                setFilteredList(result);
+            } catch (error) {
+            console.error(error);
+            }
+        };
+
+        fetchFriends();
+    }, []);
+
+    // 친구 이름 검색
+    const handleSearch = (value: string) => {
+        setSearchText(value);
+    
+        const filtered = friendList.filter((friend) =>
+          friend.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredList(filtered);
+    };
+
 
     // 더미 데이터
     const rewardHistory = [
@@ -97,7 +128,7 @@ const FriendRewards: React.FC = () => {
                                 type="text"
                                 placeholder="Search Name..."
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => handleSearch(e.target.value)}
                                 className="w-full h-14 px-4 py-2 pr-14 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500"
                             />
                             <FaSearch
@@ -107,6 +138,22 @@ const FriendRewards: React.FC = () => {
                                     transform: 'translateY(-50%)',
                                 }}
                             />
+                            {/* 자동완성 결과 목록 */}
+                            {searchText && filteredList.length > 0 && (
+                                <ul className="autoCompleteList">
+                                {filteredList.map((friend) => (
+                                    <li
+                                    key={friend}
+                                    onClick={() => {
+                                        setSearchText(friend); // 검색창 자동완성
+                                        setFilteredList([]);   // 리스트 닫기
+                                    }}
+                                    >
+                                    {friend}
+                                    </li>
+                                ))}
+                                </ul>
+                            )}
                         </div>
 
                         {/* 자산 종류 필터 */}
