@@ -176,7 +176,7 @@ const MyAssets: React.FC = () => {
                         <img
                             src={charactorImageSrc}
                             alt="User Profile"
-                            className="w-10 h-10 rounded-full"
+                            className="w-8 h-8 rounded-full"
                         />
                     </div>
 
@@ -238,7 +238,7 @@ const MyAssets: React.FC = () => {
                         onClick={() => navigate("/my-nfts")}
                         aria-label="View All NFTs"
                         >
-                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-3 h-3" />
+                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
                 <div className="mt-4 w-full">
@@ -293,12 +293,12 @@ const MyAssets: React.FC = () => {
                         onClick={() => navigate("/claim-history")}
                         aria-label="View Claim History"
                         >
-                        View Claim History <FaChevronRight className="ml-1 w-3 h-3" />
+                        View Claim History <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
 
                  {/* SL Balance */}
-                <div className="flex items-center justify-between h-14 py-4 px-5 border-[2px] rounded-full background-[#1F1E27] border-[#35383F] mt-4">
+                <div className="flex items-center justify-between h-14 py-4 px-5 border-[2px] rounded-full bg-[#1F1E27] border-[#35383F] mt-4">
                     <div className="flex items-center">
                         <img
                             src={Images.SLToken} // SL 이미지 경로를 설정
@@ -311,7 +311,7 @@ const MyAssets: React.FC = () => {
                 </div>
 
                 {/* USDC Balance */}
-                <div className="flex items-center justify-between h-14 py-4 px-5 border-[2px] rounded-full background-[#1F1E27] border-[#35383F] mt-2">
+                <div className="flex items-center justify-between h-14 py-4 px-5 border-[2px] rounded-full bg-[#1F1E27] border-[#35383F] mt-2">
                     <div className="flex items-center">
                         <img
                             src={Images.USDC} // USDC 이미지 경로를 설정
@@ -338,24 +338,24 @@ const MyAssets: React.FC = () => {
                         className="flex items-center text-white text-xs"
                         onClick={() => navigate("/reward-history")}
                         >
-                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-3 h-3" />
+                        {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
                 </div>
                 <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] py-3 px-4">
                     {rewardHistory.map((reward, index) => (
                         <div
                             key={reward.id}
-                            className={`flex justify-between items-center py-2 ${
+                            className={`flex justify-between items-center py-4 ${
                                 index !== rewardHistory.length - 1 ? "border-b border-[#35383F]" : ""
                             }`}
                         >
                             <div>
-                                <p className="text-sm font-medium">{reward.description}</p>
-                                <p className="text-xs text-gray-400">{formatDate(reward.date)}</p>
+                                <p className="text-base font-normal">{reward.description}</p>
+                                <p className="text-xs font-normal text-[#A3A3A3]">{formatDate(reward.date)}</p>
                             </div>
                             <p
-                                className={`text-sm font-bold ${
-                                    reward.points.startsWith("+") ? "text-blue-400" : "text-red-400"
+                                className={`text-lg font-semibold ${
+                                    reward.points.startsWith("+") ? "text-[#3B82F6]" : "text-[#DD2726]"
                                 }`}
                             >
                                 {reward.points}
