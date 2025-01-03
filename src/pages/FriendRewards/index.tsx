@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
 import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { TopTitle } from "@/shared/components/ui";
 import getFriendsList from "@/entities/RewardPage/api/friendsList";
+import getReferralDetail from "@/entities/RewardPage/api/referralRewards";
 
 const FriendRewards: React.FC = () => {
     const { t } = useTranslation();
@@ -16,6 +18,7 @@ const FriendRewards: React.FC = () => {
     const [friendList, setFriendList] = useState<string[]>([]); // 받은 원본 친구 목록
     const [filteredList, setFilteredList] = useState<string[]>([]); // 검색된 친구 목록
     const [searchText, setSearchText] = useState<string>("");
+    const [referralDetails, setReferralDetails] = useState<any[]>([]);
 
     // 필터 상태
     const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
@@ -26,8 +29,11 @@ const FriendRewards: React.FC = () => {
         const fetchFriends = async () => {
             try {
                 const result = await getFriendsList(); 
+                const today = format(new Date(), "yyyy-MM-dd");
+                const detail = await getReferralDetail(null, today, null, null);
                 setFriendList(result);
                 setFilteredList(result);
+                setReferralDetails(detail);
             } catch (error) {
             console.error(error);
             }
@@ -156,7 +162,6 @@ const FriendRewards: React.FC = () => {
                                     ))}
                                 </ul>
                             )}
-
                         </div>
 
                         {/* 자산 종류 필터 */}

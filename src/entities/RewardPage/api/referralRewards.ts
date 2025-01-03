@@ -1,10 +1,15 @@
 import api from '@/shared/api/axiosInstance';
 
 // 친구목록
-export const getReferralDetail = async (assetType: string, startDate: string, endDate: string, friendId: string): Promise<any> => {
+export const getReferralDetail = async (assetType: any, startDate: any, endDate: any, friendId: any): Promise<any> => {
+    const filters = {
+        assetType,
+        startDate,
+        endDate,
+        friendId
+    }
     
-    
-    const response = await api.get('/friends/reward/detail');
+    const response = await api.post('/friends/reward/details', filters);
 
     if (response.data.code === 'OK') {
         console.log("수입이 좀 있나? ", response.data.data);
