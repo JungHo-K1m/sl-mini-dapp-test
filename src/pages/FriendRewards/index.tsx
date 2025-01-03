@@ -138,18 +138,18 @@ const FriendRewards: React.FC = () => {
                                 }}
                             />
                         </div>
-                        <div className="mt-3">
+                        <div className="my-3">
                             {/* 자동완성 결과 목록 */}
                             {searchText && filteredList.length > 0 && (
                                 <ul className="autoCompleteList">
-                                    {filteredList.map((friend, index) => (
+                                    {filteredList.map((friend) => (
                                         <li
                                             key={friend}
                                             onClick={() => {
                                                 setSearchText(friend); // 검색창 자동완성
                                                 setFilteredList([]);   // 리스트 닫기
                                             }}
-                                            className={index !== filteredList.length - 1 ? "border-b border-gray-300" : ""}
+                                            className= "border-b border-gray-300 mt-2"
                                             >
                                             {friend}
                                         </li>
