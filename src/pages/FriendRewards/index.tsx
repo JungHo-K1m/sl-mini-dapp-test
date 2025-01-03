@@ -19,7 +19,6 @@ const FriendRewards: React.FC = () => {
 
     // 필터 상태
     const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
-    const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태 추가
 
     // 친구 목록 가져오기
     useEffect(() => {
@@ -75,7 +74,7 @@ const FriendRewards: React.FC = () => {
         const assetType = reward.points.replace(/^[+-]?\d+/, "").trim();
         const assetIncluded = selectedAssets.length === 0 || selectedAssets.includes(assetType);
         const dateIncluded = isWithinDateRange(reward.date);
-        const searchIncluded = reward.from.toLowerCase().includes(searchTerm.toLowerCase()); // 검색어 필터링
+        const searchIncluded = reward.from.toLowerCase().includes(searchText.toLowerCase()); // 검색어 필터링
         return assetIncluded && dateIncluded && searchIncluded;
     });
 
@@ -127,7 +126,7 @@ const FriendRewards: React.FC = () => {
                             <input
                                 type="text"
                                 placeholder="Search Name..."
-                                value={searchTerm}
+                                value={searchText}    
                                 onChange={(e) => handleSearch(e.target.value)}
                                 className="w-full h-14 px-4 py-2 pr-14 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500"
                             />
