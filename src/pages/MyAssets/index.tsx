@@ -396,7 +396,7 @@ const MyAssets: React.FC = () => {
                         </AlertDialogTitle>
                     </AlertDialogHeader>
                     <div className="flex flex-col items-center justify-center">
-                        <p className="text-base font-semibold text-gray-200 mt-4 mb-6 text-center">
+                        <p className="text-base font-semibold text-gray-200 mt-5 mb-3 text-center">
                             Select the token you want to claim :
                         </p>
                         <div className="flex items-center w-[300px] h-[120px] rounded-2xl border-[#35383F] border-2 bg-[#181A20]">
@@ -414,7 +414,7 @@ const MyAssets: React.FC = () => {
                                 <img
                                     src={Images.SLToken}
                                     alt="SL Token"
-                                    className="w-8 h-8 mb-[2px]"
+                                    className="w-[30px] h-[30px] mb-[2px]"
                                 />
                                 <p className="text-sm font-semibold">SL</p>
                             </button>
@@ -433,7 +433,7 @@ const MyAssets: React.FC = () => {
                                 <img
                                     src={Images.USDC}
                                     alt="USDC Icon"
-                                    className="w-8 h-8 mb-[2px]"
+                                    className="w-[30px] h-[30px] mb-[2px]"
                                 />
                                 <p className="text-sm font-semibold">USDC</p>
                             </button>

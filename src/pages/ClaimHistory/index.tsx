@@ -41,7 +41,7 @@ const ClaimHistory: React.FC = () => {
                         onClick={() => navigate(`/claim-details/${item.id}`)}
                     >
                         <div>
-                            <p className="text-lg font-medium">{item.token}</p>
+                            <p className="text-lg font-normal">{item.token}</p>
                             <p className="text-xs font-normal text-gray-400">{item.date}</p>
                         </div>
                         <div className="flex items-center gap-4">
@@ -51,7 +51,7 @@ const ClaimHistory: React.FC = () => {
                                     {item.status}
                                 </span>
                             </div>
-                            <FaChevronRight className="w-4 h-4 text-gray-400" />
+                            <FaChevronRight className="w-4 h-4" />
                         </div>
                     </div>
                 ))}

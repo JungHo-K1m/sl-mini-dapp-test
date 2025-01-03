@@ -119,7 +119,7 @@ const RewardHistory: React.FC = () => {
                     <div className="flex items-center">
                         <p className="text-lg font-semibold">Filter Option</p>
                     </div>
-                    {isOpen ? <FaChevronUp className="text-lg" /> : <FaChevronDown className="text-lg" />}
+                    {isOpen ? <FaChevronUp className="w-4 h-4" /> : <FaChevronDown className="w-4 h-4" />}
                 </div>
 
                 {/* 애니메이션이 적용된 영역 */}
@@ -205,7 +205,7 @@ const RewardHistory: React.FC = () => {
                         filteredHistory.map((reward) => (
                             <div
                                 key={reward.id}
-                                className="flex justify-between items-center py-2 border-b border-[#35383F]"
+                                className="flex justify-between items-center py-4 border-b border-[#35383F]"
                             >
                                 <div>
                                     <p className="text-sm font-medium">{reward.description}</p>
@@ -225,15 +225,15 @@ const RewardHistory: React.FC = () => {
                     )}
                     {/* 레퍼럴 보상 내역(요약본) */}
                     <div 
-                        className="flex justify-between items-center py-2 border-b border-[#35383F]"
+                        className="flex justify-between items-center py-4 border-b border-[#35383F]"
                         onClick={() => navigate("/referral-rewards")}>
                         <div>
                             <p className="text-sm font-medium">Friend Referral Rewards</p>
                             <p className="text-xs text-gray-400">17-12-2024</p>
                         </div>
                         <div className="flex items-center gap-2 ml-auto">
-                            <p className="text-sm font-bold text-blue-400">+150P</p>
-                            <FaChevronRight className="w-2 h-2" />
+                            <p className="text-sm font-bold text-blue-400">+150P..</p>
+                            <FaChevronRight className="w-4 h-4" />
                         </div>
                     </div>
                 </div>
