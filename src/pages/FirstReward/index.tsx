@@ -18,7 +18,7 @@ const FirstRewardPage: React.FC = () => {
         </h1>
 
         {/* 보상 아이콘 */}
-        <div className="mt-6 flex justify-center gap-4">
+        <div className="mt-6 flex justify-center gap-2">
             <img
                 src={Images.firstPoints}
                 alt="reward-icon"

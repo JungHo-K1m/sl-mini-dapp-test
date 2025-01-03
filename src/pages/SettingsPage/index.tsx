@@ -59,7 +59,7 @@ const SettingsPage: React.FC =() => {
             </div>
             <div 
                 className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                onClick={() => navigate("/policy-")}>
+                onClick={() => navigate("/policy-agreement")}>
                 <div>
                     <p className="font-semibold">약관 동의 페이지</p>
                 </div>
