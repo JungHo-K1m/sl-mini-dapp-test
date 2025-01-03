@@ -414,7 +414,7 @@ const MyAssets: React.FC = () => {
                                 <img
                                     src={Images.SLToken}
                                     alt="SL Token"
-                                    className="w-8 h-8 mb-2"
+                                    className="w-8 h-8 mb-[2px]"
                                 />
                                 <p className="text-sm font-semibold">SL</p>
                             </button>
@@ -433,7 +433,7 @@ const MyAssets: React.FC = () => {
                                 <img
                                     src={Images.USDC}
                                     alt="USDC Icon"
-                                    className="w-8 h-8 mb-2"
+                                    className="w-8 h-8 mb-[2px]"
                                 />
                                 <p className="text-sm font-semibold">USDC</p>
                             </button>
