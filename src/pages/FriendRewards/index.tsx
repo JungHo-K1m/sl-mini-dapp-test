@@ -29,8 +29,10 @@ const FriendRewards: React.FC = () => {
   // 서버에서 받아온 리워드 내역
   const [referralDetails, setReferralDetails] = useState<any[]>([]);
 
-  // 자산 타입 필터 (여러 개 체크 가능하다고 가정)
-  const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
+  // 자산 타입 필터: 하나만 선택할 수 있게. (예: 기본값 "SL")
+  const [selectedAsset, setSelectedAsset] = useState<string>("SL");
+
+  // 처음에 사용하던 selectedAssets 배열은 필요 없어져서 제거
 
   // --------------------------------------------------
   // 1) 페이지 최초 진입 시: 친구 목록 + 이번 달 1일부터 오늘까지의 리워드 내역
@@ -38,24 +40,24 @@ const FriendRewards: React.FC = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        // 1. 친구 목록 가져오기 (자동완성 위해서)
+        // 친구 목록 가져오기
         const friendListResult = await getFriendsList();
         setFriendList(friendListResult);
         setFilteredList(friendListResult);
 
-        // 2. startDate = 이번 달 1일, endDate = 오늘
+        // 이번 달 1일~오늘
         const now = new Date();
         const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
         setStartDate(firstDayOfMonth);
         setEndDate(now);
 
-        // 3. 서버에 최초 리워드 내역 요청
+        // 서버에 최초 리워드 내역 요청
         const formattedStart = format(firstDayOfMonth, "yyyy-MM-dd");
         const formattedEnd = format(now, "yyyy-MM-dd");
-        // => assetType: null, friendId: null
+        
+        // assetType = null 로, friendId = null 로 요청
         const detail = await getReferralDetail(null, formattedStart, formattedEnd, null);
-
         setReferralDetails(detail);
       } catch (error) {
         console.error(error);
@@ -69,7 +71,6 @@ const FriendRewards: React.FC = () => {
   // 2) 자산 타입, 날짜, 검색어가 바뀔 때마다 서버에 재요청
   // --------------------------------------------------
   useEffect(() => {
-    // startDate 혹은 endDate가 아직 null이면, 아직 초기화가 안 된 상태이므로 return
     if (!startDate || !endDate) return;
 
     const fetchDataByFilter = async () => {
@@ -78,19 +79,18 @@ const FriendRewards: React.FC = () => {
         const formattedStart = format(startDate, "yyyy-MM-dd");
         const formattedEnd = format(endDate, "yyyy-MM-dd");
 
-        // 자산 필터가 여러 개일 때, 예시로 "첫 번째 선택 자산"만 보낸다고 가정하거나
-        // 혹은 서버가 배열을 받을 수 있다면 배열로 보낼 수도 있음
-        // 여기서는 "단일 선택" 예시로.
-        const assetType =
-          selectedAssets.length === 1 ? selectedAssets[0] : null;
+        // 선택된 자산 타입이 "Point"라면 "star"로 바꿔서 서버에 전송
+        let assetTypeForServer: string | null = null;
+        if (selectedAsset) {
+          if (selectedAsset === "Point") assetTypeForServer = "star";
+          else assetTypeForServer = selectedAsset;
+        }
 
-        // 친구 이름을 friendId로 바로 쓰는 예시 (실제로는 ID 매핑이 필요할 수 있음)
-        // 여기서는 "이름을 그대로 friendId"로 보낸다고 가정.
+        // 검색어를 friendId로 바로 쓰는 예시
         const friendId = searchText ? searchText : null;
 
-        // API 호출
         const detail = await getReferralDetail(
-          assetType,
+          assetTypeForServer,  // 여기서 "Point" -> "star" 처리
           formattedStart,
           formattedEnd,
           friendId
@@ -103,7 +103,7 @@ const FriendRewards: React.FC = () => {
     };
 
     fetchDataByFilter();
-  }, [selectedAssets, startDate, endDate, searchText]);
+  }, [selectedAsset, startDate, endDate, searchText]);
 
   // --------------------------------------------------
   // 3) 자동완성용 친구 검색
@@ -116,11 +116,18 @@ const FriendRewards: React.FC = () => {
     setFilteredList(filtered);
   };
 
-  // 자산 타입 체크박스
+  // 자산 타입 체크박스: 하나만 선택 가능하도록 변경
   const handleAssetChange = (asset: string) => {
-    setSelectedAssets((prev) =>
-      prev.includes(asset) ? prev.filter((a) => a !== asset) : [...prev, asset]
-    );
+    // 이미 선택된 것을 클릭하면 null로 만들 수도 있지만,
+    // 여기서는 "같은 것 다시 누르면 해제"인지, "변경할 수 없음"인지 정해야 함.
+    // 간단히 "같은 자산을 다시 누르면 선택 해제" 로 가정하겠습니다:
+    if (selectedAsset === asset) {
+      // 이미 같은 자산이 선택된 상태라면 해제
+      setSelectedAsset("");
+    } else {
+      // 새 자산만 선택
+      setSelectedAsset(asset);
+    }
   };
 
   // 커스텀 날짜 인풋
@@ -181,10 +188,10 @@ const FriendRewards: React.FC = () => {
                 placeholder="Search Name..."
                 value={searchText}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full h-14 px-4 py-2 pr-14 bg-gray-800 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500"
+                className="w-full h-14 px-4 py-2 pr-14 bg-[#1F1E27] border-[#35383F] border-2 text-white text-center rounded-full focus:outline-none focus:ring focus:ring-blue-500"
               />
               <FaSearch
-                className="absolute right-5 text-gray-400 w-5 h-5"
+                className="absolute right-5 text-[#A3A3A3] w-5 h-5"
                 style={{
                   top: "50%",
                   transform: "translateY(-50%)",
@@ -211,7 +218,7 @@ const FriendRewards: React.FC = () => {
               )}
             </div>
 
-            {/* 자산 종류 필터 */}
+            {/* 자산 종류 필터 (하나만 선택) */}
             <p className="text-lg font-medium text-left mb-2">Asset Types</p>
             <div className="flex flex-col gap-2 ml-3">
               {["USDC", "SL", "Point"].map((asset) => (
@@ -221,7 +228,7 @@ const FriendRewards: React.FC = () => {
                 >
                   <input
                     type="checkbox"
-                    checked={selectedAssets.includes(asset)}
+                    checked={selectedAsset === asset}
                     onChange={() => handleAssetChange(asset)}
                     className="mr-2"
                   />
@@ -244,6 +251,7 @@ const FriendRewards: React.FC = () => {
                   customInput={<CustomDateInput placeholder="Start Date" />}
                   dateFormat="yyyy-MM-dd"
                   maxDate={endDate || undefined}
+                  className="rounded-full"
                 />
               </div>
               {/* 종료일 */}
@@ -255,6 +263,7 @@ const FriendRewards: React.FC = () => {
                   customInput={<CustomDateInput placeholder="End Date" />}
                   dateFormat="yyyy-MM-dd"
                   minDate={startDate || undefined}
+                  className="rounded-full"
                 />
               </div>
             </div>
@@ -271,20 +280,21 @@ const FriendRewards: React.FC = () => {
               className="flex justify-between items-center py-4 border-b border-[#35383F]"
             >
               <div>
-                {/* userId or from? 서버 응답 형식에 맞춰 조정 */}
-                <p className="text-sm font-medium">{reward.userId}</p>
-                <p className="text-xs text-gray-400">
-                  {reward.rewardedAt?.substring(0, 10)} {/* 'YYYY-MM-DD'만 표시 */}
+                <p className="text-base font-medium">{reward.userId}</p>
+                <p className="text-xs font-normal text-[#A3A3A3]">
+                  {reward.rewardedAt?.substring(0, 10)}
                 </p>
               </div>
-              <p className="text-sm font-bold text-blue-400">
+              <p className="text-lg font-semibold text-[#3B82F6]">
                 {reward.reward}
                 {reward.type}
               </p>
             </div>
           ))
         ) : (
-          <p className="text-center text-sm text-gray-400">No records found</p>
+          <p className="text-center text-lg font-semibold text-gray-400">
+            No records found
+          </p>
         )}
       </div>
     </div>
