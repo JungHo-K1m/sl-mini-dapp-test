@@ -82,7 +82,7 @@ const FriendRewards: React.FC = () => {
         // 선택된 자산 타입이 "Point"라면 "star"로 바꿔서 서버에 전송
         let assetTypeForServer: string | null = null;
         if (selectedAsset) {
-          if (selectedAsset === "Point") assetTypeForServer = "star";
+          if (selectedAsset === "Point") assetTypeForServer = "POINT";
           else assetTypeForServer = selectedAsset;
         }
 
@@ -150,9 +150,7 @@ const FriendRewards: React.FC = () => {
   );
   CustomDateInput.displayName = "CustomDateInput";
 
-  // --------------------------------------------------
-  // 렌더링
-  // --------------------------------------------------
+  
   return (
     <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
       <TopTitle title="Friend Referral Rewards" back={true} />
@@ -286,7 +284,7 @@ const FriendRewards: React.FC = () => {
                 </p>
               </div>
               <p className="text-lg font-semibold text-[#3B82F6]">
-                {reward.reward}
+                +{reward.reward}
                 {reward.type}
               </p>
             </div>
