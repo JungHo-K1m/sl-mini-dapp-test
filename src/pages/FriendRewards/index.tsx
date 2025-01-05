@@ -284,7 +284,7 @@ const FriendRewards: React.FC = () => {
                 </p>
               </div>
               <p className="text-lg font-semibold text-[#3B82F6]">
-                +{reward.reward}
+                +{reward.reward.toLocaleString()}
                 {reward.type}
               </p>
             </div>
