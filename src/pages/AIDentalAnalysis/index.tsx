@@ -240,10 +240,11 @@ const DentalAnalysis: React.FC = () => {
             });
 
             // 4) 응답(JSON) 파싱
-            const responseData = await response;
+            const responseData = response;
             console.log("openAI 응답: ", responseData);
             // 모델이 최종 생성한 텍스트
             const assistantMessage = responseData?.choices?.[0]?.message?.content?.trim() || "(No response)";
+            console.log("뽑은 데이터: ", assistantMessage);
 
             // 5) 응답에 따른 분기 처리
             if (assistantMessage === "NOPE") {
