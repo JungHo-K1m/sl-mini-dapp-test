@@ -10,7 +10,11 @@ import { TopTitle } from '@/shared/components/ui';
 const DentalAnalysis: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { t } = useTranslation();
+    const { i18n, t } = useTranslation();
+    // 현재 활성화된 언어 코드 가져오기
+    const currentLanguage = i18n.language;
+
+    console.log("현재 활성화된 언어:", currentLanguage);
 
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [label, setLabel] = useState(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
@@ -108,6 +112,10 @@ const DentalAnalysis: React.FC = () => {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
                 messages: [
+                    {
+                        role: "system",
+                        content: `You are a helpful assistant. Please respond in ${currentLanguage}.`, // 언어 코드 전달
+                    },
                   {
                     "role": "user",
                     "content": [
