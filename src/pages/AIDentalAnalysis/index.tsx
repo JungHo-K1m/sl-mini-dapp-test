@@ -102,23 +102,22 @@ const DentalAnalysis: React.FC = () => {
         setLoading(true);
 
         try {
-            // Base64 문자열 생성
-            const base64Data = await convertFileToBase64(selectedImage);
-    
-            // 이미지 URL 형식 확인
-            if (!base64Data.startsWith("data:image/")) {
-                throw new Error("Invalid Base64 image data.");
-            }
+            // 1) File을 Base64 문자열로 변환
+        const base64Data = await convertFileToBase64(selectedImage);
 
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
                 messages: [
                   {
                     "role": "user",
-                    content: JSON.stringify({
-                        type: "image_url",
-                        image_url: base64Data, // Base64 문자열 전체 전달
-                    }),
+                    "content": [
+                      {
+                        "type": "image_url",
+                        "image_url": {
+                          "url": "data:image/${getImageExtension(selectedImage)};base64,${base64Data}"
+                        }
+                      }
+                    ]
                   },
                   {
                     "role": "assistant",
@@ -131,10 +130,14 @@ const DentalAnalysis: React.FC = () => {
                   },
                   {
                     "role": "user",
-                    content: JSON.stringify({
-                        type: "image_url",
-                        image_url: base64Data, // Base64 문자열 전체 전달
-                    }),
+                    "content": [
+                      {
+                        "type": "image_url",
+                        "image_url": {
+                          "url": "data:image/${getImageExtension(selectedImage)};base64,${base64Data}"
+                        }
+                      }
+                    ]
                   },
                   {
                     "role": "assistant",
