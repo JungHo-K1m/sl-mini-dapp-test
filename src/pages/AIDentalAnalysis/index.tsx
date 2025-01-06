@@ -11,10 +11,6 @@ const DentalAnalysis: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { i18n, t } = useTranslation();
-    // 현재 활성화된 언어 코드 가져오기
-    const currentLanguage = i18n.language;
-
-    console.log("현재 활성화된 언어:", currentLanguage);
 
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [label, setLabel] = useState(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
@@ -300,8 +296,7 @@ const DentalAnalysis: React.FC = () => {
                     // 번역 실행
                     const translatedExplanation = await translateExplanation(
                         originalExplanation,
-                        // i18n.language // 현재 언어 코드 사용
-                        "ko"
+                        i18n.language // 현재 언어 코드 사용
                     );
             
                     setLabel(parsedData.diagnosis.diagnostic_name);
