@@ -90,6 +90,7 @@ const ConnectWalletPage: React.FC = () => {
                 <img
                     src={Images.SplashTitle}
                     alt="Lucky Dice Logo"
+                    className="w-[272px] mb-[90px]"
                 />
             )}
         </div>

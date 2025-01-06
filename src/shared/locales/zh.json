@@ -37,6 +37,8 @@
       "Retest": "重新測試",
       "Saving": "保存中...",
       "Save": "保存。",
+      "Please_upload_tooth_image": "请上传宠物牙齿的照片。",
+      "Please_upload_pets_tooth_image": "请再上传一张能看到牙齿的图片。",
       "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "加載AI模型失敗，請稍後重試或檢查您的網絡連接。",
       "Click_the_button_to_analyze_the_uploaded_image.": "點擊按鈕分析上傳的圖像。",
       "Please_upload_an_image_before_analysis.": "請在分析前上傳圖像。",

@@ -117,7 +117,7 @@ const DentalAnalysis: React.FC = () => {
                                         "진단명"에는 아래 클래스 중 하나를, "설명"에는 사진에 대한 진단의 상세 내용으로 답한다. 
                                         "설명"의 경우, 질병과 조치할 내용 대하여 최소 100자 이상 설명한다.
                                         - 진단명 클래스 : "Gingivitis & Plaque","Periodontitis", "Normal"
-                                        답변은 "NOPE" ,"Non dental", "진단명":"설명" 중 하나로만 한다. 이때, "진단명":"설명"은 2번의 결과이다.`
+                                        답변은 "NOPE" ,"Non dental", "진단명":"설명" 중 하나로만 한다. 이때, "진단명":"설명"은 2번의 결과로, JSON 스키마 형태로 답변한다.`
                             },
                             {
                                 type: "image_url",
@@ -155,13 +155,13 @@ const DentalAnalysis: React.FC = () => {
             // 5) 응답에 따른 분기 처리
             if (assistantMessage === "NOPE") {
                 // 요구사항 1: "NOPE"인 경우 모달
-                showModalFunction("반려동물의 치아 이미지를 업로드해주세요.");
+                showModalFunction(t("ai_page.Please_upload_tooth_image"));
                 setIsAnalyzed(false);
                 setLabel("NOPE"); // 상태 표시 (원하시면 변경/생략 가능)
             } 
             else if (assistantMessage === "Non dental" || assistantMessage === "None-Dental") {
                 // 요구사항 2: "Non dental"인 경우 모달
-                showModalFunction("치아가 보이는 이미지로 다시 업로드해주세요.");
+                showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
                 setIsAnalyzed(false);
                 setLabel("Non dental"); // 상태 표시 (원하시면 변경/생략 가능)
             } 
