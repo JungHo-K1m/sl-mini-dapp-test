@@ -23,7 +23,7 @@ const ConnectWalletPage: React.FC = () => {
     <div
       className="relative w-full h-screen flex flex-col items-center bg-cover bg-center"
       style={{
-        backgroundImage: Images.SplashBackground,
+        backgroundImage: `url(${Images.SplashBackground})`,
       }}
     >
       {/* 로고 */}
