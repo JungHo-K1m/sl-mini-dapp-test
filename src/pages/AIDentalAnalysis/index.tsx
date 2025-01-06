@@ -258,6 +258,7 @@ const DentalAnalysis: React.FC = () => {
                     showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
                     setIsAnalyzed(false);
                     setLabel("Non dental");
+                    setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
                 } else if (
                     parsedData.classification === "dog" &&
@@ -272,6 +273,7 @@ const DentalAnalysis: React.FC = () => {
                     // 예외 처리: 유효하지 않은 응답
                     showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
                     setIsAnalyzed(false);
+                    setSelectedImage(null);
                     setLabel(t("ai_page.Analysis_failed"));
                     setExplanation(""); // 설명 초기화
                 }
