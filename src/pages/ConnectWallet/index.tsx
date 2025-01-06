@@ -66,8 +66,8 @@ const ConnectWalletPage: React.FC = () => {
                         src={Images.SplashTitle}
                         alt="Lucky Dice Logo"
                         className="w-[272px] mb-[90px]"
-                        initial={{ y: 0 }} // 초기 위치
-                        animate={{ y: -80 }} // 애니메이션 후 위치
+                        initial={{ y: 80 }} // 초기 위치
+                        animate={{ y: 0 }} // 애니메이션 후 위치
                         transition={{ duration: 0.8, ease: "easeInOut" }} // 애니메이션 시간 및 이징 설정
                     />
 
