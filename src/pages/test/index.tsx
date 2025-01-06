@@ -11,7 +11,7 @@ const WalletConnect: React.FC = () => {
       // SDK 초기화
       const sdk = await DappPortalSDK.init({
         clientId: import.meta.env.VITE_LINE_CLIENT_ID || "", // 환경 변수에서 clientId 가져오기
-        chainId: "1001", // 테스트 체인 ID
+        // chainId: "1001", // 테스트 체인 ID
       });
 
       console.log("clientId 확인:", import.meta.env.VITE_LINE_CLIENT_ID);
