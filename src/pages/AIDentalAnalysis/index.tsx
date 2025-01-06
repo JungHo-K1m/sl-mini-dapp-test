@@ -26,6 +26,7 @@ const DentalAnalysis: React.FC = () => {
 
     const openai = new OpenAI({
         apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
+        dangerouslyAllowBrowser: true,
     });
 
     // 진단 증상이름과 내용 (기존)
