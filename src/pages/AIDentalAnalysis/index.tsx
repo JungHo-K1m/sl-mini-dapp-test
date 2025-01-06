@@ -247,36 +247,38 @@ const DentalAnalysis: React.FC = () => {
             console.log("뽑은 데이터: ", assistantMessage);
 
             // 5) 응답에 따른 분기 처리
-            if (assistantMessage === "NOPE") {
-                // 요구사항 1: "NOPE"인 경우 모달
-                showModalFunction(t("ai_page.Please_upload_tooth_image"));
-                setIsAnalyzed(false);
-                setLabel("NOPE"); // 상태 표시 (원하시면 변경/생략 가능)
-            } 
-            else if (assistantMessage === "Non dental" || assistantMessage === "None-Dental") {
-                // 요구사항 2: "Non dental"인 경우 모달
-                showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
-                setIsAnalyzed(false);
-                setLabel("Non dental"); // 상태 표시 (원하시면 변경/생략 가능)
-            } 
-            else {
-                // 요구사항 3: 응답이 "진단명 + 설명"인 경우
-                // 예: "Gingivitis & Plaque: 치석이 심한 상태입니다."
-                // 콜론(:) 기준으로 진단명과 설명을 분리하는 예시
-                if (assistantMessage.includes(":")) {
-                    const splitted = assistantMessage.split(":");
-                    const diagnosis = splitted[0].trim();
-                    const desc = splitted.slice(1).join(":").trim(); // 콜론이 여러 번 있을 경우 대비
-
-                    setLabel(diagnosis);    // 진단명
-                    setExplanation(desc);    // 설명
+            try {
+                // assistantMessage를 JSON 객체로 파싱
+                const parsedData = JSON.parse(assistantMessage);
+                console.log("Parsed Response Data:", parsedData);
+            
+                // 데이터 유효성 검사 및 분기 처리
+                if (parsedData.classification === "NOPE" || parsedData.tooth_image === "Non dental") {
+                    // 치아 이미지가 아닌 경우
+                    showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
+                    setIsAnalyzed(false);
+                    setLabel("Non dental");
+                    setExplanation(""); // 설명 초기화
+                } else if (
+                    parsedData.classification === "dog" &&
+                    parsedData.tooth_image === "true" &&
+                    parsedData.diagnosis
+                ) {
+                    // 분석 성공: 진단 결과 표시
+                    setLabel(parsedData.diagnosis.diagnostic_name);
+                    setExplanation(parsedData.diagnosis.explanation);
+                    setIsAnalyzed(true);
                 } else {
-                    // 만약 콜론(:)이 없다면, 진단명만 있다고 보고 설명은 비우기
-                    setLabel(assistantMessage);
-                    setExplanation("");
+                    // 예외 처리: 유효하지 않은 응답
+                    showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+                    setIsAnalyzed(false);
+                    setLabel(t("ai_page.Analysis_failed"));
+                    setExplanation(""); // 설명 초기화
                 }
-                setIsAnalyzed(true);
-            }
+            } catch (error) {
+                console.error("JSON Parsing Error:", error);
+                showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+            }            
         } catch (error: any) {
             console.error("OpenAI Error:", error);
             showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
