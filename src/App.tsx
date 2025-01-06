@@ -38,6 +38,7 @@ import AgreementPage from "./pages/Agreement";
 import FriendRewards from "./pages/FriendRewards";
 import WalletConnect from "./pages/test";
 import ClaimHistory from "./pages/ClaimHistory";
+import ConnectWalletPage from "./pages/ConnectWallet";
 
 
 // 튜토리얼
@@ -188,6 +189,7 @@ const App:React.FC = () =>{
                     <Route path="/claim-history" element={<DiceEventLayout hidden={true}><ClaimHistory /></DiceEventLayout>} />
                     <Route path="/sdk-test" element={<DiceEventLayout hidden={true}><WalletConnect /></DiceEventLayout>} />
                     <Route path="/invite-friends-list" element={<DiceEventLayout hidden={true}><InviteFriendsList /></DiceEventLayout>} />
+                    <Route path="/connect-wallet" element={<DiceEventLayout hidden={true}><ConnectWalletPage /></DiceEventLayout>} />
 
                 </Routes>
             )}
