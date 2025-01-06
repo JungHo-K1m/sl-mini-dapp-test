@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from '@tanstack/react-query';
 import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
+import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
 
 const DentalAnalysis: React.FC = () => {
@@ -22,6 +23,10 @@ const DentalAnalysis: React.FC = () => {
 
     const petData = location.state as { id: string };
     const petId = petData?.id || '';
+
+    const openai = new OpenAI({
+        apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
+    });
 
     // 진단 증상이름과 내용 (기존)
     const symptomsInfo: Record<string, string> = {
@@ -99,135 +104,139 @@ const DentalAnalysis: React.FC = () => {
             // 1) File을 Base64 문자열로 변환
             const base64Data = await convertFileToBase64(selectedImage);
 
-            // 2) ChatCompletion API에 보낼 메시지 (분석 가이드라인 + Base64 이미지)
-            const requestBody = {
+            const response = await openai.chat.completions.create({
                 model: "gpt-4o",
                 messages: [
-                    {
-                      "role": "user",
-                      "content": [
-                        {
-                          "type": "image_url",
-                          "image_url": {
-                            "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`
-                          }
+                  {
+                    "role": "user",
+                    "content": [
+                      {
+                        "type": "image_url",
+                        "image_url": {
+                          "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`
                         }
-                      ]
-                    },
-                    {
-                      "role": "assistant",
-                      "content": [
-                        {
-                          "type": "text",
-                          "text": "{\"classification\":\"dog\",\"tooth_image\":\"true\",\"diagnosis\":{\"diagnostic_name\":\"Gingivitis & Plaque\",\"explanation\":\"The image shows obvious signs of gingivitis and plaque buildup. The gums appear inflamed and swollen, which are indicators of gingivitis, while the discolored patches on the teeth suggest the accumulation of plaque. If left untreated, this condition can progress into periodontitis, causing significant dental and health issues for the animal. Routine dental care and professional cleaning might be necessary to address this.\"}}"
-                        }
-                      ]
-                    },
-                    {
-                      "role": "user",
-                      "content": [
-                        {
-                          "type": "image_url",
-                          "image_url": {
-                            "url": "data:image/jpeg;base64,..."
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "role": "assistant",
-                      "content": [
-                        {
-                          "type": "text",
-                          "text": "{\"classification\":\"NOPE\",\"tooth_image\":\"Non dental\",\"diagnosis\":{\"diagnostic_name\":\"Normal\",\"explanation\":\"This image does not contain a dental context, so there is no diagnosis to be provided. It is rather an architectural or landscape image likely showing a well-known building illuminated at night.\"}}"
-                        }
-                      ]
-                    }
-                  ],
-                  response_format: {
-                    "type": "json_schema",
-                    "json_schema": {
-                      "name": "image_analysis",
-                      "strict": true,
-                      "schema": {
-                        "type": "object",
-                        "properties": {
-                          "classification": {
-                            "type": "string",
-                            "description": "Determine whether the image is of a dog, cat, or neither.",
-                            "enum": [
-                              "dog",
-                              "cat",
-                              "NOPE"
-                            ]
-                          },
-                          "tooth_image": {
-                            "type": "string",
-                            "description": "Indicates if the image is a tooth image.",
-                            "enum": [
-                              "true",
-                              "false",
-                              "Non dental"
-                            ]
-                          },
-                          "diagnosis": {
-                            "type": "object",
-                            "description": "If it is a tooth image, provide the diagnosis details.",
-                            "properties": {
-                              "diagnostic_name": {
-                                "type": "string",
-                                "description": "Name of the diagnosis related to dental health.",
-                                "enum": [
-                                  "Gingivitis & Plaque",
-                                  "Periodontitis",
-                                  "Normal"
-                                ]
-                              },
-                              "explanation": {
-                                "type": "string",
-                                "description": "Detailed explanation of the diagnosis with at least 200 characters."
-                              }
-                            },
-                            "required": [
-                              "diagnostic_name",
-                              "explanation"
-                            ],
-                            "additionalProperties": false
-                          }
-                        },
-                        "required": [
-                          "classification",
-                          "tooth_image",
-                          "diagnosis"
-                        ],
-                        "additionalProperties": false
                       }
-                    }
+                    ]
                   },
-                  temperature: 1,
-                  max_completion_tokens: 2048,
-                  top_p: 1,
-                  frequency_penalty: 0,
-                  presence_penalty: 0
-            };
-
-            // 3) OpenAI API 호출
-            const OPENAI_API_KEY = import.meta.env.VITE_OPEN_AI_API_KEY;
-            const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${OPENAI_API_KEY}`
+                  {
+                    "role": "assistant",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "{\"classification\":\"dog\",\"tooth_image\":\"true\",\"diagnosis\":{\"diagnostic_name\":\"Gingivitis & Plaque\",\"explanation\":\"The image shows obvious signs of gingivitis and plaque buildup. The gums appear inflamed and swollen, which are indicators of gingivitis, while the discolored patches on the teeth suggest the accumulation of plaque. If left untreated, this condition can progress into periodontitis, causing significant dental and health issues for the animal. Routine dental care and professional cleaning might be necessary to address this.\"}}"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "user",
+                    "content": [
+                      {
+                        "type": "image_url",
+                        "image_url": {
+                          "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "assistant",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "{\"classification\":\"NOPE\",\"tooth_image\":\"Non dental\",\"diagnosis\":{\"diagnostic_name\":\"Normal\",\"explanation\":\"This image does not contain a dental context, so there is no diagnosis to be provided. It is rather an architectural or landscape image likely showing a well-known building illuminated at night.\"}}"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "user",
+                    "content": [
+                      {
+                        "type": "image_url",
+                        "image_url": {
+                          "url": "data:image/png;base64,..."
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "role": "assistant",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "{\"classification\":\"dog\",\"tooth_image\":\"Non dental\",\"diagnosis\":{\"diagnostic_name\":\"Normal\",\"explanation\":\"The image depicts a dog during bath time, with soap or foam on its head for a playful touch. There are no visible dental elements or context to analyze for dental health assessment. This image provides a charming and lighthearted view of a pet care routine.\"}}"
+                      }
+                    ]
+                  }
+                ],
+                response_format: {
+                  "type": "json_schema",
+                  "json_schema": {
+                    "name": "image_analysis",
+                    "strict": true,
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "classification": {
+                          "type": "string",
+                          "description": "Determine whether the image is of a dog, cat, or neither.",
+                          "enum": [
+                            "dog",
+                            "cat",
+                            "NOPE"
+                          ]
+                        },
+                        "tooth_image": {
+                          "type": "string",
+                          "description": "Indicates if the image is a tooth image.",
+                          "enum": [
+                            "true",
+                            "false",
+                            "Non dental"
+                          ]
+                        },
+                        "diagnosis": {
+                          "type": "object",
+                          "description": "If it is a tooth image, provide the diagnosis details.",
+                          "properties": {
+                            "diagnostic_name": {
+                              "type": "string",
+                              "description": "Name of the diagnosis related to dental health.",
+                              "enum": [
+                                "Gingivitis & Plaque",
+                                "Periodontitis",
+                                "Normal"
+                              ]
+                            },
+                            "explanation": {
+                              "type": "string",
+                              "description": "Detailed explanation of the diagnosis with at least 200 characters."
+                            }
+                          },
+                          "required": [
+                            "diagnostic_name",
+                            "explanation"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "classification",
+                        "tooth_image",
+                        "diagnosis"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
                 },
-                body: JSON.stringify(requestBody)
+                temperature: 1,
+                max_completion_tokens: 2048,
+                top_p: 1,
+                frequency_penalty: 0,
+                presence_penalty: 0
             });
 
-            if (!response.ok) {
-                throw new Error(`OpenAI API Error: ${response.status} ${response.statusText}`);
-            }
-
             // 4) 응답(JSON) 파싱
-            const responseData = await response.json();
+            const responseData = await response;
             console.log("openAI 응답: ", responseData);
             // 모델이 최종 생성한 텍스트
             const assistantMessage = responseData?.choices?.[0]?.message?.content?.trim() || "(No response)";
