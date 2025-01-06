@@ -114,7 +114,7 @@ const DentalAnalysis: React.FC = () => {
                       {
                         "type": "image_url",
                         "image_url": {
-                            "url": "data:image/${getImageExtension(selectedImage)};base64,${base64Data}",
+                            "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
                             "detail": "high"
                         }
                       }
@@ -135,7 +135,7 @@ const DentalAnalysis: React.FC = () => {
                       {
                         "type": "image_url",
                         "image_url": {
-                            "url": "data:image/${getImageExtension(selectedImage)};base64,${base64Data}",
+                            "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
                             "detail": "high"
                         }
                       }
@@ -156,7 +156,7 @@ const DentalAnalysis: React.FC = () => {
                       {
                         "type": "image_url",
                         "image_url": {
-                            "url": "data:image/${getImageExtension(selectedImage)};base64,${base64Data}",
+                            "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
                             "detail": "high"
                         }
                       }
