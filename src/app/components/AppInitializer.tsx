@@ -118,9 +118,10 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
         // 라인 액세스 토큰 발급
         const lineToken = liff.getAccessToken();
         if (!lineToken) throw new Error("라인 Access Token을 가져오지 못했습니다.");
+        const refCode = localStorage.getItem("referralCode");
   
         // 사용자 검증 진행
-        const isInitial = await userAuthenticationWithServer(lineToken);
+        const isInitial = await userAuthenticationWithServer(lineToken, refCode);
         console.log("사용자 검증 진행");
   
         if (isInitial === undefined) {

@@ -1,11 +1,12 @@
 import api from '@/shared/api/axiosInstance';
 
 // 사용자 정보 검증
-export const userAuthenticationWithServer = async (lineIdToken: string): Promise<boolean | undefined> => {
+export const userAuthenticationWithServer = async (lineIdToken: string, referralCode: any): Promise<boolean | undefined> => {
     try {
         const lineData = {
             lineToken: lineIdToken,
-            channelId: '2006732321'
+            channelId: '2006732321',
+            referralCode: referralCode
         }
         const response = await api.post('/auth/login/line', lineData);
 
