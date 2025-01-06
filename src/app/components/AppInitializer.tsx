@@ -5,6 +5,8 @@ import { useUserStore } from "@/entities/User/model/userModel";
 import userAuthenticationWithServer from "@/entities/User/api/userAuthentication";
 import i18n from "@/shared/lib/il8n";
 import SplashScreen from "./SplashScreen";
+import checkWallet from "@/entities/Asset/api/checkWalet";
+
 
 interface AppInitializerProps {
   onInitialized: () => void;
@@ -56,7 +58,18 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     try {
       await fetchUserData();
       console.log("사용자 데이터 정상적으로 가져옴. 주사위 게임 페이지로 이동");
-      navigate("/dice-event");
+      const walletMessage = await checkWallet();
+      if (walletMessage === "Success") {
+        console.log("walletCheck 성공. /dice-event 로 이동");
+        navigate("/dice-event");
+      } else if (walletMessage === "You do not have a registered wallet.") {
+        console.log("walletCheck 결과: 지갑 없음. /connect-wallet 로 이동");
+        navigate("/connect-wallet");
+      } else {
+        // 그 외 예상치 못한 응답 처리
+        console.error("Unexpected walletCheck response:", walletMessage);
+        // 필요시 다른 페이지 이동 혹은 에러 핸들링
+      }
     } catch (error: any) {
       if (error.response?.status === 500) {
         console.error("500 오류: 캐릭터가 선택되지 않음. 캐릭터 선택 페이지로 이동");

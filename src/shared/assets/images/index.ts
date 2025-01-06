@@ -149,6 +149,9 @@ import Fall from "./fall.png";
 import GiveawayBG from "./giveaway-bg.png";
 import GiveawayEffect from "./giveaway-effect.png";
 import SpinRapple1Black from "./spinRapple1Black.png";
+import SplashBackground from "./splashbackground.png"
+import SplashTitle from "./splashtitle.png"
+import ConnectButton from "./connectbutton.png"
 
 
 const Images = {
@@ -302,6 +305,9 @@ const Images = {
   Fall,
   GiveawayBG,
   GiveawayEffect,
+  SplashBackground,
+  SplashTitle,
+  ConnectButton,
 };
 
 export default Images;
