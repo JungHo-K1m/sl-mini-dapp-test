@@ -56,6 +56,14 @@ const SettingsPage: React.FC =() => {
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div> */}
+                <div 
+                    className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
+                    onClick={() => navigate('/sdk-test')}>
+                    <div>
+                        <p className="font-semibold">sdk-test</p>
+                    </div>
+                    <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+                </div>
             </div>
         </div>
     );

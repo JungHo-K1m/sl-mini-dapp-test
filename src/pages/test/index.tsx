@@ -22,11 +22,11 @@ const WalletConnect: React.FC = () => {
       console.log("WalletProvider 가져오기 성공:", walletProvider);
 
       // 지갑 연결 요청
-      const accounts = await walletProvider.request({
-        method: "kaia_requestAccounts", // 문서에 명시된 메서드
-      }) as string[];
+      const accounts = (await walletProvider.request({
+        method: "kaia_requestAccounts", // Dapp Portal 가이드에 따라 사용
+      })) as string[];
 
-      setAccount(accounts[0]); // 첫 번째 계정 설정
+      setAccount(accounts[0]);
       console.log("지갑 연결 성공:", accounts[0]);
     } catch (error: any) {
       console.error("에러 발생:", error.message);
