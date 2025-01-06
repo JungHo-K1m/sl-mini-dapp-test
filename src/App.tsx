@@ -189,7 +189,7 @@ const App:React.FC = () =>{
                     <Route path="/claim-history" element={<DiceEventLayout hidden={true}><ClaimHistory /></DiceEventLayout>} />
                     <Route path="/sdk-test" element={<DiceEventLayout hidden={true}><WalletConnect /></DiceEventLayout>} />
                     <Route path="/invite-friends-list" element={<DiceEventLayout hidden={true}><InviteFriendsList /></DiceEventLayout>} />
-                    <Route path="/connect-wallet" element={<DiceEventLayout hidden={true}><ConnectWalletPage /></DiceEventLayout>} />
+                    <Route path="/connect-wallet" ><ConnectWalletPage /> </Route>
 
                 </Routes>
             )}

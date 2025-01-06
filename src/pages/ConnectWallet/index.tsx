@@ -21,7 +21,7 @@ const ConnectWalletPage: React.FC = () => {
 
   return (
     <div
-      className="relative w-full h-screen flex flex-col items-center justify-center bg-cover bg-center"
+      className="relative w-full h-screen flex flex-col items-center bg-cover bg-center"
       style={{
         backgroundImage: Images.SplashBackground,
       }}
