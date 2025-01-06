@@ -112,10 +112,6 @@ const DentalAnalysis: React.FC = () => {
             const response = await openai.chat.completions.create({
                 model: "gpt-4o",
                 messages: [
-                    {
-                        role: "system",
-                        content: `You are a helpful assistant. Please respond in ko.`, // 언어 코드 전달
-                    },
                   {
                     "role": "user",
                     "content": [
@@ -274,8 +270,42 @@ const DentalAnalysis: React.FC = () => {
                     parsedData.diagnosis
                 ) {
                     // 분석 성공: 진단 결과 표시
+                    const originalExplanation = parsedData.diagnosis.explanation;
+            
+                    // OpenAI Chat 모델을 사용하여 설명 번역
+                    const translateExplanation = async (text: string, targetLanguage: string) => {
+                        try {
+                            const response = await openai.chat.completions.create({
+                                model: "gpt-4o",
+                                messages: [
+                                    {
+                                        role: "system",
+                                        content: `You are a translation assistant. Translate the following text into ${targetLanguage}:`,
+                                    },
+                                    {
+                                        role: "user",
+                                        content: text,
+                                    },
+                                ],
+                            });
+            
+                            const translatedText = response?.choices?.[0]?.message?.content?.trim();
+                            return translatedText || text; // 번역 실패 시 원본 텍스트 반환
+                        } catch (error) {
+                            console.error("Translation Error:", error);
+                            return text; // 번역 실패 시 원본 텍스트 반환
+                        }
+                    };
+            
+                    // 번역 실행
+                    const translatedExplanation = await translateExplanation(
+                        originalExplanation,
+                        // i18n.language // 현재 언어 코드 사용
+                        "ko"
+                    );
+            
                     setLabel(parsedData.diagnosis.diagnostic_name);
-                    setExplanation(parsedData.diagnosis.explanation);
+                    setExplanation(translatedExplanation);
                     setIsAnalyzed(true);
                 } else {
                     // 예외 처리: 유효하지 않은 응답
@@ -288,6 +318,10 @@ const DentalAnalysis: React.FC = () => {
             } catch (error) {
                 console.error("JSON Parsing Error:", error);
                 showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+                setIsAnalyzed(false);
+                setSelectedImage(null);
+                setLabel(t("ai_page.Analysis_failed"));
+                setExplanation(""); // 설명 초기화
             }            
         } catch (error: any) {
             console.error("OpenAI Error:", error);
@@ -327,6 +361,32 @@ const DentalAnalysis: React.FC = () => {
         setSelectedImage(null);
         setExplanation("");
         setIsAnalyzed(false);
+    };
+
+    const translateResponse = async (originalText: string, targetLanguage: string) => {
+        try {
+            const response = await openai.chat.completions.create({
+                model: "gpt-4o",
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are a translation assistant. Translate the following text into ${targetLanguage}:`,
+                    },
+                    {
+                        role: "user",
+                        content: originalText,
+                    },
+                ],
+            });
+    
+            const translatedText = response?.choices?.[0]?.message?.content?.trim();
+            console.log("Translated Text:", translatedText);
+    
+            return translatedText;
+        } catch (error) {
+            console.error("Translation Error:", error);
+            return null;
+        }
     };
 
     return (
