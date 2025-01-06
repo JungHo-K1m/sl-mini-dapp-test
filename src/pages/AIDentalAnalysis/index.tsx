@@ -114,7 +114,7 @@ const DentalAnalysis: React.FC = () => {
                 messages: [
                     {
                         role: "system",
-                        content: `You are a helpful assistant. Please respond in ${currentLanguage}.`, // 언어 코드 전달
+                        content: `You are a helpful assistant. Please respond in ko.`, // 언어 코드 전달
                     },
                   {
                     "role": "user",
