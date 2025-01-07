@@ -122,7 +122,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
             </PopoverContent>
           </Popover>
           <div className="flex flex-col gap-1 border-2 border-[#21212f] rounded-3xl text-center bg-white text-[#171717] font-medium w-[165px] h-[72px] items-center justify-center">
-            <p className="text-sm text-[#737373]">Allowed Betting Amount</p>
+            <p className="text-xs text-[#737373]">Allowed Betting Amount</p>
             <div className="flex flex-row items-center justify-center gap-3">
               <img src={Images.Star} alt="Star" className="w-6 h-6" />
               <p>{formatNumber(allowedBetting)}</p>

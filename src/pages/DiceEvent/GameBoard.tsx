@@ -588,7 +588,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
             </DialogTrigger>
             <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh md:h-auto overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
               <DialogHeader className="">
-                <DialogTitle>Your Current Abilities</DialogTitle>
+                <DialogTitle>Your Current Inventory</DialogTitle>
               </DialogHeader>
               <div className="flex flex-col mt-4 gap-4">
                 <div className="flex flex-col bg-[#1F1E27] p-5 rounded-3xl border-2 border-[#35383F] font-medium gap-2">

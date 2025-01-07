@@ -46,7 +46,9 @@ const steps = [
       selector: "#first-step",
       content: (
         <div className="text-sm">
-          <strong>Roll Dice Button:</strong> Click this button to roll the dice.
+          <strong>Roll Dice Button:</strong> 
+          Rolling the dice moves your cuddly companion around the Monopoly board. 
+          The tile it lands on determines your rewards or triggers special in-game events.
         </div>
       ),
       stepInteraction: false,
@@ -55,8 +57,8 @@ const steps = [
       selector: "#second-step",
       content: (
         <div className="text-sm">
-          <strong>Dice Gauge:</strong> Press and hold the button to move the gauge bar, covering six sections (1–6).<div style={{ marginBottom: "1rem" }}></div>
-          Rolling the dice within the gauge range gives a <strong>50% chance</strong> to trigger the <strong>Lucky Dice effect</strong> and display the corresponding number.
+          <strong>Dice Gauge:</strong> Press and hold the button to move the gauge, which has six sections (1–6). Release the button when the gauge reaches your desired number.<div style={{ marginBottom: "1rem" }}></div>
+          If the gauge lands on the number you want, you have a <strong>50% chance</strong> to trigger the <strong>Lucky Dice effect</strong>, causing your pet to move to that number on the board
         </div>
       ),
       stepInteraction: false,
@@ -66,7 +68,7 @@ const steps = [
       content: (
         <div className="text-sm">
           <strong>Dice Refill:</strong> Once all dice are used, the text changes to <em>'Refill Dice.'</em> Click it to refill your dice.<div style={{ marginBottom: "1rem" }}></div>
-          After refilling, you can receive new dice again after <strong>1 hour</strong>.<div style={{ marginBottom: "1rem" }}></div>
+          After refilling, you can receive additional dice again after <strong>an hour</strong>.<div style={{ marginBottom: "1rem" }}></div>
           When the refill time is over, the text changes to <em>'Waiting.'</em> If you have no dice left, it reverts to <em>'Refill Dice.'</em>
         </div>
       ),
@@ -76,8 +78,8 @@ const steps = [
       selector: "#fourth-step",
       content: (
         <div className="text-sm">
-          <strong>NFT Dashboard:</strong> Displays the <strong>number of NFTs</strong> you own.<div style={{ marginBottom: "1rem" }}></div>
-          Click it to view the <strong>effects</strong> of your owned NFTs.
+          <strong>NFT Dashboard:</strong> Shows the <strong>number of NFTs</strong> you own.<div style={{ marginBottom: "1rem" }}></div>
+          Click to explore the <strong>effects</strong> of your NFTs.
         </div>
       ),
       stepInteraction: false,

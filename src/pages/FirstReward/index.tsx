@@ -13,8 +13,8 @@ const FirstRewardPage: React.FC = () => {
     <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-20">
         {/* 상단 메시지 */}
         <h1 className="text-center mt-36 text-xl font-semibold">
-            As a new member, <br />
-            you're starting your journey with
+            Let’s get you started! <br />
+            Here are some rewards to kick off your journey
         </h1>
 
         {/* 보상 아이콘 */}
@@ -50,7 +50,7 @@ const FirstRewardPage: React.FC = () => {
                         alt="calendar-icon"
                         className="w-6 h-6"
                     />
-                    <p className="text-left text-base font-medium">Daily Attendance : 1,000 Point</p>
+                    <p className="text-left text-base font-medium">Daily Attendance : 1,000 Points</p>
                 </div>
                 <div className="flex items-center gap-2">
                     <img
@@ -64,7 +64,7 @@ const FirstRewardPage: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                     <p className="text-left ml-9 text-base font-medium">
-                        : 7,777 Point + 10SL Token + 30 Dice
+                        : 7,777 Points + 10SL Tokens + 30 Dice
                     </p>
                 </div>
             </div>

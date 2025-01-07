@@ -275,7 +275,7 @@ const DiceEventPage: React.FC = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-6">
-                  <p className="font-jalnan text-center">Get Rewarded</p>
+                  <p className="font-jalnan text-center">Grap your prize!</p>
                   {currentReward && (
                     <div className="flex flex-row items-center gap-2">
                       <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
@@ -309,7 +309,7 @@ const DiceEventPage: React.FC = () => {
                   onClick={() => setShowLevelUpDialog(false)}
                   className="bg-[#0147E5] font-medium rounded-full w-40 h-14"
                 >
-                  Close
+                  Continue
                 </button>
               </div>
             </DialogContent>
