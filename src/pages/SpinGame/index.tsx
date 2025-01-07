@@ -421,10 +421,10 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
                 <div className="flex flex-row items-center gap-2">
                   <img
                     src={Images.RewardNFT}
-                    alt="rewardNFT"
+                    alt="rewardBooster"
                     className="w-6 h-6"
                   />
-                  <p className="font-semibold">Reward NFT</p>
+                  <p className="font-semibold">Reward Booster</p>
                 </div>
                 <div className="flex flex-row items-center gap-1 mt-2 ml-6">
                   <IoGameController className="text-xl" />

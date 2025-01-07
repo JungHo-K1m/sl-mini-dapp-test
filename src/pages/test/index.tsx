@@ -15,8 +15,8 @@ const WalletConnect: React.FC = () => {
         chainId: "8217", // Klaytn 메인넷
       });
 
-      console.log("clientId 확인:", import.meta.env.VITE_LINE_CLIENT_ID);
-      console.log("SDK 초기화 완료:", sdk);
+      // console.log("clientId 확인:", import.meta.env.VITE_LINE_CLIENT_ID);
+      // console.log("SDK 초기화 완료:", sdk);
 
       // WalletProvider 가져오기
       const walletProvider = sdk.getWalletProvider();

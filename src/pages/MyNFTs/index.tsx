@@ -20,8 +20,8 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopCli
     "Gold NFT": Images.Gold,
     "Silver NFT": Images.Silver,
     "Bronze NFT": Images.Bronze,
-    "Reward NFT": Images.RewardNFT,
-    "Auto NFT": Images.AutoNFT,
+    "Reward Booster": Images.RewardNFT,
+    "Auto Item": Images.AutoNFT,
   };
 
   return (
@@ -108,12 +108,12 @@ const MyNfts: React.FC = () => {
     },
     { category: "Bronze NFT", count: 0, nfts: [] },
     {
-      category: "Reward NFT",
+      category: "Reward Booster",
       count: 1,
       nfts: [{ id: 5, name: "Reward Cat", image: "https://via.placeholder.com/150" }],
     },
     {
-      category: "Auto NFT",
+      category: "Auto Item",
       count: 1,
       nfts: [{ id: 6, name: "Auto Cat", image: "https://via.placeholder.com/150" }],
     },

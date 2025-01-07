@@ -86,7 +86,7 @@ const steps = [
       selector: "#fifth-step",
       content: (
         <div className="text-sm">
-          <strong>Auto Function:</strong> If you own an <strong>Auto NFT</strong>, the dice will roll automatically.<div style={{ marginBottom: "1rem" }}></div>
+          <strong>Auto Function:</strong> If you own an <strong>Auto Item</strong>, the dice will roll automatically.<div style={{ marginBottom: "1rem" }}></div>
           When the refill time arrives, the dice will also be refilled and rolled automatically.<div style={{ marginBottom: "1rem" }}></div>
           This function only works while you are on the <strong>Game section</strong> and does not apply to actions on <em>Rock-Paper-Scissors</em>, <em>Spin</em>, or <em>Anywhere tiles</em>.
         </div>
