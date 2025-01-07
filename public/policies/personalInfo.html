@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Consent to Collection and Use of Personal Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        html, body {
+        html {
             margin: 0;
             padding: 0;
             height: 100%; /* 전체 높이 차지 */
@@ -71,7 +72,7 @@
         window.addEventListener("resize", sendHeightToParent);
       </script>
   </head>
-  <body>
+  <body class="flex flex-col bg-[#0D1226] items-center max-w-[600px] w-full h-full text-white">
     <div class="container">
       <h1>Consent to Collection and Use of Personal Information</h1>
 
