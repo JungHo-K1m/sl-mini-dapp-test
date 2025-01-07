@@ -152,7 +152,6 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
       console.log("라인 로그 아웃 진행");
       localStorage.removeItem("accessToken");
       liff.logout();
-      window.location.reload();
     }
   };
 
