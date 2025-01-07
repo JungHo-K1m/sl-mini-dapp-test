@@ -7,6 +7,7 @@ import { BiCopy } from 'react-icons/bi';
 import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 import getFriends from '@/entities/Mission/api/friends';
+import liff from "@line/liff";
 
 interface TruncateMiddleProps {
   text: string;
@@ -77,6 +78,17 @@ const InviteFriends: React.FC = () => {
     fetchFriendsData();
   }, []);
 
+  const shareButton = () => {
+    if (liff.isApiAvailable('shareTargetPicker')) {
+      liff.shareTargetPicker([
+        {
+          type: "text",
+          text: "Hello, World!"
+        }
+      ])
+    }
+  }
+
   // 로딩 상태 처리
   if (loading) {
     return <LoadingSpinner className="h-screen" />;
@@ -119,6 +131,16 @@ const InviteFriends: React.FC = () => {
           {t('mission_page.Invite_Friends_and_Get_Reward')}
         </button>
       </div>
+
+      {/* 공유 버튼 테스트 */}
+      <div>
+        <button 
+          className="w-[80%] h-11 bg-green-700 rounded-full my-8"
+          onClick={shareButton}>
+          testing share
+        </button>
+      </div>
+
       {friends.length > 0 ? ( // 친구 목록이 존재하는 경우에만 렌더링
         <div className="flex flex-col mt-8 w-full gap-3">
           <div className="flex flex-row justify-between items-center mb-[6px]">
