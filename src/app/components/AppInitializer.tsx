@@ -20,7 +20,6 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     "", 
     "dice-event", 
     "choose-character",
-    "policy-agreement",
     "AI-menu",
     "mission",
     "reward",
@@ -43,7 +42,6 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     "first-reward",
     "settings",
     "policy-detail",
-    "policy-agreement",
     "referral-rewards",
     "claim-history",
     "sdk-test",
@@ -129,7 +127,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
         } else if (isInitial === true) {
           // 신규 사용자
           console.log("신규 사용자: 이용약관 동의 페이지로 이동");
-          navigate("/policy-agreement");
+          navigate("/choose-character");
           return;
         } else {
           // 기존 사용자
