@@ -80,12 +80,15 @@ const InviteFriends: React.FC = () => {
 
   const shareButton = () => {
     if (liff.isApiAvailable('shareTargetPicker')) {
+      console.log("targetpicker 시작");
       liff.shareTargetPicker([
         {
           type: "text",
           text: "Hello, World!"
         }
-      ])
+      ]).catch(function(res) {
+        console.log("Failed to launch ShareTargetPicker")
+      })
     }
   }
 
@@ -133,9 +136,9 @@ const InviteFriends: React.FC = () => {
       </div>
 
       {/* 공유 버튼 테스트 */}
-      <div>
+      <div className="w-[80%] h-10">
         <button 
-          className="w-[80%] h-11 bg-green-700 rounded-full my-8"
+          className="w-full h-full bg-green-700 rounded-full my-8"
           onClick={shareButton}>
           testing share
         </button>
