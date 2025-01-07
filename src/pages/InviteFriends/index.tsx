@@ -78,7 +78,7 @@ const InviteFriends: React.FC = () => {
     fetchFriendsData();
   }, []);
 
-  const shareButton = () => {
+  const shareButton = async () => {
     if (liff.isApiAvailable('shareTargetPicker')) {
       console.log("targetpicker 시작");
       liff.shareTargetPicker([
@@ -136,9 +136,9 @@ const InviteFriends: React.FC = () => {
       </div>
 
       {/* 공유 버튼 테스트 */}
-      <div className="w-[80%] h-10">
+      <div className="w-[80%] h-10 my-8">
         <button 
-          className="w-full h-full bg-green-700 rounded-full my-8"
+          className="w-full h-full bg-green-700 rounded-full"
           onClick={shareButton}>
           testing share
         </button>
