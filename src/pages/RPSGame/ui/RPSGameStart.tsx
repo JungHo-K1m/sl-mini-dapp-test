@@ -114,7 +114,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
                     <strong>Continue or Cash Out</strong>
                     <ul className="list-disc pl-5">
                       <li>After winning a round, you can continue or cash out.</li>
-                      <li>If you lose any round, you lose your bet.</li>
+                      <li>Losing any round forfeits your bet.</li>
                     </ul>
                   </li>
                 </ol>
