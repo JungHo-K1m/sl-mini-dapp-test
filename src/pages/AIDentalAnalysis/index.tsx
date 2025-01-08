@@ -259,7 +259,7 @@ const DentalAnalysis: React.FC = () => {
                     setLabel("Non dental");
                     setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
-                } else if(parsedData.image_type === "dog" || parsedData.image_type === "cat" && parsedData.is_tooth_image === "false"){
+                } else if((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === "false"){
                     // 업로드한 사진이 반려 동물의 사진이지만 치아가 보이지 않는 경우
                     showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
                     setIsAnalyzed(false);
@@ -267,8 +267,7 @@ const DentalAnalysis: React.FC = () => {
                     setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
                 } else if (
-                    parsedData.image_type === "dog" ||
-                    parsedData.image_type === "cat" &&
+                    (parsedData.image_type === "dog" || parsedData.image_type === "cat") &&
                     parsedData.is_tooth_image === "true" &&
                     parsedData.diagnosis
                 ) {
