@@ -253,7 +253,7 @@ const DentalAnalysis: React.FC = () => {
                     setLabel("Non dental");
                     setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
-                } else if(parsedData.image_type === "other" && parsedData.is_tooth_image === "false" && parsedData.diagnosis){
+                } else if(parsedData.image_type === "other" && parsedData.is_tooth_image === false && parsedData.diagnosis){
                     // 업로드한 사진이 전혀 다른 사진인 경우
                     console.log("전혀 다른 이미지를 올리셨어요.");
                     showModalFunction(t("ai_page.Please_upload_tooth_image"));
@@ -261,7 +261,7 @@ const DentalAnalysis: React.FC = () => {
                     setLabel("Non dental");
                     setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
-                } else if((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === "false" && parsedData.diagnosis){
+                } else if((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === false && parsedData.diagnosis){
                     // 업로드한 사진이 반려 동물의 사진이지만 치아가 보이지 않는 경우
                     console.log("이빨 좀 보이는 사진 올려주세요.");
                     showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
@@ -269,7 +269,7 @@ const DentalAnalysis: React.FC = () => {
                     setLabel("Non dental");
                     setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
-                } else if ((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === "true" && parsedData.diagnosis) {
+                } else if ((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === true && parsedData.diagnosis) {
                     // 분석 성공: 진단 결과 표시
                     console.log("분석을 정상적으로 했어요.");
                     
