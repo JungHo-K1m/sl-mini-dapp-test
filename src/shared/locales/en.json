@@ -37,6 +37,8 @@
       "Retest": "Retest",
       "Saving": "Saving...",
       "Save": "Save",
+      "actual_photo":"Please upload the actual picture, not the x-ray picture.",
+      "Failed_to_analyze_the_image":"Image analysis failed, please try again.",
       "Please_upload_tooth_image": "Please upload the images of your pet's teeth.",
       "Please_upload_pets_tooth_image": "Please re-upload it as an image showing your pet's teeth.",
       "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "Failed to load the AI model. Please try again later or check your network connection.",

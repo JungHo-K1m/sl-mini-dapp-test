@@ -37,6 +37,8 @@
         "Retest": "재검사",
         "Saving": "저장 중...",
         "Save": "저장",
+        "Failed_to_analyze_the_image":"이미지 분석에 실패했습니다. 다시 시도해주세요.",
+        "actual_photo":"x-ray 사진이 아닌 실제 사진을 업로드해주세요.",
         "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "AI 모델 호출에 실패했습니다. 다시 시도하거나, 네트워크를 확인해주세요.",
         "Click_the_button_to_analyze_the_uploaded_image.": "버튼을 클릭하여 업로드한 이미지를 분석합니다.",
         "Please_upload_an_image_before_analysis.": "분석 전, 이미지를 먼저 업로드해 주세요.",

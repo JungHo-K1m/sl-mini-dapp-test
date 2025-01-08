@@ -37,6 +37,8 @@
       "Retest": "重新測試",
       "Saving": "保存中...",
       "Save": "保存。",
+      "Failed_to_analyze_the_image":"图像分析失败 。 请再试一次。",
+      "actual_photo":"请上传真实照片，而不是x-ray照片。",
       "Please_upload_tooth_image": "请上传宠物牙齿的照片。",
       "Please_upload_pets_tooth_image": "请将其重新上传为显示您宠物牙齿的图像",
       "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "加載AI模型失敗，請稍後重試或檢查您的網絡連接。",

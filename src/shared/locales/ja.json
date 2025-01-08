@@ -37,6 +37,8 @@
         "Retest": "再試験",
         "Saving": "貯蔵中...",
         "Save": "貯蔵",
+        "actual_photo":"x-ray写真ではなく、実際の写真をアップロードしてください。",
+        "Failed_to_analyze_the_image":"画像解析に失敗しました。 もう一度お試しください。",
         "Please_upload_tooth_image": "ペットの歯の画像をアップしてください。",
         "Please_upload_pets_tooth_image": "ペットの歯を示す画像として再アップロードしてください",
         "Failed_to_load_the_AI_model._Please_try_again_later_or_check_your_network_connection.": "AIモデルの読み込みに失敗しました。後でもう一度試すか、ネットワーク接続を確認してください。",
