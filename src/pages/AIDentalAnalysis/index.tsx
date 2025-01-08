@@ -247,6 +247,7 @@ const DentalAnalysis: React.FC = () => {
                 // 데이터 유효성 검사 및 분기 처리
                 if (parsedData.image_type === "x-ray") {
                     // 업로드한 사진이 x-ray 이미지인 경우
+                    console.log("여기는 x-ray 취급 안해요.");
                     showModalFunction(t("ai_page.actual_photo"));
                     setIsAnalyzed(false);
                     setLabel("Non dental");
@@ -254,6 +255,7 @@ const DentalAnalysis: React.FC = () => {
                     setExplanation(""); // 설명 초기화
                 } else if(parsedData.image_type === "other" && parsedData.is_tooth_image === "false"){
                     // 업로드한 사진이 전혀 다른 사진인 경우
+                    console.log("전혀 다른 이미지를 올리셨어요.");
                     showModalFunction(t("ai_page.Please_upload_tooth_image"));
                     setIsAnalyzed(false);
                     setLabel("Non dental");
@@ -261,17 +263,16 @@ const DentalAnalysis: React.FC = () => {
                     setExplanation(""); // 설명 초기화
                 } else if((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === "false"){
                     // 업로드한 사진이 반려 동물의 사진이지만 치아가 보이지 않는 경우
+                    console.log("이빨 좀 보이는 사진 올려주세요.");
                     showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
                     setIsAnalyzed(false);
                     setLabel("Non dental");
                     setSelectedImage(null);
                     setExplanation(""); // 설명 초기화
-                } else if (
-                    (parsedData.image_type === "dog" || parsedData.image_type === "cat") &&
-                    parsedData.is_tooth_image === "true" &&
-                    parsedData.diagnosis
-                ) {
+                } else if ((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === "true") {
                     // 분석 성공: 진단 결과 표시
+                    console.log("분석을 정상적으로 했어요.");
+                    
                     const originalExplanation = parsedData.diagnosis.description;
             
                     // OpenAI Chat 모델을 사용하여 설명 번역
