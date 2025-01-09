@@ -205,7 +205,7 @@ const DentalAnalysis: React.FC = () => {
                               },
                               "description": {
                                 "type": "string",
-                                "description": "Detailed explanation of the diagnosis with at least 200 characters."
+                                "description": `Detailed explanation of the diagnosis with at least 200 characters and translate into ${i18n.language}`
                               }
                             },
                             "required": [
@@ -275,39 +275,39 @@ const DentalAnalysis: React.FC = () => {
                     
                     const originalExplanation = parsedData.diagnosis.description;
             
-                    // OpenAI Chat 모델을 사용하여 설명 번역
-                    const translateExplanation = async (text: string, targetLanguage: string) => {
-                        try {
-                            const response = await openai.chat.completions.create({
-                                model: "gpt-4o",
-                                messages: [
-                                    {
-                                        role: "system",
-                                        content: `You are a translation assistant. Translate the following text into ${targetLanguage}:`,
-                                    },
-                                    {
-                                        role: "user",
-                                        content: text,
-                                    },
-                                ],
-                            });
+                    // // OpenAI Chat 모델을 사용하여 설명 번역
+                    // const translateExplanation = async (text: string, targetLanguage: string) => {
+                    //     try {
+                    //         const response = await openai.chat.completions.create({
+                    //             model: "gpt-4o",
+                    //             messages: [
+                    //                 {
+                    //                     role: "system",
+                    //                     content: `You are a translation assistant. Translate the following text into ${targetLanguage}:`,
+                    //                 },
+                    //                 {
+                    //                     role: "user",
+                    //                     content: text,
+                    //                 },
+                    //             ],
+                    //         });
             
-                            const translatedText = response?.choices?.[0]?.message?.content?.trim();
-                            return translatedText || text; // 번역 실패 시 원본 텍스트 반환
-                        } catch (error) {
-                            console.error("Translation Error:", error);
-                            return text; // 번역 실패 시 원본 텍스트 반환
-                        }
-                    };
+                    //         const translatedText = response?.choices?.[0]?.message?.content?.trim();
+                    //         return translatedText || text; // 번역 실패 시 원본 텍스트 반환
+                    //     } catch (error) {
+                    //         console.error("Translation Error:", error);
+                    //         return text; // 번역 실패 시 원본 텍스트 반환
+                    //     }
+                    // };
             
-                    // 번역 실행
-                    const translatedExplanation = await translateExplanation(
-                        originalExplanation,
-                        i18n.language // 현재 언어 코드 사용
-                    );
+                    // // 번역 실행
+                    // const translatedExplanation = await translateExplanation(
+                    //     originalExplanation,
+                    //     i18n.language // 현재 언어 코드 사용
+                    // );
             
                     setLabel(parsedData.diagnosis.diagnostic_name);
-                    setExplanation(translatedExplanation);
+                    setExplanation(originalExplanation);
                     setIsAnalyzed(true);
                 } else {
                     // 예외 처리: 유효하지 않은 응답
