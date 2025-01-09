@@ -25,7 +25,7 @@ const SettingsPage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleNavigation('service')}>
                     <div>
-                        <p className="font-semibold">Terms of Service</p>
+                        <p className="font-semibold">{t("setting.terms_of_service")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
@@ -34,7 +34,7 @@ const SettingsPage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleNavigation('privacy')}>
                     <div>
-                        <p className="font-semibold">Privacy Policy</p>
+                        <p className="font-semibold">{t("setting.privacy_policy")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
@@ -43,7 +43,7 @@ const SettingsPage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleNavigation('commerce')}>
                     <div>
-                        <p className="font-semibold">Electronic Commerce Policy</p>
+                        <p className="font-semibold">{t("setting.electronic_commerce_policy")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
@@ -68,7 +68,7 @@ const SettingsPage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => navigate('/choose-language')}>
                     <div>
-                        <p className="font-semibold">Lanaguage</p>
+                        <p className="font-semibold">{t("setting.language")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>

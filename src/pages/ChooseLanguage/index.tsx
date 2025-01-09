@@ -26,7 +26,7 @@ const LanguagePage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleChooseLanguage("en")}>
                     <div>
-                        <p className="font-semibold">English</p>
+                        <p className="font-semibold">{t("setting.eng")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
@@ -35,7 +35,7 @@ const LanguagePage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleChooseLanguage("ja")}>
                     <div>
-                        <p className="font-semibold">Japanese</p>
+                        <p className="font-semibold">{t("setting.jpn")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
@@ -44,7 +44,7 @@ const LanguagePage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleChooseLanguage("zh")}>
                     <div>
-                        <p className="font-semibold">Taiwanese</p>
+                        <p className="font-semibold">{t("setting.tw")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>
@@ -53,7 +53,7 @@ const LanguagePage: React.FC =() => {
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                     onClick={() => handleChooseLanguage("th")}>
                     <div>
-                        <p className="font-semibold">Thai</p>
+                        <p className="font-semibold">{t("setting.thi")}</p>
                     </div>
                     <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
                 </div>

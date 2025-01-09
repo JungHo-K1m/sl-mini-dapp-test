@@ -162,7 +162,41 @@
       "point": "Point",
       "no_nft": "No NFTs in your colletion yet.",
       "own_nft": "Own NFT and Boost your rank!",
-      "shop_nft": "Shop NFT"
+      "shop_nft": "Shop NFT",
+      "claimavble": "Claimable Balance",
+      "view_claim": "View Claim History",
+      "claim_reward": "Claim Rewards",
+      "prepare_service": "We're preparing for the sercive",
+      "claim": {
+        "claim_token": "Claim Tokens",
+        "select_token": "Select the token you want to claim :",
+        "wallet_connect": "Wallet Connection",
+        "to_claim_sl": "To claim SL, you need to connect your Kaikas wallet.",
+        "would_you": "Would you like to connect your wallet?",
+        "connect": "Connect Wallet",
+        "cancel": "Cancel",
+        "sl": "SL Claim",
+        "connected": "Connected wallet address : ",
+        "gas_note": "Note: A gas fee will be deducted from your claim.",
+        "min_claim": "Minimum claim amount is 100SL.",
+        "enter_sl": "Enter the amount of SL to claim :",
+        "enter_sl_placeholder": "Enter the amount of SL",
+        "usdc": "USDC Claim",
+        "enter_address": "Enter the wallet address to receive USDC :",
+        "enter_usdc": "Enter the amount of USDC to claim :",
+        "enter_usdc_placeholder": "Enter the amount of USDC",
+        "claim_btn": "Claim",
+        "process": "Processing",
+        "processing": "Processing Claim...",
+        "wait": "Please wait.",
+        "failed": "Claim Failed",
+        "try_agein": "Claim failed. Please try again later.",
+        "try_agein_btn": "Try Again",
+        "close":"Close",
+        "complete": "Claim Completed",
+        "success": "SL claim was successful!",
+        "view_history": "View History"
+      }
     },
     "dice_evnet": {
       "Attendance": "Attendance",
@@ -198,6 +232,16 @@
         "Cancel": "Cancel",
         "Bet": "Bet"
       }
+    },
+    "setting": {
+      "terms_of_service": "Trems of Service",
+      "privacy_policy": "Privacy Policy",
+      "electronic_commerce_policy": "Electronic Commerce Service",
+      "language": "Language",
+      "eng": "English",
+      "jpn": "Japanese",
+      "tw": "Taiwanese",
+      "thi" : "Thai"
     }
   }
   

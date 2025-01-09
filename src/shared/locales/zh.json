@@ -162,7 +162,41 @@
       "point": "点",
       "no_nft": "您的收藏中还没有 NFT。",
       "own_nft": "拥有NFT并提升您的排名！",
-      "shop_nft": "购物NFT"
+      "shop_nft": "购物NFT",
+      "claimavble": "可領取餘額",
+      "view_claim": "查看領取紀錄",
+      "claim_reward": "領取獎勵",
+      "prepare_service": "服務準備中，請稍後",
+      "claim": {
+        "claim_token": "領取代幣",
+        "select_token": "請選擇您要領取的代幣：",
+        "wallet_connect": "錢包連接",
+        "to_claim_sl": "要領取 SL，您需要先連接 Kaikas 錢包。",
+        "would_you": "是否要連接您的錢包？",
+        "connect": "連接錢包",
+        "cancel": "取消",
+        "sl": "SL 領取",
+        "connected": "已連接的錢包地址：",
+        "gas_note": "注意：會從您的領取額中扣除 Gas 費用。",
+        "min_claim": "最低可領取金額為 100SL。",
+        "enter_sl": "請輸入要領取的 SL 數量：",
+        "enter_sl_placeholder": "請輸入 SL 數量",
+        "usdc": "USDC 領取",
+        "enter_address": "請輸入接收 USDC 的錢包地址：",
+        "enter_usdc": "請輸入要領取的 USDC 數量：",
+        "enter_usdc_placeholder": "請輸入 USDC 數量",
+        "claim_btn": "領取",
+        "process": "處理中",
+        "processing": "正在處理領取...",
+        "wait": "請稍候",
+        "failed": "領取失敗",
+        "try_agein": "領取失敗，請稍後再試。",
+        "try_agein_btn": "再試一次",
+        "close": "關閉",
+        "complete": "領取完成",
+        "success": "SL 領取成功！",
+        "view_history": "查看歷史"
+      }
     },
     "dice_evnet": {
       "Attendance": "簽到",
@@ -198,6 +232,16 @@
         "Cancel": "取消",
         "Bet": "下注"
       }
+    },
+    "setting": {
+      "terms_of_service": "服務條款",
+      "privacy_policy": "隱私政策",
+      "electronic_commerce_policy": "電子商務服務",
+      "language": "語言",
+      "eng": "英文",
+      "jpn": "日文",
+      "tw": "繁體中文",
+      "thi": "泰文"
     }
   }
   

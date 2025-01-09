@@ -162,7 +162,41 @@
         "point": "ポイント",
         "no_nft": "NFTはまだ入荷していません。",
         "own_nft": "NFTを所有し、ランクを上げましょう！",
-        "shop_nft": "NFTを購入します"
+        "shop_nft": "NFTを購入します",
+        "claimavble": "請求可能残高",
+        "view_claim": "請求履歴を表示",
+        "claim_reward": "報酬を請求",
+        "prepare_service": "サービス準備中です",
+        "claim": {
+            "claim_token": "トークンを請求",
+            "select_token": "請求したいトークンを選択してください：",
+            "wallet_connect": "ウォレット接続",
+            "to_claim_sl": "SLを請求するにはKaikasウォレットを接続する必要があります。",
+            "would_you": "ウォレットを接続しますか？",
+            "connect": "ウォレットを接続",
+            "cancel": "キャンセル",
+            "sl": "SL請求",
+            "connected": "接続済みウォレットアドレス：",
+            "gas_note": "注: ガス料金は請求額から差し引かれます。",
+            "min_claim": "最低請求額は100SLです。",
+            "enter_sl": "請求するSLの数量を入力してください：",
+            "enter_sl_placeholder": "SLの数量を入力してください",
+            "usdc": "USDC請求",
+            "enter_address": "USDCを受け取るウォレットアドレスを入力してください：",
+            "enter_usdc": "請求するUSDCの数量を入力してください：",
+            "enter_usdc_placeholder": "USDCの数量を入力してください",
+            "claim_btn": "請求",
+            "process": "処理中",
+            "processing": "請求処理中...",
+            "wait": "しばらくお待ちください。",
+            "failed": "請求に失敗しました",
+            "try_agein": "請求に失敗しました。後でもう一度お試しください。",
+            "try_agein_btn": "再試行",
+            "close": "閉じる",
+            "complete": "請求が完了しました",
+            "success": "SLの請求が成功しました！",
+            "view_history": "履歴を見る"
+        }
     },
     "dice_event": {
         "Attendance": "出席",
@@ -198,5 +232,15 @@
             "Cancel": "キャンセル",
             "Bet": "賭ける"
         }
+    },
+    "setting": {
+        "terms_of_service": "利用規約",
+        "privacy_policy": "プライバシーポリシー",
+        "electronic_commerce_policy": "電子商取引サービス",
+        "language": "言語",
+        "eng": "英語",
+        "jpn": "日本語",
+        "tw": "台湾語",
+        "thi": "タイ語"
     }
 }
