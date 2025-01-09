@@ -4,6 +4,7 @@ import i18n from "@/shared/lib/il8n";
 import { TopTitle } from '@/shared/components/ui';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
+import Images from '@/shared/assets/images';
 
 
 const LanguagePage: React.FC =() => {
@@ -21,45 +22,74 @@ const LanguagePage: React.FC =() => {
             <TopTitle title="Settings" back={true} />
 
             <div className="w-full">
-                {/* 영어 선택 */}
-                <div 
-                    className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => handleChooseLanguage("en")}>
-                    <div>
-                        <p className="font-semibold">{t("setting.eng")}</p>
-                    </div>
-                    <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                </div>
-                {/* 일본어 선택 */}
-                <div 
-                    className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => handleChooseLanguage("ja")}>
-                    <div>
-                        <p className="font-semibold">{t("setting.jpn")}</p>
-                    </div>
-                    <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                </div>
-                {/* 대만어 선택 */}
-                <div 
-                    className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => handleChooseLanguage("zh")}>
-                    <div>
-                        <p className="font-semibold">{t("setting.tw")}</p>
-                    </div>
-                    <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                </div>
-                {/* 태국어 선택 */}
-                <div 
-                    className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => handleChooseLanguage("th")}>
-                    <div>
-                        <p className="font-semibold">{t("setting.thi")}</p>
-                    </div>
-                    <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                </div>
-            </div>
+        {/* 영어 선택 */}
+        <div 
+          className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"
+          onClick={() => handleChooseLanguage("en")}
+        >
+          {/* 왼쪽 국기 + 텍스트 */}
+          <div className="flex items-center space-x-2">
+            <img 
+              src={Images.en}
+              alt="English Flag" 
+              className="w-6 h-6 rounded-full object-cover" 
+            />
+            <p className="font-semibold">{t("setting.eng")}</p>
+          </div>
+          <FaChevronLeft className="text-lg transform rotate-180" />
         </div>
-    );
+
+        {/* 일본어 선택 */}
+        <div 
+          className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"
+          onClick={() => handleChooseLanguage("ja")}
+        >
+          <div className="flex items-center space-x-2">
+            <img 
+              src={Images.jp} 
+              alt="Japanese Flag" 
+              className="w-6 h-6 rounded-full object-cover" 
+            />
+            <p className="font-semibold">{t("setting.jpn")}</p>
+          </div>
+          <FaChevronLeft className="text-lg transform rotate-180" />
+        </div>
+
+        {/* 대만어 선택 */}
+        <div 
+          className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"
+          onClick={() => handleChooseLanguage("zh")}
+        >
+          <div className="flex items-center space-x-2">
+            <img 
+              src={Images.tw} 
+              alt="Taiwan Flag" 
+              className="w-6 h-6 rounded-full object-cover" 
+            />
+            <p className="font-semibold">{t("setting.tw")}</p>
+          </div>
+          <FaChevronLeft className="text-lg transform rotate-180" />
+        </div>
+
+        {/* 태국어 선택 */}
+        <div 
+          className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"
+          onClick={() => handleChooseLanguage("th")}
+        >
+          <div className="flex items-center space-x-2">
+            <img 
+              src={Images.th}
+              alt="Thailand Flag" 
+              className="w-6 h-6 rounded-full object-cover" 
+            />
+            <p className="font-semibold">{t("setting.thi")}</p>
+          </div>
+          <FaChevronLeft className="text-lg transform rotate-180" />
+        </div>
+      </div>
+    </div>
+  );
 };
+
 
 export default LanguagePage;

@@ -152,7 +152,10 @@ import SpinRapple1Black from "./spinRapple1Black.png";
 import SplashBackground from "./splashbackground.png"
 import SplashTitle from "./splashtitle.png"
 import ConnectButton from "./connectbutton.png"
-
+import jp from "./jp_flag.svg"
+import en from "./eng_flag.svg"
+import tw from "./tw_flag.svg"
+import th from "./th_flag.svg"
 
 const Images = {
   HorizontalLogo,
@@ -308,6 +311,10 @@ const Images = {
   SplashBackground,
   SplashTitle,
   ConnectButton,
+  jp,
+  en,
+  tw,
+  th
 };
 
 export default Images;
