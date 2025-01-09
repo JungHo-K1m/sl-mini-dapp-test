@@ -42,7 +42,7 @@ const LanguagePage: React.FC =() => {
                 {/* 대만어 선택 */}
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => handleChooseLanguage("zh-TW")}>
+                    onClick={() => handleChooseLanguage("zh")}>
                     <div>
                         <p className="font-semibold">Taiwanese</p>
                     </div>
