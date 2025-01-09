@@ -205,7 +205,7 @@ const DentalAnalysis: React.FC = () => {
                               },
                               "description": {
                                 "type": "string",
-                                "description": `Detailed explanation of the diagnosis with at least 200 characters and translate into ${i18n.language}`
+                                "description": `A detailed explanation of the diagnosis, translated into ${i18n.language}, with exactly or approximately 200 characters.`
                               }
                             },
                             "required": [
