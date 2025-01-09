@@ -4,9 +4,10 @@ import { HiCheck, HiX } from 'react-icons/hi';
 interface AttendanceDayProps {
   day: string;
   status: 'checked' | 'missed' | 'default' | 'today';
+  displayDay: string;
 }
 
-const AttendanceDay: React.FC<AttendanceDayProps> = ({ day, status }) => {
+const AttendanceDay: React.FC<AttendanceDayProps> = ({ day, status, displayDay }) => {
   const getStatusClass = () => {
     switch (status) {
       case 'checked':
@@ -24,7 +25,7 @@ const AttendanceDay: React.FC<AttendanceDayProps> = ({ day, status }) => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-2">
-      <p className="font-semibold">{day}</p>
+      <p className="font-semibold">{displayDay}</p>
       <div
         className={`w-7 h-7 rounded-full flex justify-center items-center border-2 ${getStatusClass()}`}
       >
