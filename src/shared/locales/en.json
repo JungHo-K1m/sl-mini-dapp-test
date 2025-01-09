@@ -121,7 +121,14 @@
       "you_didnt_airdrop": "You didn’t get the airdrop this time.",
       "air_drop_winner": "Airdrop Winners",
       "next_raffle": "Join the next raffle for another chance!",
-      "raffle_winner": "Raffle Winners"
+      "raffle_winner": "Raffle Winners",
+      "ref_reward": "Friend Referral Rewards",
+      "filter": "Filter Option",
+      "search": "Search Friend",
+      "name": "Search Name...",
+      "type": "Asset Type",
+      "range": "Date Range",
+      "no_record": "No records found"
     },
     "wallet_page": {
         "wallet": "Wallet",
@@ -173,7 +180,14 @@
       "of_your_invited_friend's_reward.": "of your invited friend's reward.",
       "Invite_Friends_and_Get_Reward": "Invite Friends and Get Reward",
       "Invited_Friends": "Invited Friends",
-      "Completed":"Completed"
+      "Completed":"Completed",
+      "invite_your_friend": "Invite Your Friends!",
+      "total_reward": "Total referral rewards",
+      "view_detail": "View Details",
+      "points":"Ponits Earned",
+      "sl": "SL Earned",
+      "usdc": "USDC Earned",
+      "frined_list": "Invite Friends List"
     },
     "asset_page": {
       "Shop_Unique_NFTs_Now!": "Shop Unique NFTs Now!",

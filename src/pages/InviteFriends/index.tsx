@@ -136,13 +136,13 @@ const InviteFriends: React.FC = () => {
       </div>
 
       {/* 공유 버튼 테스트 */}
-      <div className="w-[80%] h-10 my-8">
+      {/* <div className="w-[80%] h-10 my-8">
         <button 
           className="w-full h-full bg-green-700 rounded-full"
           onClick={shareButton}>
           testing share
         </button>
-      </div>
+      </div> */}
 
       {friends.length > 0 ? ( // 친구 목록이 존재하는 경우에만 렌더링
         <div className="flex flex-col mt-8 w-full gap-3">

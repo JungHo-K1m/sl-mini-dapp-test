@@ -57,18 +57,18 @@ const InviteFriendsList: React.FC = () => {
     return (
         <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-32">
             {/* 상단 타이틀 */}
-            <TopTitle title="Invite Friends List" back={true} />
+            <TopTitle title={t("mission_page.friend_list")} back={true} />
             
             {/* 레퍼럴 보상 내용 */}
             <div className='w-full'>
                 <div className="flex justify-between items-center">
-                    <h2 className="text-lg font-medium">Total referral rewards</h2>
+                    <h2 className="text-lg font-medium">{t("mission_page.total_reward")}</h2>
                     <button
                         className="flex items-center text-white text-xs font-medium"
                         onClick={() => navigate("/referral-rewards")}
                         aria-label="View All NFTs"
                         >
-                        View Details <FaChevronRight className="ml-1 w-3 h-3" />
+                        {t("mission_page.view_detail")} <FaChevronRight className="ml-1 w-3 h-3" />
                     </button>
                 </div>
                 <div className="bg-[#1F1E27] rounded-3xl border-2 border-[#35383F] flex flex-col justify-center gap-4 h-36 p-5 mt-3">
@@ -78,7 +78,7 @@ const InviteFriendsList: React.FC = () => {
                             alt="Points Earned"
                             className="w-6 h-6"
                             />
-                        <p className="text-base font-medium flex-1 ml-1">Points Earned</p>
+                        <p className="text-base font-medium flex-1 ml-1">{t("mission_page.points")}</p>
                         <p className="text-[#3B82F6] text-lg font-semibold">+{formattedStar}P</p>
                     </div>
                     <div className="flex items-center">
@@ -87,7 +87,7 @@ const InviteFriendsList: React.FC = () => {
                             alt="SL Earned"
                             className="w-6 h-6"
                             />
-                        <p className="text-base font-medium flex-1 ml-1">SL Earned</p>
+                        <p className="text-base font-medium flex-1 ml-1">{t("mission_page.sl")}</p>
                         <p className="text-[#3B82F6] text-lg font-semibold">+{formattedSL}SLT</p>
                     </div>
                     <div className="flex items-center">
@@ -96,7 +96,7 @@ const InviteFriendsList: React.FC = () => {
                             alt="USDC Earned"
                             className="w-6 h-6"
                             />
-                        <p className="text-base font-medium flex-1 ml-1">USDC Earned</p>
+                        <p className="text-base font-medium flex-1 ml-1">{t("mission_page.usdc")}</p>
                         <p className="text-[#3B82F6] text-lg font-semibold">+{formattedUSDC}USDC</p>
                     </div>
                 </div>
@@ -122,7 +122,7 @@ const InviteFriendsList: React.FC = () => {
                     ))}
                 </div>
             ) : (
-                <p className="text-sm text-gray-400 mt-8">Invite Your Friends!</p> // 친구가 없을 경우
+                <p className="text-sm text-gray-400 mt-8">{t("mission_page.invite_your_friend")}</p> // 친구가 없을 경우
             )}
         </div>
     );

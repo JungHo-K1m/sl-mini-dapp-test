@@ -121,7 +121,14 @@
       "you_didnt_airdrop": "คุณไม่ได้รับ Airdrop ในครั้งนี้",
       "air_drop_winner": "ผู้ชนะกิจกรรม Airdrop",
       "next_raffle": "เข้าร่วมการจับฉลากครั้งถัดไปเพื่อโอกาสอีกครั้ง!",
-      "raffle_winner": "ผู้ชนะการจับฉลาก"
+      "raffle_winner": "ผู้ชนะการจับฉลาก",
+      "ref_reward": "รางวัลแนะนำเพื่อน",
+      "filter": "ตัวเลือกการกรอง",
+      "search": "ค้นหาเพื่อน",
+      "name": "ค้นหาชื่อ...",
+      "type": "ประเภทสินทรัพย์",
+      "range": "ช่วงวันที่",
+      "no_record": "ไม่พบข้อมูล"
     },
     "wallet_page": {
       "wallet": "กระเป๋า",
@@ -173,7 +180,14 @@
       "of_your_invited_friend's_reward.": "จากรางวัลของเพื่อนที่คุณเชิญ",
       "Invite_Friends_and_Get_Reward": "เชิญเพื่อนและรับรางวัล",
       "Invited_Friends": "เพื่อนที่เชิญ",
-      "Completed":"เสร็จสมบูรณ์แล้ว"
+      "Completed":"เสร็จสมบูรณ์แล้ว",
+      "invite_your_friend": "เชิญเพื่อนของคุณ!",
+      "total_reward": "รางวัลเชิญเพื่อนทั้งหมด",
+      "view_detail": "ดูรายละเอียด",
+      "points": "คะแนนที่ได้รับ",
+      "sl": "SL ที่ได้รับ",
+      "usdc": "USDC ที่ได้รับ",
+      "frined_list": "รายชื่อเพื่อนที่เชิญ"
     },
     "asset_page": {
       "Shop_Unique_NFTs_Now!": "ช้อป NFT สุดพิเศษได้เลยตอนนี้!",
