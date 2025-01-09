@@ -20,7 +20,8 @@ import {
 import { formatNumber } from "@/shared/utils/formatNumber";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";   // ★ 로딩 스피너
 import { preloadImages } from "@/shared/utils/preloadImages";         // ★ 이미지 프리로딩 함수
-
+import { useTranslation } from "react-i18next";
+const { t } = useTranslation();
 interface OneTimeMissionCardProps {
   mission: Mission;
   onClear: (id: number) => void;
@@ -110,8 +111,8 @@ const DailyMissionCard: React.FC<DailyMissionProps> = ({
       <div className="space-y-3">
         <p className="text-xl font-semibold">{title}</p>
         <p className="text-sm">
-          Earn various rewards <br className="md:hidden" /> such as dice,
-          points, SL coins
+          {t("mission_page.Earn_various_rewards")} <br className="md:hidden" />
+          {t("mission_page.such_as_dice,_points,_SL_coins")}
         </p>
       </div>
       <img src={image} alt={alt} className="w-24 h-24" />
@@ -124,6 +125,7 @@ const MissionPage: React.FC = () => {
   // 1) 이미지 로딩 상태
   // ---------------------------
   const [isLoading, setIsLoading] = useState(true);
+  
 
   // ---------------------------
   // 2) 미션 스토어
@@ -221,9 +223,9 @@ const MissionPage: React.FC = () => {
   // ---------------------------
   return (
     <div className="flex flex-col text-white mx-6 mb-20 md:mb-96">
-      <TopTitle title="Mission" />
+      <TopTitle title={t("mission_page.Mission")} />
 
-      <h1 className="font-semibold text-lg ml-[2px] mb-4">One-Time Missions</h1>
+      <h1 className="font-semibold text-lg ml-[2px] mb-4">{t("mission_page.One_Time_Mission")}</h1>
 
       {/* 미션 스토어 로딩 or 에러 */}
       {loading && <LoadingSpinner />}
@@ -293,25 +295,24 @@ const MissionPage: React.FC = () => {
                       alt="Mission Completed"
                       className="w-5 h-5"
                     />
-                    <p>Completed</p>
+                    <p>{t("mission_page.Completed")}</p>
                   </div>
                 )}
               </div>
 
               <p className="text-xs mb-8 mt-2 text-white">
-                * If the mission is not performed correctly, you may be excluded
-                from the final reward.
+                {t("mission_page.*_If_the_mission_is_not_performed_correctly,_you_may_be_excluded_from_the_final_reward.")}
               </p>
             </div>
           )
         )}
       </div>
 
-      <h1 className="font-semibold text-lg ml-[2px] mb-4">Daily Missions</h1>
+      <h1 className="font-semibold text-lg ml-[2px] mb-4">{t("mission_page.Daily_Mission")}</h1>
 
       <Link to="/invite-friends">
         <DailyMissionCard
-          title="Invite Friends"
+          title={t("mission_page.Invite_friends")}
           alt="Invite Friend"
           image={Images.InviteFriend}
         />
