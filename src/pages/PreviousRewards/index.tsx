@@ -39,7 +39,6 @@ import { selectRankingReward, selectRaffleReward } from "@/features/PreviousRewa
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
 
 
-const { t } = useTranslation();
 
 // 임시 인터페이스(RewardSelectionDialog에서 쓰이는 형태)
 interface RewardData {
@@ -53,6 +52,7 @@ interface RewardData {
 }
 
 const PreviousRewards: React.FC = () => {
+  const { t } = useTranslation();
   // -----------------------------
   // 1) Ranking 관련 Zustand
   // -----------------------------

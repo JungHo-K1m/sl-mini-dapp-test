@@ -20,7 +20,6 @@ import ErrorMessage from "@/shared/components/ui/ErrorMessage"; // 에러 메시
 import { useTranslation } from "react-i18next";
 
 
-const { t } = useTranslation();
 
 interface RaffleSectionProps {
   myRankings: PlayerData[];
@@ -61,6 +60,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
 }) => {
   // 총 보상 개수
   const totalRewards = myRankings.length;
+  const { t } = useTranslation();
 
   // 아직 받지 않은 보상 개수
   const leftRewards = myRankings.filter(

@@ -7,7 +7,6 @@ import ErrorMessage from "@/shared/components/ui/ErrorMessage";
 import { useTranslation } from "react-i18next";
 
 
-const { t } = useTranslation();
 
 /**
  * AirdropWinner: 에어드롭 당첨자 정보
@@ -48,6 +47,7 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
   isLoadingAirdrop,
   errorAirdrop,
 }) => {
+  const { t } = useTranslation();
   // 1) 로딩 중이면 스피너 노출
   if (isLoadingAirdrop) {
     return (
