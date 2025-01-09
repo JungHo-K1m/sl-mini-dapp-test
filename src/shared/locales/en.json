@@ -311,6 +311,14 @@
       "jpn": "Japanese",
       "tw": "Taiwanese",
       "thi" : "Thai"
+    },
+    "user_level": {
+      "message_1": "Hey there, <br/>ready to roll?",
+      "message_2": "Dice are <br/>hot!",
+      "message_3": "Roll it <br/>again!",
+      "message_4": "Let's make a <br/>big move!",
+      "message_5": "All set <br/>to roll?",
+      "message_6": "Keep those <br/>dice rolling!"
     }
   }
   

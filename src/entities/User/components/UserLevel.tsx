@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Snowfall } from 'react-snowfall';
 import Images from '@/shared/assets/images';
+import { useTranslation } from "react-i18next";
 
 const UserLevel: React.FC<{
   userLv: number;
@@ -29,14 +30,15 @@ const UserLevel: React.FC<{
   }
 
   const roundedExp = Math.floor(exp);
+  const { t } = useTranslation();
 
   const messages = [
-    "Hey there, <br/>ready to roll?",
-    "Dice are <br/>hot!",
-    "Roll it <br/>again!",
-    "Let's make a <br/>big move!",
-    "All set <br/>to roll?",
-    "Keep those <br/>dice rolling!"
+    t("user_level.message_1"),
+    t("user_level.message_2"),
+    t("user_level.message_3"),
+    t("user_level.message_4"),
+    t("user_level.message_5"),
+    t("user_level.message_6")
   ];
 
   const [currentMsgIndex, setCurrentMsgIndex] = useState(0);
