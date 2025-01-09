@@ -10,6 +10,7 @@ import {
 import Images from "@/shared/assets/images";
 import { formatNumber } from "@/shared/utils/formatNumber";
 import { useRPSGameStore } from "../store";
+import { useTranslation } from "react-i18next";
 
 interface RPSGameStartProps {
   onStart: () => void;
@@ -24,6 +25,8 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
 }) => {
   const [betAmount, setBetAmount] = useState<string>("");
   const setBetAmountStore = useRPSGameStore((state) => state.setBetAmount);
+  const { t } = useTranslation();
+  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -60,9 +63,9 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
   return (
     <div className="h-screen md:min-w-[600px] flex flex-col items-center justify-center px-12">
       <h1 className="text-[#E20100] font-jalnan text-center text-[26px] mt-4">
-        Triple or Nothing!
+        {t("dice_event.rps_game.title_1")}
         <br />
-        Spin for Your Chance!
+        {t("dice_event.rps_game.title_2")}
       </h1>
 
       <div className="flex flex-col items-center justify-center mt-4">
@@ -76,7 +79,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
           <Popover>
             <PopoverTrigger className="flex flex-row gap-1 border-2 border-[#21212f] rounded-3xl text-center bg-white text-[#171717] font-medium w-[165px] h-[72px] items-center justify-center">
               <AiFillQuestionCircle className="w-6 h-6" />
-              <p>How to play</p>
+              <p>{t("dice_event.rps_game.how_to")}</p>
             </PopoverTrigger>
             <PopoverContent
               className="rounded-3xl border-2 border-[#21212f] bg-white"
@@ -87,34 +90,34 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
             >
               <div className="text-black p-4 rounded-lg shadow-lg w-full max-w-lg">
                 <h2 className="text-xl font-bold text-center mb-4">
-                  ✼ Game Instructions ✼
+                  ✼ {t("dice_event.rps_game.instruction")} ✼
                 </h2>
                 <ol className="text-sm leading-loose space-y-4">
                   <li>
-                    <strong>Enter Your Bet Amount</strong>
+                    <strong>{t("dice_event.rps_game.enter")}</strong>
                     <ul className="list-disc pl-5">
-                      <li>Maximum bet is half of your total stars.</li>
+                      <li>{t("dice_event.rps_game.max")}</li>
                     </ul>
                   </li>
                   <li>
-                    <strong>Play Rock-Paper-Scissors</strong>
+                    <strong>{t("dice_event.rps_game.play")}</strong>
                     <ul className="list-disc pl-5">
-                      <li>Choose rock, paper, or scissors for each round.</li>
-                      <li>You'll play up to 3 rounds.</li>
+                      <li>{t("dice_event.rps_game.choose")}</li>
+                      <li>{t("dice_event.rps_game.3_rounds")}</li>
                     </ul>
                   </li>
                   <li>
-                    <strong>Win Rewards</strong>
+                    <strong>{t("dice_event.rps_game.win")}</strong>
                     <ul className="list-disc pl-5">
-                      <li>Win a round: Your bet is tripled.</li>
-                      <li>Win consecutive rounds to multiply your reward.</li>
+                      <li>{t("dice_event.rps_game.tripled")}</li>
+                      <li>{t("dice_event.rps_game.multifly")}</li>
                     </ul>
                   </li>
                   <li>
-                    <strong>Continue or Cash Out</strong>
+                    <strong>{t("dice_event.rps_game.continue")}</strong>
                     <ul className="list-disc pl-5">
-                      <li>After winning a round, you can continue or cash out.</li>
-                      <li>Losing any round forfeits your bet.</li>
+                      <li>{t("dice_event.rps_game.cash_out")}</li>
+                      <li>{t("dice_event.rps_game.losing")}</li>
                     </ul>
                   </li>
                 </ol>
@@ -122,7 +125,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
             </PopoverContent>
           </Popover>
           <div className="flex flex-col gap-1 border-2 border-[#21212f] rounded-3xl text-center bg-white text-[#171717] font-medium w-[165px] h-[72px] items-center justify-center">
-            <p className="text-xs text-[#737373]">Allowed Betting Amount</p>
+            <p className="text-xs text-[#737373]">{t("dice_event.rps_game.allowed")}</p>
             <div className="flex flex-row items-center justify-center gap-3">
               <img src={Images.Star} alt="Star" className="w-6 h-6" />
               <p>{formatNumber(allowedBetting)}</p>
@@ -145,7 +148,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
               type="button"
               onClick={handleCancelClick}
             >
-              Cancel
+              {t("dice_event.rps_game.cancel")}
             </button>
             <button
               type="submit"
@@ -161,7 +164,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
               }
               // onClick={handleStartClick} // 이미 onSubmit에서 처리하므로 제거
             >
-              Bet
+              {t("dice_event.rps_game.bet")}
             </button>
           </div>
         </form>

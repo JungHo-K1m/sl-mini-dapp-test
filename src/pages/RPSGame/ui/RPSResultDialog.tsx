@@ -4,6 +4,7 @@ import React from "react";
 import { AlertDialog, AlertDialogContent } from "@/shared/components/ui";
 import Images from "@/shared/assets/images";
 import { formatNumber } from "@/shared/utils/formatNumber";
+import { useTranslation } from "react-i18next";
 
 interface ResultWinProps {
   winnings: number;
@@ -26,6 +27,7 @@ const ResultWin: React.FC<ResultWinProps> = ({
   winMultiplier,
 }) => {
   const isFinalWin = consecutiveWins >= 3;
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -43,14 +45,14 @@ const ResultWin: React.FC<ResultWinProps> = ({
         </div>
         {isFinalWin ? (
           <div className="font-jalnan text-[24px] text-center">
-            Congratulations!
+            {t("dice_event.rps_game.congrate")}
             <br />
-            You've won 27x your bet!
+            {t("dice_event.rps_game.27x")}
           </div>
         ) : (
           <div className="font-jalnan text-[30px] text-center">
             <div className="flex flex-col justify-center items-center">
-              Continue with <br />
+              {t("dice_event.rps_game.continue_with")} <br />
               <div className="flex flex-row items-center justify-center">
                 <div className="flex flex-row items-center justify-center font-semibold text-base w-12 h-8 bg-[#21212F] rounded-full">
                   <p>x{winMultiplier}</p>
@@ -66,7 +68,7 @@ const ResultWin: React.FC<ResultWinProps> = ({
               className="rounded-full h-14 w-32 bg-[#21212f] text-white font-medium"
               onClick={onQuit}
             >
-              Finish
+              {t("dice_event.rps_game.finish")}
             </button>
           ) : (
             <>
@@ -74,13 +76,13 @@ const ResultWin: React.FC<ResultWinProps> = ({
                 className="rounded-full h-14 w-32 bg-gray-200 text-[#171717] font-medium"
                 onClick={onQuit}
               >
-                Collect
+                {t("dice_event.rps_game.collect")}
               </button>
               <button
                 className="rounded-full h-14 w-32 bg-[#21212f] text-white font-medium"
                 onClick={onContinue}
               >
-                Gamble
+                {t("dice_event.rps_game.gamble")}
               </button>
             </>
           )}
@@ -91,6 +93,7 @@ const ResultWin: React.FC<ResultWinProps> = ({
 };
 
 const ResultLose: React.FC<ResultLoseProps> = ({ winnings, onQuit }) => {
+  const { t } = useTranslation();
   return (
     <div>
       <img
@@ -107,8 +110,8 @@ const ResultLose: React.FC<ResultLoseProps> = ({ winnings, onQuit }) => {
         </div>
         <div className="font-jalnan text-[20px] text-center">
           <p>
-            Better luck <br />
-            next time!
+            {t("dice_event.rps_game.better_luck")} <br />
+            {t("dice_event.rps_game.next_time")}
           </p>
         </div>
 
@@ -116,7 +119,7 @@ const ResultLose: React.FC<ResultLoseProps> = ({ winnings, onQuit }) => {
           className="rounded-full h-14 w-32 bg-[#21212f] text-white font-medium"
           onClick={onQuit}
         >
-          Quit
+          {t("dice_event.rps_game.quit")}
         </button>
       </div>
     </div>
@@ -144,7 +147,6 @@ const RPSResultDialog: React.FC<RPSResultDialogProps> = ({
   consecutiveWins,
   winMultiplier,
 }) => {
-
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>

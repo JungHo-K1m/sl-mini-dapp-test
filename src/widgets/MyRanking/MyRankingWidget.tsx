@@ -4,6 +4,7 @@ import { useUserStore } from '@/entities/User/model/userModel';
 import CountUp from 'react-countup';
 import { IoIosArrowRoundUp, IoIosArrowRoundDown } from "react-icons/io";
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { useTranslation } from "react-i18next";
 
 interface MyRankingWidgetProps {
   titleHidden?: boolean;
@@ -13,6 +14,7 @@ interface MyRankingWidgetProps {
 const MyRankingWidget: React.FC<MyRankingWidgetProps> = ({ className, titleHidden = false }) => {
   // useUserStore에서 필요한 데이터 가져오기
   const { rank, previousRank, starPoints, lotteryCount, slToken } = useUserStore();
+  const { t } = useTranslation();
   
   // 이전 값들을 추적하기 위한 ref
   const prevRankRef = useRef(rank);
@@ -126,11 +128,11 @@ const scaleAndGlowImage = {
       className={`flex flex-col items-center justify-center text-white cursor-pointer w-full ${className}`}
       role="button"
     >
-      <h1 className={`font-jalnan text-3xl ${titleHidden ? "hidden" : "block"}`}>My Rank</h1>
+      <h1 className={`font-jalnan text-3xl ${titleHidden ? "hidden" : "block"}`}>{t("dice_event.my_rank")}</h1>
       <div className={`bg-box  px-8 w-full h-24 md:h-32 flex font-semibold ${titleHidden?"mt-0":"mt-4"}`}>
         {/* My Rank 섹션 */}
         <div className="relative w-[121px] h-full flex flex-col items-center justify-center gap-2">
-          <p className="text-base font-semibold">My Rank</p>
+          <p className="text-base font-semibold">{t("dice_event.my_rank")}</p>
           <motion.p 
             className="text-2xl text-[#fde047] font-jalnan"
             variants={scaleAndGlow}
@@ -230,7 +232,7 @@ const scaleAndGlowImage = {
 
       {/* 설명 텍스트 */}
       <p className="flex items-start justify-start w-full font-medium text-xs md:text-sm mt-2 px-2">
-        * Rankings are based on Star Points
+        * {t("dice_event.ranking_base")}
       </p>
     </div>
   );

@@ -20,6 +20,7 @@ import LevelRewards from "@/widgets/LevelRewards";
 import LeaderBoard from "@/widgets/LeaderBoard";
 import { HiX } from "react-icons/hi";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { useTranslation } from "react-i18next";
 
 const levelRewards = [
   // 2~9 레벨 보상 예시
@@ -67,6 +68,7 @@ const DiceEventPage: React.FC = () => {
   const [initialX, setInitialX] = useState<number>(140);
   const [initialY, setInitialY] = useState<number>(474);
   const [delta, setDelta] = useState<number>(56);
+  const { t } = useTranslation();
 
   // 레벨 업 시 팝업 표시를 위한 상태
   const [showLevelUpDialog, setShowLevelUpDialog] = useState<boolean>(false);
@@ -230,7 +232,7 @@ const DiceEventPage: React.FC = () => {
                   alt="airplane"
                   className="h-20 md:h-28"
                 />
-                Select a tile to move
+                {t("dice_event.select_tile")}
               </div>
             </div>
           )}
@@ -266,7 +268,7 @@ const DiceEventPage: React.FC = () => {
               <div className="flex flex-col items-center justify-around">
                 <div className=" flex flex-col items-center gap-2">
                   <h1 className=" font-jalnan text-5xl text-[#FDE047]">
-                    Level up!
+                    {t("dice_event.level_up")}
                   </h1>
                   <img
                     src={getLevelEffectImageSrc()}
@@ -275,7 +277,7 @@ const DiceEventPage: React.FC = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-6">
-                  <p className="font-jalnan text-center">Grap your prize!</p>
+                  <p className="font-jalnan text-center">{t("dice_event.grap_prize")}</p>
                   {currentReward && (
                     <div className="flex flex-row items-center gap-2">
                       <div className="box-bg rounded-xl w-16 h-16 border-2 border-[#2660f4] flex flex-col items-center gap-2 justify-center ">
