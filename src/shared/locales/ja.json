@@ -96,6 +96,33 @@
             "Dec": "12月"
         }
     },
+    "reward_page": {
+        "reward": "報酬",
+        "previous": "過去の報酬",
+        "see_ranking_reward": "先月のランキングと報酬を確認しましょう！",
+        "this_month": "今月の",
+        "awards": "ランキング報酬",
+        "raffle": "抽選報酬",
+        "air_drop": "エアドロップイベント",
+        "view_more": "もっと見る",
+        "last_month": "先月の結果",
+        "ranking_tap": "ランキング",
+        "raffle_tap": "抽選",
+        "air_drop_tap": "エアドロップ",
+        "ranking_reward": "ランキング報酬受賞者",
+        "no_ranking": "ランキング情報がありません",
+        "your_rank": "あなたのランク: #",
+        "keep_play": "引き続きプレイして、次回に挑戦しましょう！",
+        "congrate": "おめでとうございます！あなたの報酬はこちら：",
+        "recieved": "受け取り済み",
+        "you_didnt": "今回はランクインしていません。",
+        "no_airdrop": "先月はエアドロップがありませんでした。",
+        "better_luck": "次回の幸運をお祈りします！",
+        "you_didnt_airdrop": "今回はエアドロップを受け取れませんでした。",
+        "air_drop_winner": "エアドロップ受賞者",
+        "next_raffle": "次の抽選にも参加して、チャンスをゲットしましょう！",
+        "raffle_winner": "抽選当選者"
+    },
     "wallet_page": {
         "wallet": "ウォレット",
         "wallet_section": "ウォレットセクション",

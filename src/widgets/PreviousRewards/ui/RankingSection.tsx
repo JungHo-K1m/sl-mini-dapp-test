@@ -13,6 +13,7 @@ import {
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
 import ErrorMessage from "@/shared/components/ui/ErrorMessage";
+import { useTranslation } from "react-i18next";
 
 interface RankingSectionProps {
   myData: PlayerData | null;
@@ -45,6 +46,8 @@ const RankingSection: React.FC<RankingSectionProps> = ({
     console.log("RankingSection myData:", myData);
   }, [myData]);
 
+  const { t } = useTranslation();
+
   return (
     <div className="p-6 bg-[#0D1226] text-white w-full ">
       {myData ? (
@@ -54,22 +57,22 @@ const RankingSection: React.FC<RankingSectionProps> = ({
             // 1000등 밖인 경우
             <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-24 justify-center items-center">
               <p className="font-semibold text-sm text-center">
-                Your Rank: #
+                {t("reward_page.your_rank")}
                 <span className="text-[#FDE047] font-bold">{myData.rank}</span>
                 <br />
-                Keep playing and try again next time!
+                {t("reward_page.keep_play")}
               </p>
             </div>
           ) : myData.rank <= 20 ? (
             // 1~20등까지 보상 버튼 노출
             <>
               <p className="font-semibold">
-                Congratulations! Here’s your reward:
+                {t("reward_page.congrate")}
               </p>
               <div className="relative flex flex-row items-center box-bg rounded-3xl h-24 border-2 border-[#0147E5] mt-3 p-5 gap-3">
                 {isReceived && (
                   <div className="absolute top-2 right-2 bg-[#0147E5] rounded-full px-3 py-1 text-sm">
-                    Received
+                    {t("reward_page.recieved")}
                   </div>
                 )}
                 <p>#{myData.rank}</p>
@@ -112,10 +115,10 @@ const RankingSection: React.FC<RankingSectionProps> = ({
             // 21~1000등 사이인 경우 (보상 버튼 비노출)
             <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
               <p className="font-semibold text-sm text-center">
-                Your Rank: #
+                {t("reward_page.your_rank")}
                 <span className="text-[#FDE047] font-bold">{myData.rank}</span>
                 <br />
-                Keep playing and try again next time!
+                {t("reward_page.keep_play")}
               </p>
             </div>
           )}
@@ -124,15 +127,15 @@ const RankingSection: React.FC<RankingSectionProps> = ({
         // myData가 null인 경우 (랭킹 데이터 자체가 없는 경우)
         <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
           <p className="font-semibold text-sm text-center">
-            You didn't rank this time. <br />
-            Keep playing and try again next time!
+            {t("reward_page.you_didnt")}<br />
+            {t("reward_page.keep_play")}
           </p>
         </div>
       )}
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
-      <p className="font-semibold">Ranking Reward Winner</p>
+      <p className="font-semibold">{t("reward_page.ranking_reward")}</p>
         {topRankings.length > 0 ? (
           topRankings.slice(0, 20).map((r) => {
             return (
@@ -177,7 +180,7 @@ const RankingSection: React.FC<RankingSectionProps> = ({
             );
           })
         ) : (
-          <p className="text-center text-sm">No rankings available</p>
+          <p className="text-center text-sm">{t("reward_page.no_ranking")}</p>
         )}
       </div>
 

@@ -4,6 +4,10 @@ import React from "react";
 import Images from "@/shared/assets/images";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
 import ErrorMessage from "@/shared/components/ui/ErrorMessage";
+import { useTranslation } from "react-i18next";
+
+
+const { t } = useTranslation();
 
 /**
  * AirdropWinner: 에어드롭 당첨자 정보
@@ -68,8 +72,8 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
       <div className="p-6 bg-[#0D1226] text-white w-full h-svh">
         <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-24 justify-center items-center">
           <p className="font-semibold text-sm text-center">
-            There was no airdrop last month. <br />
-            Better luck next time!
+            {t("reward_page.no_airdrop")} <br />
+            {t("reward_page.better_luck")}
           </p>
         </div>
       </div>
@@ -107,8 +111,8 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
           // rank가 null인 경우 (미당첨)
           <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-center items-center">
             <p className="font-semibold text-sm text-center">
-              You didn’t get the airdrop this time. <br />
-              Better luck next time!
+              {t("reward_page.you_didnt_airdrop")} <br />
+              {t("reward_page.better_luck")}
             </p>
           </div>
         )
@@ -120,7 +124,7 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
       {/* 당첨자 목록 (최대 16명) */}
       {winners.length > 0 && (
         <div className="flex flex-col mt-8">
-          <p className="font-semibold">Airdrop Winners</p>
+          <p className="font-semibold">{t("reward_page.air_drop_winner")}</p>
           {winners.map((w) => (
             <div
               key={w.rank}

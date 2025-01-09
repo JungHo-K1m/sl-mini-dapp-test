@@ -96,6 +96,33 @@
         "Dec": "Dec"
       }
     },
+    "reward_page": {
+      "reward": "Rewards",
+      "previous": "Previous Rewards",
+      "see_ranking_reward": "See your rankings and rewards from last month!",
+      "this_month": "This Month's",
+      "awards": "Ranking Awards",
+      "raffle": "Raffle Awards",
+      "air_drop": "AirDrop Event",
+      "view_more": "View More",
+      "last_month": "Last month's results",
+      "ranking_tap": "Ranking",
+      "raffle_tap": "Raffle",
+      "air_drop_tap": "Airdrop",
+      "ranking_reward": "Ranking Reward Winner",
+      "no_ranking": "No rankings available",
+      "your_rank": "Your Rank: #",
+      "keep_play": "Keep playing and try again next time!",
+      "congrate": "Congratulations! Here’s your reward:",
+      "recieved": "Received",
+      "you_didnt": "You didn't rank this time.",
+      "no_airdrop": "There was no airdrop last month.",
+      "better_luck": "Better luck next time!",
+      "you_didnt_airdrop": "You didn’t get the airdrop this time.",
+      "air_drop_winner": "Airdrop Winners",
+      "next_raffle": "Join the next raffle for another chance!",
+      "raffle_winner": "Raffle Winners"
+    },
     "wallet_page": {
         "wallet": "Wallet",
         "wallet_section": "Wallet Section",

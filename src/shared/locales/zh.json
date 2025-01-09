@@ -96,6 +96,33 @@
         "Dec": "十二月"
       }
     },
+    "reward_page": {
+      "reward": "獎勵",
+      "previous": "先前獎勵",
+      "see_ranking_reward": "查看上個月的排名和獎勵！",
+      "this_month": "本月的",
+      "awards": "排名獎勵",
+      "raffle": "抽獎獎勵",
+      "air_drop": "空投活動",
+      "view_more": "查看更多",
+      "last_month": "上個月的結果",
+      "ranking_tap": "排名",
+      "raffle_tap": "抽獎",
+      "air_drop_tap": "空投",
+      "ranking_reward": "排名獎勵得主",
+      "no_ranking": "目前沒有排名可顯示",
+      "your_rank": "你的排名：#",
+      "keep_play": "繼續遊玩，下次再接再厲！",
+      "congrate": "恭喜你！以下是你的獎勵：",
+      "recieved": "已領取",
+      "you_didnt": "這次你沒有進入排名。",
+      "no_airdrop": "上個月沒有進行空投。",
+      "better_luck": "希望下次能更幸運！",
+      "you_didnt_airdrop": "這次你沒有獲得空投。",
+      "air_drop_winner": "空投得主",
+      "next_raffle": "參加下次抽獎再試試手氣吧！",
+      "raffle_winner": "抽獎得主"
+    },
     "wallet_page": {
       "wallet": "錢包",
       "wallet_section": "錢包區域",

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { TopTitle } from "@/shared/components/ui";
+import { useTranslation } from "react-i18next";
 import "./PreviousRewards.css";
 
 // Tabs
@@ -36,6 +37,9 @@ import { selectRankingReward, selectRaffleReward } from "@/features/PreviousRewa
 
 // Types
 import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
+
+
+const { t } = useTranslation();
 
 // 임시 인터페이스(RewardSelectionDialog에서 쓰이는 형태)
 interface RewardData {
@@ -299,7 +303,7 @@ const PreviousRewards: React.FC = () => {
   // -----------------------------
   return (
     <div className="flex flex-col mb-44 text-white items-center w-full ">
-      <TopTitle title="Last month's results" className="px-6" back={true} />
+      <TopTitle title={t("reward_page.last_month")} className="px-6" back={true} />
 
       {/* 보상 선택 다이얼로그 (랭킹 or 래플) */}
       <RewardSelectionDialog
@@ -327,7 +331,7 @@ const PreviousRewards: React.FC = () => {
               data-[state=active]:text-white font-normal data-[state=active]:font-semibold
               text-lg transition-colors border-b-2 border-transparent duration-300 ease-in-out"
           >
-            Ranking
+            {t("reward_page.ranking_tap")}
           </TabsTrigger>
 
           {/* 2. Raffle 탭 */}
@@ -339,7 +343,7 @@ const PreviousRewards: React.FC = () => {
               data-[state=active]:text-white font-normal data-[state=active]:font-semibold
               text-lg transition-colors border-b-2 border-transparent duration-300 ease-in-out"
           >
-            Raffle
+            {t("reward_page.raffle_tap")}
           </TabsTrigger>
 
           {/* 3. Airdrop 탭 */}
@@ -351,7 +355,7 @@ const PreviousRewards: React.FC = () => {
               data-[state=active]:text-white font-normal data-[state=active]:font-semibold
               text-lg transition-colors border-b-2 border-transparent duration-300 ease-in-out"
           >
-            Airdrop
+            {t("reward_page.air_drop_tap")}
           </TabsTrigger>
         </TabsList>
 

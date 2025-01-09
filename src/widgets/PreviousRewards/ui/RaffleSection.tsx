@@ -17,6 +17,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
 import ErrorMessage from "@/shared/components/ui/ErrorMessage"; // 에러 메시지 컴포넌트 임포트
+import { useTranslation } from "react-i18next";
+
+
+const { t } = useTranslation();
 
 interface RaffleSectionProps {
   myRankings: PlayerData[];
@@ -101,7 +105,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
                     <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5  h-24 justify-between">
                       {isRaffleReceived && (
                         <div className="absolute top-2 right-2 bg-[#0147E5] rounded-full px-3 py-1 text-sm">
-                          Received
+                          {t("reward_page.recieved")}
                         </div>
                       )}
                       <div className="flex flex-row items-center gap-3">
@@ -158,15 +162,15 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
         // 보상 데이터가 없는 경우
         <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 h-full justify-between">
           <p className="font-semibold text-sm text-center">
-            Better luck next time! <br />
-            Join the next raffle for another chance!
+            {t("reward_page.better_luck")} <br />
+            {t("reward_page.next_raffle")}
           </p>
         </div>
       )}
 
       {/* Top Rankings */}
       <div className="flex flex-col mt-8">
-      <p className="font-semibold">Raffle Winners</p>
+      <p className="font-semibold">{t("reward_page.raffle_winner")}</p>
         {raffleTopRankings.length > 0 ? (
           raffleTopRankings.slice(0, 20).map((r) => {
             const raffleTopReceived =
@@ -217,7 +221,7 @@ const RaffleSection: React.FC<RaffleSectionProps> = ({
             );
           })
         ) : (
-          <p className="text-center text-sm">No rankings available</p>
+          <p className="text-center text-sm">{t("reward_page.no_ranking")}</p>
         )}
       </div>
 
