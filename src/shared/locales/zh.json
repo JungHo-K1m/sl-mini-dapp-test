@@ -242,6 +242,8 @@
     },
     "dice_event": {
       "attendance": "簽到",
+      "level_reward": "等級獎勵",
+      "level": "等級",
       "day": {
         "SUN": "日",
         "MON": "一",

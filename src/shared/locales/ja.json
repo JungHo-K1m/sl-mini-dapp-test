@@ -242,6 +242,8 @@
     },
     "dice_event": {
         "attendance": "出席",
+        "level_reward": "レベル報酬",
+        "level": "レベル",
         "day": {
             "SUN": "日",
             "MON": "月",

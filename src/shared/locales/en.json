@@ -242,6 +242,8 @@
     },
     "dice_event": {
       "attendance": "Attendance",
+      "level_reward": "Level Rewards",
+      "level": "Level",
       "day": {
         "SUN": "SUN",
         "MON": "MON",

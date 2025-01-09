@@ -1,6 +1,7 @@
 import React from 'react';
 import Images from '@/shared/assets/images';
 import {formatNumber} from "@/shared/utils/formatNumber"
+import { useTranslation } from "react-i18next";
 
 interface LevelReward {
   level: number;
@@ -25,9 +26,11 @@ const levelRewards: LevelReward[] = [
 ];
 
 const LevelRewards: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col gap-4 w-full">
-      <h1 className="text-center font-bold text-xl ">Level Rewards</h1>
+      <h1 className="text-center font-bold text-xl ">{t("dice_event.level_reward")}</h1>
 
       <div className="bg-[#1F1E27] border-2 border-[#35383F] flex flex-col p-5 rounded-3xl gap-4">
         {levelRewards.map((reward) => (
@@ -37,7 +40,7 @@ const LevelRewards: React.FC = () => {
                 className="w-6 h-6 rounded-full"
                 style={{ backgroundColor: reward.bgColor }}
               ></div>
-              <p>Level {reward.level}</p>
+              <p>{t("dice_event.level")} {reward.level}</p>
             </div>
             <div className="flex flex-row justify-center items-center gap-2 w-full">
               <div className="w-20 h-20 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-2xl flex items-center justify-center">

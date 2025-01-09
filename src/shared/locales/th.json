@@ -242,6 +242,8 @@
     },
     "dice_event": {
       "attendance": "เช็กชื่อ",
+      "level_reward": "รางวัลเลเวล",
+      "level": "เลเวล",
       "day": {
         "SUN": "อา.",
         "MON": "จ.",
