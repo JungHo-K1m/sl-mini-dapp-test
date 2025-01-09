@@ -21,7 +21,7 @@ import { formatNumber } from "@/shared/utils/formatNumber";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";   // ★ 로딩 스피너
 import { preloadImages } from "@/shared/utils/preloadImages";         // ★ 이미지 프리로딩 함수
 import { useTranslation } from "react-i18next";
-const { t } = useTranslation();
+
 interface OneTimeMissionCardProps {
   mission: Mission;
   onClear: (id: number) => void;
@@ -36,6 +36,8 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
   const mapping = missionImageMap[mission.name];
   const imageSrc = mapping ? Images[mapping.imageKey] : Images.TokenReward;
   const className = mapping ? mapping.className : "";
+  const { t } = useTranslation();
+
 
   const handleClick = () => {
     if (!mission.isCleared) {
@@ -106,6 +108,7 @@ const DailyMissionCard: React.FC<DailyMissionProps> = ({
   image,
   alt,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className="basic-mission-card h-36 rounded-3xl flex flex-row items-center pl-8 pr-5 justify-between mb-3">
       <div className="space-y-3">
@@ -125,6 +128,7 @@ const MissionPage: React.FC = () => {
   // 1) 이미지 로딩 상태
   // ---------------------------
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
   
 
   // ---------------------------
