@@ -192,7 +192,6 @@ const App:React.FC = () =>{
                     <Route path="/invite-friends-list" element={<DiceEventLayout hidden={true}><InviteFriendsList /></DiceEventLayout>} />
                     <Route path="/choose-language" element={<DiceEventLayout hidden={true}><LanguagePage /></DiceEventLayout>} />
                     <Route path="/connect-wallet" element={<ConnectWalletPage />} />
-
                 </Routes>
             )}
         </TourProvider>

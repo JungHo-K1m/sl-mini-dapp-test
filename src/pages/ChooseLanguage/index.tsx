@@ -12,7 +12,7 @@ const LanguagePage: React.FC =() => {
 
     const handleChooseLanguage = (lang: string) => {
         i18n.changeLanguage(lang);
-        navigate('/settings');
+        navigate('/dice-event');
     };
 
 
