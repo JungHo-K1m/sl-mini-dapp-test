@@ -1,13 +1,13 @@
 // src/shared/assets/images/missionImageMap.ts
 
-import Images from "./index";
+import Images from './index';
 
 const missionImageMap: { [key: string]: { imageKey: keyof typeof Images; className: string } } = {
-  follow_on_x: { imageKey: "Twitter", className: "follow-on-x-mission-card" },
-  join_telegram: { imageKey: "Telegram", className: "join-telegram-mission-card" },
-  subscribe_to_email: { imageKey: "Email", className: "subscribe-to-email-mission-card" },
-  join_the_sl_discord: { imageKey: "Discord", className: "join-discord-mission-card" },
-  leave_a_supportive_comment_on_sl_x: { imageKey: "LargeTwitter", className: "comment-on-x-mission-card" },
+  'Follow on X': { imageKey: 'Twitter', className: 'follow-on-x-mission-card' },
+  'Join Telegram': { imageKey: 'Telegram', className: 'join-telegram-mission-card' },
+  'Subscribe to Email': { imageKey: 'Email', className: 'subscribe-to-email-mission-card' },
+  'Follow on LinkedIn': { imageKey: 'LinkedIn', className: 'follow-on-linkedin-mission-card' },
+  // 필요한 만큼 추가적인 미션과 이미지 매핑을 추가하세요.
 };
 
 export default missionImageMap;
