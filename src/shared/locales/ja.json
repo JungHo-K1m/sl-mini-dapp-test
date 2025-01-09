@@ -191,7 +191,7 @@
         "no_nft": "NFTはまだ入荷していません。",
         "own_nft": "NFTを所有し、ランクを上げましょう！",
         "shop_nft": "NFTを購入します",
-        "claimavble": "請求可能残高",
+        "claimable": "請求可能残高",
         "view_claim": "請求履歴を表示",
         "claim_reward": "報酬を請求",
         "prepare_service": "サービス準備中です",
