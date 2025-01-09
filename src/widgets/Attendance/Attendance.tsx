@@ -54,7 +54,7 @@ const Attendance: React.FC = () => {
         {days.map((day) => {
           // day: "SUN" | "MON" etc. (식별자)
           // displayDay: i18n에서 불러온 번역 문자열
-          const displayDay = t(`dice_event.day.${day.toLowerCase()}`);
+          const displayDay = t(`dice_event.day.${day}`);
           // 예: day === "SUN" -> displayDay === "일" (혹은 "SUN" 등)
 
           return (
