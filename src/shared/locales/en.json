@@ -294,7 +294,11 @@
       "grap_prize": "Grap your prize!",
       "my_rank":"My Rank",
       "ranking_base": "Rankings are based on Star Points",
-      "star_rewards": "Rewards: 1,000 Star Points"
+      "star_rewards": "Rewards: 1,000 Star Points",
+      "mission": "Mission",
+      "get_more_dice": "Get More Dice",
+      "Earn_extra_rolls": "Earn extra rolls",
+      "to_boost_your_chances": "to boost your chances!"
     },
     "setting": {
       "terms_of_service": "Trems of Service",

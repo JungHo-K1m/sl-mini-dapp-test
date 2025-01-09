@@ -294,7 +294,11 @@
       "grap_prize": "領取你的獎品！",
       "my_rank": "我的排名",
       "ranking_base": "排名依據星星點數而定",
-      "star_rewards": "獎勵：1,000 星星點數"
+      "star_rewards": "獎勵：1,000 星星點數",
+      "mission": "任務",
+      "get_more_dice": "獲取更多骰子",
+      "Earn_extra_rolls": "獲得更多擲骰次數",
+      "to_boost_your_chances": "提升你的中獎機率！"
     },
     "setting": {
       "terms_of_service": "服務條款",

@@ -294,7 +294,11 @@
         "grap_prize": "賞品をゲットしよう！",
         "my_rank": "自分のランク",
         "ranking_base": "ランキングはスターポイントに基づきます",
-        "star_rewards": "報酬：スターポイント1,000"
+        "star_rewards": "報酬：スターポイント1,000",
+        "mission": "ミッション",
+        "get_more_dice": "ダイスをもっと入手",
+        "Earn_extra_rolls": "ロール数を増やして",
+        "to_boost_your_chances": "勝利のチャンスをアップしましょう！"
     },
     "setting": {
         "terms_of_service": "利用規約",

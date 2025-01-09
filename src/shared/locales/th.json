@@ -294,7 +294,11 @@
       "grap_prize": "มารับรางวัลของคุณ!",
       "my_rank": "อันดับของฉัน",
       "ranking_base": "การจัดอันดับจะพิจารณาจาก Star Points",
-      "star_rewards": "รางวัล: 1,000 Star Points"
+      "star_rewards": "รางวัล: 1,000 Star Points",
+      "mission": "ภารกิจ",
+      "get_more_dice": "รับลูกเต๋าเพิ่มเติม",
+      "Earn_extra_rolls": "รับโอกาสทอยเพิ่ม",
+      "to_boost_your_chances": "เพื่อเพิ่มโอกาสในการชนะ!"
     },
     "setting": {
       "terms_of_service": "เงื่อนไขการให้บริการ",

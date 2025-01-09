@@ -62,7 +62,7 @@ const RPSGameStart: React.FC<RPSGameStartProps> = ({
 
   return (
     <div className="h-screen md:min-w-[600px] flex flex-col items-center justify-center px-12">
-      <h1 className="text-[#E20100] font-jalnan text-center text-[26px] mt-4">
+      <h1 className="text-[#E20100] font-jalnan text-center text-[26px] mt-4 whitespace-nowrap">
         {t("dice_event.rps_game.title_1")}
         <br />
         {t("dice_event.rps_game.title_2")}
