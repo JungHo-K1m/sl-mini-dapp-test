@@ -156,6 +156,7 @@ import jp from "./jp_flag.svg"
 import en from "./eng_flag.svg"
 import tw from "./tw_flag.svg"
 import th from "./th_flag.svg"
+import UploadArrow from "./uploaderarrow.png"
 
 const Images = {
   HorizontalLogo,
@@ -314,7 +315,8 @@ const Images = {
   jp,
   en,
   tw,
-  th
+  th,
+  UploadArrow
 };
 
 export default Images;

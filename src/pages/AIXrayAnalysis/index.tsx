@@ -112,8 +112,7 @@ const AIXrayAnalysis: React.FC = () => {
 
     try{
       const base64Data = await convertFileToBase64(selectedImage);
-
-
+      
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
@@ -263,30 +262,39 @@ const AIXrayAnalysis: React.FC = () => {
     <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
       <TopTitle title={t('ai_page.ai_xray_analysis')} back={true} />
 
-      <div className="mt-6 w-full max-w-sm mx-auto rounded-md overflow-hidden p-2 flex flex-col items-center">
-        <input
-          id="file-upload"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="hidden"
-        />
-        <label htmlFor="file-upload" className="cursor-pointer">
-          {selectedImage ? (
+      <div className="mt-6 w-full max-w-sm mx-auto p-2 flex flex-col items-center">
+      {/* 실제 파일 업로드 input (숨김 처리) */}
+      <input
+        id="file-upload"
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="hidden"
+      />
+
+      <label
+        htmlFor="file-upload"
+        className="cursor-pointer w-[280px] h-[280px] flex flex-col items-center justify-center rounded-3xl border-2 bg-[#2E3364B2] border-[#3937A3] overflow-hidden">
+        {selectedImage ? (
+          // 이미 파일을 업로드했다면 미리보기
+          <img
+            src={URL.createObjectURL(selectedImage)}
+            alt="Uploaded X-ray"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          // 아직 업로드 전이면, 화살표 이미지 + 안내 문구
+          <>
             <img
-              src={URL.createObjectURL(selectedImage)}
-              alt="Uploaded X-ray"
-              className="w-64 h-64 rounded-md object-fill"
+              src={Images.UploadArrow} 
+              alt="Upload arrow"
+              className="w-20 h-20 mb-6"
             />
-          ) : (
-            <img
-              src={Images.uploader}
-              alt="Click here to upload your image"
-              className="w-64 h-64 object-cover"
-            />
-          )}
-        </label>
-      </div>
+            <p className="text-white font-medium text-base">Click here to upload your image</p>
+          </>
+        )}
+      </label>
+    </div>
 
       {!isAnalyzed && (
         <div className="mt-6 w-full max-w-lg mx-auto">
