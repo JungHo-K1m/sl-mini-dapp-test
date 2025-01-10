@@ -106,130 +106,81 @@ const DentalAnalysis: React.FC = () => {
       const base64Data = await convertFileToBase64(selectedImage);
 
       const response = await openai.chat.completions.create({
-          model: "gpt-4o",
-          messages: [
-              {
-                "role": "user",
-                "content": [
-                  {
-                    "type": "image_url",
-                    "image_url": {
-                      "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
-                    }
+        model: "gpt-4o",
+        messages: [
+            {
+              "role": "user",
+              "content": [
+                {
+                  "type": "image_url",
+                  "image_url": {
+                    "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
                   }
-                ]
-              },
-              {
-                "role": "assistant",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "{\"animal_type\":\"cat\",\"image_type\":\"x-ray\",\"diagnosis\":{\"diagnostic_name\":\"Periodontitis\",\"explanation\":\"The dental x-ray indicates advanced periodontal disease, known as periodontitis. In this condition, the supporting structures of the teeth, including the gums and bone, are damaged due to bacterial infection. The image suggests bone loss and possible formation of periodontal pockets, typical indicators of periodontitis. This disease can eventually lead to tooth loss if not addressed. Managing such a condition involves thorough cleaning and, in severe cases, might require surgical intervention to prevent further damage.\"}}"
-                  }
-                ]
-              },
-              {
-                "role": "user",
-                "content": [
-                  {
-                    "type": "image_url",
-                    "image_url": {
-                      "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
-                    }
-                  }
-                ]
-              },
-              {
-                "role": "assistant",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "{\"image_type\":\"x-ray\",\"is_tooth_image\":true,\"diagnosis\":{\"diagnostic_name\":\"Periodontitis\",\"description\":\"The dental x-ray suggests signs of periodontitis, which is an advanced stage of gum disease involving bone loss around teeth. This can lead to loose teeth if not treated.\"},\"final_answer\":\"The x-ray shows signs consistent with periodontitis, indicating bone loss around the teeth.\"}"
-                  }
-                ]
-              },
-              {
-                "role": "user",
-                "content": [
-                  {
-                    "type": "image_url",
-                    "image_url": {
-                      "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
-                    }
-                  }
-                ]
-              },
-              {
-                "role": "assistant",
-                "content": [
-                  {
-                    "type": "text",
-                    "text": "{\"image_type\":\"dog\",\"is_tooth_image\":false,\"diagnosis\":{\"diagnostic_name\":\"Normal\",\"description\":\"This is an image of a dog during a bath, with shampoo lather on its coat. There's nothing diagnostically significant to find; the dog appears to be in a normal bathing situation.\"},\"final_answer\":\"The image is of a dog receiving a bath, appearing normal and healthy.\"}"
-                  }
-                ]
-              }
-            ],
-            response_format: {
-              "type": "json_schema",
-              "json_schema": {
-                "name": "image_analysis",
-                "strict": true,
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "image_type": {
-                      "type": "string",
-                      "description": "Indicates whether the image is of a dog, cat, an X-ray, or other.",
-                      "enum": [
-                        "dog",
-                        "cat",
-                        "x-ray",
-                        "other"
-                      ]
-                    },
-                    "is_tooth_image": {
-                      "type": "boolean",
-                      "description": "Indicator if the image is specifically of a tooth."
-                    },
-                    "diagnosis": {
-                      "type": "object",
-                      "properties": {
-                        "diagnostic_name": {
-                          "type": "string",
-                          "description": "The name of the diagnosis.",
-                          "enum": [
-                            "Gingivitis & Plaque",
-                            "Periodontitis",
-                            "Normal"
-                          ]
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": `A detailed explanation of the diagnosis, translated into ${i18n.language}, at least 200 characters.`
-                        }
-                      },
-                      "required": [
-                        "diagnostic_name",
-                        "description"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "image_type",
-                    "is_tooth_image",
-                    "diagnosis"
-                  ],
-                  "additionalProperties": false
                 }
-              }
+              ]
             },
-            temperature: 1,
-            max_completion_tokens: 2048,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0
-      });
+          ],
+          response_format: {
+            "type": "json_schema",
+            "json_schema": {
+              "name": "image_analysis",
+              "strict": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image_type": {
+                    "type": "string",
+                    "description": "Indicates whether the image is of a dog, cat, an X-ray, or other.",
+                    "enum": [
+                      "dog",
+                      "cat",
+                      "x-ray",
+                      "other"
+                    ]
+                  },
+                  "is_tooth_image": {
+                    "type": "boolean",
+                    "description": "Indicator if the image is specifically of a tooth."
+                  },
+                  "diagnosis": {
+                    "type": "object",
+                    "properties": {
+                      "diagnostic_name": {
+                        "type": "string",
+                        "description": "The name of the diagnosis.",
+                        "enum": [
+                          "Gingivitis & Plaque",
+                          "Periodontitis",
+                          "Normal"
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": `A detailed explanation of the diagnosis, translated into ${i18n.language}, at least 200 characters.`
+                      }
+                    },
+                    "required": [
+                      "diagnostic_name",
+                      "description"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "image_type",
+                  "is_tooth_image",
+                  "diagnosis"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          temperature: 1,
+          max_completion_tokens: 2048,
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0
+        });
 
       // 4) 응답(JSON) 파싱
       const responseData = response;
@@ -238,7 +189,7 @@ const DentalAnalysis: React.FC = () => {
       const assistantMessage = responseData?.choices?.[0]?.message?.content?.trim() || "(No response)";
       console.log("뽑은 데이터: ", assistantMessage);
 
-        // 5) 응답에 따른 분기 처리
+      // 5) 응답에 따른 분기 처리
       try {
           // assistantMessage를 JSON 객체로 파싱
           const parsedData = JSON.parse(assistantMessage);
