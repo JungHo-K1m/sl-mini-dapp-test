@@ -317,7 +317,7 @@ const DentalAnalysis: React.FC = () => {
                       alt="Upload arrow"
                       className="w-20 h-20 mb-6"
                     />
-                    <p className="text-white font-medium text-base">Click here to upload your image</p>
+                    <p className="text-white font-medium text-base whitespace-nowrap">{t("ai_page.click_here")}</p>
                   </>
                 )}
               </label>
