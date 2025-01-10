@@ -263,43 +263,43 @@ const AIXrayAnalysis: React.FC = () => {
       <TopTitle title={t('ai_page.ai_xray_analysis')} back={true} />
 
       <div className="mt-6 w-full max-w-sm mx-auto p-2 flex flex-col items-center">
-      {/* 실제 파일 업로드 input (숨김 처리) */}
-      <input
-        id="file-upload"
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="hidden"
-      />
+        {/* 실제 파일 업로드 input (숨김 처리) */}
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
 
-      <label
-        htmlFor="file-upload"
-        className="cursor-pointer w-[280px] h-[280px] flex flex-col items-center justify-center rounded-3xl border-2 bg-[#2E3364B2] border-[#3937A3] overflow-hidden">
-        {selectedImage ? (
-          // 이미 파일을 업로드했다면 미리보기
-          <img
-            src={URL.createObjectURL(selectedImage)}
-            alt="Uploaded X-ray"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          // 아직 업로드 전이면, 화살표 이미지 + 안내 문구
-          <>
+        <label
+          htmlFor="file-upload"
+          className="cursor-pointer w-[280px] h-[280px] flex flex-col items-center justify-center rounded-3xl border-2 bg-[#2E3364B2] border-[#3937A3] overflow-hidden">
+          {selectedImage ? (
+            // 이미 파일을 업로드했다면 미리보기
             <img
-              src={Images.UploadArrow} 
-              alt="Upload arrow"
-              className="w-20 h-20 mb-6"
+              src={URL.createObjectURL(selectedImage)}
+              alt="Uploaded X-ray"
+              className="w-full h-full object-cover"
             />
-            <p className="text-white font-medium text-base">Click here to upload your image</p>
-          </>
-        )}
-      </label>
-    </div>
+          ) : (
+            // 아직 업로드 전이면, 화살표 이미지 + 안내 문구
+            <>
+              <img
+                src={Images.UploadArrow} 
+                alt="Upload arrow"
+                className="w-20 h-20 mb-6"
+              />
+              <p className="text-white font-medium text-base">Click here to upload your image</p>
+            </>
+          )}
+        </label>
+      </div>
 
       {!isAnalyzed && (
         <div className="mt-6 w-full max-w-lg mx-auto">
           <button
-            className={`w-full text-white text-lg py-2 px-4 rounded-full ${loading ? 'cursor-wait' : ''}`}
+            className={`w-full h-14 text-white text-base font-medium py-2 px-4 rounded-full ${loading ? 'cursor-wait' : ''}`}
             style={{ backgroundColor: '#0147E5' }}
             onClick={analyzeImage}
             disabled={loading}
