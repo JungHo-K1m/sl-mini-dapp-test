@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from '@tanstack/react-query';
 import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
+import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
 
 const AIXrayAnalysis: React.FC = () => {
@@ -23,6 +24,12 @@ const AIXrayAnalysis: React.FC = () => {
 
   const petData = location.state as { id: string };
   const petId = petData?.id || '';
+
+  
+  const openai = new OpenAI({
+      apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
+      dangerouslyAllowBrowser: true,
+  });
 
   const symptomsInfo: Record<string, string> = {
     "Periodontitis": t("ai_page.reuslts.symptoms_of_periodontitis"),
@@ -68,6 +75,31 @@ const AIXrayAnalysis: React.FC = () => {
       setIsAnalyzed(false);
     }
   };
+  
+  function getImageExtension(file: File): string {
+    // 예: file.type === "image/jpeg", "image/png" 등
+    const mimeType = file.type;
+    const extension = mimeType.split("/")[1] || "jpeg";
+    return extension;
+  }
+  
+  async function convertFileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const result = reader.result as string;
+        // "data:image/png;base64,..." 부분을 둘로 나누고 뒷부분만 사용
+        const base64String = result.split(",")[1];
+        if (base64String) {
+          resolve(base64String);
+        } else {
+          reject("Failed to convert file to base64.");
+        }
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  }
 
   const analyzeImage = async () => {
     if (!selectedImage) {
@@ -78,24 +110,123 @@ const AIXrayAnalysis: React.FC = () => {
     setLoading(true);
     const loadedModel = await loadModel();
 
-    if (loadedModel && selectedImage) {
-      const imageElement = new Image();
-      imageElement.src = URL.createObjectURL(selectedImage);
-      imageElement.onload = async () => {
-        const predictions = await loadedModel.predict(imageElement);
-        const highestPrediction = predictions.reduce((prev, current) =>
-          prev.probability > current.probability ? prev : current
-        );
+    try{
+      const base64Data = await convertFileToBase64(selectedImage);
 
-        setLabel(
-          highestPrediction.probability > 0.95
-            ? t(`ai_page.reuslts.${highestPrediction.className.replace(/ /g, "_")}`, { defaultValue: t("ai_page.reuslts.Normal") })
-            : t("ai_page.reuslts.Normal")
-        );
-        setIsAnalyzed(true);
-        setLoading(false);
-      };
-    } else {
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "image_url",
+                "image_url": {
+                  "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
+                }
+              }
+            ]
+          },
+        ],
+        response_format: {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "image_analysis",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image_type": {
+                  "type": "string",
+                  "description": "Type of the analyzed image.",
+                  "enum": [
+                    "human_xray",
+                    "pet_xray",
+                    "non_xray"
+                  ]
+                }
+              },
+              "required": [
+                "image_type"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        temperature: 1,
+        max_completion_tokens: 2048,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0
+      });
+      
+      const responseData = response;
+      console.log("openAI 응답: ", responseData);
+      const assistantMessage = responseData?.choices?.[0]?.message?.content?.trim() || "(No response)";
+      console.log("뽑은 데이터: ", assistantMessage);
+
+      try{
+        const parsedData = JSON.parse(assistantMessage);
+        console.log("Parsed Response Data:", parsedData);
+
+        if(parsedData.image_type === "human_xray"){
+          // 업로드한 사진이 사람의 x-ray 이미지인 경우
+          console.log("사람의 x-ray까지 분석은 못해요.");
+          showModalFunction("upload your pet's xray, not human's.");
+          setIsAnalyzed(false);
+          setLabel("Upload Again");
+          setSelectedImage(null);
+          getSymptomDescription("");
+        } else if(parsedData.image_type === "non_xray"){
+          // 업로드한 사진이 전혀 x-ray 이미지가 아닌 겨우
+          console.log("반려동물의 x-ray이미지만 올려주세요.");
+          showModalFunction("Please upload your pet's x-ray Image.");
+          setIsAnalyzed(false);
+          setLabel("Upload Again");
+          setSelectedImage(null);
+          getSymptomDescription("");
+        } else if(parsedData.image_type === "pet_xray"){
+          // 업로드한 사진이 반려 동물의 x-ray 이미지인 경우
+          if (loadedModel && selectedImage) {
+            const imageElement = new Image();
+            imageElement.src = URL.createObjectURL(selectedImage);
+            imageElement.onload = async () => {
+              const predictions = await loadedModel.predict(imageElement);
+              const highestPrediction = predictions.reduce((prev, current) =>
+                prev.probability > current.probability ? prev : current
+              );
+
+              setLabel(
+                highestPrediction.probability > 0.95
+                  ? t(`ai_page.reuslts.${highestPrediction.className.replace(/ /g, "_")}`, { defaultValue: t("ai_page.reuslts.Normal") })
+                  : t("ai_page.reuslts.Normal")
+              );
+              setIsAnalyzed(true);
+              setLoading(false);
+            };
+          } else {
+            setLoading(false);
+          }
+        } else {
+          // 예외 처리: 유효하지 않은 응답
+          showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+          setIsAnalyzed(false);
+          setSelectedImage(null);
+          setLabel(t("ai_page.Analysis_failed"));
+          getSymptomDescription("");
+        }
+      } catch(error){
+        console.error("JSON Parsing Error:", error);
+        showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+        setIsAnalyzed(false);
+        setSelectedImage(null);
+        setLabel(t("ai_page.Analysis_failed"));
+      }
+    } catch(error: any){
+      console.error("OpenAI Error:", error);
+      showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+    } finally {
       setLoading(false);
     }
   };
