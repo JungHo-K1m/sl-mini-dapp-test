@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 import getFriends from '@/entities/Mission/api/friends';
 import liff from "@line/liff";
+import { formatNumber } from '@/shared/utils/formatNumber';
 
 interface TruncateMiddleProps {
   text: string;
@@ -117,7 +118,7 @@ const InviteFriends: React.FC = () => {
         <div className="flex flex-row items-center">
           <div className="flex flex-col items-center gap-2 justify-center">
             <img src={Images.Star} alt="star" className="h-11" />
-            <p className="font-medium text-sm">1000 P</p>
+            <p className="font-medium text-sm">{formatNumber(10000)} P</p>
           </div>
         </div>
         <p className="text-sm ">
