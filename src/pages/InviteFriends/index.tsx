@@ -129,8 +129,7 @@ const InviteFriends: React.FC = () => {
           {t("mission_page.of_your_invited_friend's_reward.")}
         </p>
         <button 
-          className="h-14 w-[302px] rounded-full bg-[#21212f]"
-          onClick={()=>navigate("/invite-friends-list")}>
+          className="h-14 w-[302px] rounded-full bg-[#21212f]">
           {t('mission_page.Invite_Friends_and_Get_Reward')}
         </button>
       </div>
@@ -148,7 +147,9 @@ const InviteFriends: React.FC = () => {
         <div className="flex flex-col mt-8 w-full gap-3">
           <div className="flex flex-row justify-between items-center mb-[6px]">
             <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
-            <div className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]">
+            <div
+              className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]"
+              onClick={()=>navigate("/invite-friends-list")}>
               Total : <span className="text-[#FDE047]">{friends.length}</span>
             </div>
           </div>
