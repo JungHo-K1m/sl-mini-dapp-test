@@ -79,19 +79,28 @@ const InviteFriends: React.FC = () => {
     fetchFriendsData();
   }, []);
 
-  const shareButton = async () => {
-    if (liff.isApiAvailable('shareTargetPicker')) {
-      console.log("targetpicker 시작");
-      liff.shareTargetPicker([
-        {
-          type: "text",
-          text: "Hello, World!"
-        }
-      ]).catch(function(res) {
-        console.log("Failed to launch ShareTargetPicker")
-      })
+  const handleInviteClick = async () => {
+    try {
+      if (!liff.isLoggedIn()) {
+        liff.login({ redirectUri: window.location.href });
+        return;
+      }
+
+      if (liff.isApiAvailable('shareTargetPicker')) {
+        await liff.shareTargetPicker([
+          {
+            type: 'text',
+            text: `Join me on this awesome app! Use my referral link: ${referralLink}`
+          }
+        ]);
+        console.log('Message sent!');
+      } else {
+        console.error('Share Target Picker API is not available.');
+      }
+    } catch (error) {
+      console.error('Error sharing message:', error);
     }
-  }
+  };
 
   // 로딩 상태 처리
   if (loading) {
@@ -130,19 +139,11 @@ const InviteFriends: React.FC = () => {
           {t("mission_page.of_your_invited_friend's_reward.")}
         </p>
         <button 
-          className="h-14 w-[302px] rounded-full bg-[#21212f]">
+          className="h-14 w-[302px] rounded-full bg-[#21212f]"
+          onClick={handleInviteClick}>
           {t('mission_page.Invite_Friends_and_Get_Reward')}
         </button>
       </div>
-
-      {/* 공유 버튼 테스트 */}
-      {/* <div className="w-[80%] h-10 my-8">
-        <button 
-          className="w-full h-full bg-green-700 rounded-full"
-          onClick={shareButton}>
-          testing share
-        </button>
-      </div> */}
 
       {friends.length > 0 ? ( // 친구 목록이 존재하는 경우에만 렌더링
         <div className="flex flex-col mt-8 w-full gap-3">
