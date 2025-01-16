@@ -7,6 +7,7 @@ import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
 import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
+import getBalance from '@/entities/AI/api/checkBalance';
 
 const AIXrayAnalysis: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,13 @@ const AIXrayAnalysis: React.FC = () => {
 
   const [model, setModel] = useState<tmImage.CustomMobileNet | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [label, setLabel] = useState(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
+
+  // ① 영어 원본 라벨
+  const [predictedLabel, setPredictedLabel] = useState<string>('');
+
+  // ② 화면에 보여줄 번역된 라벨
+  const [displayLabel, setDisplayLabel] = useState<string>(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
+
   const [loading, setLoading] = useState(false);
   const [showFullText, setShowFullText] = useState(false);
   const [isAnalyzed, setIsAnalyzed] = useState(false);
@@ -25,12 +32,12 @@ const AIXrayAnalysis: React.FC = () => {
   const petData = location.state as { id: string };
   const petId = petData?.id || '';
 
-  
   const openai = new OpenAI({
-      apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
-      dangerouslyAllowBrowser: true,
+    apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
+    dangerouslyAllowBrowser: true,
   });
 
+  // “원본 라벨” -> “화면용 라벨” 매핑을 위한 딕셔너리
   const symptomsInfo: Record<string, string> = {
     "Periodontitis": t("ai_page.reuslts.symptoms_of_periodontitis"),
     "Normal": t("ai_page.reuslts.no_issues_detected"),
@@ -40,6 +47,7 @@ const AIXrayAnalysis: React.FC = () => {
     "Healthy": t("ai_page.reuslts.no_issues_detected_healthy"),
   };
 
+  // displayLabel를 얻기 위한 함수
   const getSymptomDescription = (label: string) =>
     symptomsInfo[label] || t("ai_page.Diagnosis_information_not_available");
 
@@ -48,12 +56,11 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   useEffect(() => {
-      // 페이지 최초 로드 시 모달 표시
-      setModalInfo({
-          isVisible: true,
-          message: t("ai_page.Please_upload_x_ray_image")
-      });
-  }, []);
+    setModalInfo({
+      isVisible: true,
+      message: t("ai_page.5SL_tokens")
+    });
+  }, [t]);
 
   const loadModel = async () => {
     if (model) return model;
@@ -71,25 +78,27 @@ const AIXrayAnalysis: React.FC = () => {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setSelectedImage(event.target.files[0]);
-      setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image"));
+
+      // 분석 전이므로, 원본 라벨과 화면표시용 라벨도 초기화
+      setPredictedLabel('');
+      setDisplayLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image"));
+
       setIsAnalyzed(false);
     }
   };
-  
+
   function getImageExtension(file: File): string {
-    // 예: file.type === "image/jpeg", "image/png" 등
     const mimeType = file.type;
     const extension = mimeType.split("/")[1] || "jpeg";
     return extension;
   }
-  
+
   async function convertFileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
         const result = reader.result as string;
-        // "data:image/png;base64,..." 부분을 둘로 나누고 뒷부분만 사용
         const base64String = result.split(",")[1];
         if (base64String) {
           resolve(base64String);
@@ -101,6 +110,21 @@ const AIXrayAnalysis: React.FC = () => {
     });
   }
 
+  const checkBalance = async () => {
+    try {
+      const response = await getBalance();
+      if (response.message === "Success") {
+        analyzeImage();
+      } else {
+        setShowModal(true);
+        showModalFunction(t("ai_page.5SL_tokens"));
+      }
+    } catch (error: any) {
+      console.error("Balance check Error:", error);
+      showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+    }
+  };
+
   const analyzeImage = async () => {
     if (!selectedImage) {
       showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
@@ -110,9 +134,9 @@ const AIXrayAnalysis: React.FC = () => {
     setLoading(true);
     const loadedModel = await loadModel();
 
-    try{
+    try {
       const base64Data = await convertFileToBase64(selectedImage);
-      
+
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
@@ -159,34 +183,30 @@ const AIXrayAnalysis: React.FC = () => {
         frequency_penalty: 0,
         presence_penalty: 0
       });
-      
+
       const responseData = response;
       console.log("openAI 응답: ", responseData);
       const assistantMessage = responseData?.choices?.[0]?.message?.content?.trim() || "(No response)";
       console.log("뽑은 데이터: ", assistantMessage);
 
-      try{
+      try {
         const parsedData = JSON.parse(assistantMessage);
         console.log("Parsed Response Data:", parsedData);
 
-        if(parsedData.image_type === "human_xray"){
-          // 업로드한 사진이 사람의 x-ray 이미지인 경우
-          console.log("사람의 x-ray까지 분석은 못해요.");
-          showModalFunction("upload your pet's xray, not human's.");
+        if (parsedData.image_type === "human_xray") {
+          showModalFunction("Upload your pet's x-ray, not a human's.");
           setIsAnalyzed(false);
-          setLabel("Upload Again");
+          setDisplayLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
           setSelectedImage(null);
-          getSymptomDescription("");
-        } else if(parsedData.image_type === "non_xray"){
-          // 업로드한 사진이 전혀 x-ray 이미지가 아닌 겨우
-          console.log("반려동물의 x-ray이미지만 올려주세요.");
+          setPredictedLabel('');
+        } else if (parsedData.image_type === "non_xray") {
           showModalFunction("Please upload your pet's x-ray Image.");
           setIsAnalyzed(false);
-          setLabel("Upload Again");
+          setDisplayLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
           setSelectedImage(null);
-          getSymptomDescription("");
-        } else if(parsedData.image_type === "pet_xray"){
-          // 업로드한 사진이 반려 동물의 x-ray 이미지인 경우
+          setPredictedLabel('');
+        } else if (parsedData.image_type === "pet_xray") {
+          // 실제 분류 모델 동작
           if (loadedModel && selectedImage) {
             const imageElement = new Image();
             imageElement.src = URL.createObjectURL(selectedImage);
@@ -196,11 +216,21 @@ const AIXrayAnalysis: React.FC = () => {
                 prev.probability > current.probability ? prev : current
               );
 
-              setLabel(
+              // ① 예측 결과(영어 원본)
+              const rawLabel = highestPrediction.className;
+
+              // ② 번역된 문자열
+              const translatedLabel =
                 highestPrediction.probability > 0.95
-                  ? t(`ai_page.reuslts.${highestPrediction.className.replace(/ /g, "_")}`, { defaultValue: t("ai_page.reuslts.Normal") })
-                  : t("ai_page.reuslts.Normal")
-              );
+                  ? t(`ai_page.reuslts.${rawLabel.replace(/ /g, "_")}`, {
+                      defaultValue: t("ai_page.reuslts.Normal"),
+                    })
+                  : t("ai_page.reuslts.Normal");
+
+              // state에 둘 다 반영
+              setPredictedLabel(rawLabel);
+              setDisplayLabel(translatedLabel);
+
               setIsAnalyzed(true);
               setLoading(false);
             };
@@ -208,21 +238,21 @@ const AIXrayAnalysis: React.FC = () => {
             setLoading(false);
           }
         } else {
-          // 예외 처리: 유효하지 않은 응답
           showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
           setIsAnalyzed(false);
           setSelectedImage(null);
-          setLabel(t("ai_page.Analysis_failed"));
-          getSymptomDescription("");
+          setDisplayLabel(t("ai_page.Analysis_failed"));
+          setPredictedLabel('');
         }
-      } catch(error){
+      } catch (error) {
         console.error("JSON Parsing Error:", error);
         showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
         setIsAnalyzed(false);
         setSelectedImage(null);
-        setLabel(t("ai_page.Analysis_failed"));
+        setDisplayLabel(t("ai_page.Analysis_failed"));
+        setPredictedLabel('');
       }
-    } catch(error: any){
+    } catch (error: any) {
       console.error("OpenAI Error:", error);
       showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
     } finally {
@@ -230,6 +260,7 @@ const AIXrayAnalysis: React.FC = () => {
     }
   };
 
+  // 결과 저장
   const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
     mutationFn: (formData: FormData) => storeResult(formData, "xray"),
     onSuccess: () => navigate('/AI-menu', { state: { id: petId } }),
@@ -242,10 +273,11 @@ const AIXrayAnalysis: React.FC = () => {
       return;
     }
 
+    // 이 때는 영어 원본 라벨(predictedLabel)을 저장
     const formData = new FormData();
     formData.append(
       'json',
-      new Blob([JSON.stringify({ petId, result: label })], { type: 'application/json' })
+      new Blob([JSON.stringify({ petId, result: predictedLabel })], { type: 'application/json' })
     );
     formData.append('file', selectedImage);
 
@@ -253,7 +285,8 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   const resetAnalysis = () => {
-    setLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
+    setDisplayLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
+    setPredictedLabel('');
     setSelectedImage(null);
     setIsAnalyzed(false);
   };
@@ -276,32 +309,33 @@ const AIXrayAnalysis: React.FC = () => {
           htmlFor="file-upload"
           className="cursor-pointer w-[280px] h-[280px] flex flex-col items-center justify-center rounded-3xl border-2 bg-[#2E3364B2] border-[#3937A3] overflow-hidden">
           {selectedImage ? (
-            // 이미 파일을 업로드했다면 미리보기
             <img
               src={URL.createObjectURL(selectedImage)}
               alt="Uploaded X-ray"
               className="w-full h-full object-cover"
             />
           ) : (
-            // 아직 업로드 전이면, 화살표 이미지 + 안내 문구
             <>
               <img
                 src={Images.UploadArrow} 
                 alt="Upload arrow"
                 className="w-20 h-20 mb-6"
               />
-              <p className="text-white font-medium text-base whitespace-nowrap">{t("ai_page.click_here")}</p>
+              <p className="text-white font-medium text-base whitespace-nowrap">
+                {t("ai_page.click_here")}
+              </p>
             </>
           )}
         </label>
       </div>
 
+      {/* 분석 전 버튼 */}
       {!isAnalyzed && (
         <div className="mt-6 w-full max-w-lg mx-auto">
           <button
             className={`w-full h-14 text-white text-base font-medium py-2 px-4 rounded-full ${loading ? 'cursor-wait' : ''}`}
             style={{ backgroundColor: '#0147E5' }}
-            onClick={analyzeImage}
+            onClick={checkBalance}
             disabled={loading}
           >
             {loading ? t("ai_page.Analyzing...") : t("ai_page.Upload_image_and_analysis")}
@@ -309,22 +343,23 @@ const AIXrayAnalysis: React.FC = () => {
         </div>
       )}
 
+      {/* 분석 완료 UI */}
       {isAnalyzed && (
         <>
           <div className="mt-4 text-lg font-semibold">
-            <p>{t("ai_page.Analysis_results")}: {label}</p>
+            <p>{t("ai_page.Analysis_results")}: {displayLabel}</p>
           </div>
 
           <div className="mt-4 p-4 bg-gray-800 rounded-xl max-w-sm mx-auto">
             <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-3'}`}>
-              {getSymptomDescription(label)}
+              {getSymptomDescription(predictedLabel)}
             </p>
             <div className="flex justify-center mt-2">
               <button
                 className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
                 style={{ backgroundColor: '#FFFFFF' }}
                 onClick={() => setShowFullText(!showFullText)}
-                >
+              >
                 {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
               </button>
             </div>
@@ -350,6 +385,7 @@ const AIXrayAnalysis: React.FC = () => {
         </>
       )}
 
+      {/* 모달 */}
       {(showModal || modalInfo.isVisible) && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full">
           <div className="bg-white p-6 rounded-lg text-black text-center w-[70%] max-w-[550px]">

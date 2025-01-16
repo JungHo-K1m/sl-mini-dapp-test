@@ -53,7 +53,7 @@ const DentalAnalysis: React.FC = () => {
       // 페이지 최초 로드 시 모달 표시
       setModalInfo({
           isVisible: true,
-          message: t("ai_page.Please_upload_actual_photo")
+          message: t("ai_page.5SL_tokens")
       });
   }, []);
 
@@ -106,7 +106,8 @@ const DentalAnalysis: React.FC = () => {
         showModalFunction(t("ai_page.5SL_tokens"));
       }
     } catch(error: any){
-
+      console.error("Balance check Error:", error);
+      showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
     }
   }
 
