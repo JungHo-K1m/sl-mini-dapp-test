@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from '@tanstack/react-query';
 import Images from "@/shared/assets/images";
 import storeResult from '@/entities/AI/api/stroeResult';
+import storeDescription from '@/entities/AI/api/storeDescription';
 import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
 
@@ -255,7 +256,9 @@ const DentalAnalysis: React.FC = () => {
 
   // 결과 저장 mutation
   const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
-    mutationFn: (formData: FormData) => storeResult(formData, "dental"),
+    // mutationFn: (formData: FormData) => storeResult(formData, "dental"),
+    
+    mutationFn: (formData: FormData) => storeDescription(formData),
     onSuccess: () => navigate('/AI-menu', { state: { id: petId } }),
     onError: () => showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again.")),
   });
@@ -270,7 +273,13 @@ const DentalAnalysis: React.FC = () => {
     const formData = new FormData();
     formData.append(
       'json',
-      new Blob([JSON.stringify({ petId, result: label })], { type: 'application/json' })
+      new Blob(
+        [
+          JSON.stringify({
+            petId, 
+            result: label,
+            description: explanation,           
+        })], { type: 'application/json' })
     );
     formData.append('file', selectedImage);
 
