@@ -22,12 +22,8 @@ const DiagnosisDetail: React.FC = () => {
     const [showFullText, setShowFullText] = useState(false);
 
     return (
-        // 1) 부모 컨테이너: relative + min-h-screen
         <div className="relative flex flex-col items-center text-white mx-6 md:mx-28 min-h-screen">
-            
-            {/* 2) 스크롤 영역: flex-1, overflow-y-auto, 하단 버튼과 겹치지 않도록 pb-36 등으로 충분히 여백 */}
-            <div className="flex-1 w-full overflow-y-auto pb-36">
-                
+            <div className="flex-1 w-full overflow-y-auto pb-6">
                 <TopTitle title={t("ai_page.Record_Details")} back={true} />
 
                 {/* 이미지 표시 영역 */}
