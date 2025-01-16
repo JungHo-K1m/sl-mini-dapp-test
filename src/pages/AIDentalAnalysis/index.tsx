@@ -245,31 +245,36 @@ const DentalAnalysis: React.FC = () => {
           } else if ((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === true && parsedData.diagnosis) {
               // 분석 성공: 진단 결과 표시
               console.log("분석을 정상적으로 했어요.");
+              const originalExplanation = parsedData.diagnosis.description;
+      
+              setLabel(parsedData.diagnosis.diagnostic_name);
+              setExplanation(originalExplanation);
+              setIsAnalyzed(true);
 
               // sl 차감 api 진행
-              try{
-                const slResponse = await slPayment();
+              // try{
+              //   const slResponse = await slPayment();
 
-                if(slResponse.message === "Success"){
-                  const originalExplanation = parsedData.diagnosis.description;
+              //   if(slResponse.message === "Success"){
+              //     const originalExplanation = parsedData.diagnosis.description;
       
-                  setLabel(parsedData.diagnosis.diagnostic_name);
-                  setExplanation(originalExplanation);
-                  setIsAnalyzed(true);
-                }else {
-                  setShowModal(true);
-                  setSelectedImage(null);
-                  setIsAnalyzed(false);
-                  showModalFunction(t("ai_page.5SL_tokens"));
-                }
-              }catch(error: any){
-                console.error("sl payment Error:", error);
-                showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
-                setIsAnalyzed(false);
-                setSelectedImage(null);
-                setLabel(t("ai_page.Analysis_failed"));
-                setExplanation(""); // 설명 초기화
-              }
+              //     setLabel(parsedData.diagnosis.diagnostic_name);
+              //     setExplanation(originalExplanation);
+              //     setIsAnalyzed(true);
+              //   }else {
+              //     setShowModal(true);
+              //     setSelectedImage(null);
+              //     setIsAnalyzed(false);
+              //     showModalFunction(t("ai_page.5SL_tokens"));
+              //   }
+              // }catch(error: any){
+              //   console.error("sl payment Error:", error);
+              //   showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+              //   setIsAnalyzed(false);
+              //   setSelectedImage(null);
+              //   setLabel(t("ai_page.Analysis_failed"));
+              //   setExplanation(""); // 설명 초기화
+              // }
           } else {
               // 예외 처리: 유효하지 않은 응답
               showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
@@ -288,6 +293,8 @@ const DentalAnalysis: React.FC = () => {
       }            
     } catch (error: any) {
         console.error("OpenAI Error:", error);
+        setIsAnalyzed(false);
+        setSelectedImage(null);
         showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
     } finally {
         setLoading(false);
