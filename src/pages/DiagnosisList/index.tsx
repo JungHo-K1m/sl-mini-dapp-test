@@ -22,7 +22,8 @@ const DiagnosisRecords: React.FC = () => {
         diagnosisImgUrl: string, 
         petName: string, 
         petImgUrl: string, 
-        type: string 
+        type: string,
+        description: string
     }[]>([]);
     const petData = location.state as { id: string };
     const [id] = useState<string>(petData?.id || '');
@@ -137,7 +138,14 @@ const DiagnosisRecords: React.FC = () => {
                     {records.map((record, index) => (
                         <div 
                             key={index} className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                            onClick={() => navigate('/diagnosis-detail', { state: { img: record.diagnosisImgUrl, result: record.result } })}>
+                            onClick={() => navigate('/diagnosis-detail', {state: {
+                                // 다른 필드들
+                                img: record.diagnosisImgUrl,
+                                result: record.result,
+                      
+                                // DENTAL_REAL이라면 description도 넘겨주기
+                                description: record.type === "DENTAL_REAL" ? record.description : "",
+                              } })}>
                             <div>
                                 <p className="font-semibold text-base">{`${record.diagnosisAt}  ${record.type}`}</p>
                                 <p className="text-sm font-normal text-gray-400">{record.result}</p>

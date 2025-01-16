@@ -8,13 +8,23 @@ const DiagnosisDetail: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const resultData = location.state as { img: string, result: string };
-    const [label] = useState<string>(resultData?.result || ''); // 진단명
-    const [imageUrl] = useState<string>(resultData?.img || ''); // 진단 이미지
+
+    // ---------------------------------------
+    // (1) description까지 받아오기
+    // ---------------------------------------
+    const { img, result, description } = location.state as {
+      img: string;
+      result: string;
+      description?: string;  // 없을 수도 있으니 optional
+    };
+
+    // 기존 state
+    const [label] = useState<string>(result || '');   // 진단명
+    const [imageUrl] = useState<string>(img || '');   // 진단 이미지
     const [showFullText, setShowFullText] = useState(false);
 
     return (
-        <div className="flex flex-col items-center text-white mx-6 md:mx-28  min-h-screen">
+        <div className="flex flex-col items-center text-white mx-6 md:mx-28 min-h-screen">
             <TopTitle title={t("ai_page.Record_Details")} back={true} />
 
             {/* 이미지 표시 영역 */}
@@ -41,19 +51,37 @@ const DiagnosisDetail: React.FC = () => {
                 </div>
 
                 <div className="mt-4 p-4 bg-gray-800 text-white rounded-xl shadow-md max-w-2xl lg:max-w-3xl mx-auto">
-                    <p
-                        className="overflow-hidden text-sm md:text-base lg:text-lg font-normal"
-                        style={{
-                            display: "-webkit-box",
-                            WebkitLineClamp: showFullText ? undefined : 3,
-                            WebkitBoxOrient: "vertical",
-                        }}
-                    >
-                        {t(`ai_page.reuslts.symptoms_of_${label.replace(/ /g, "_").toLowerCase()}`) ||
+                    {/* ---------------------------------------
+                        (2) description 값이 있으면 그대로 표시,
+                            없으면 기존 번역 표시
+                       --------------------------------------- */}
+                    {description ? (
+                        <p
+                            className="overflow-hidden text-sm md:text-base lg:text-lg font-normal"
+                            style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: showFullText ? undefined : 3,
+                                WebkitBoxOrient: "vertical",
+                            }}
+                        >
+                            {description}
+                        </p>
+                    ) : (
+                        <p
+                            className="overflow-hidden text-sm md:text-base lg:text-lg font-normal"
+                            style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: showFullText ? undefined : 3,
+                                WebkitBoxOrient: "vertical",
+                            }}
+                        >
+                            {t(`ai_page.reuslts.symptoms_of_${label.replace(/ /g, "_").toLowerCase()}`) ||
                             t("ai_page.Diagnosis_information_not_available.")}
-                    </p>
+                        </p>
+                    )}
+                    
                     <div className="flex justify-center mt-2">
-                        {!showFullText && (
+                        {!showFullText ? (
                             <button
                                 className="mt-2 w-1/2 text-black text-base md:text-lg lg:text-xl font-semibold py-2 px-4 rounded-xl"
                                 style={{ backgroundColor: "#FFFFFF" }}
@@ -61,8 +89,7 @@ const DiagnosisDetail: React.FC = () => {
                             >
                                 {t("ai_page.See_more")}
                             </button>
-                        )}
-                        {showFullText && (
+                        ) : (
                             <button
                                 className="mt-2 w-1/2 text-black text-base md:text-lg lg:text-xl font-semibold py-2 px-4 rounded-xl"
                                 style={{ backgroundColor: "#FFFFFF" }}
@@ -74,13 +101,13 @@ const DiagnosisDetail: React.FC = () => {
                     </div>
                 </div>
             </div>
-            
+
             <div className="w-11/12 max-w-md absolute bottom-16 left-1/2 transform -translate-x-1/2">
                 <button
                     className="w-full py-4 rounded-full text-lg font-semibold"
                     style={{backgroundColor: '#0147E5'}}
                     onClick={() => navigate('/AI-menu')}
-                    >
+                >
                     {t("ai_page.Home")}
                 </button>
             </div>
