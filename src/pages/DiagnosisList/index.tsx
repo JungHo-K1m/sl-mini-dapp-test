@@ -112,7 +112,7 @@ const DiagnosisRecords: React.FC = () => {
             <TopTitle title={t("ai_page.Records")} back={true} />
 
             {/* 필터링 버튼 */}
-            <div className="flex justify-start w-full mt-2 h-11 relative">
+            <div className="flex justify-start w-full h-11 relative">
                 <div className="relative w-1/2 max-w-xs"> {/* 너비를 절반으로 조정 */}
                     <select
                         className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
