@@ -72,7 +72,7 @@ const SelectPet: React.FC = () => {
       </div>
 
       <div className="px-6">
-        <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto justify-items-center">
+        <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto justify-items-center">
           {/* 반려동물 목록 */}
           {pets.map((pet) => (
             <div key={pet.petId} className="flex flex-col items-center">
