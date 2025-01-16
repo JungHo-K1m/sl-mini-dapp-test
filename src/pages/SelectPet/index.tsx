@@ -84,7 +84,7 @@ const SelectPet: React.FC = () => {
                   onClick={() => handlePetSelect(pet.petId)}
                 />
                 <button
-                  className="absolute bottom-2 right-8 bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center"
+                  className="absolute bottom-2 right-3 bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center"
                   onClick={() =>
                     navigate(`/edit-pet`, {
                       state: { id: pet.petId, name: pet.name, imageUrl: pet.imageUrl },
