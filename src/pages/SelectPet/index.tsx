@@ -71,19 +71,19 @@ const SelectPet: React.FC = () => {
         <div className={`w-6 h-6`} ></div>
       </div>
 
-      <div className="grid grid-cols-2 gap-0 mt-6 w-full max-w-md">
+      <div className="grid grid-cols-2 gap-0.5 w-full max-w-sm mx-auto">
         {/* 반려동물 목록 */}
         {pets.map((pet) => (
-          <div key={pet.petId} className="w-full max-w-[180px] flex flex-col items-center">
-            <div className="relative w-full h-full rounded-2xl bg-[#0D1226] flex items-center justify-center overflow-hidden">
+          <div key={pet.petId} className="w-full flex flex-col items-center">
+            <div className="relative w-full h-full rounded-3xl bg-[#0D1226] flex items-center justify-center overflow-hidden">
               <img
                 src={pet.imageUrl}
                 alt={pet.name}
-                className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] lg:w-[180px] lg:h-[180px] object-cover rounded-2xl"
+                className="w-[130px] h-[130px] object-cover rounded-2xl"
                 onClick={() => handlePetSelect(pet.petId)}
               />
               <button
-                className="absolute bottom-2 right-8 bg-blue-500 rounded-full cursor-pointer w-6 h-6 flex items-center justify-center"
+                className="absolute bottom-2 right-8 bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center"
                 onClick={() =>
                   navigate(`/edit-pet`, {
                     state: { id: pet.petId, name: pet.name, imageUrl: pet.imageUrl },
@@ -93,20 +93,19 @@ const SelectPet: React.FC = () => {
                 <FaPen className="text-white w-3 h-3" />
               </button>
             </div>
-            {/* 이름 위/아래 여백도 줄임 */}
-            <div className="mt-1 mb-2 text-center font-normal text-sm w-full">{pet.name}</div>
+            <div className="mt-1 mb-2 text-center text-sm w-full">{pet.name}</div>
           </div>
         ))}
 
         {/* 반려동물 추가 버튼 */}
         <div key="add-pet" className="flex flex-col items-center">
           <div
-            className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] lg:w-[180px] lg:h-[180px] rounded-lg bg-gray-800 flex items-center justify-center cursor-pointer"
+            className="w-[130px] h-[130px] rounded-3xl bg-gray-800 flex items-center justify-center cursor-pointer"
             onClick={() => navigate('/regist-pet')}
           >
             <button className="text-white text-5xl">+</button>
           </div>
-          <div className="mt-1 text-center font-normal text-sm">{t("ai_page.Add_Profile")}</div>
+          <div className="mt-1 text-center text-sm">{t("ai_page.Add_Profile")}</div>
         </div>
       </div>
     </div>
