@@ -7,6 +7,7 @@ import storeResult from '@/entities/AI/api/stroeResult';
 import storeDescription from '@/entities/AI/api/storeDescription';
 import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
+import getBalance from '@/entities/AI/api/checkBalance';
 
 const DentalAnalysis: React.FC = () => {
   const navigate = useNavigate();
@@ -91,6 +92,22 @@ const DentalAnalysis: React.FC = () => {
     const mimeType = file.type;
     const extension = mimeType.split("/")[1] || "jpeg";
     return extension;
+  }
+
+  // SL 잔고 확인
+  const checkBalance = async () => {
+    try {
+      const response = await getBalance();
+
+      if(response.message === "Success"){
+        analyzeImage();
+      } else {
+        setShowModal(true);
+        showModalFunction(t("ai_page.5SL_tokens"));
+      }
+    } catch(error: any){
+
+    }
   }
 
   // 이미지 분석 함수
@@ -338,7 +355,7 @@ const DentalAnalysis: React.FC = () => {
                     <button
                         className={`w-full h-14 text-white text-base font-medium py-2 px-4 rounded-full ${loading ? 'cursor-wait' : ''}`}
                         style={{ backgroundColor: '#0147E5' }}
-                        onClick={analyzeImage}
+                        onClick={checkBalance}
                         disabled={loading}
                     >
                         {loading ? t("ai_page.Analyzing...") : t("ai_page.Upload_image_and_analysis")}
