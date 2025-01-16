@@ -83,7 +83,7 @@ const SelectPet: React.FC = () => {
                 onClick={() => handlePetSelect(pet.petId)}
               />
               <button
-                className="absolute bottom-2 right-8 bg-blue-500 p-1 rounded-full cursor-pointer w-6 h-6"
+                className="absolute bottom-2 right-8 bg-blue-500 rounded-full cursor-pointer w-6 h-6 flex items-center justify-center"
                 onClick={() =>
                   navigate(`/edit-pet`, {
                     state: { id: pet.petId, name: pet.name, imageUrl: pet.imageUrl },
@@ -92,6 +92,7 @@ const SelectPet: React.FC = () => {
               >
                 <FaPen className="text-white w-3 h-3" />
               </button>
+
             </div>
             <div className="mt-2 mb-6 text-center font-normal text-sm w-full">{pet.name}</div>
           </div>
