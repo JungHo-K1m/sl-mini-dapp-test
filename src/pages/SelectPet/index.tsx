@@ -71,7 +71,7 @@ const SelectPet: React.FC = () => {
         <div className={`w-6 h-6`} ></div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mt-11 w-full max-w-md">
+      <div className="grid grid-cols-2 gap-1 mt-11 w-full max-w-md">
         {/* 반려동물 목록 */}
         {pets.map((pet) => (
           <div key={pet.petId} className="w-full max-w-[180px] flex flex-col items-center">
@@ -79,11 +79,11 @@ const SelectPet: React.FC = () => {
               <img
                 src={pet.imageUrl}
                 alt={pet.name}
-                className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] lg:w-[180px] lg:h-[180px] object-cover rounded-2xl"
+                className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] lg:w-[180px] lg:h-[180px] object-cover rounded-md"
                 onClick={() => handlePetSelect(pet.petId)}
               />
               <button
-                className="absolute bottom-2 right-8 bg-blue-500 p-1 rounded-full cursor-pointer"
+                className="absolute bottom-2 right-8 bg-blue-500 p-1 rounded-full cursor-pointer w-6 h-6"
                 onClick={() =>
                   navigate(`/edit-pet`, {
                     state: { id: pet.petId, name: pet.name, imageUrl: pet.imageUrl },
