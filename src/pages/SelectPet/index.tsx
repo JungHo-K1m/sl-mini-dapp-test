@@ -71,7 +71,7 @@ const SelectPet: React.FC = () => {
         <div className={`w-6 h-6`} ></div>
       </div>
 
-      <div className="px-8">
+      <div className="px-6">
         <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto justify-items-center">
           {/* 반려동물 목록 */}
           {pets.map((pet) => (
