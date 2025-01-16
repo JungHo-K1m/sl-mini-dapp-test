@@ -258,6 +258,8 @@ const DentalAnalysis: React.FC = () => {
                   setIsAnalyzed(true);
                 }else {
                   setShowModal(true);
+                  setSelectedImage(null);
+                  setIsAnalyzed(false);
                   showModalFunction(t("ai_page.5SL_tokens"));
                 }
               }catch(error: any){
