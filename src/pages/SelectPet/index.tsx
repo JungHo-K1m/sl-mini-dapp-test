@@ -71,11 +71,11 @@ const SelectPet: React.FC = () => {
         <div className={`w-6 h-6`} ></div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mt-11 w-full max-w-md">
+      <div className="grid grid-cols-2 gap-3 mt-11 w-full max-w-md">
         {/* 반려동물 목록 */}
         {pets.map((pet) => (
           <div key={pet.petId} className="w-full max-w-[180px] flex flex-col items-center">
-            <div className="relative w-full h-full rounded-lg bg-[#0D1226] flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-full rounded-md bg-[#0D1226] flex items-center justify-center overflow-hidden">
               <img
                 src={pet.imageUrl}
                 alt={pet.name}
@@ -90,7 +90,7 @@ const SelectPet: React.FC = () => {
                   })
                 }
               >
-                <FaPen className="text-white" />
+                <FaPen className="text-white w-3 h-3" />
               </button>
             </div>
             <div className="mt-2 mb-6 text-center font-normal text-sm w-full">{pet.name}</div>
@@ -105,7 +105,7 @@ const SelectPet: React.FC = () => {
           >
             <button className="text-white text-5xl">+</button>
           </div>
-          <div className="mt-2 text-center font-semibold text-lg">{t("ai_page.Add_Profile")}</div>
+          <div className="mt-2 text-center font-normal text-sm">{t("ai_page.Add_Profile")}</div>
         </div>
       </div>
     </div>
