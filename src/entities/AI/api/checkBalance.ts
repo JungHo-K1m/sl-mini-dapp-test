@@ -2,7 +2,7 @@ import api from '@/shared/api/axiosInstance';
 
 // SL 잔고 확인
 export const getBalance = async (): Promise<any> => {
-  const response = await api.get('/diagnosis/balance');
+  const response = await api.get('/diagnosis/sl/balance');
   
   if (response.data.code === 'OK') {
     console.log("얼마고: ", response.data);
