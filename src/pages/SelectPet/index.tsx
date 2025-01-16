@@ -71,7 +71,7 @@ const SelectPet: React.FC = () => {
         <div className={`w-6 h-6`} ></div>
       </div>
 
-      <div className="grid grid-cols-2 gap-0.5 w-full max-w-sm mx-auto">
+      <div className="grid grid-cols-2 gap-0.5 w-full max-w-sm mx-5">
         {/* 반려동물 목록 */}
         {pets.map((pet) => (
           <div key={pet.petId} className="w-full flex flex-col items-center">
@@ -79,7 +79,7 @@ const SelectPet: React.FC = () => {
               <img
                 src={pet.imageUrl}
                 alt={pet.name}
-                className="w-[130px] h-[130px] object-cover rounded-2xl"
+                className="w-[130px] h-[130px] object-cover rounded-3xl"
                 onClick={() => handlePetSelect(pet.petId)}
               />
               <button
