@@ -385,7 +385,7 @@ const DentalAnalysis: React.FC = () => {
                     <button
                         className={`w-full h-14 text-white text-base font-medium py-2 px-4 rounded-full ${loading ? 'cursor-wait' : ''}`}
                         style={{ backgroundColor: '#0147E5' }}
-                        onClick={checkBalance}
+                        onClick={analyzeImage}
                         disabled={loading}
                     >
                         {loading ? t("ai_page.Analyzing...") : t("ai_page.Upload_image_and_analysis")}

@@ -78,15 +78,21 @@ const AIMenu: React.FC = () => {
   // 각 메뉴 클릭 시 전역 상태 설정 후 반려동물 선택 페이지로 이동
   const handleMenuClick = (menu: 'x-ray' | 'ai-analysis' | 'records') => {
     // x-ray 또는 ai-analysis 선택 시 전역 상태에 저장 후 반려동물 선택 페이지로 이동
-    if(slToken < 5 && menu === 'x-ray'){
-      setShowModal(true);
-    } else if(slToken < 5 && menu === 'ai-analysis') {
-      setShowModal(true);
-    } else {
-      setSelectedMenu(menu);
-      navigate('/select-pet');
-    }
+    setSelectedMenu(menu);
+    navigate('/select-pet');
   };
+
+  // const handleMenuClick = (menu: 'x-ray' | 'ai-analysis' | 'records') => {
+  //   // x-ray 또는 ai-analysis 선택 시 전역 상태에 저장 후 반려동물 선택 페이지로 이동
+  //   if(slToken < 5 && menu === 'x-ray'){
+  //     setShowModal(true);
+  //   } else if(slToken < 5 && menu === 'ai-analysis') {
+  //     setShowModal(true);
+  //   } else {
+  //     setSelectedMenu(menu);
+  //     navigate('/select-pet');
+  //   }
+  // };
 
   if (loading) {
     // 로딩 중일 때는 로딩스피너만 보여줌
