@@ -55,6 +55,22 @@ const LanguagePage: React.FC =() => {
           <FaChevronLeft className="text-lg transform rotate-180" />
         </div>
 
+        {/* 한국어 선택 */}
+        <div 
+          className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"
+          onClick={() => handleChooseLanguage("ko")}
+        >
+          <div className="flex items-center space-x-2">
+            <img 
+              src={Images.ko}
+              alt="Thailand Flag" 
+              className="w-6 h-6 rounded-full object-cover" 
+            />
+            <p className="font-semibold">{t("setting.kor")}</p>
+          </div>
+          <FaChevronLeft className="text-lg transform rotate-180" />
+        </div>
+
         {/* 대만어 선택 */}
         <div 
           className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"

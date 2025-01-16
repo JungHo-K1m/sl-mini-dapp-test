@@ -311,7 +311,8 @@
       "eng": "English",
       "jpn": "Japanese",
       "tw": "Taiwanese",
-      "thi" : "Thai"
+      "thi" : "Thai",
+      "kor": "Korean"
     },
     "user_level": {
       "message_1": "Hey there, <br/>ready to roll?",

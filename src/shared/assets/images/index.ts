@@ -156,6 +156,7 @@ import jp from "./jp_flag.svg"
 import en from "./eng_flag.svg"
 import tw from "./tw_flag.svg"
 import th from "./th_flag.svg"
+import ko from "./ko_flag.svg"
 import UploadArrow from "./uploaderarrow.png"
 
 const Images = {
@@ -316,6 +317,7 @@ const Images = {
   en,
   tw,
   th,
+  ko,
   UploadArrow
 };
 
