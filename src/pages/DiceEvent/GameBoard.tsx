@@ -775,7 +775,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
               }}
             >
               <BsDice5Fill className="w-3 h-3" />
-              <p>: {t("dice_event.roll_dice")}</p>
+              <p>: {t("dice_event.refill")}</p>
             </motion.div>
           ) : (
             <>
