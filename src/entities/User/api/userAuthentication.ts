@@ -5,7 +5,7 @@ export const userAuthenticationWithServer = async (lineIdToken: string, referral
     try {
         const lineData = {
             lineToken: lineIdToken,
-            channelId: '2006791116',
+            channelId: '2006732321',
             referralCode: referralCode
         }
         const response = await api.post('/auth/login/line', lineData);
