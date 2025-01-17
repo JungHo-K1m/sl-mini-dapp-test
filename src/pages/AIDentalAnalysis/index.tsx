@@ -131,15 +131,15 @@ const DentalAnalysis: React.FC = () => {
         model: "gpt-4o",
         messages: [
             {
-              "role": "user",
-              "content": [
+              role: "user",
+              content: JSON.stringify([
                 {
-                  "type": "image_url",
-                  "image_url": {
-                    "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
+                  type: "image_url",
+                  image_url: {
+                    url: `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
                   }
                 }
-              ]
+              ]),
             },
           ],
           response_format: {
