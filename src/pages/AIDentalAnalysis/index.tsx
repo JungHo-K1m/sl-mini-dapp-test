@@ -167,13 +167,20 @@ const DentalAnalysis: React.FC = () => {
               "schema": {
                 "type": "object",
                 "properties": {
+                  "is_x_ray": {
+                    "type": "string",
+                    "description": "Indicates whether the image is of X-ray, or other.",
+                    "enum": [
+                      "x-ray",
+                      "other"
+                    ]
+                  },
                   "image_type": {
                     "type": "string",
-                    "description": "Indicates whether the image is of a dog, cat, an X-ray, or other.",
+                    "description": "Indicates whether the image is of a dog, cat, or other.",
                     "enum": [
                       "dog",
                       "cat",
-                      "x-ray",
                       "other"
                     ]
                   },
@@ -206,6 +213,7 @@ const DentalAnalysis: React.FC = () => {
                   }
                 },
                 "required": [
+                  "is_x_ray",
                   "image_type",
                   "is_tooth_image",
                   "diagnosis"
@@ -236,7 +244,7 @@ const DentalAnalysis: React.FC = () => {
           console.log("Parsed Response Data:", parsedData);
       
           // 데이터 유효성 검사 및 분기 처리
-          if (parsedData.image_type === "x-ray") {
+          if (parsedData.is_x_ray === "x-ray") {
               // 업로드한 사진이 x-ray 이미지인 경우
               console.log("여기는 x-ray 취급 안해요.");
               showModalFunction(t("ai_page.actual_photo"));
