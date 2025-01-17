@@ -114,6 +114,23 @@ const DentalAnalysis: React.FC = () => {
     }
   }
 
+  async function retryWithBackoff(fn: () => any, retries = 5, delay = 5) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            return await fn(); // 함수 실행
+        } catch (error: any) {
+            if (error.response?.status === 429) {
+                const backoffTime = delay * Math.pow(2, i); // 지연 시간 증가
+                console.warn(`429 Too Many Requests: 재시도까지 ${backoffTime / 5}초 대기`);
+                await new Promise((resolve) => setTimeout(resolve, backoffTime));
+            } else {
+                throw error; // 다른 에러는 바로 반환
+            }
+        }
+    }
+    throw new Error('429 Too Many Requests: 최대 재시도 횟수 초과');
+  }
+
   // 이미지 분석 함수
   const analyzeImage = async () => {
     if (!selectedImage) {
@@ -127,7 +144,7 @@ const DentalAnalysis: React.FC = () => {
       // 1) File을 Base64 문자열로 변환
       const base64Data = await convertFileToBase64(selectedImage);
 
-      const response = await openai.chat.completions.create({
+      const response = await retryWithBackoff(() => openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
             {
@@ -202,7 +219,8 @@ const DentalAnalysis: React.FC = () => {
           top_p: 1,
           frequency_penalty: 0,
           presence_penalty: 0
-        });
+        })
+      );
 
       // 4) 응답(JSON) 파싱
       const responseData = response;
