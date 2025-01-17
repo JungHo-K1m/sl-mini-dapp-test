@@ -145,7 +145,7 @@ const DentalAnalysis: React.FC = () => {
       const base64Data = await convertFileToBase64(selectedImage);
 
       const response = await retryWithBackoff(() => openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4o-mini",
         messages: [
             {
               role: "user",
@@ -195,7 +195,7 @@ const DentalAnalysis: React.FC = () => {
                       },
                       "description": {
                         "type": "string",
-                        "description": `A detailed explanation of the diagnosis, translated into ${i18n.language}, at least 200 characters.`
+                        "description": `A detailed explanation of the diagnosis, translated into ${i18n.language}, at least 150 characters.`
                       }
                     },
                     "required": [
@@ -260,7 +260,7 @@ const DentalAnalysis: React.FC = () => {
               setLabel("Non dental");
               setSelectedImage(null);
               setExplanation(""); // 설명 초기화
-          } else if ((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === true && parsedData.diagnosis) {
+          } else if (parsedData.is_tooth_image === true && parsedData.diagnosis) {
               // 분석 성공: 진단 결과 표시
               console.log("분석을 정상적으로 했어요.");
               const originalExplanation = parsedData.diagnosis.description;
