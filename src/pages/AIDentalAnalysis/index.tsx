@@ -149,14 +149,14 @@ const DentalAnalysis: React.FC = () => {
         messages: [
             {
               role: "user",
-              content: JSON.stringify([
+              content: [
                 {
-                  type: "image_url",
-                  image_url: {
-                    url: `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
+                  "type": "image_url",
+                  "image_url": {
+                    "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
                   }
                 }
-              ]),
+              ],
             },
           ],
           response_format: {
