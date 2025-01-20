@@ -186,7 +186,8 @@ const GameBoard: React.FC<GameBoardProps> = ({
         const currentTimeUntilRefill = timeUntilRefillRef.current; 
 
         if (diceCount > 0 && !buttonDisabled) {
-          diceRef.current?.roll();
+          // diceRef.current?.roll();
+          rollDice();
         } else if (diceCount === 0) {
           if (currentTimeUntilRefill === "Refill dice" && !isRefilling) {
             handleRefillDice().catch((err) => console.error("오토 리필 실패:", err));
@@ -201,7 +202,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         clearInterval(autoInterval);
       }
     };
-  }, [isAuto, diceCount, buttonDisabled, diceRef,]); 
+  }, [isAuto, diceCount, buttonDisabled, rollDice,]); 
   // timeUntilRefill 제거
 
 
@@ -811,3 +812,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
 };
 
 export default GameBoard;
+function rollDice() {
+  throw new Error("Function not implemented.");
+}
+
