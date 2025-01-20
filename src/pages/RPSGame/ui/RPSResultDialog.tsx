@@ -35,7 +35,7 @@ const ResultWin: React.FC<ResultWinProps> = ({
   // 승리 효과음 재생
   useEffect(() => {
     playSfx(Audios.rps_win);
-  }, [playSfx]);
+  }, []);
 
   return (
     <div>
@@ -107,7 +107,7 @@ const ResultLose: React.FC<ResultLoseProps> = ({ winnings, onQuit }) => {
   // 패배 효과음 재생
   useEffect(() => {
     playSfx(Audios.rps_lose);
-  }, [playSfx]);
+  }, []);
 
   return (
     <div>
