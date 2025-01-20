@@ -162,6 +162,12 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     console.log("gameResult changed =>", gameResult);
   }, [gameResult]);
 
+  useEffect(() => {
+    if (isDialogOpen) {
+      console.log("Dialog open. gameResult =", gameResult);
+    }
+  }, [isDialogOpen, gameResult]);
+  
   const handleContinue = () => {
     if (consecutiveWins >= totalRounds) {
       handleQuit();
