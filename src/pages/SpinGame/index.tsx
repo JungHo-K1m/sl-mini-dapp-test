@@ -245,6 +245,16 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
 
       const normalizedSpinType = spinType.trim().toUpperCase();
 
+      // 결과 사운드 처리
+      if (normalizedSpinType === "BOOM") {
+        // 붐(꽝)이면 패배 사운드
+        playSfx(Audios.rps_lose);
+        console.log("Boom! Better luck next time!");
+      } else {
+        // 그 외엔 보상 사운드
+        playSfx(Audios.reward);
+      }
+
       if (normalizedSpinType === "STAR") {
         setStarPoints((prev: number) => prev + amount);
       } else if (normalizedSpinType === "DICE") {
