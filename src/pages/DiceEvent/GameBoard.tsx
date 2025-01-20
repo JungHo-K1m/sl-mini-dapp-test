@@ -70,6 +70,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   handleMouseDown,
   handleMouseUp,
   isLuckyVisible,
+  rollDice,
 }) => {
   // Zustand 스토어에서 필요한 상태와 함수 가져오기
   const {
@@ -813,7 +814,3 @@ const GameBoard: React.FC<GameBoardProps> = ({
 };
 
 export default GameBoard;
-function rollDice() {
-  throw new Error("Function not implemented.");
-}
-
