@@ -240,7 +240,6 @@ const MyAssets: React.FC = () => {
                 />
             </div>
             
-
             {/* 내 NFT 컬렉션 */}
             <div className="mt-9 w-full">
                 <div className="flex justify-between items-center">

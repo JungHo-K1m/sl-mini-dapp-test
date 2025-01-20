@@ -125,7 +125,10 @@ const PetRegister: React.FC = () => {
                     <p>{modalText}</p>
                     <button
                         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                        onClick={()=>setShowModal(false)}
+                        onClick={()=>{
+                            playSfx(Audios.button_click);
+                            setShowModal(false);
+                        }}
                         >
                         {t("OK")}
                     </button>

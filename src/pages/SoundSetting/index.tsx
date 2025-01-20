@@ -47,7 +47,7 @@ const SoundSetting: React.FC = () => {
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
               onClick={()=>{
                 playSfx(Audios.button_click);
-                toggleMasterMute;
+                toggleMasterMute();
               }}>
                 {masterMuted ? (
                     <HiVolumeOff className="text-xl" />
@@ -81,7 +81,7 @@ const SoundSetting: React.FC = () => {
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
               onClick={() => {
                 playSfx(Audios.button_click);
-                toggleBgmMute;
+                toggleBgmMute();
               }}
             >
                 {bgmMuted ? (
@@ -116,7 +116,7 @@ const SoundSetting: React.FC = () => {
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
               onClick={() => {
                 playSfx(Audios.button_click);
-                toggleSfxMute;
+                toggleSfxMute();
               }}>
                 {sfxMuted ? (
                     <HiVolumeOff className="text-xl" />
@@ -148,7 +148,7 @@ const SoundSetting: React.FC = () => {
         <button
           onClick={() => {
             playSfx(Audios.button_click);
-            handleSave;
+            handleSave();
           }}
           className="bg-[#0147E5] w-full py-4 rounded-full text-base font-medium"
         >

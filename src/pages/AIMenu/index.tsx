@@ -74,6 +74,7 @@ const AIMenu: React.FC = () => {
   });
 
   const handleCloseModal = () => {
+    playSfx(Audios.button_click);
     setShowModal(false);
     localStorage.setItem('modalDisplayed', 'true'); // 모달 표시 여부 기록
   };

@@ -175,8 +175,10 @@ const DiagnosisRecords: React.FC = () => {
                         <div> &nbsp;</div>
                         <button
                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            onClick={()=>setOpen(false)}
-                            >
+                            onClick={()=>{
+                                playSfx(Audios.button_click);
+                                setOpen(false);
+                            }}>
                             {t("OK")}
                         </button>
                     </div>

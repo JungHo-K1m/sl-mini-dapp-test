@@ -208,6 +208,8 @@ const PreviousRewards: React.FC = () => {
   // 보상 수령(랭킹/래플 공용)
   // ------------------------------------------------------
   const handleGetReward = async (data: RewardData) => {
+    playSfx(Audios.button_click);
+    
     if (data.selectedRewardType !== null) {
       alert("이미 보상을 선택하셨습니다!");
       return;
