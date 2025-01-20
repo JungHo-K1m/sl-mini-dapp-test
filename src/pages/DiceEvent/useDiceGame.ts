@@ -6,6 +6,8 @@ import { useRPSGameStore } from "../RPSGame/store";
 import { useUserStore, Board } from "@/entities/User/model/userModel"; // 'Board' 임포트 추가
 import { anywhereAPI } from "@/features/DiceEvent/api/anywhereApi";
 import { RollDiceResponseData } from '@/features/DiceEvent/api/rollDiceApi';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 export interface Reward {
   type: string;
@@ -43,6 +45,7 @@ export const useDiceGame = () => {
   const [rolledValue, setRolledValue] = useState<number>(0);
   const [reward, setReward] = useState<Reward | null>(null);
   const [tileSequence, setTileSequence] = useState<number>(position);
+  const { playSfx } = useSound();
 
   // RPS 게임 및 스핀 게임 상태
   const [isRPSGameActive, setIsRPSGameActive] = useState(false);
@@ -258,6 +261,7 @@ export const useDiceGame = () => {
   // 주사위 굴리기 함수
   const rollDice = useCallback(() => {
     if (diceCount > 0 && !isRolling) {
+      playSfx(Audios.roll_dice);
       setIsRolling(true);
       setButtonDisabled(true);
       diceRef.current?.roll(); // Dice 컴포넌트의 roll 메소드 호출
