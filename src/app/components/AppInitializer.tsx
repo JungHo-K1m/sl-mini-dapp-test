@@ -208,6 +208,8 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
           "en-US": "en",
           "ja-JP": "ja",
           "zh-TW": "zh",
+          "th-TH": "th",
+          "ko-KR": "ko",
         };
         const i18nLanguage = languageMap[userLanguage] || "en";
         i18n.changeLanguage(i18nLanguage);

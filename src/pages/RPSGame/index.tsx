@@ -122,6 +122,8 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     if (isSpinning || !isAnySlotSpinning) return; 
     spin();
 
+    playSfx(Audios.rps_slot);
+
     setTimeout(async () => {
       try {
         const response = await playRound(userChoice);
