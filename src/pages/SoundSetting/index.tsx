@@ -37,7 +37,7 @@ const SoundSetting: React.FC = () => {
             {/* 1) 마스터 볼륨 */}
             <div className="p-4 mb-3">
                 <h2 className="text-lg font-semibold mb-2">Master Volume</h2>
-                <div className="bg-gray-800 rounded-full flex items-center justify-between">
+                <div className="bg-gray-800 rounded-full w-full h-10 flex items-center justify-between">
                     <button
                         className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
                         onClick={toggleMasterMute}
@@ -65,7 +65,7 @@ const SoundSetting: React.FC = () => {
             {/* 2) 배경음(BGM) */}
             <div className="p-4 mb-3">
                 <h2 className="text-lg font-semibold mb-2">Background Music</h2>
-                <div className="bg-gray-800 rounded-full flex items-center justify-between">
+                <div className="bg-gray-800 rounded-full w-full h-10 flex items-center justify-between">
                     <button
                     className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
                     onClick={toggleBgmMute}
@@ -93,7 +93,7 @@ const SoundSetting: React.FC = () => {
             {/* 3) 효과음(SFX) */}
             <div className="p-4">
                 <h2 className="text-lg font-semibold mb-2">Sound Effects</h2>
-                <div className="bg-gray-800 rounded-full flex items-center justify-between">
+                <div className="bg-gray-800 rounded-full w-full h-10 flex items-center justify-between">
                     <button
                         className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
                         onClick={toggleSfxMute}
