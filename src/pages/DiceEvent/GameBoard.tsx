@@ -51,6 +51,7 @@ interface GameBoardProps {
   handleMouseDown: () => void;
   handleMouseUp: () => void;
   isLuckyVisible: boolean;
+  rollDice: () => void;
 }
 
 const GameBoard: React.FC<GameBoardProps> = ({
@@ -202,7 +203,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
         clearInterval(autoInterval);
       }
     };
-  }, [isAuto, diceCount, buttonDisabled, rollDice,]); 
+  }, [isAuto, diceCount, buttonDisabled, rollDice, isRefilling]); 
   // timeUntilRefill 제거
 
 

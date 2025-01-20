@@ -222,6 +222,7 @@ const DiceEventPage: React.FC = () => {
             handleMouseDown={game.handleMouseDown}
             handleMouseUp={game.handleMouseUp}
             isLuckyVisible={game.isLuckyVisible}
+            rollDice={game.rollDice}
           />
           {game.selectingTile && !isAuto && (
             <div className="absolute md:-top-40 -top-20 left-0 w-full h-full flex justify-center items-center z-20">
