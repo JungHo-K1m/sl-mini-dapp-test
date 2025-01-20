@@ -3,13 +3,19 @@ import SelectCharacter from './SelectCharacter';
 import chooseCharacter from '@/entities/User/api/chooseCharacter';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
+
 
 const SelectCharacterPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedPet, setSelectedPet] = React.useState<'DOG' | 'CAT'>('DOG');
+  const { playSfx } = useSound();
   
   const handleCharacterSelect = async () => {
+    playSfx(Audios.button_click);
+    
     try{
       const response = await chooseCharacter(selectedPet);
       if(response){

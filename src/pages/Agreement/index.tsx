@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const AgreementPage: React.FC = () => {
   const navigate = useNavigate();
   const [modalContent, setModalContent] = useState<string>(""); // 모달에 표시할 HTML 파일 경로
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const [allChecked, setAllChecked] = useState(false);
+  const { playSfx } = useSound();
   const [checkedItems, setCheckedItems] = useState({
     termsOfService: false,
     privacyPolicy: false,
@@ -16,6 +19,7 @@ const AgreementPage: React.FC = () => {
   const isAllChecked = Object.values(checkedItems).every((item) => item);
 
   const handleCheckAll = () => {
+    playSfx(Audios.button_click);
     const newValue = !allChecked;
     setAllChecked(newValue);
     setCheckedItems({
@@ -26,6 +30,7 @@ const AgreementPage: React.FC = () => {
   };
 
   const handleCheckItem = (key: string) => {
+    playSfx(Audios.button_click);
     setCheckedItems((prev) => ({
       ...prev,
       [key]: !prev[key as keyof typeof checkedItems],
@@ -33,16 +38,19 @@ const AgreementPage: React.FC = () => {
   };
 
   const handleOpenModal = (file: string) => {
+    playSfx(Audios.button_click);
     setModalContent(`/policies/${file}`); // 파일 경로 설정
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
+    playSfx(Audios.button_click);
     setIsModalOpen(false);
     setModalContent("");
   };
 
   const handleNext = () => {
+    playSfx(Audios.button_click);
     if (isAllChecked) {
       navigate("/choose-character"); // 캐릭터 선택 페이지로 이동
     }

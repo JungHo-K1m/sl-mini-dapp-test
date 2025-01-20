@@ -15,6 +15,9 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/shared/components/ui';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
+
 
 interface TruncateMiddleProps {
     text: any;
@@ -49,6 +52,7 @@ const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
 const MyAssets: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
     const { userId, userLv, characterType } = useUserStore();
     const [loading, setLoading] = useState(true);
     const [nft, setNFT] = useState(0);
@@ -192,13 +196,19 @@ const MyAssets: React.FC = () => {
                     {/* 지갑 페이지 이동 */}
                     <button 
                         className="w-8 h-8 rounded-full flex items-center justify-center"
-                        onClick={()=>navigate('/wallet')}>
+                        onClick={()=>{
+                            playSfx(Audios.button_click);
+                            navigate('/wallet');
+                        }}>
                         <BiWallet className="w-6 h-6" />
                     </button>
                     {/* 설정 페이지 이동 */}
                     <button 
                         className="w-8 h-8 rounded-full flex items-center justify-center"
-                        onClick={()=>navigate('/settings')}>
+                        onClick={()=>{
+                            playSfx(Audios.button_click);
+                            navigate('/settings');
+                        }}>
                         <IoSettingsOutline className="w-6 h-6" />
                     </button>
                 </div>
@@ -207,7 +217,10 @@ const MyAssets: React.FC = () => {
             {/* NFT 상점 이동 영역 - 추후 수정 예정 */}
             <div 
                 className="rounded-2xl p-5 mt-6 w-full flex items-center justify-between"
-                onClick={()=>setShowModal(true)}
+                onClick={()=>{
+                    playSfx(Audios.button_click);
+                    setShowModal(true);
+                }}
                 style={{
                     background: "linear-gradient(to bottom, #19203CB2 0%, #304689 100%)",
                 }}>
@@ -235,7 +248,10 @@ const MyAssets: React.FC = () => {
                     
                     <button
                         className="flex items-center text-white text-xs"
-                        onClick={() => navigate("/my-nfts")}
+                        onClick={() => {
+                            playSfx(Audios.button_click);
+                            navigate("/my-nfts");
+                        }}
                         aria-label="View All NFTs"
                         >
                         {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
@@ -251,7 +267,10 @@ const MyAssets: React.FC = () => {
                             <button
                                 className="w-1/2 py-4 rounded-full text-base font-medium mt-12"
                                 style={{ backgroundColor: '#0147E5' }}
-                                onClick={()=>setShowModal(true)}
+                                onClick={()=>{
+                                    playSfx(Audios.button_click);
+                                    setShowModal(true);
+                                }}
                                 >
                                 {t("asset_page.shop_nft")}
                             </button>
@@ -287,7 +306,10 @@ const MyAssets: React.FC = () => {
                     
                     <button
                         className="flex items-center text-white text-xs"
-                        onClick={() => navigate("/claim-history")}
+                        onClick={() => {
+                            playSfx(Audios.button_click);
+                            navigate("/claim-history");
+                        }}
                         aria-label="View Claim History"
                         >
                         {t("asset_page.view_claim")} <FaChevronRight className="ml-1 w-2 h-2" />
@@ -321,7 +343,10 @@ const MyAssets: React.FC = () => {
                 </div>
                 <button
                     className="w-full h-14 mt-3 py-4 rounded-full text-base font-medium bg-[#0147E5] text-white"
-                    onClick={() => setClaimModalOpen(true)}
+                    onClick={() => {
+                        playSfx(Audios.button_click);
+                        setClaimModalOpen(true);
+                    }}
                     >
                     {t("asset_page.claim_reward")}
                 </button>
@@ -333,7 +358,10 @@ const MyAssets: React.FC = () => {
                     <h2 className="text-lg font-semibold">{t("asset_page.Rewards_History")}</h2>
                     <button
                         className="flex items-center text-white text-xs"
-                        onClick={() => navigate("/reward-history")}
+                        onClick={() => {
+                            playSfx(Audios.button_click);
+                            navigate("/reward-history");
+                        }}
                         >
                         {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
                     </button>
@@ -369,7 +397,10 @@ const MyAssets: React.FC = () => {
                         <p>{t("asset_page.prepare_service")}</p>
                         <button
                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            onClick={()=>setShowModal(false)}
+                            onClick={()=>{
+                                playSfx(Audios.button_click);
+                                setShowModal(false);
+                            }}
                             >
                             {t("OK")}
                         </button>
@@ -388,7 +419,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.claim_token")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setClaimModalOpen(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setClaimModalOpen(false);
+                                    }}/>
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -400,6 +436,7 @@ const MyAssets: React.FC = () => {
                             {/* SL 버튼 */}
                             <button
                                 onClick={() => {
+                                    playSfx(Audios.button_click);
                                     setClaimModalOpen(false);
                                     // 만약 지갑 연결이 필요한 경우:
                                     setWalletConnection(true);
@@ -421,6 +458,7 @@ const MyAssets: React.FC = () => {
                             {/* USDC 버튼 */}
                             <button
                                 onClick={() => {
+                                    playSfx(Audios.button_click);
                                     // USDC 선택 시 로직 (예: 모달 닫고 USDC Claim 모달 열기)
                                     setClaimModalOpen(false);
                                     setUsdcCaim(true);
@@ -451,7 +489,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.wallet_connect")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setWalletConnection(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setWalletConnection(false);
+                                    }}/>
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -465,6 +508,7 @@ const MyAssets: React.FC = () => {
                             {/* Connect Wallet 버튼 */}
                             <button
                                 onClick={() => {
+                                    playSfx(Audios.button_click);
                                     // 여기에 실제 지갑 연결 로직
                                     // 예: connectKaikasWallet()
                                     // 모달 닫기 or 다음 단계 열기
@@ -478,7 +522,10 @@ const MyAssets: React.FC = () => {
 
                             {/* Cancel 버튼 */}
                             <button
-                                onClick={() => setWalletConnection(false)}
+                                onClick={() => {
+                                    playSfx(Audios.button_click);
+                                    setWalletConnection(false);
+                                }}
                                 className="w-full md:w-[180px] h-14 rounded-full border-[2px] border-[#737373] text-white font-medium"
                                 >
                                 {t("asset_page.claim.cancel")}
@@ -500,7 +547,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.sl")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setSLClaim(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setSLClaim(false);
+                                    }} />
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -530,7 +582,7 @@ const MyAssets: React.FC = () => {
                             onClick={() => {
                                 // 실제로 SL을 Claim할 때 지갑 호출 로직
                                 setSLClaim(false);
-                                setLoadingModal(true)
+                                setLoadingModal(true);
                             }}
                             className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
                         >
@@ -552,7 +604,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.usdc")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setUsdcCaim(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setUsdcCaim(false);
+                                    }}/>
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -586,9 +643,10 @@ const MyAssets: React.FC = () => {
                         {/* Claim 버튼 */}
                         <button
                             onClick={() => {
-                            // 실제 Claim 로직
-                            setLoadingModal(true);
-                            setUsdcCaim(false);
+                                playSfx(Audios.button_click);
+                                // 실제 Claim 로직
+                                setLoadingModal(true);
+                                setUsdcCaim(false);
                             }}
                             className="w-full h-14 rounded-full bg-[#0147E5] text-white text-base font-medium"
                         >
@@ -610,7 +668,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.process")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setLoadingModal(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setLoadingModal(false);
+                                    }}/>
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -628,6 +691,7 @@ const MyAssets: React.FC = () => {
                             {/* 모달 확인용 버튼 */}
                             <button
                                 onClick={() => {
+                                    playSfx(Audios.button_click);
                                     // 성공 모달
                                     setSuccess(true);
                                     setLoadingModal(false);
@@ -640,6 +704,7 @@ const MyAssets: React.FC = () => {
                             {/* Close 버튼 */}
                             <button
                                 onClick={() => {
+                                    playSfx(Audios.button_click);
                                     // 실패 모달
                                     setFailed(true);
                                     setLoadingModal(false);
@@ -665,7 +730,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.failed")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setFailed(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setFailed(false);
+                                    }}/>
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -685,6 +755,7 @@ const MyAssets: React.FC = () => {
                             {/* Try Again 버튼 */}
                             <button
                                 onClick={() => {
+                                    playSfx(Audios.button_click);
                                     // 재시도 로직
                                     setFailed(false);
                                     setLoadingModal(true); // 다시 로딩 모달 띄울 수도 있음
@@ -696,7 +767,10 @@ const MyAssets: React.FC = () => {
 
                             {/* Close 버튼 */}
                             <button
-                                onClick={() => setFailed(false)}
+                                onClick={() => {
+                                    playSfx(Audios.button_click);
+                                    setFailed(false);
+                                }}
                                 className="w-[120px] h-14 rounded-full border-[2px] border-[#737373] text-white text-base font-medium"
                                 >
                                 {t("asset_page.claim.close")}
@@ -718,7 +792,12 @@ const MyAssets: React.FC = () => {
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
                                 <p>{t("asset_page.claim.complete")}</p>
-                                <HiX className={'w-6 h-6 cursor-pointer'} onClick={() => setSuccess(false)} />
+                                <HiX 
+                                    className={'w-6 h-6 cursor-pointer'} 
+                                    onClick={() => {
+                                        playSfx(Audios.button_click);
+                                        setSuccess(false);
+                                    }}/>
                             </div>
                         </AlertDialogTitle>
                     </AlertDialogHeader>
@@ -737,6 +816,7 @@ const MyAssets: React.FC = () => {
                         {/* View History 버튼 */}
                         <button
                             onClick={() => {
+                                playSfx(Audios.button_click);;
                                 setSuccess(false);
                                 navigate('/claim-history');
                             }}

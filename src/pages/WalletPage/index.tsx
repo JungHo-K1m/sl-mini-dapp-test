@@ -6,6 +6,8 @@ import { IoChevronBackOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import './WalletPage.css';
 import getWallets from '@/entities/Asset/api/getWalletList';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface TruncateMiddleProps {
   text: string;
@@ -48,6 +50,7 @@ interface Wallet {
 const WalletPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { playSfx } = useSound();
   
   // 거래소의 표시 이름을 관리하는 객체
   const DisplayNameList: Record<string, string> = {
@@ -121,6 +124,7 @@ const WalletPage: React.FC = () => {
 
   // 지갑 등록 페이지 이동 + 등록한 지갑의 거래소 목록 전달
   const handleNavigateToWalletList = () => {
+    playSfx(Audios.button_click);
     navigate('/wallet-list', { state: { registeredMarkets } });
   };
 
@@ -136,6 +140,8 @@ const WalletPage: React.FC = () => {
 
   // "삭제" 버튼 클릭 시 실행되는 함수
   const handleDeleteWallet = () => {
+    playSfx(Audios.button_click);
+
     if (selectedWallet) {
       setWallets(wallets.filter(wallet => wallet.id !== selectedWallet.id));
       setSelectedWalletId(null);
@@ -146,8 +152,10 @@ const WalletPage: React.FC = () => {
     <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
       <div
         className={`h-14 flex items-center w-full font-bold text-xl mb-8 justify-between`}
-        onClick={() => navigate("/my-assets")}
-        >
+        onClick={() => {
+          playSfx(Audios.button_click);
+          navigate("/my-assets");
+        }}>
         <IoChevronBackOutline className={`w-6 h-6`} />
         <p>Wallet</p>
         <div className={`w-6 h-6`} ></div>
@@ -164,8 +172,10 @@ const WalletPage: React.FC = () => {
                 className={`flex flex-row rounded-2xl px-5 justify-between items-center h-16 border-2 ${
                   wallet.id === selectedWalletId ? 'border-[#0147e5] bg-[#2a2a3d]' : 'border-[#737373] bg-[#1f1e27]'
                 } cursor-pointer`}
-                onClick={() => setSelectedWalletId(wallet.id)}
-              >
+                onClick={() => {
+                  playSfx(Audios.button_click);
+                  setSelectedWalletId(wallet.id);
+                }}>
                 <div className="flex flex-row items-center gap-3">
                   {wallet.imgSrc && <img src={wallet.imgSrc} className="w-6 h-6" alt={`${wallet.market} logo`} />}
                   <div className="flex flex-col text-sm">

@@ -13,6 +13,8 @@ import { AiFillQuestionCircle } from 'react-icons/ai';
 import { useTranslation } from "react-i18next";
 import registerWallet from '@/entities/Asset/api/registerWallet';
 import { TopTitle } from '@/shared/components/ui';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 // SelectedWallet 인터페이스 정의
 interface SelectedWallet {
@@ -62,6 +64,7 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
     const navigate = useNavigate();
     const location = useLocation();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
 
     // 모든 거래소 정의
     const allMarkets = [
@@ -143,6 +146,8 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
 
     // 거래소별 사이트 URL이동 버튼 클릭 핸들러
     const handleCreateAccount = () => {
+        playSfx(Audios.button_click);
+
         const selectedExchangeUrl = ExchangeUrls[selectedWallet.market];
         if (selectedExchangeUrl) {
             window.open(selectedExchangeUrl, '_blank'); // 새 탭에서 열기
@@ -156,6 +161,7 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
         event: React.MouseEvent<HTMLButtonElement>,
         market: string
     ) => {
+        playSfx(Audios.button_click);
         event.preventDefault();
         setOpen(true);
 
@@ -179,32 +185,39 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
     };
 
     const handleClose = () => {
+        playSfx(Audios.button_click);
         setOpen(false);
     };
 
     const handleWalletInputOpen = () => {
+        playSfx(Audios.button_click);
         handleClose();
         setWalletInputOpen(true);
     };
 
     const handleWalletInputClose = () => {
+        playSfx(Audios.button_click);
         setWalletInputOpen(false);
     };
 
     const handleTipOpen = () => {
+        playSfx(Audios.button_click);
         setTipOpen(true);
     };
 
     const handleTipClose = () => {
+        playSfx(Audios.button_click);
         setTipOpen(false);
     };
 
     const handleWalletConnectSuccessOpen = () => {
+        playSfx(Audios.button_click);
         handleWalletInputClose();
         setWalletConnectSuccessOpen(true);
     };
 
     const handleWalletConnectSuccessClose = () => {
+        playSfx(Audios.button_click);
         setWalletConnectSuccessOpen(false);
         navigate('/wallet');
     };
@@ -228,6 +241,8 @@ const WalletList: React.FC = () => { // 컴포넌트 이름을 PascalCase로 변
     };
 
     const handleRegisterWallet = async () => {
+        playSfx(Audios.button_click);
+        
         if (selectedWallet.market && address) {
             console.log("마켓: ", selectedWallet.market);
             console.log("주소: ", address);

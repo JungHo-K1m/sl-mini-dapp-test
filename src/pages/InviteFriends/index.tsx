@@ -9,6 +9,8 @@ import LoadingSpinner from '@/shared/components/ui/loadingSpinner';
 import getFriends from '@/entities/Mission/api/friends';
 import liff from "@line/liff";
 import { formatNumber } from '@/shared/utils/formatNumber';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface TruncateMiddleProps {
   text: string;
@@ -46,6 +48,7 @@ interface Friend {
 const InviteFriends: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { playSfx } = useSound();
   const [copySuccess, setCopySuccess] = useState<string>(''); // 클립보드 복사 결과 메시지
   const [referralLink, setReferralLink] = useState<string>(''); // 레퍼럴 코드 상태
   const [friends, setFriends] = useState<Friend[]>([]); // 친구 목록 상태
@@ -53,6 +56,8 @@ const InviteFriends: React.FC = () => {
 
   // 클립보드 복사 함수
   const copyToClipboard = async () => {
+    playSfx(Audios.button_click);
+
     try {
       await navigator.clipboard.writeText(referralLink);
       setCopySuccess('Copied to clipboard!');
@@ -80,6 +85,8 @@ const InviteFriends: React.FC = () => {
   }, []);
 
   const handleInviteClick = async () => {
+    playSfx(Audios.button_click);
+    
     try {
       if (liff.isInClient()) {
         // LINE 앱 내의 LIFF 브라우저에서 실행 중인 경우
@@ -190,7 +197,10 @@ const InviteFriends: React.FC = () => {
             <p className="text-lg font-medium">{t('mission_page.Invited_Friends')}</p>
             <div
               className="flex items-center justify-center text-sm font-medium w-[72px] h-8 rounded-full bg-[#21212f]"
-              onClick={()=>navigate("/invite-friends-list")}>
+              onClick={()=>{
+                playSfx(Audios.button_click);
+                navigate("/invite-friends-list");
+              }}>
               Total : <span className="text-[#FDE047]">{friends.length}</span>
             </div>
           </div>

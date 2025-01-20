@@ -9,11 +9,14 @@ import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
 import getBalance from '@/entities/AI/api/checkBalance';
 import slPayment from '@/entities/AI/api/paySL';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const DentalAnalysis: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { i18n, t } = useTranslation();
+  const { playSfx } = useSound();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [label, setLabel] = useState(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
@@ -60,12 +63,14 @@ const DentalAnalysis: React.FC = () => {
 
   // 이미지 업로더
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files && event.target.files[0]) {
-          setSelectedImage(event.target.files[0]);
-          setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image"));
-          setExplanation("");
-          setIsAnalyzed(false);
-      }
+    playSfx(Audios.button_click);
+  
+    if (event.target.files && event.target.files[0]) {
+      setSelectedImage(event.target.files[0]);
+      setLabel(t("ai_page.Click_the_button_to_analyze_the_uploaded_image"));
+      setExplanation("");
+      setIsAnalyzed(false);
+    }
   };
 
   // File -> Base64 문자열로 변환
@@ -133,6 +138,8 @@ const DentalAnalysis: React.FC = () => {
 
   // 이미지 분석 함수
   const analyzeImage = async () => {
+    playSfx(Audios.button_click);
+
     if (!selectedImage) {
       showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
       return;
@@ -338,6 +345,7 @@ const DentalAnalysis: React.FC = () => {
 
   // 결과 저장 함수
   const saveResult = () => {
+    playSfx(Audios.button_click);
     if (!selectedImage || !isAnalyzed) {
       showModalFunction(t("ai_page.Please_analyze_the_image_before_saving."));
       return;
@@ -361,11 +369,17 @@ const DentalAnalysis: React.FC = () => {
 
     // 재검사 진행 버튼 함수
     const resetAnalysis = () => {
+      playSfx(Audios.button_click);
       setLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
       setSelectedImage(null);
       setExplanation("");
       setIsAnalyzed(false);
     };
+
+    const handleSeeMore = () => {
+      playSfx(Audios.button_click);
+      setShowFullText(!showFullText)
+    }
 
     return (
         <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
@@ -438,7 +452,7 @@ const DentalAnalysis: React.FC = () => {
                             <button
                                 className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
                                 style={{ backgroundColor: '#FFFFFF' }}
-                                onClick={() => setShowFullText(!showFullText)}
+                                onClick={handleSeeMore}
                             >
                                 {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
                             </button>
@@ -477,6 +491,7 @@ const DentalAnalysis: React.FC = () => {
                         <button
                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
                             onClick={() => {
+                                playSfx(Audios.button_click);
                                 setShowModal(false);
                                 setModalInfo({ isVisible: false, message: '' });
                             }}

@@ -7,6 +7,8 @@ import Images from '@/shared/assets/images';
 import { FaChevronRight } from "react-icons/fa";
 import getFriends from '@/entities/Mission/api/friends';
 import getFriendsReward from '@/entities/Asset/api/friendsReward';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface Friend {
     userId: string;
@@ -15,6 +17,7 @@ interface Friend {
 const InviteFriendsList: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
     const [friends, setFriends] = useState<Friend[]>([]); // 친구 목록 상태
     const [loading, setLoading] = useState<boolean>(true); // 로딩 상태
     const [star, setStar] = useState(0.0);
@@ -65,7 +68,10 @@ const InviteFriendsList: React.FC = () => {
                     <h2 className="text-lg font-medium">{t("mission_page.total_reward")}</h2>
                     <button
                         className="flex items-center text-white text-xs font-medium"
-                        onClick={() => navigate("/referral-rewards")}
+                        onClick={() => {
+                            playSfx(Audios.button_click);
+                            navigate("/referral-rewards");
+                        }}
                         aria-label="View All NFTs"
                         >
                         {t("mission_page.view_detail")} <FaChevronRight className="ml-1 w-3 h-3" />

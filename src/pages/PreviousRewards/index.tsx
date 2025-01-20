@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { TopTitle } from "@/shared/components/ui";
 import { useTranslation } from "react-i18next";
 import "./PreviousRewards.css";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 // Tabs
 import {
@@ -123,6 +125,8 @@ const PreviousRewards: React.FC = () => {
   // -----------------------------
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogTitle, setDialogTitle] = useState("");
+  
+  const { playSfx } = useSound();
 
   // 라운드 번호 (예시)
   const round = 1;
@@ -317,9 +321,11 @@ const PreviousRewards: React.FC = () => {
       <Tabs
         defaultValue="ranking"
         className="w-full rounded-none"
-        onValueChange={(val) => 
-          setCurrentTab(val as "ranking" | "raffle" | "airdrop")
-        }
+        onValueChange={(val) => {
+          // 탭 클릭 시 사운드 재생
+          playSfx(Audios.button_click);
+          setCurrentTab(val as "ranking" | "raffle" | "airdrop");
+        }}
       >
         <TabsList className="grid w-full grid-cols-3 rounded-none outline-none bg-[#0D1226]">
           {/* 1. Ranking 탭 */}

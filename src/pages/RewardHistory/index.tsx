@@ -7,10 +7,14 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { TopTitle } from "@/shared/components/ui";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
+
 
 const RewardHistory: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
     const [isOpen, setIsOpen] = useState(false);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
@@ -114,8 +118,10 @@ const RewardHistory: React.FC = () => {
             <div>
                 <div
                     className="flex items-center justify-between cursor-pointer"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
+                    onClick={() => {
+                        playSfx(Audios.button_click);
+                        setIsOpen(!isOpen);
+                    }}>
                     <div className="flex items-center">
                         <p className="text-lg font-semibold">Filter Option</p>
                     </div>
@@ -138,7 +144,10 @@ const RewardHistory: React.FC = () => {
                                     <input
                                         type="checkbox"
                                         checked={selectedAssets.includes(asset)}
-                                        onChange={() => handleAssetChange(asset)}
+                                        onChange={() => {
+                                            playSfx(Audios.button_click);
+                                            handleAssetChange(asset);
+                                        }}
                                         className="mr-2"
                                     />
                                     {asset}
@@ -154,7 +163,10 @@ const RewardHistory: React.FC = () => {
                                     <input
                                         type="checkbox"
                                         checked={selectedChanges.includes(change)}
-                                        onChange={() => handleChangeType(change)}
+                                        onChange={() => {
+                                            playSfx(Audios.button_click);
+                                            handleChangeType(change);
+                                        }}
                                         className="mr-2"
                                     />
                                     {change}
@@ -172,6 +184,7 @@ const RewardHistory: React.FC = () => {
                                     onChange={(date) => {
                                         setStartDate(date);
                                         if (endDate && date && date > endDate) {
+                                            playSfx(Audios.button_click);
                                             setEndDate(null);
                                         }
                                     }}
@@ -186,7 +199,10 @@ const RewardHistory: React.FC = () => {
                             <div className="w-full">
                                 <DatePicker
                                     selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
+                                    onChange={(date) => {
+                                        playSfx(Audios.button_click);
+                                        setEndDate(date);
+                                    }}
                                     placeholderText="End Date"
                                     customInput={<CustomDateInput placeholder="End Date" />}
                                     dateFormat="yyyy-MM-dd"
@@ -226,7 +242,10 @@ const RewardHistory: React.FC = () => {
                     {/* 레퍼럴 보상 내역(요약본) */}
                     <div 
                         className="flex justify-between items-center py-4 border-b border-[#35383F]"
-                        onClick={() => navigate("/referral-rewards")}>
+                        onClick={() => {
+                            playSfx(Audios.button_click);
+                            navigate("/referral-rewards");
+                        }}>
                         <div>
                             <p className="text-sm font-medium">Friend Referral Rewards</p>
                             <p className="text-xs text-gray-400">17-12-2024</p>

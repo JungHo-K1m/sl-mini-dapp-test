@@ -9,11 +9,14 @@ import OpenAI from 'openai';
 import { TopTitle } from '@/shared/components/ui';
 import getBalance from '@/entities/AI/api/checkBalance';
 import slPayment from '@/entities/AI/api/paySL';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const AIXrayAnalysis: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const { playSfx } = useSound();
 
   const [model, setModel] = useState<tmImage.CustomMobileNet | null>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -77,6 +80,8 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    playSfx(Audios.button_click);
+
     if (event.target.files && event.target.files[0]) {
       setSelectedImage(event.target.files[0]);
 
@@ -127,6 +132,8 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   const analyzeImage = async () => {
+    playSfx(Audios.button_click);
+
     if (!selectedImage) {
       showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
       return;
@@ -321,6 +328,8 @@ const AIXrayAnalysis: React.FC = () => {
   });
 
   const saveResult = () => {
+    playSfx(Audios.button_click);
+
     if (!selectedImage || !isAnalyzed) {
       showModalFunction(t("ai_page.Please_analyze_the_image_before_saving."));
       return;
@@ -338,11 +347,17 @@ const AIXrayAnalysis: React.FC = () => {
   };
 
   const resetAnalysis = () => {
+    playSfx(Audios.button_click);
     setDisplayLabel(t("ai_page.Upload_an_X-ray_image_to_start_analysis"));
     setPredictedLabel('');
     setSelectedImage(null);
     setIsAnalyzed(false);
   };
+
+  const handleSeeMore = () => {
+    playSfx(Audios.button_click);
+    setShowFullText(!showFullText)
+  }
 
   return (
     <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">
@@ -411,7 +426,7 @@ const AIXrayAnalysis: React.FC = () => {
               <button
                 className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
                 style={{ backgroundColor: '#FFFFFF' }}
-                onClick={() => setShowFullText(!showFullText)}
+                onClick={handleSeeMore}
               >
                 {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
               </button>
@@ -446,6 +461,7 @@ const AIXrayAnalysis: React.FC = () => {
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
               onClick={() => {
+                playSfx(Audios.button_click);
                 setShowModal(false);
                 setModalInfo({ isVisible: false, message: '' });
               }}

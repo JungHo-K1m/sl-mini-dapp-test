@@ -3,6 +3,9 @@
 import React from 'react';
 import Images from '@/shared/assets/images';
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
+
 
 interface SelectCharacterProps {
   selectedPet: 'DOG' | 'CAT';
@@ -11,6 +14,8 @@ interface SelectCharacterProps {
 
 const SelectCharacter: React.FC<SelectCharacterProps> = ({ selectedPet, setSelectedPet }) => {
   const { t } = useTranslation();
+  const { playSfx } = useSound();
+  
   React.useEffect(() => {
     console.log('Step 5-0: SelectCharacter 컴포넌트 마운트됨.');
     return () => {
@@ -19,6 +24,7 @@ const SelectCharacter: React.FC<SelectCharacterProps> = ({ selectedPet, setSelec
   }, []);
 
   const handlePetSelection = (pet: 'DOG' | 'CAT') => {
+    playSfx(Audios.button_click);
     console.log(`Step 5-0: ${pet} 선택됨.`);
     setSelectedPet(pet);
   };

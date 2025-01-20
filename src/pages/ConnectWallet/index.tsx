@@ -4,13 +4,18 @@ import { motion } from "framer-motion"; // framer-motion import
 import Images from "@/shared/assets/images";
 import DappPortalSDK from "@linenext/dapp-portal-sdk";
 import checkWallet from "@/entities/Asset/api/checkWalet";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const ConnectWalletPage: React.FC = () => {
     const navigate = useNavigate();
     const [account, setAccount] = useState<string | null>(null);
     const [showConnectButton, setShowConnectButton] = useState(false);
+    const { playSfx } = useSound();
 
     const handleConnectWallet = async () => {
+        playSfx(Audios.button_click);
+        
         try {
             console.log("초기화 시작");
 

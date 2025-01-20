@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from "@/shared/components/ui";
 import Images from "@/shared/assets/images";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface NftCategoryProps {
   title: string;
@@ -14,6 +16,7 @@ interface NftCategoryProps {
 
 const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { playSfx } = useSound();
 
   // NFT 카테고리별 이미지
   const categoryImages: { [key: string]: string } = {
@@ -28,8 +31,10 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopCli
     <div className="mb-8">
       <div
         className="flex items-center justify-between cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+        onClick={() => {
+          playSfx(Audios.button_click);
+          setIsOpen(!isOpen);
+        }}>
         <div className="flex items-center">
           <img
             src={categoryImages[title]}
@@ -87,6 +92,7 @@ const NftCategory: React.FC<NftCategoryProps> = ({ title, count, nfts, onShopCli
 const MyNfts: React.FC = () => {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false); // showModal 상태 선언
+  const { playSfx } = useSound();
 
   // 더미 데이터
   const nftData = [
@@ -130,7 +136,10 @@ const MyNfts: React.FC = () => {
             title={category.category}
             count={category.count}
             nfts={category.nfts}
-            onShopClick={() => setShowModal(true)} // Shop 버튼 클릭 시 모달 표시
+            onShopClick={() => {
+              playSfx(Audios.button_click);
+              setShowModal(true);
+            }} // Shop 버튼 클릭 시 모달 표시
           />
         ))}
       </div>
@@ -141,8 +150,10 @@ const MyNfts: React.FC = () => {
             <p>We're preparing for the service.</p>
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-              onClick={() => setShowModal(false)}
-            >
+              onClick={() => {
+                playSfx(Audios.button_click);
+                setShowModal(false);
+              }}>
               {t("OK")}
             </button>
           </div>

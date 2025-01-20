@@ -4,9 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { TopTitle } from '@/shared/components/ui';
 import { useSoundStore } from '@/shared/store/useSoundStore';
 import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const SoundSetting: React.FC = () => {
   const navigate = useNavigate();
+  const { playSfx } = useSound();
   const {
     // 마스터
     masterVolume,
@@ -42,8 +45,10 @@ const SoundSetting: React.FC = () => {
           <div className="bg-gray-800 rounded-full w-full h-14 flex items-center justify-between py-2 px-4">
             <button
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
-              onClick={toggleMasterMute}
-            >
+              onClick={()=>{
+                playSfx(Audios.button_click);
+                toggleMasterMute;
+              }}>
                 {masterMuted ? (
                     <HiVolumeOff className="text-xl" />
                 ) : (
@@ -74,7 +79,10 @@ const SoundSetting: React.FC = () => {
           <div className="bg-gray-800 rounded-full w-full h-14 flex items-center justify-between py-2 px-4">
             <button
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
-              onClick={toggleBgmMute}
+              onClick={() => {
+                playSfx(Audios.button_click);
+                toggleBgmMute;
+              }}
             >
                 {bgmMuted ? (
                     <HiVolumeOff className="text-xl" />
@@ -106,8 +114,10 @@ const SoundSetting: React.FC = () => {
           <div className="bg-gray-800 rounded-full w-full h-14 flex items-center justify-between py-2 px-4">
             <button
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
-              onClick={toggleSfxMute}
-            >
+              onClick={() => {
+                playSfx(Audios.button_click);
+                toggleSfxMute;
+              }}>
                 {sfxMuted ? (
                     <HiVolumeOff className="text-xl" />
                 ) : (
@@ -136,7 +146,10 @@ const SoundSetting: React.FC = () => {
       {/* 저장 버튼 */}
       <div className="w-full mt-auto mb-6">
         <button
-          onClick={handleSave}
+          onClick={() => {
+            playSfx(Audios.button_click);
+            handleSave;
+          }}
           className="bg-[#0147E5] w-full py-4 rounded-full text-base font-medium"
         >
           Save

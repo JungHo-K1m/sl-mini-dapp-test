@@ -11,9 +11,12 @@ import { Link } from "react-router-dom";
 import { formatNumber } from "@/shared/utils/formatNumber";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const Reward: React.FC = () => {
   const { t } = useTranslation();
+  const { playSfx } = useSound();
   const {
     fetchLeaderHome,
     rankingAwards,
@@ -52,11 +55,24 @@ const Reward: React.FC = () => {
     return str.slice(0, num) + '...';
   };
 
+  const handleShowMoreRanking = () => {
+    playSfx(Audios.button_click);
+    setShowMoreRanking(true);
+  }
+
+  const handleShowMoreRaffle = () => {
+    playSfx(Audios.button_click);
+    setShowMoreRaffle(true);
+  }
+
   return (
     <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full ">
       <TopTitle title={t("reward_page.reward")} />
 
-      <Link to="/previous-rewards" className="first-to-third-pace-box h-36 rounded-3xl mb-14 flex flex-row items-center justify-around p-5 cursor-pointer">
+      <Link 
+        to="/previous-rewards" 
+        className="first-to-third-pace-box h-36 rounded-3xl mb-14 flex flex-row items-center justify-around p-5 cursor-pointer"
+        onClick={() => playSfx(Audios.button_click)}>
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">{t("reward_page.previous")}</p>
           <p className="text-sm">
@@ -114,7 +130,7 @@ const Reward: React.FC = () => {
 
         {rankingOthers.length > 0 && !showMoreRanking && (
           <button
-            onClick={() => setShowMoreRanking(true)}
+            onClick={handleShowMoreRanking}
             className="border border-[#ffffff] text-white text-xs font-semibold px-4 py-2 rounded-full mt-4"
           >
             {t("reward_page.view_more")}
@@ -169,7 +185,7 @@ const Reward: React.FC = () => {
 
         {raffleOthers.length > 0 && !showMoreRaffle && (
           <button
-            onClick={() => setShowMoreRaffle(true)}
+            onClick={handleShowMoreRaffle}
             className="border border-[#ffffff] text-white text-xs font-semibold px-4 py-2 rounded-full mt-4"
           >
             {t("reward_page.view_more")}

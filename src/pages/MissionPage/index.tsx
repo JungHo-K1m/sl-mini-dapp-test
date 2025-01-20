@@ -21,6 +21,8 @@ import { formatNumber } from "@/shared/utils/formatNumber";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";   // ★ 로딩 스피너
 import { preloadImages } from "@/shared/utils/preloadImages";         // ★ 이미지 프리로딩 함수
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface OneTimeMissionCardProps {
   mission: Mission;
@@ -37,9 +39,12 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
   const imageSrc = mapping ? Images[mapping.imageKey] : Images.TokenReward;
   const className = mapping ? mapping.className : "";
   const { t } = useTranslation();
+  const { playSfx } = useSound();
 
 
   const handleClick = () => {
+    playSfx(Audios.button_click);
+    
     if (!mission.isCleared) {
       // 미션 이동 링크 열기
       if (mission.redirectUrl) {
@@ -129,6 +134,7 @@ const MissionPage: React.FC = () => {
   // ---------------------------
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
+  const { playSfx } = useSound();
   
 
   // ---------------------------
@@ -203,6 +209,7 @@ const MissionPage: React.FC = () => {
   };
 
   const handleCloseDialog = () => {
+    playSfx(Audios.button_click);
     setIsDialogOpen(false);
     setRewardData(null);
   };
@@ -252,6 +259,7 @@ const MissionPage: React.FC = () => {
                   mission.isCleared ? "pointer-events-none" : ""
                 }`}
                 onClick={() => {
+                  playSfx(Audios.button_click);
                   if (!mission.isCleared) {
                     if (mission.redirectUrl) {
                       window.open(mission.redirectUrl, "_blank");
