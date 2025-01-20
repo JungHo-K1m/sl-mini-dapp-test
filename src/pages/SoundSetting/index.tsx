@@ -35,7 +35,7 @@ const SoundSetting: React.FC = () => {
 
             <div className="w-full">
             {/* 1) 마스터 볼륨 */}
-            <div className="p-4 mb-3">
+            <div className="mb-3">
                 <h2 className="text-lg font-semibold mb-2">Master Volume</h2>
                 <div className="bg-gray-800 rounded-full w-full h-10 flex items-center justify-between">
                     <button
@@ -63,7 +63,7 @@ const SoundSetting: React.FC = () => {
             </div>
 
             {/* 2) 배경음(BGM) */}
-            <div className="p-4 mb-3">
+            <div className="mb-3">
                 <h2 className="text-lg font-semibold mb-2">Background Music</h2>
                 <div className="bg-gray-800 rounded-full w-full h-10 flex items-center justify-between">
                     <button
@@ -91,7 +91,7 @@ const SoundSetting: React.FC = () => {
             </div>
 
             {/* 3) 효과음(SFX) */}
-            <div className="p-4">
+            <div>
                 <h2 className="text-lg font-semibold mb-2">Sound Effects</h2>
                 <div className="bg-gray-800 rounded-full w-full h-10 flex items-center justify-between">
                     <button
