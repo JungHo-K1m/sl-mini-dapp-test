@@ -3,6 +3,8 @@ import { TopTitle } from '@/shared/components/ui';
 import { motion } from 'framer-motion';
 import './SlotMachine.css'; // CSS 파일을 그대로 사용
 import Images from '@/shared/assets/images';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const images = [Images.Rock, Images.Scissors, Images.Paper]; // 이미지 경로 배열
 
@@ -10,6 +12,7 @@ const SlotMachine: React.FC = () => {
   const [slotIndex, setSlotIndex] = useState<number>(0);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [spinSpeed, setSpinSpeed] = useState<number>(100);
+  const { playSfx } = useSound();
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -34,6 +37,7 @@ const SlotMachine: React.FC = () => {
   };
 
   const handleSpin = async () => {
+    playSfx(Audios.rps_slot);
     setIsSpinning(true);
     setSpinSpeed(50); // 애니메이션 속도를 빠르게 설정
 

@@ -1,10 +1,12 @@
 // src/pages/RPSGame/ui/RPSResultDialog.tsx
 
-import React from "react";
+import React, { useEffect } from "react";
 import { AlertDialog, AlertDialogContent } from "@/shared/components/ui";
 import Images from "@/shared/assets/images";
 import { formatNumber } from "@/shared/utils/formatNumber";
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface ResultWinProps {
   winnings: number;
@@ -28,6 +30,12 @@ const ResultWin: React.FC<ResultWinProps> = ({
 }) => {
   const isFinalWin = consecutiveWins >= 3;
   const { t } = useTranslation();
+  const { playSfx } = useSound();
+
+  // 승리 효과음 재생
+  useEffect(() => {
+    playSfx(Audios.rps_win);
+  }, [playSfx]);
 
   return (
     <div>
@@ -94,6 +102,13 @@ const ResultWin: React.FC<ResultWinProps> = ({
 
 const ResultLose: React.FC<ResultLoseProps> = ({ winnings, onQuit }) => {
   const { t } = useTranslation();
+  const { playSfx } = useSound();
+
+  // 승리 효과음 재생
+  useEffect(() => {
+    playSfx(Audios.rps_lose);
+  }, [playSfx]);
+
   return (
     <div>
       <img

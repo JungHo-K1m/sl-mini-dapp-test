@@ -28,6 +28,8 @@ import { formatNumber } from "@/shared/utils/formatNumber";
 import { FaBookTanakh  } from "react-icons/fa6";
 import { useTour } from "@reactour/tour";
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 dayjs.extend(duration);
 dayjs.extend(utc); // UTC 플러그인 적용
@@ -99,6 +101,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   const [timeUntilRefill, setTimeUntilRefill] = useState("");
   const [isRefilling, setIsRefilling] = useState(false); // 리필 중 상태 관리
   const {setIsOpen} = useTour();
+  const { playSfx } = useSound();
 
   // timeUntilRefill 최신값을 보관할 ref 생성
   const timeUntilRefillRef = useRef(timeUntilRefill);
@@ -123,6 +126,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
     // Refill Dice API 호출 함수
   const handleRefillDice = async () => {
+    // 소리 추가
+    playSfx(Audios.button_click);
+
     try {
       setIsRefilling(true);
       await refillDice();
