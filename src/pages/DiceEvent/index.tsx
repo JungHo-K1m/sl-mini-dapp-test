@@ -189,7 +189,7 @@ const DiceEventPage: React.FC = () => {
         <>
           <div className="w-full flex justify-center mb-4 mt-8 gap-4">
             <Dialog>
-              <DialogTrigger>
+              <DialogTrigger onClick={() => playSfx(Audios.button_click)}>
                 <UserLevel
                   userLv={userLv}
                   charactorImageSrc={charactorImageSrc}

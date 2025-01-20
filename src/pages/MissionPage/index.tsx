@@ -322,7 +322,7 @@ const MissionPage: React.FC = () => {
 
       <h1 className="font-semibold text-lg ml-[2px] mb-4">{t("mission_page.Daily_Mission")}</h1>
 
-      <Link to="/invite-friends">
+      <Link to="/invite-friends" onClick={() => playSfx(Audios.button_click)}>
         <DailyMissionCard
           title={t("mission_page.Invite_friends")}
           alt="Invite Friend"

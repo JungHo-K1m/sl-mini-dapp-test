@@ -5,6 +5,8 @@ import { formatNumber } from '@/shared/utils/formatNumber';
 import { useNavigate } from 'react-router-dom';
 import { useNavigationStore } from '@/shared/store/navigationStore';
 import { Snowfall } from 'react-snowfall';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 interface MonthlyPrizeProps {
   month: number;            
@@ -20,6 +22,7 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
   eventFinishTime,
 }) => {
   const navigate = useNavigate();
+  const { playSfx } = useSound();
   const setSelected = useNavigationStore((state) => state.setSelected);
 
   // 월 이름 배열
@@ -74,6 +77,7 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
 
   // 클릭 -> /reward
   const handleRankingClick = () => {
+    playSfx(Audios.button_click);
     setSelected('/reward');
     if (window.location.pathname !== '/reward') {
       navigate('/reward');

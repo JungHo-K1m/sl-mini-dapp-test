@@ -182,9 +182,9 @@ const RewardHistory: React.FC = () => {
                                 <DatePicker
                                     selected={startDate}
                                     onChange={(date) => {
+                                        playSfx(Audios.button_click);
                                         setStartDate(date);
                                         if (endDate && date && date > endDate) {
-                                            playSfx(Audios.button_click);
                                             setEndDate(null);
                                         }
                                     }}
