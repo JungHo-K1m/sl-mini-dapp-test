@@ -21,6 +21,8 @@ import LeaderBoard from "@/widgets/LeaderBoard";
 import { HiX } from "react-icons/hi";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const levelRewards = [
   // 2~9 레벨 보상 예시
@@ -65,6 +67,7 @@ const DiceEventPage: React.FC = () => {
   } = useUserStore();
 
   const game = useDiceGame();
+  const { playSfx } = useSound();
   const [initialX, setInitialX] = useState<number>(140);
   const [initialY, setInitialY] = useState<number>(474);
   const [delta, setDelta] = useState<number>(56);
@@ -77,6 +80,7 @@ const DiceEventPage: React.FC = () => {
   // 레벨 업 감지: userLv가 이전 레벨보다 커질 때만 팝업 표시
   useEffect(() => {
     if (userLv > prevLevel) {
+      playSfx(Audios.level_up);
       setShowLevelUpDialog(true);
     }
     setPrevLevel(userLv);

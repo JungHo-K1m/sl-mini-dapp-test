@@ -104,7 +104,7 @@ const ResultLose: React.FC<ResultLoseProps> = ({ winnings, onQuit }) => {
   const { t } = useTranslation();
   const { playSfx } = useSound();
 
-  // 승리 효과음 재생
+  // 패배 효과음 재생
   useEffect(() => {
     playSfx(Audios.rps_lose);
   }, [playSfx]);

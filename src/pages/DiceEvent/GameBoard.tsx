@@ -137,6 +137,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
       // refillDice 호출 후 fetchUserData를 통해 diceRefilledAt이 갱신된다고 가정
       // 여기서 별도로 diceRefilledAt을 조정할 필요 없음
       setIsRefilling(false);
+      playSfx(Audios.reward);
     } catch (error: any) {
       console.error("주사위 리필 실패:", error);
       setIsRefilling(false);
