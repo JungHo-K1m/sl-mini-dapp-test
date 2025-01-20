@@ -38,6 +38,8 @@ const SlotMachine: React.FC = () => {
 
   const handleSpin = async () => {
     playSfx(Audios.rps_slot);
+    console.log("Sound played successfully!");
+    
     setIsSpinning(true);
     setSpinSpeed(50); // 애니메이션 속도를 빠르게 설정
 
