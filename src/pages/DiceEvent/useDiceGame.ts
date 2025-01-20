@@ -273,6 +273,8 @@ export const useDiceGame = () => {
     async (tileId: number) => {
       if (!selectingTile || tileId === 18) return; // 타일 18 클릭 시 아무 동작도 하지 않음
 
+      playSfx(Audios.high_pass);
+
       try {
         setButtonDisabled(true); // 버튼 비활성화
         setMoving(true); // 이동 중 상태 설정
@@ -331,6 +333,7 @@ export const useDiceGame = () => {
       setError,
       isAuto, // isAuto 필요 시 추가
       boards, // boards 필요 시 추가
+      playSfx,
     ]
   );
 
