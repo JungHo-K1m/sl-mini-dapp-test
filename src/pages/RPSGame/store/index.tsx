@@ -39,7 +39,7 @@ interface RPSGameState {
   closeDialog: () => void;
   fetchAllowedBetting: () => Promise<void>;
   playRound: (userChoice: string) => Promise<PlayRoundResponse | null>;
-  handleRPSGameEnd: (result: "win" | "lose", winnings: number) => void;
+  handleRPSGameEnd: (result: "win" | "lose" | null, winnings: number) => void;
 }
 
 export const useRPSGameStore = create<RPSGameState>((set, get) => ({
@@ -196,7 +196,7 @@ export const useRPSGameStore = create<RPSGameState>((set, get) => ({
     }
   },
   
-  handleRPSGameEnd: (result: "win" | "lose", winnings: number) => {
+  handleRPSGameEnd: (result: "win" | "lose" | null, winnings: number) => {
     set({
       isDialogOpen: false,
       isGameStarted: false,

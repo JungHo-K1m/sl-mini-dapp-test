@@ -219,7 +219,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
             allowedBetting={allowedBetting}
             onCancel={() => {
               onCancel();
-              handleRPSGameEnd("lose", 0);
+              handleRPSGameEnd(null, 0);
             }}
           />
         </motion.div>
