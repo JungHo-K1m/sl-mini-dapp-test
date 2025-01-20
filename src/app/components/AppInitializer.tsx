@@ -173,9 +173,9 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
       navigate("/choose-character");
     } else {
       console.error("[AppInitializer] 그 외 오류 -> 라인 로그아웃 후 handleTokenFlow() 재시도");
-      // localStorage.removeItem("accessToken");
-      // liff.logout();
-      // handleTokenFlow();
+      localStorage.removeItem("accessToken");
+      liff.logout();
+      handleTokenFlow();
     }
   };
 
