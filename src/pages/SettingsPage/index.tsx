@@ -3,16 +3,35 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { TopTitle } from '@/shared/components/ui';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 
 const SettingsPage: React.FC =() => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
 
     // navigate에 policyType을 전달
     const handleNavigation = (policyType: string) => {
+        playSfx(Audios.button_click);
         navigate('/policy-detail', { state: { policyType } });
     };
+
+    const handleLanguage = () => {
+        playSfx(Audios.button_click);
+        navigate('/choose-language');
+    };
+
+    const handleSound = () => {
+        playSfx(Audios.button_click);
+        navigate('/sound-setting');
+    };
+
+    // const handleLanguage = () => {
+    //     const { playSfx } = useSound();
+    //     navigate("");
+    // };
 
 
     return(
@@ -66,7 +85,7 @@ const SettingsPage: React.FC =() => {
                 </div>
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/choose-language')}>
+                    onClick={handleLanguage}>
                     <div>
                         <p className="font-semibold">{t("setting.language")}</p>
                     </div>
@@ -74,7 +93,7 @@ const SettingsPage: React.FC =() => {
                 </div>
                 <div 
                     className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                    onClick={() => navigate('/sound-setting')}>
+                    onClick={handleSound}>
                     <div>
                         <p className="font-semibold">Sound</p>
                     </div>

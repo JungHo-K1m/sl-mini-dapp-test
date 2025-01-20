@@ -5,15 +5,19 @@ import { TopTitle } from '@/shared/components/ui';
 import { FaChevronLeft } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
 import Images from '@/shared/assets/images';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 
 const LanguagePage: React.FC =() => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
 
     const handleChooseLanguage = (lang: string) => {
-        i18n.changeLanguage(lang);
-        navigate('/dice-event');
+      playSfx(Audios.button_click);
+      i18n.changeLanguage(lang);
+      navigate('/dice-event');
     };
 
 

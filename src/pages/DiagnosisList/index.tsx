@@ -5,11 +5,14 @@ import getRecords from '@/entities/AI/api/getRecord';
 import getDiagnosisList from '@/entities/Pet/api/getDiagnosisList';
 import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const DiagnosisRecords: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
 
     const [open, setOpen] = useState(false);
     const [modalText, setModalText] = useState('');
@@ -69,7 +72,8 @@ const DiagnosisRecords: React.FC = () => {
 
     // 필터 변경 시 기록 조회
     useEffect(() => {
-        const fetchFilteredRecords = async () => {
+        const fetchFilteredRecords = async () => {    
+            playSfx(Audios.button_click);
             setLoading(true);
             if (id) {
                 try {
@@ -107,6 +111,19 @@ const DiagnosisRecords: React.FC = () => {
         setModalText(text);
     }
 
+    const handleNavigateToDetail = (record: typeof records[number]) => {
+        playSfx(Audios.button_click);
+        navigate('/diagnosis-detail', {
+            state: {
+                img: record.diagnosisImgUrl,
+                result: record.result,
+                // DENTAL_REAL일 때만 description을 전달
+                description: record.type === "DENTAL_REAL" ? record.description : "",
+            },
+        });
+    };
+
+
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
             <TopTitle title={t("ai_page.Records")} back={true} />
@@ -138,14 +155,7 @@ const DiagnosisRecords: React.FC = () => {
                     {records.map((record, index) => (
                         <div 
                             key={index} className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                            onClick={() => navigate('/diagnosis-detail', {state: {
-                                // 다른 필드들
-                                img: record.diagnosisImgUrl,
-                                result: record.result,
-                      
-                                // DENTAL_REAL이라면 description도 넘겨주기
-                                description: record.type === "DENTAL_REAL" ? record.description : "",
-                              } })}>
+                            onClick={() => handleNavigateToDetail(record)}>
                             <div>
                                 <p className="font-semibold text-base">{`${record.diagnosisAt}  ${record.type}`}</p>
                                 <p className="text-sm font-normal text-gray-400">{record.result}</p>

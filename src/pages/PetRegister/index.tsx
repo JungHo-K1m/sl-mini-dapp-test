@@ -5,10 +5,13 @@ import { useMutation } from '@tanstack/react-query';
 import registerPet from '@/entities/Pet/api/registPet';
 import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const PetRegister: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
 
     const [showModal, setShowModal] = useState(false);
     const [modalText, setModalText] = useState('');
@@ -32,6 +35,7 @@ const PetRegister: React.FC = () => {
 
     // 이미지 업로드
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        playSfx(Audios.button_click);
         if (event.target.files && event.target.files.length > 0) {
             const selectedFile = event.target.files[0];
             setPetImage(selectedFile);
@@ -48,6 +52,7 @@ const PetRegister: React.FC = () => {
 
     // 등록 버튼 클릭
     const registerBtn = () => {
+        playSfx(Audios.button_click);
         if (!petName || !petImage) {
             setShowModal(true);
             setModalText('Please provide both pet name and image.');
@@ -113,7 +118,7 @@ const PetRegister: React.FC = () => {
             </button>
         </div>
 
-        {/* SL토큰 소요 알림 모달창 */}
+        {/* 알림 모달창 */}
         {showModal && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                 <div className="bg-white text-black p-6 rounded-lg text-center">

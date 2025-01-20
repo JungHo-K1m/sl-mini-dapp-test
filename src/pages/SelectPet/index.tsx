@@ -7,11 +7,14 @@ import { getPetList } from '@/entities/Pet/api/getPetList';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Pet } from '@/entities/Pet/model/types';
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const SelectPet: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+  const { playSfx } = useSound();
   const { selectedMenu } = useMainPageStore();
   const queryClient = useQueryClient();
 
@@ -34,13 +37,28 @@ const SelectPet: React.FC = () => {
   // 반려동물 선택 시 페이지 이동 함수
   const handlePetSelect = (petId: number) => {
     if (selectedMenu === 'x-ray') {
+      playSfx(Audios.button_click);
       navigate(`/ai-xray-analysis`, { state: { id: petId } });
     } else if(selectedMenu === 'ai-analysis'){
+      playSfx(Audios.button_click);
       navigate(`/ai-dental-analysis`, { state: { id: petId } });
     } else if (selectedMenu === 'records') {
+      playSfx(Audios.button_click);
       navigate(`/diagnosis-list`, { state: { id: petId } });
     }
   };
+
+  const handleEdit = (petId: number, name: string, imageUrl: string) => {
+    playSfx(Audios.button_click);
+    navigate(`/edit-pet`, {
+      state: { id: petId, name, imageUrl },
+    });
+  };
+
+  const handleAdd = () => {
+    playSfx(Audios.button_click);
+    navigate("/regist-pet");
+  }
 
   // 로딩 중 표시
   if (isLoading) {
@@ -85,11 +103,7 @@ const SelectPet: React.FC = () => {
                 />
                 <button
                   className="absolute bottom-2 right-3 bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center"
-                  onClick={() =>
-                    navigate(`/edit-pet`, {
-                      state: { id: pet.petId, name: pet.name, imageUrl: pet.imageUrl },
-                    })
-                  }
+                  onClick={() => handleEdit(pet.petId, pet.name, pet.imageUrl)}
                 >
                   <FaPen className="text-white w-3 h-3" />
                 </button>
@@ -102,7 +116,7 @@ const SelectPet: React.FC = () => {
           <div key="add-pet" className="flex flex-col items-center">
             <div
               className="w-[130px] h-[130px] rounded-3xl bg-gray-800 flex items-center justify-center cursor-pointer"
-              onClick={() => navigate('/regist-pet')}
+              onClick={handleAdd}
             >
               <button className="text-white text-5xl">+</button>
             </div>

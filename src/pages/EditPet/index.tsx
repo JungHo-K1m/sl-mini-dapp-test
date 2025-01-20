@@ -6,11 +6,14 @@ import deletePet from '@/entities/Pet/api/deletePetInfo';
 import { FaChevronLeft } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const EditPet: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
     const petData = location.state as { id: string, name: string, imageUrl: string };
     
     const [petImage, setPetImage] = useState<File | null>(null);
@@ -24,6 +27,8 @@ const EditPet: React.FC = () => {
 
     // 이미지 수정
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        playSfx(Audios.button_click);
+        
         if (event.target.files && event.target.files.length > 0) {
             const selectedFile = event.target.files[0];
             setPetImage(selectedFile);
@@ -32,7 +37,9 @@ const EditPet: React.FC = () => {
     };
 
     // 완료 버튼 클릭 (반려동물 정보 수정)
-    const editBtn = async () => {        
+    const editBtn = async () => {       
+        playSfx(Audios.button_click); 
+
         if (!petName) {
             setShowModal(true);
             setModalMessage('Please provide the pet name.');
@@ -65,6 +72,8 @@ const EditPet: React.FC = () => {
 
     // 삭제 버튼 클릭 (반려동물 삭제)
     const deleteBtn = async () => {
+        playSfx(Audios.button_click);
+        
         if (id) {
             if (window.confirm("Are you sure you want to delete your pet?")) {
                 try {

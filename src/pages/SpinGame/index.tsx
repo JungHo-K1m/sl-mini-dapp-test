@@ -14,6 +14,8 @@ import {
   AlertDialogContent,
 } from "@/shared/components/ui";
 import api from "@/shared/api/axiosInstance";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const data = [
   {
@@ -177,6 +179,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
     amount: number;
   } | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const { playSfx } = useSound();
 
   const { setStarPoints, setDiceCount, setSlToken, setLotteryCount, items } =
     useUserStore();
@@ -186,6 +189,8 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
 
     try {
       setIsSpinning(true);
+
+      playSfx(Audios.spin_game);
 
       // /play-spin API 호출
       const response = await api.get("/play-spin");

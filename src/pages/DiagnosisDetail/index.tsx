@@ -3,11 +3,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Images from "@/shared/assets/images";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
 
 const DiagnosisDetail: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { playSfx } = useSound();
 
     // description까지 받아오기
     const { img, result, description } = location.state as {
@@ -20,6 +23,16 @@ const DiagnosisDetail: React.FC = () => {
     const [label] = useState<string>(result || '');
     const [imageUrl] = useState<string>(img || '');
     const [showFullText, setShowFullText] = useState(false);
+
+    const handleGoHome = () => {
+        playSfx(Audios.button_click);
+        navigate('/AI-menu');
+    }
+
+    const handleShowText = (see: boolean) => {
+        playSfx(Audios.button_click);
+        setShowFullText(see);
+    }
 
     return (
         <div className="relative flex flex-col items-center text-white mx-6 md:mx-28 min-h-screen">
@@ -82,7 +95,7 @@ const DiagnosisDetail: React.FC = () => {
                                 <button
                                     className="mt-2 w-1/2 text-black text-base md:text-lg lg:text-xl font-semibold py-2 px-4 rounded-xl"
                                     style={{ backgroundColor: "#FFFFFF" }}
-                                    onClick={() => setShowFullText(true)}
+                                    onClick={() => handleShowText(true)}
                                 >
                                     {t("ai_page.See_more")}
                                 </button>
@@ -90,7 +103,7 @@ const DiagnosisDetail: React.FC = () => {
                                 <button
                                     className="mt-2 w-1/2 text-black text-base md:text-lg lg:text-xl font-semibold py-2 px-4 rounded-xl"
                                     style={{ backgroundColor: "#FFFFFF" }}
-                                    onClick={() => setShowFullText(false)}
+                                    onClick={() => handleShowText(false)}
                                 >
                                     {t("ai_page.See_less")}
                                 </button>
@@ -108,7 +121,7 @@ const DiagnosisDetail: React.FC = () => {
                 <button
                     className="w-full py-4 rounded-full text-lg font-semibold"
                     style={{ backgroundColor: '#0147E5' }}
-                    onClick={() => navigate('/AI-menu')}
+                    onClick={handleGoHome}
                 >
                     {t("ai_page.Home")}
                 </button>
