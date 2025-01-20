@@ -181,9 +181,9 @@ const RPSResultDialog: React.FC<RPSResultDialogProps> = ({
             consecutiveWins={consecutiveWins}
             winMultiplier={winMultiplier*3}
           />
-        ) : (
+        ) : result === "lose" ? (
           <ResultLose winnings={winnings} onQuit={onQuit} />
-        )}
+        ) : null}
       </AlertDialogContent>
     </AlertDialog>
   );
