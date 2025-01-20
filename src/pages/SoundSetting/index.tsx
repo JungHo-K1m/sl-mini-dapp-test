@@ -35,11 +35,11 @@ const SoundSetting: React.FC = () => {
 
             <div className="w-full">
             {/* 1) 마스터 볼륨 */}
-            <div className="bg-gray-800 rounded-md p-4">
+            <div className="p-4 mb-3">
                 <h2 className="text-lg font-semibold mb-2">Master Volume</h2>
-                <div className="flex items-center justify-between">
+                <div className="bg-gray-800 rounded-full flex items-center justify-between">
                     <button
-                        className="bg-blue-500 hover:bg-blue-600 px-4 py-1 rounded-md text-sm"
+                        className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
                         onClick={toggleMasterMute}
                         >
                         {masterMuted ? 'Unmute' : 'Mute'}
@@ -63,11 +63,11 @@ const SoundSetting: React.FC = () => {
             </div>
 
             {/* 2) 배경음(BGM) */}
-            <div className="bg-gray-800 rounded-md p-4">
+            <div className="p-4 mb-3">
                 <h2 className="text-lg font-semibold mb-2">Background Music</h2>
-                <div className="flex items-center justify-between">
+                <div className="bg-gray-800 rounded-full flex items-center justify-between">
                     <button
-                    className="bg-blue-500 hover:bg-blue-600 px-4 py-1 rounded-md text-sm"
+                    className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
                     onClick={toggleBgmMute}
                     >
                     {bgmMuted ? 'Unmute' : 'Mute'}
@@ -91,11 +91,11 @@ const SoundSetting: React.FC = () => {
             </div>
 
             {/* 3) 효과음(SFX) */}
-            <div className="bg-gray-800 rounded-md p-4">
+            <div className="p-4">
                 <h2 className="text-lg font-semibold mb-2">Sound Effects</h2>
-                <div className="flex items-center justify-between">
+                <div className="bg-gray-800 rounded-full flex items-center justify-between">
                     <button
-                        className="bg-blue-500 hover:bg-blue-600 px-4 py-1 rounded-md text-sm"
+                        className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
                         onClick={toggleSfxMute}
                         >
                         {sfxMuted ? 'Unmute' : 'Mute'}
