@@ -45,7 +45,7 @@ export const useDiceGame = () => {
   const [rolledValue, setRolledValue] = useState<number>(0);
   const [reward, setReward] = useState<Reward | null>(null);
   const [tileSequence, setTileSequence] = useState<number>(position);
-  const { playSfx } = useSound();
+  const { playSfx, stopSfx } = useSound();
 
   // RPS 게임 및 스핀 게임 상태
   const [isRPSGameActive, setIsRPSGameActive] = useState(false);
@@ -94,6 +94,7 @@ export const useDiceGame = () => {
       onMoveComplete: (finalPosition: number) => void
     ) => {
       setMoving(true);
+      playSfx(Audios.move, { loop: true });
       console.log('movePiece 호출됨:', startPosition, endPosition);
       let currentPosition = startPosition;
 
@@ -112,7 +113,7 @@ export const useDiceGame = () => {
         } else {
           // 보상 적용 제거
           // applyReward(currentPosition);
-
+          stopSfx(Audios.move);
           switch (currentPosition) {
             case 2:
               setTimeout(() => {
