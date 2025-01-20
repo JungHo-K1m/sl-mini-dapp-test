@@ -145,6 +145,9 @@ const GameBoard: React.FC<GameBoardProps> = ({
   };
 
   const handleAutoSwitch = async () => {
+    // 소리 추가
+    playSfx(Audios.button_click);
+    
     try {
       await autoSwitch();
     } catch (error: any) {

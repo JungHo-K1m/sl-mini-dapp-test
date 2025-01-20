@@ -185,6 +185,8 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
     useUserStore();
 
   const handleSpinClick = async () => {
+    playSfx(Audios.button_click);
+
     if (isSpinning) return;
 
     try {
@@ -465,6 +467,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
 // 메인 SpinGame 컴포넌트
 const SpinGame: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   const [showSpin, setShowSpin] = useState(false);
+  const { playSfx } = useSound();
 
   // 이미지 로딩 여부 (true일 때 로딩 중)
   const [isLoading, setIsLoading] = useState(true);
@@ -512,6 +515,7 @@ const SpinGame: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   }, []);
 
   const handleStartClick = () => {
+    playSfx(Audios.button_click);
     setShowSpin(true);
   };
 

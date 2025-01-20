@@ -3,14 +3,19 @@ import Images from '@/shared/assets/images';
 import { useNavigate } from 'react-router-dom';
 import { useNavigationStore } from '@/shared/store/navigationStore';
 import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
+
 
 const MissionWidget: React.FC = () => {
   const navigate = useNavigate();
   const setSelected = useNavigationStore((state) => state.setSelected);
   const { t } = useTranslation();
+  const { playSfx } = useSound();
   
 
   const handleMissionClick = () => {
+    playSfx(Audios.button_click);
     setSelected('/mission');
     navigate('/mission');
   };
