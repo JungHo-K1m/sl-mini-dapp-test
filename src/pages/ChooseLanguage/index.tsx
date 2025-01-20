@@ -18,10 +18,10 @@ const LanguagePage: React.FC =() => {
 
 
     return(
-        <div className="flex flex-col items-center text-white px-6 min-h-screen">
-            <TopTitle title="Settings" back={true} />
+      <div className="flex flex-col items-center text-white px-6 min-h-screen">
+        <TopTitle title="Settings" back={true} />
 
-            <div className="w-full">
+        <div className="w-full">
         {/* 영어 선택 */}
         <div 
           className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center cursor-pointer"

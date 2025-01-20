@@ -41,7 +41,7 @@ import WalletConnect from "./pages/test";
 import ClaimHistory from "./pages/ClaimHistory";
 import ConnectWalletPage from "./pages/ConnectWallet";
 import LanguagePage from "./pages/ChooseLanguage";
-
+import SoundSetting from "./pages/SoundSetting";
 
 // 튜토리얼
 const steps = [
@@ -194,6 +194,7 @@ const App:React.FC = () =>{
                   <Route path="/sdk-test" element={<DiceEventLayout hidden={true}><WalletConnect /></DiceEventLayout>} />
                   <Route path="/invite-friends-list" element={<DiceEventLayout hidden={true}><InviteFriendsList /></DiceEventLayout>} />
                   <Route path="/choose-language" element={<DiceEventLayout hidden={true}><LanguagePage /></DiceEventLayout>} />
+                  <Route path="/sound-setting" element={<DiceEventLayout hidden={true}><SoundSetting /></DiceEventLayout>} />
                   <Route path="/connect-wallet" element={<ConnectWalletPage />} />
               </Routes>
             </SoundProvider>
