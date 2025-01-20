@@ -127,6 +127,8 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
     setTimeout(async () => {
       try {
         const response = await playRound(userChoice);
+
+        console.log("Server response =>", response);
         if (response) {
           stopSpin(userChoice, response.computerChoice);
 
@@ -151,6 +153,14 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
       }
     }, 2000);
   };
+
+  useEffect(() => {
+    console.log("Dialog changed =>", isDialogOpen, " result=", gameResult);
+  }, [isDialogOpen, gameResult]);
+
+  useEffect(() => {
+    console.log("gameResult changed =>", gameResult);
+  }, [gameResult]);
 
   const handleContinue = () => {
     if (consecutiveWins >= totalRounds) {
@@ -219,7 +229,7 @@ const RPSGame: React.FC<RPSGameProps> = ({ onGameEnd, onCancel }) => {
             allowedBetting={allowedBetting}
             onCancel={() => {
               onCancel();
-              handleRPSGameEnd(null, 0);
+              handleRPSGameEnd("lose", 0);
             }}
           />
         </motion.div>
