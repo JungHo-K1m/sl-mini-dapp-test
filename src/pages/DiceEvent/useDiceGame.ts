@@ -210,6 +210,11 @@ export const useDiceGame = () => {
           showReward(tileData.rewardType, tileData.rewardAmount);
         }
 
+        // 무인도 도착 시 효과음
+        if (tileData?.tileType === "JAIL") {
+          playSfx(Audios.island);
+        }
+
         if (isAuto && [5, 15, 18].includes(finalPosition)) {
           // Auto 모드이고 특정 타일에 도착했을 때 게임을 활성화하지 않음
           console.log(`Auto 모드: 타일 ${finalPosition} 도착, 게임 활성화 건너뜀`);
