@@ -6,8 +6,9 @@ import { TbTargetArrow } from "react-icons/tb";
 import { BiWallet } from "react-icons/bi";
 import { useNavigationStore } from "@/shared/store/navigationStore";
 import { IoGameControllerOutline } from "react-icons/io5";
-
+import { useSound } from "@/shared/provider/SoundProvider";
 import Images from "@/shared/assets/images";
+import Audios from "@/shared/assets/audio";
 
 interface BottomNavigationProps {
   hidden?: boolean;
@@ -15,9 +16,12 @@ interface BottomNavigationProps {
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({hidden}) => {
   const { selected, setSelected } = useNavigationStore();
+  // 사운드 훅
+  const { playSfx } = useSound();
 
   const handleNavigation = (path: string) => {
     setSelected(path);
+    playSfx(Audios.button_click);
   };
 
   return (
