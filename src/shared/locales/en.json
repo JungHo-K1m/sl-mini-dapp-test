@@ -5,6 +5,13 @@
       "Choose_your_character!": "Choose your character!",
       "Continue": "Continue"
     },
+    "tutorial": {
+      "first_step": "<strong>Roll Dice Button:</strong> Rolling the dice moves your cuddly companion around the Monopoly board. The tile it lands on determines your rewards or triggers special in-game events.",
+      "second_step": "<strong>Dice Gauge:</strong> Press and hold the button to move the gauge, which has six sections (1–6). Release the button when the gauge reaches your desired number.<div style=\"marginBottom: 1rem\"></div>If the gauge lands on the number you want, you have a <strong>50% chance</strong> to trigger the <strong>Lucky Dice effect</strong>, causing your pet to move to that number on the board",
+      "third_step": "<strong>Dice Refill:</strong> Once all dice are used, the text changes to <em>'Refill Dice.'</em> Click it to refill your dice.<div style=\"marginBottom: 1rem\"></div>After refilling, you can receive additional dice again after <strong>an hour</strong>.<div style=\"marginBottom: 1rem\"></div>When the refill time is over, the text changes to <em>'Waiting.'</em> If you have no dice left, it reverts to <em>'Refill Dice.'</em>",
+      "fourth_step": "<strong>NFT Dashboard:</strong> Shows the <strong>number of NFTs</strong> you own.<div style=\"marginBottom: 1rem\"></div>Click to explore the <strong>effects</strong> of your NFTs.",
+      "fifth_step": "<strong>Auto Function:</strong> If you own an <strong>Auto Item</strong>, the dice will roll automatically.<div style=\"marginBottom: 1rem\"></div>When the refill time arrives, the dice will also be refilled and rolled automatically.<div style=\"marginBottom: 1rem\"></div>This function only works while you are on the <strong>Game section</strong> and does not apply to actions on <em>Rock-Paper-Scissors</em>, <em>Spin</em>, or <em>Anywhere tiles</em>."
+    },
     "ai_page": {
       "click_here": "Click here to upload your image",
       "AI_based_examination_for_pets": "AI-based examination for pets",
@@ -287,6 +294,23 @@
         "better_luck": "Better luck",
         "next_time": "next time!",
         "quit": "Quit"
+      },
+      "spin_game": {
+        "spin_wheel": "Spin the Wheel,",
+        "win_prize": "Win Prizes!",
+        "note": "Note",
+        "if_you": "If you leave without spinning the roulette,",
+        "lose_turn": "you will lose your turn.",
+        "start": "Start",
+        "get_reward": "Get Rewarded",
+        "boom": "Boom!",
+        "better_luck": "Better luck next time!",
+        "congrate": "Congratulations!",
+        "you_won": "You won",
+        "include": "Your rewards include",
+        "booster": "Reward Booster",
+        "spin_reward": "Spin Reward",
+        "ok": "OK"
       },
       "inventory": "Your Current Inventory",
       "points": "Game Board Points",

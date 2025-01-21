@@ -5,6 +5,13 @@
       "Choose_your_character!": "選擇您的角色！",
       "Continue": "繼續"
     },
+    "tutorial": {
+      "first_step": "<strong>擲骰子按鈕：</strong> 擲骰子可讓您的可愛夥伴在大富翁棋盤上移動，停留的格子將決定您獲得的獎勵或觸發特殊的遊戲事件。",
+      "second_step": "<strong>骰子量表:</strong> 按住按鈕以移動量表，量表分為六個區段（1–6）。當量表到達想要的數字時，鬆開按鈕。<div style=\"marginBottom: 1rem\"></div>如果量表正好落在您想要的數字上，有 <strong>50% 的機率</strong> 觸發 <strong>幸運骰子效果</strong>，使您的寵物移動到該數字所在的棋格。",
+      "third_step": "<strong>骰子補充:</strong> 當您用完所有骰子後，按鈕文字會變成 <em>「補充骰子」</em>，點擊它即可補充骰子。<div style=\"marginBottom: 1rem\"></div>補充之後，<strong>一小時</strong> 後您可以再次領取額外的骰子。<div style=\"marginBottom: 1rem\"></div>當補充時間結束後，按鈕文字會變成 <em>「等待中」</em>，如果您沒有剩餘骰子，則會變回 <em>「補充骰子」</em>。",
+      "fourth_step": "<strong>NFT儀表板:</strong> 顯示您擁有的 <strong>NFT 數量</strong>。<div style=\"marginBottom: 1rem\"></div>點擊以查看您的NFT之 <strong>效果</strong>。",
+      "fifth_step": "<strong>自動功能:</strong> 如果您擁有 <strong>自動道具</strong>，骰子將自動擲出。<div style=\"marginBottom: 1rem\"></div>當到達補充時間，骰子也會自動補充並擲出。<div style=\"marginBottom: 1rem\"></div>該功能僅在您位於 <strong>遊戲界面</strong> 時運作，不適用於猜拳、轉盤或「任意位置」格。"
+    },
     "ai_page": {
       "click_here": "点击这里上传您的图片",
       "AI_based_examination_for_pets": "基於AI的寵物牙齒分析",
@@ -287,6 +294,23 @@
         "better_luck": "可惜了",
         "next_time": "下次再加油！",
         "quit": "退出"
+      },
+      "spin_game": {
+        "spin_wheel": "轉轉樂,",
+        "win_prize": "贏得獎品！",
+        "note": "注意",
+        "if_you": "如果您在沒有旋轉輪盤的情況下離開，",
+        "lose_turn": "您將失去一次機會。",
+        "start": "開始",
+        "get_reward": "領取獎勵",
+        "boom": "砰！",
+        "better_luck": "下次好運！",
+        "congrate": "恭喜！",
+        "you_won": "您贏了！",
+        "include": "您的獎勵包含以下內容：",
+        "booster": "獎勵加速器",
+        "spin_reward": "轉盤獎勵",
+        "ok": "確認"
       },
       "inventory": "你目前的庫存",
       "points": "遊戲棋盤積分",

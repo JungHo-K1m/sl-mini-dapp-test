@@ -6,6 +6,7 @@ import { preloadImages } from "@/shared/utils/preloadImages";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // ★ 이 로딩 스피너 사용
 import { motion } from "framer-motion";
 import { useUserStore } from "@/entities/User/model/userModel";
+import { useTranslation } from "react-i18next";
 import { formatNumber } from "@/shared/utils/formatNumber";
 import { IoGameController } from "react-icons/io5";
 import { Wheel } from "react-custom-roulette";
@@ -132,6 +133,7 @@ const data = [
 
 // 스핀 시작 컴포넌트
 const SpinGameStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
+  const { t } = useTranslation();
   return (
     <div
       className="flex flex-col items-center justify-center px-12 pb-8 h-full w-full"
@@ -142,9 +144,9 @@ const SpinGameStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
       }}
     >
       <h1 className="text-[#fde047] font-jalnan text-center text-[36px] mt-8 ">
-        Spin the Wheel,
+        {t("dice_event.spin_game.spin_wheel")}
         <br />
-        Win Prizes!
+        {t("dice_event.spin_game.win_prize")}
       </h1>
 
       <img
@@ -154,16 +156,16 @@ const SpinGameStart: React.FC<{ onStart: () => void }> = ({ onStart }) => {
       />
       <div className="border-2 border-[#21212f] rounded-3xl text-center bg-white text-[#171717] font-medium w-[342px] h-[110px] flex items-center justify-center mt-4">
         <p>
-          ※ Note ※
-          <br /> If you leave without spinning the roulette, <br />
-          you will lose your turn.
+          ※ {t("dice_event.spin_game.note")} ※
+          <br /> {t("dice_event.spin_game.if_you")} <br />
+          {t("dice_event.spin_game.lose_turn")}
         </p>
       </div>
       <button
         className="flex items-center justify-center bg-[#21212f] text-white h-14 mt-4 w-[342px] rounded-full font-medium"
         onClick={onStart}
       >
-        Start
+        {t("dice_event.spin_game.start")}
       </button>
     </div>
   );
@@ -180,6 +182,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   } | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const { playSfx } = useSound();
+  const { t } = useTranslation();
 
   const { setStarPoints, setDiceCount, setSlToken, setLotteryCount, items } =
     useUserStore();
@@ -330,9 +333,9 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
       }}
     >
       <h1 className="text-[#fde047] font-jalnan text-center text-[36px] mt-8 md:mb-12">
-        Spin the Wheel,
+        {t("dice_event.spin_game.spin_wheel")}
         <br />
-        Win Prizes!
+        {t("dice_event.spin_game.win_prize")}
       </h1>
 
       <motion.div
@@ -407,7 +410,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
       <AlertDialog open={isDialogOpen}>
         <AlertDialogContent className="rounded-3xl bg-[#21212F] text-white border-none max-w-[90%] md:max-w-lg">
           <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-            <h1 className="mt-10 font-jalnan">Get Rewarded</h1>
+            <h1 className="mt-10 font-jalnan">{t("dice_event.spin_game.get_reward")}</h1>
             <div className="w-32 h-32 bg-gradient-to-b from-[#2660f4] to-[#3937a3] rounded-[24px] flex items-center justify-center">
               <div className="w-[126px] h-[126px] logo-bg rounded-[24px] flex items-center justify-center flex-col gap-2">
                 <img
@@ -420,21 +423,21 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
             <div className="text-center space-y-2">
               {prizeData?.spinType?.toUpperCase() === "BOOM" ? (
                 <>
-                  <p className="text-xl font-semibold">Boom!</p>
-                  <p className="text-[#a3a3a3]">Better luck next time!</p>
+                  <p className="text-xl font-semibold">{t("dice_event.spin_game.boom")}</p>
+                  <p className="text-[#a3a3a3]">{t("dice_event.spin_game.better_luck")}</p>
                 </>
               ) : (
                 <>
                   <p className="text-xl font-semibold">
-                    Congratulations! <br />
-                    You won {prizeData && formatNumber(prizeData?.amount)}{" "}
+                    {t("dice_event.spin_game.congrate")} <br />
+                    {t("dice_event.spin_game.you_won")} {prizeData && formatNumber(prizeData?.amount)}{" "}
                     {getPrizeDisplayName(prizeData?.spinType)}!
                   </p>
                 </>
               )}
             </div>
             <div className="flex flex-col w-full mt-4">
-              <p>Your rewards include : </p>
+              <p>{t("dice_event.spin_game.include")} : </p>
               <div className="rounded-3xl border-2 border-[#35383f] bg-[#1f1e27] p-5 mt-2">
                 <div className="flex flex-row items-center gap-2">
                   <img
@@ -442,11 +445,11 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
                     alt="rewardBooster"
                     className="w-6 h-6"
                   />
-                  <p className="font-semibold">Reward Booster</p>
+                  <p className="font-semibold">{t("dice_event.spin_game.booster")}</p>
                 </div>
                 <div className="flex flex-row items-center gap-1 mt-2 ml-6">
                   <IoGameController className="text-xl" />
-                  <p className="text-sm">Spin Reward : x{items.spinTimes}</p>
+                  <p className="text-sm">{t("dice_event.spin_game.spin_reward")} : x{items.spinTimes}</p>
                 </div>
               </div>
             </div>
@@ -455,7 +458,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
                 className="w-full h-14 rounded-full bg-[#0147e5]"
                 onClick={handleCloseDialog}
               >
-                OK
+                {t("dice_event.spin_game.ok")}
               </button>
             </div>
           </div>

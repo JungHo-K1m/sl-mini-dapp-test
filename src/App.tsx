@@ -6,6 +6,8 @@ import AppInitializer from "./app/components/AppInitializer";
 import { TourProvider } from "@reactour/tour";
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { useUserStore } from "@/entities/User/model/userModel";
+import { useTranslation } from "react-i18next";
+import parse from 'html-react-parser';
 import { SoundProvider } from "./shared/provider/SoundProvider";
 import Audios from "./shared/assets/audio";
 import "./App.css";
@@ -43,15 +45,18 @@ import ConnectWalletPage from "./pages/ConnectWallet";
 import LanguagePage from "./pages/ChooseLanguage";
 import SoundSetting from "./pages/SoundSetting";
 
+const { t } = useTranslation();
+
 // 튜토리얼
 const steps = [
     {
       selector: "#first-step",
       content: (
         <div className="text-sm">
-          <strong>Roll Dice Button:</strong> 
+          {parse(t('tutorial.first_step'))}
+          {/* <strong>Roll Dice Button:</strong> 
           Rolling the dice moves your cuddly companion around the Monopoly board. 
-          The tile it lands on determines your rewards or triggers special in-game events.
+          The tile it lands on determines your rewards or triggers special in-game events. */}
         </div>
       ),
       stepInteraction: false,
@@ -60,8 +65,9 @@ const steps = [
       selector: "#second-step",
       content: (
         <div className="text-sm">
-          <strong>Dice Gauge:</strong> Press and hold the button to move the gauge, which has six sections (1–6). Release the button when the gauge reaches your desired number.<div style={{ marginBottom: "1rem" }}></div>
-          If the gauge lands on the number you want, you have a <strong>50% chance</strong> to trigger the <strong>Lucky Dice effect</strong>, causing your pet to move to that number on the board
+          {parse(t('tutorial.second_step'))}
+          {/* <strong>Dice Gauge:</strong> Press and hold the button to move the gauge, which has six sections (1–6). Release the button when the gauge reaches your desired number.<div style={{ marginBottom: "1rem" }}></div>
+          If the gauge lands on the number you want, you have a <strong>50% chance</strong> to trigger the <strong>Lucky Dice effect</strong>, causing your pet to move to that number on the board */}
         </div>
       ),
       stepInteraction: false,
@@ -70,9 +76,10 @@ const steps = [
       selector: "#third-step",
       content: (
         <div className="text-sm">
-          <strong>Dice Refill:</strong> Once all dice are used, the text changes to <em>'Refill Dice.'</em> Click it to refill your dice.<div style={{ marginBottom: "1rem" }}></div>
+          {parse(t('tutorial.third_step'))}
+          {/* <strong>Dice Refill:</strong> Once all dice are used, the text changes to <em>'Refill Dice.'</em> Click it to refill your dice.<div style={{ marginBottom: "1rem" }}></div>
           After refilling, you can receive additional dice again after <strong>an hour</strong>.<div style={{ marginBottom: "1rem" }}></div>
-          When the refill time is over, the text changes to <em>'Waiting.'</em> If you have no dice left, it reverts to <em>'Refill Dice.'</em>
+          When the refill time is over, the text changes to <em>'Waiting.'</em> If you have no dice left, it reverts to <em>'Refill Dice.'</em> */}
         </div>
       ),
       stepInteraction: false,
@@ -81,8 +88,9 @@ const steps = [
       selector: "#fourth-step",
       content: (
         <div className="text-sm">
-          <strong>NFT Dashboard:</strong> Shows the <strong>number of NFTs</strong> you own.<div style={{ marginBottom: "1rem" }}></div>
-          Click to explore the <strong>effects</strong> of your NFTs.
+          {parse(t('tutorial.fourth_step'))}
+          {/* <strong>NFT Dashboard:</strong> Shows the <strong>number of NFTs</strong> you own.<div style={{ marginBottom: "1rem" }}></div>
+          Click to explore the <strong>effects</strong> of your NFTs. */}
         </div>
       ),
       stepInteraction: false,
@@ -91,9 +99,10 @@ const steps = [
       selector: "#fifth-step",
       content: (
         <div className="text-sm">
-          <strong>Auto Function:</strong> If you own an <strong>Auto Item</strong>, the dice will roll automatically.<div style={{ marginBottom: "1rem" }}></div>
+          {parse(t('tutorial.fifth_step'))}
+          {/* <strong>Auto Function:</strong> If you own an <strong>Auto Item</strong>, the dice will roll automatically.<div style={{ marginBottom: "1rem" }}></div>
           When the refill time arrives, the dice will also be refilled and rolled automatically.<div style={{ marginBottom: "1rem" }}></div>
-          This function only works while you are on the <strong>Game section</strong> and does not apply to actions on <em>Rock-Paper-Scissors</em>, <em>Spin</em>, or <em>Anywhere tiles</em>.
+          This function only works while you are on the <strong>Game section</strong> and does not apply to actions on <em>Rock-Paper-Scissors</em>, <em>Spin</em>, or <em>Anywhere tiles</em>. */}
         </div>
       ),
       stepInteraction: false,

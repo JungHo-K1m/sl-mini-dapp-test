@@ -5,6 +5,13 @@
       "Choose_your_character!": "캐릭터를 선택하세요!",
       "Continue": "계속하기"
     },
+    "tutorial": {
+      "first_step": "<strong>주사위 굴리기 버튼:</strong> 주사위를 굴리면 귀여운 반려동물이 모노폴리 보드를 돌아다니며, 멈춘 칸에 따라 보상을 획득하거나 특별한 게임 내 이벤트가 발생합니다.",
+      "second_step": "<strong>주사위 게이지:</strong> 버튼을 길게 눌러 게이지를 이동하세요. 게이지는 1~6까지 구간으로 나뉘어 있으며, 원하는 숫자에 도달했을 때 버튼에서 손을 떼면 됩니다.<div style=\"marginBottom: 1rem\"></div>원하는 숫자에 정확히 멈추면 <strong>50% 확률</strong>로 <strong>럭키 다이스 효과</strong>가 발동되어, 반려동물이 해당 숫자 칸으로 이동합니다.",
+      "third_step": "<strong>주사위 보충:</strong> 모든 주사위를 사용하면, 버튼 문구가 <em>'주사위 보충'</em>으로 바뀝니다. 이 버튼을 클릭하여 주사위를 보충하세요.<div style=\"marginBottom: 1rem\"></div>보충 후, <strong>1시간</strong>이 지나면 다시 추가 주사위를 받을 수 있습니다.<div style=\"marginBottom: 1rem\"></div>보충 시간이 끝나면 버튼 문구가 <em>'대기 중'</em>으로 바뀌고, 주사위가 남아 있지 않으면 <em>'주사위 보충'</em>으로 되돌아갑니다.",
+      "fourth_step": "<strong>NFT 대시보드:</strong> 현재 소유 중인 <strong>NFT의 수</strong>를 보여줍니다.<div style=\"marginBottom: 1rem\"></div>클릭하면 해당 NFT들의 <strong>효과</strong>를 확인할 수 있습니다.",
+      "fifth_step": "<strong>자동 기능:</strong> <strong>자동 아이템</strong>을 보유하고 있다면 주사위가 자동으로 굴러갑니다.<div style=\"marginBottom: 1rem\"></div>보충 시간이 되면 주사위도 자동으로 보충되고 굴려집니다.<div style=\"marginBottom: 1rem\"></div>이 기능은 <strong>게임 섹션</strong>에 있을 때만 작동하며, 가위바위보, 룰렛, 혹은 '어디든지' 칸에는 적용되지 않습니다."
+    },
     "ai_page": {
       "click_here": "이미지를 업로드하려면 여기를 클릭하세요",
       "AI_based_examination_for_pets": "반려동물을 위한 AI 기반 검사",
@@ -287,6 +294,23 @@
         "better_luck": "더 좋은 운을 빕니다!",
         "next_time": "다음 기회에!",
         "quit": "그만두기"
+      },
+      "spin_game": {
+        "spin_wheel": "룰렛 돌리기,",
+        "win_prize": "상품을 획득하세요!",
+        "note": "알림",
+        "if_you": "룰렛을 돌리지 않고 나가면,",
+        "lose_turn": "기회를 잃게 됩니다.",
+        "start": "시작",
+        "get_reward": "보상 받기",
+        "boom": "꽝!",
+        "better_luck": "다음 기회에 행운을 빌어요!",
+        "congrate": "축하합니다!",
+        "you_won": "당첨되셨습니다!",
+        "include": "획득한 보상에는 다음이 포함됩니다:",
+        "booster": "보상 부스터",
+        "spin_reward": "룰렛 보상",
+        "ok": "확인"
       },
       "inventory": "현재 인벤토리",
       "points": "게임보드 포인트",

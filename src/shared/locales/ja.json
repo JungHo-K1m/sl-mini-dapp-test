@@ -5,6 +5,13 @@
         "Choose_your_character!": "キャラクターを選択してください！",
         "Continue": "続行"
     },
+    "tutorial": {
+        "first_step": "<strong>サイコロを振るボタン:</strong> サイコロを振ると、かわいいペットがモノポリーボード上を移動します。止まったマスによって報酬を獲得したり、特別なゲーム内イベントが発生します。",
+        "second_step": "<strong>サイコログラフ:</strong> ボタンを押し続けるとゲージが動きます。ゲージは1～6のセクションに分かれており、望む数字に達したらボタンを離してください。<div style=\"marginBottom: 1rem\"></div>望む数字で止まった場合、<strong>50%の確率</strong>で <strong>ラッキーダイス効果</strong> が発動し、ペットがその数字のマスに移動します。",
+        "third_step": "<strong>サイコロ補充:</strong> すべてのサイコロを使用すると、ボタンのテキストが <em>「サイコロ補充」</em> に変わります。クリックしてサイコロを補充してください。<div style=\"marginBottom: 1rem\"></div>補充後、<strong>1時間</strong> 経過すると再びサイコロを受け取ることができます。<div style=\"marginBottom: 1rem\"></div>補充時間が終わると、テキストは <em>「待機中」</em> に変わり、サイコロが残っていない場合は <em>「サイコロ補充」</em> に戻ります。",
+        "fourth_step": "<strong>NFTダッシュボード:</strong> 所持している <strong>NFTの数</strong> を表示します。<div style=\"marginBottom: 1rem\"></div>クリックすると、そのNFTの <strong>効果</strong> を確認できます。",
+        "fifth_step": "<strong>自動機能:</strong> <strong>オートアイテム</strong>を所持している場合、サイコロは自動的に振られます。<div style=\"marginBottom: 1rem\"></div>補充時間になると、サイコロも自動で補充され再度振られます。<div style=\"marginBottom: 1rem\"></div>この機能は <strong>ゲーム画面</strong> にいるときのみ有効で、ジャンケンやルーレット、「どこでもマス」などのアクションには適用されません。"
+    },
     "ai_page": {
         "click_here": "画像をアップロードするには、こちらをクリックしてください",
         "AI_based_examination_for_pets": "ペットのAI歯科検査",
@@ -287,6 +294,23 @@
             "better_luck": "より良い運を",
             "next_time": "次の機?に！",
             "quit": "終了"
+        },
+        "spin_game": {
+            "spin_wheel": "ルーレットを回す,",
+            "win_prize": "賞品をゲットしよう！",
+            "note": "注意",
+            "if_you": "ルーレットを回さずに退出すると、",
+            "lose_turn": "あなたの番が失われます。",
+            "start": "スタート",
+            "get_reward": "報酬を受け取る",
+            "boom": "ドカン！",
+            "better_luck": "次はもっと幸運を！",
+            "congrate": "おめでとうございます！",
+            "you_won": "当選しました！",
+            "include": "獲得した報酬には以下が含まれます:",
+            "booster": "報酬ブースター",
+            "spin_reward": "ルーレット報酬",
+            "ok": "OK"
         },
         "inventory": "現在の所持品",
         "points": "ゲームボードポイント",

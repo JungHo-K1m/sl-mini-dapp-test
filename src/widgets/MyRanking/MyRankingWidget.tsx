@@ -232,7 +232,7 @@ const MyRankingWidget: React.FC<MyRankingWidgetProps> = ({
                   animate="animate"
                   exit="exit"
                 >
-                  My Rank
+                  {t("dice_event.my_rank")}
                 </motion.p>
               )}
 
