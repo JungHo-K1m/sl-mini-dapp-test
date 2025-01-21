@@ -30,7 +30,6 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     "wallet-list",
     "test",
     "previous-rewards",
-    "choose-character",
     "select-pet",
     "regist-pet",
     "edit-pet",
