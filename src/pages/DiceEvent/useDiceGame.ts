@@ -109,7 +109,7 @@ export const useDiceGame = () => {
         }
 
         if (currentPosition !== (endPosition % 20)) {
-          setTimeout(moveStep, 310);
+          setTimeout(moveStep, 305);
         } else {
           // 보상 적용 제거
           // applyReward(currentPosition);
