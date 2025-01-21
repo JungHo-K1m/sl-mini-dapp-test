@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TopTitle } from '@/shared/components/ui';
 import { useSoundStore } from '@/shared/store/useSoundStore';
+import saveSoundSetting from '@/entities/User/api/saveSoundSetting';
 import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
@@ -28,9 +29,30 @@ const SoundSetting: React.FC = () => {
     toggleSfxMute,
   } = useSoundStore();
 
-  const handleSave = () => {
-    // 추후 저장 로직(예: API 호출 등) 필요하다면 여기에
-    navigate(-1);
+  const handleSave = async() => {
+    try{
+      const soundData = {
+        masterVolume: masterVolume*10,
+        masterMute: masterMuted,
+        backVolume: bgmVolume*10,
+        backMute: bgmMuted,
+        effectVolume: sfxVolume*10,
+        effectMute: sfxMuted
+      };
+
+      const saveResponse = await saveSoundSetting(soundData);
+
+      if (saveResponse) {
+        navigate("/dice-event");
+      } else {
+        // 실패(false) 시 사용자에게 알림/로그 등 처리
+        alert("사운드 설정 저장에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error: any) {
+      // 에러 핸들링
+      console.error("사운드 설정 저장 중 에러:", error);
+      alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    }
   };
 
   return (
