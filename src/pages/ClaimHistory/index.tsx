@@ -22,22 +22,22 @@ const ClaimHistory: React.FC = () => {
     switch (status) {
       case "Completed":
         return {
-          label: t("asset_page.claim_completed"), 
+          label: t("asset_page.claim.claim_completed"), 
           className: "bg-[#DCFCE7] text-[#166534]",
         };
       case "Pending":
         return {
-          label: t("asset_page.claim_pending"), 
+          label: t("asset_page.claim.claim_pending"), 
           className: "bg-[#FEF9C3] text-[#713F12]",
         };
       case "Failed":
         return {
-          label: t("asset_page.claim_failed"), 
+          label: t("asset_page.claim.claim_failed"), 
           className: "bg-[#FEE2E2] text-[#991B1B]",
         };
       default:
         return {
-          label: t("asset_page.claim_waiting"), 
+          label: t("asset_page.claim.claim_waiting"), 
           className: "bg-gray-500 text-white",
         };
     }
@@ -46,7 +46,7 @@ const ClaimHistory: React.FC = () => {
   return (
     <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-32">
       {/* 상단 타이틀 */}
-      <TopTitle title={t("asset_page.claim_history")} back={true} />
+      <TopTitle title={t("asset_page.claim.claim_history")} back={true} />
 
       {/* 히스토리 목록 */}
       <div className="w-full">

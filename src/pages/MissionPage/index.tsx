@@ -20,8 +20,8 @@ import {
   Mission,
 } from "@/entities/Mission/model/missionModel";
 import { formatNumber } from "@/shared/utils/formatNumber";
-import LoadingSpinner from "@/shared/components/ui/loadingSpinner";   // ★ 로딩 스피너
-import { preloadImages } from "@/shared/utils/preloadImages";         // ★ 이미지 프리로딩 함수
+import LoadingSpinner from "@/shared/components/ui/loadingSpinner"; // 로딩 스피너
+import { preloadImages } from "@/shared/utils/preloadImages";       // 이미지 프리로딩 함수
 import { useTranslation } from "react-i18next";
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
@@ -83,7 +83,7 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
       <div className="relative flex flex-col items-center justify-center z-0">
         <img src={imageSrc} alt={mission.name} className="w-9 h-9" />
         <div className="flex flex-col items-center justify-center">
-          {/* ★ 여기에서 mission.name → translatedName 으로 변경 */}
+          {/* ★ mission.name → translatedName 사용 */}
           <p className="text-sm font-medium">{translatedName}</p>
           <p className="font-semibold text-sm flex flex-row items-center gap-1">
             +{mission.diceReward}{" "}
@@ -196,7 +196,7 @@ const MissionPage: React.FC = () => {
   }, [imagesToLoad]);
 
   // ---------------------------
-  // 6) 미션 데이터 불러오기 (기존 로직)
+  // 6) 미션 데이터 불러오기
   // ---------------------------
   useEffect(() => {
     fetchMissions();
@@ -252,82 +252,101 @@ const MissionPage: React.FC = () => {
 
       {/* 미션 리스트 */}
       <div className="grid grid-cols-2 gap-3">
-        {missions.map((mission) =>
-          mission.name !== "Leave a Supportive Comment on SL X" ? (
-            <OneTimeMissionCard
-              key={mission.id}
-              mission={mission}
-              onClear={handleClearMission}
-              onMissionCleared={handleMissionCleared}
-            />
-          ) : (
-            <div className="col-span-2" key={mission.id}>
-              <div
-                className={`basic-mission-card h-36 rounded-3xl flex flex-row items-center pl-8 pr-5 justify-between relative cursor-pointer ${
-                  mission.isCleared ? "pointer-events-none" : ""
-                }`}
-                onClick={() => {
-                  playSfx(Audios.button_click);
-                  if (!mission.isCleared) {
-                    if (mission.redirectUrl) {
-                      window.open(mission.redirectUrl, "_blank");
-                    }
-                    handleClearMission(mission.id);
-                  }
-                }}
-                role="button"
-                aria-label={`Mission: ${mission.name}`}
-                tabIndex={0}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && !mission.isCleared) {
-                    if (mission.redirectUrl) {
-                      window.open(mission.redirectUrl, "_blank");
-                    }
-                    handleClearMission(mission.id);
-                  }
-                }}
-              >
-                {mission.isCleared && (
-                  <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10"></div>
-                )}
+        {missions.map((mission) => {
+          // 분기 처리: "Leave a Supportive Comment on SL X" → else 구간
+          if (mission.name !== "Leave a Supportive Comment on SL X") {
+            return (
+              <OneTimeMissionCard
+                key={mission.id}
+                mission={mission}
+                onClear={handleClearMission}
+                onMissionCleared={handleMissionCleared}
+              />
+            );
+          } else {
+            // ★ else 구간에서도 translatedName 사용
+            const translatedName = missionNamesMap[mission.name]
+              ? t(missionNamesMap[mission.name])
+              : mission.name;
 
-                <div className="relative flex flex-row items-center justify-between z-0 w-full">
-                  <div className="md:space-y-3">
-                    <p className="text-sm font-medium">{mission.name}</p>
-                    <p className="font-semibold flex flex-row items-center gap-1 mt-2">
-                      +{mission.diceReward}{" "}
-                      <img src={Images.Dice} alt="dice" className="w-5 h-5" />
-                      &nbsp; +{formatNumber(mission.starReward)}{" "}
-                      <img src={Images.Star} alt="star" className="w-5 h-5" />
-                    </p>
+            return (
+              <div className="col-span-2" key={mission.id}>
+                <div
+                  className={`basic-mission-card h-36 rounded-3xl flex flex-row items-center pl-8 pr-5 justify-between relative cursor-pointer ${
+                    mission.isCleared ? "pointer-events-none" : ""
+                  }`}
+                  onClick={() => {
+                    playSfx(Audios.button_click);
+                    if (!mission.isCleared) {
+                      if (mission.redirectUrl) {
+                        window.open(mission.redirectUrl, "_blank");
+                      }
+                      handleClearMission(mission.id);
+                    }
+                  }}
+                  role="button"
+                  aria-label={`Mission: ${mission.name}`}
+                  tabIndex={0}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter" && !mission.isCleared) {
+                      if (mission.redirectUrl) {
+                        window.open(mission.redirectUrl, "_blank");
+                      }
+                      handleClearMission(mission.id);
+                    }
+                  }}
+                >
+                  {mission.isCleared && (
+                    <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10"></div>
+                  )}
+
+                  <div className="relative flex flex-row items-center justify-between z-0 w-full">
+                    <div className="md:space-y-3">
+                      {/* ★ 영문 대신 translatedName 표시 */}
+                      <p className="text-sm font-medium">{translatedName}</p>
+                      <p className="font-semibold flex flex-row items-center gap-1 mt-2">
+                        +{mission.diceReward}{" "}
+                        <img
+                          src={Images.Dice}
+                          alt="dice"
+                          className="w-5 h-5"
+                        />
+                        &nbsp; +{formatNumber(mission.starReward)}{" "}
+                        <img
+                          src={Images.Star}
+                          alt="star"
+                          className="w-5 h-5"
+                        />
+                      </p>
+                    </div>
+                    <img
+                      src={Images.LargeTwitter}
+                      alt="Large Twitter"
+                      className="w-20 h-20"
+                    />
                   </div>
-                  <img
-                    src={Images.LargeTwitter}
-                    alt="Large Twitter"
-                    className="w-20 h-20"
-                  />
+
+                  {mission.isCleared && (
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-sm font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
+                      <img
+                        src={Images.MissionCompleted}
+                        alt="Mission Completed"
+                        className="w-5 h-5"
+                      />
+                      <p>{t("mission_page.Completed")}</p>
+                    </div>
+                  )}
                 </div>
 
-                {mission.isCleared && (
-                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-sm font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
-                    <img
-                      src={Images.MissionCompleted}
-                      alt="Mission Completed"
-                      className="w-5 h-5"
-                    />
-                    <p>{t("mission_page.Completed")}</p>
-                  </div>
-                )}
+                <p className="text-xs mb-8 mt-2 text-white">
+                  {t(
+                    "mission_page.*_If_the_mission_is_not_performed_correctly,_you_may_be_excluded_from_the_final_reward."
+                  )}
+                </p>
               </div>
-
-              <p className="text-xs mb-8 mt-2 text-white">
-                {t(
-                  "mission_page.*_If_the_mission_is_not_performed_correctly,_you_may_be_excluded_from_the_final_reward."
-                )}
-              </p>
-            </div>
-          )
-        )}
+            );
+          }
+        })}
       </div>
 
       <h1 className="font-semibold text-lg ml-[2px] mb-4">
