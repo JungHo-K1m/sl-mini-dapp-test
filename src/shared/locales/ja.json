@@ -276,33 +276,33 @@
             "tripled": "ラウンドに勝利：ベットは3倍になります。",
             "multifly": "連続勝利で報酬がどんどん倍増します。",
             "continue": "続行またはキャッシュアウト",
-            "cash_out": "ラウンドに勝利した後、続行するかキャッシュアウトするか選べます。",
-            "losing": "いずれかのラウンドで負けるとベットは失われます。",
+            "cash_out": "ラウンドに勝った後、?行するか報酬を受け取るかを選?できます。",
+            "losing": "どのラウンドで負けてもベットは??されます。",
             "congrate": "おめでとうございます！",
             "27x": "ベット額の27倍を獲得しました！",
-            "continue_with": "このまま続行",
-            "finish": "終了する",
+            "continue_with": "続行",
+            "finish": "終了",
             "collect": "受け取る",
             "gamble": "ギャンブル",
-            "better_luck": "残念でした",
-            "next_time": "次の機会をお楽しみに！",
-            "quit": "やめる"
+            "better_luck": "より良い運を",
+            "next_time": "次の機?に！",
+            "quit": "終了"
         },
-        "inventory": "現在のインベントリ",
+        "inventory": "現在の所持品",
         "points": "ゲームボードポイント",
-        "tickets": "抽選チケット",
+        "tickets": "抽選券",
         "spin": "スピン報酬",
         "additive": "NFT報酬の倍率は追加的に適用されます。",
-        "select_tile": "移動するタイルを選択",
+        "select_tile": "移動するマスを選?してください",
         "level_up": "レベルアップ！",
-        "grap_prize": "賞品をゲットしよう！",
+        "grap_prize": "賞品を手に入れましょう！",
         "my_rank": "自分のランク",
-        "ranking_base": "ランキングはスターポイントに基づきます",
-        "star_rewards": "報酬：スターポイント1,000",
+        "ranking_base": "ランキングはスタ?ポイントに基づきます",
+        "star_rewards": "報酬：スタ?ポイント1,000",
         "mission": "ミッション",
-        "get_more_dice": "ダイスをもっと入手",
-        "Earn_extra_rolls": "ロール数を増やして",
-        "to_boost_your_chances": "勝利のチャンスをアップしましょう！"
+        "get_more_dice": "さらにサイコロを獲得",
+        "Earn_extra_rolls": "追加ロールを獲得",
+        "to_boost_your_chances": "チャンスを高めましょう！"
     },
     "setting": {
         "terms_of_service": "利用規約",
@@ -316,11 +316,11 @@
         "kor": "韓国語"
     },
     "user_level": {
-        "message_1": "やあ、<br/>サイコロを振る準備はいい？",
-        "message_2": "サイコロが<br/>熱くなってるよ！",
-        "message_3": "もう一度<br/>振ってみよう！",
-        "message_4": "大きく<br/>仕掛けよう！",
-        "message_5": "準備は<br/>万端？",
-        "message_6": "そのまま<br/>振り続けよう！"
+        "message_1": "こんにちは、<br/>サイコロを振る準備はできましたか？",
+        "message_2": "サイコロがあなたを待ってます！",
+        "message_3": "もう一度<br/>振ってみましょう！",
+        "message_4": "大きく<br/>一手を打ちましょう！",
+        "message_5": "サイコロを振る<br/>準備はいいですか？",
+        "message_6": "引き?きサイコロを振ってみしょう！"
   }
 }

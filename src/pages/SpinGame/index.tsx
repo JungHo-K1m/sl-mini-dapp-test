@@ -273,6 +273,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
   };
 
   const handleCloseDialog = () => {
+    playSfx(Audios.button_click);
     setPrizeData(null);
     setIsDialogOpen(false);
     onSpinEnd();
