@@ -245,7 +245,12 @@
         "close":"Close",
         "complete": "Claim Completed",
         "success": "SL claim was successful!",
-        "view_history": "View History"
+        "view_history": "View History",
+        "claim_history": "Claim History",
+        "claim_completed": "Completed",
+        "claim_pending": "Pending",
+        "claim_failed": "Failed",
+        "claim_waiting": "Waiting"
       }
     },
     "dice_event": {

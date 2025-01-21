@@ -1,10 +1,8 @@
-/**
- * 서버에서 내려오는 mission.name(영문) -> 우리가 사용할 식별자
- */
-export const missionNameMap: Record<string, string> = {
-    "Follow on X": "follow_on_x",
-    "Join Telegram": "join_telegram",
-    "Subscribe to Email": "subscribe_to_email",
-    "Join the SL Discord": "join_the_sl_discord",
-    "Leave a Supportive Comment on SL X": "leave_a_supportive_comment_on_sl_x",
-  };
+// missionNamesMap.ts
+export const missionNamesMap: Record<string, string> = {
+  "Follow on X": "mission_page.follow_on_x",
+  "Join Telegram": "mission_page.join_telegram",
+  "Subscribe to Email": "mission_page.subscribe_to_email",
+  "Follow on LinkedIn": "mission_page.follow_on_linkedin",
+  "Leave a Supportive Comment on SL X": "mission_page.leave_a_supportive_comment_on_sl_x",
+};

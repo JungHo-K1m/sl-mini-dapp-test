@@ -85,7 +85,7 @@
     },
     "rank_page": {
       "Ranking": "랭킹",
-      "My_Rank": "내 랭킹",
+      "My_Rank": "나의 랭킹",
       "*_Rankings_are_based_on_Star_Points": "* 랭킹은 스타 포인트를 기준으로 합니다.",
       "Leader_Board": "리더보드",
       "Campaign_Prize": "캠페인 상품",
@@ -106,7 +106,7 @@
     },
     "reward_page": {
       "reward": "보상",
-      "previous": "이전 보상",
+      "previous": "이전 보상 확인하기",
       "see_ranking_reward": "지난달 랭킹과 보상을 확인하세요!",
       "this_month": "이번 달",
       "awards": "랭킹 보상",
@@ -198,9 +198,9 @@
       "friend_list": "친구 초대 목록"
     },
     "asset_page": {
-      "Shop_Unique_NFTs_Now!": "지금 바로 독특한 NFT를 쇼핑하세요!",
-      "Start_collecting_rare_and": "희귀하고",
-      "unique_digital_assets_today!": "독특한 디지털 자산을 오늘부터 모아보세요!",
+      "Shop_Unique_NFTs_Now!": "특별한 NFT 구매하기",
+      "Start_collecting_rare_and": "희귀하고 독특한 디지털 자산을",
+      "unique_digital_assets_today!": "오늘부터 모아보세요!",
       "My_NFT_Collection": "내 NFT 컬렉션",
       "View_All": "전체 보기",
       "Rewards_History": "보상 내역",
@@ -213,7 +213,7 @@
       "no_nft": "아직 보유 중인 NFT가 없습니다.",
       "own_nft": "NFT를 소유하고 랭크를 올려보세요!",
       "shop_nft": "NFT 쇼핑하기",
-      "claimable": "수령 가능 잔액",
+      "claimable": "수령 가능한 잔액",
       "view_claim": "수령 내역 보기",
       "claim_reward": "보상 수령",
       "prepare_service": "서비스를 준비 중입니다",
@@ -245,7 +245,12 @@
         "close": "닫기",
         "complete": "수령 완료",
         "success": "SL 수령이 성공적으로 완료되었습니다!",
-        "view_history": "내역 보기"
+        "view_history": "내역 보기",
+        "claim_history": "클래임 내역",
+        "claim_completed": "완료",
+        "claim_pending": "보류",
+        "claim_failed": "실패",
+        "claim_waiting": "대기 중"
       }
     },
     "dice_event": {
@@ -261,7 +266,7 @@
         "FRI": "금",
         "SAT": "토"
       },
-      "Get_More_Dice": "주사위 더 얻기",
+      "Get_More_Dice": "주사위 획득하기",
       "Earn extra rolls": "추가로 주사위를 굴릴 기회를 얻어",
       "to boost your chances!": "당첨 확률을 높이세요!",
       "roll_dice": "주사위 굴리기",
@@ -320,7 +325,7 @@
       "select_tile": "이동할 칸을 선택하세요",
       "level_up": "레벨 업!",
       "grap_prize": "보상을 받아가세요!",
-      "my_rank": "내 랭킹",
+      "my_rank": "나의 랭킹",
       "ranking_base": "랭킹은 스타 포인트를 기준으로 합니다",
       "star_rewards": "보상: 1,000 스타 포인트",
       "mission": "미션",
@@ -341,9 +346,9 @@
     },
     "user_level": {
       "message_1": "안녕하세요,<br/>주사위를 굴려볼까요?",
-      "message_2": "주사위가<br/>뜨겁습니다!",
+      "message_2": "운이 제대로<br/>붙었네요!",
       "message_3": "한 번 더<br/>굴려봅시다!",
-      "message_4": "크게<br/>움직여 볼까요?",
+      "message_4": "크게<br/>한 방 노려볼까요?",
       "message_5": "준비되셨다면<br/>주사위를 굴리세요!",
       "message_6": "계속해서<br/>주사위를 굴려보세요!"
     }

@@ -12,6 +12,8 @@ import { TopTitle } from "@/shared/components/ui";
 import "./MissionPage.css";
 import Images from "@/shared/assets/images";
 import missionImageMap from "@/shared/assets/images/missionImageMap";
+// ★ 미션 이름 번역용 매핑 테이블
+import { missionNamesMap } from "./missionNameMap"; 
 import { Link } from "react-router-dom";
 import {
   useMissionStore,
@@ -41,6 +43,10 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
   const { t } = useTranslation();
   const { playSfx } = useSound();
 
+  // 번역 키로부터 실제 번역된 문자열을 가져옴
+  const translatedName = missionNamesMap[mission.name]
+    ? t(missionNamesMap[mission.name])
+    : mission.name;
 
   const handleClick = () => {
     playSfx(Audios.button_click);
@@ -77,7 +83,8 @@ const OneTimeMissionCard: React.FC<OneTimeMissionCardProps> = ({
       <div className="relative flex flex-col items-center justify-center z-0">
         <img src={imageSrc} alt={mission.name} className="w-9 h-9" />
         <div className="flex flex-col items-center justify-center">
-          <p className="text-sm font-medium">{mission.name}</p>
+          {/* ★ 여기에서 mission.name → translatedName 으로 변경 */}
+          <p className="text-sm font-medium">{translatedName}</p>
           <p className="font-semibold text-sm flex flex-row items-center gap-1">
             +{mission.diceReward}{" "}
             <img src={Images.Dice} alt="dice" className="w-4 h-4" /> +
@@ -135,7 +142,6 @@ const MissionPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
   const { playSfx } = useSound();
-  
 
   // ---------------------------
   // 2) 미션 스토어
@@ -159,7 +165,7 @@ const MissionPage: React.FC = () => {
   //    - missionImageMap에 들어있는 이미지들 + 기본 이미지들
   // ---------------------------
   const mappedImages = Object.values(missionImageMap).flatMap((item) => {
-    // item.imageKey가 Images 내부에 있는 key 라고 가정
+    // item.imageKey가 Images 내부에 있는 key라고 가정
     return Images[item.imageKey] ? [Images[item.imageKey]] : [];
   });
 
@@ -226,7 +232,7 @@ const MissionPage: React.FC = () => {
   // 8) 이미지 로딩 중이면 Spinner 표시
   // ---------------------------
   if (isLoading) {
-    return <LoadingSpinner className="h-screen"/>;
+    return <LoadingSpinner className="h-screen" />;
   }
 
   // ---------------------------
@@ -236,7 +242,9 @@ const MissionPage: React.FC = () => {
     <div className="flex flex-col text-white mx-6 mb-20 md:mb-96">
       <TopTitle title={t("mission_page.Mission")} />
 
-      <h1 className="font-semibold text-lg ml-[2px] mb-4">{t("mission_page.One_Time_Mission")}</h1>
+      <h1 className="font-semibold text-lg ml-[2px] mb-4">
+        {t("mission_page.One_Time_Mission")}
+      </h1>
 
       {/* 미션 스토어 로딩 or 에러 */}
       {loading && <LoadingSpinner />}
@@ -313,14 +321,18 @@ const MissionPage: React.FC = () => {
               </div>
 
               <p className="text-xs mb-8 mt-2 text-white">
-                {t("mission_page.*_If_the_mission_is_not_performed_correctly,_you_may_be_excluded_from_the_final_reward.")}
+                {t(
+                  "mission_page.*_If_the_mission_is_not_performed_correctly,_you_may_be_excluded_from_the_final_reward."
+                )}
               </p>
             </div>
           )
         )}
       </div>
 
-      <h1 className="font-semibold text-lg ml-[2px] mb-4">{t("mission_page.Daily_Mission")}</h1>
+      <h1 className="font-semibold text-lg ml-[2px] mb-4">
+        {t("mission_page.Daily_Mission")}
+      </h1>
 
       <Link to="/invite-friends" onClick={() => playSfx(Audios.button_click)}>
         <DailyMissionCard

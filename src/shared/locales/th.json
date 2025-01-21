@@ -245,7 +245,12 @@
         "close": "ปิด",
         "complete": "เคลมเสร็จสิ้น",
         "success": "เคลม SL สำเร็จ!",
-        "view_history": "ดูประวัติ"
+        "view_history": "ดูประวัติ",
+        "claim_history": "ประวัติการเคลม",
+        "claim_completed": "เสร็จสิ้น",
+        "claim_pending": "รอดำเนินการ",
+        "claim_failed": "ล้มเหลว",
+        "claim_waiting": "กำลังรอ"
       }
     },
     "dice_event": {

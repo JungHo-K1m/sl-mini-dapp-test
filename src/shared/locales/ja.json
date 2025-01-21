@@ -245,7 +245,12 @@
             "close": "閉じる",
             "complete": "請求が完了しました",
             "success": "SLの請求が成功しました！",
-            "view_history": "履歴を見る"
+            "view_history": "履歴を見る",
+            "claim_history": "請求履歴", 
+            "claim_completed": "完了",
+            "claim_pending": "保留",
+            "claim_failed": "失敗",
+            "claim_waiting": "待機中"
         }
     },
     "dice_event": {
