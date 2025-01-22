@@ -342,7 +342,13 @@
       "jpn": "日文",
       "tw": "繁體中文",
       "thi": "泰文",
-      "kor": "韩国语"
+      "kor": "韩国语",
+      "sound": "发声",
+      "sound_settings":"声音设定",
+      "master": "主卷",
+      "bgm": "背景音乐",
+      "effect": "音响效果",
+      "save": "保存"
     },
     "user_level": {
       "message_1": "嗨，<br/>準備好擲骰子了嗎？",

@@ -342,7 +342,13 @@
       "jpn": "일본어",
       "tw": "대만어",
       "thi": "태국어",
-      "kor": "한국어"
+      "kor": "한국어",
+      "sound": "소리",
+      "sound_settings":"소리 설정",
+      "master": "마스터 볼륨",
+      "bgm": "배경음",
+      "effect": "효과음",
+      "save": "저장"
     },
     "user_level": {
       "message_1": "안녕하세요,<br/>주사위를 굴려볼까요?",

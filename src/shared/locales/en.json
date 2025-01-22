@@ -342,7 +342,13 @@
       "jpn": "Japanese",
       "tw": "Taiwanese",
       "thi" : "Thai",
-      "kor": "Korean"
+      "kor": "Korean",
+      "sound": "Sound",
+      "sound_settings":"Sound Settings",
+      "master": "Master Volume",
+      "bgm": "Background Music",
+      "effect": "Sound Effects",
+      "save": "Save"
     },
     "user_level": {
       "message_1": "Hey there, <br/>ready to roll?",

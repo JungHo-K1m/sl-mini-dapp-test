@@ -1,6 +1,7 @@
 // SoundSetting.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
 import { useSoundStore } from '@/shared/store/useSoundStore';
 import saveSoundSetting from '@/entities/User/api/saveSoundSetting';
@@ -10,6 +11,7 @@ import Audios from "@/shared/assets/audio";
 
 const SoundSetting: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { playSfx } = useSound();
   const {
     // 마스터
@@ -57,13 +59,13 @@ const SoundSetting: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center text-white px-6 min-h-screen">
-      <TopTitle title="Sound Settings" back={true} />
+      <TopTitle title={t("setting.sound_settings")} back={true} />
 
       <div className="w-full">
 
         {/* 1) 마스터 볼륨 */}
         <div className="mb-3">
-          <h2 className="text-lg font-semibold mb-2">Master Volume</h2>
+          <h2 className="text-lg font-semibold mb-2">{t("setting.master")}</h2>
           <div className="bg-gray-800 rounded-full w-full h-14 flex items-center justify-between py-2 px-4">
             <button
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
@@ -97,7 +99,7 @@ const SoundSetting: React.FC = () => {
 
         {/* 2) 배경음(BGM) */}
         <div className="mb-3">
-          <h2 className="text-lg font-semibold mb-2">Background Music</h2>
+          <h2 className="text-lg font-semibold mb-2">{t("setting.bgm")}</h2>
           <div className="bg-gray-800 rounded-full w-full h-14 flex items-center justify-between py-2 px-4">
             <button
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
@@ -132,7 +134,7 @@ const SoundSetting: React.FC = () => {
 
         {/* 3) 효과음(SFX) */}
         <div className="mb-3">
-          <h2 className="text-lg font-semibold mb-2">Sound Effects</h2>
+          <h2 className="text-lg font-semibold mb-2">{t("setting.effect")}</h2>
           <div className="bg-gray-800 rounded-full w-full h-14 flex items-center justify-between py-2 px-4">
             <button
               className="bg-[#0147E5] px-4 py-1 rounded-2xl text-sm"
@@ -174,7 +176,7 @@ const SoundSetting: React.FC = () => {
           }}
           className="bg-[#0147E5] w-full py-4 rounded-full text-base font-medium"
         >
-          Save
+          {t("setting.save")}
         </button>
       </div>
     </div>
