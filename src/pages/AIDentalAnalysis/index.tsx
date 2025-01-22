@@ -139,6 +139,7 @@ const DentalAnalysis: React.FC = () => {
   // 이미지 분석 함수
   const analyzeImage = async () => {
     playSfx(Audios.button_click);
+    console.log("현재 사용 언어", i18n.language);
 
     if (!selectedImage) {
       showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
