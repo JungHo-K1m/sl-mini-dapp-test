@@ -7,7 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@line/liff": "^2.25.1",
+    "@line/liff": "^2.24.0",
     "@linenext/dapp-portal-sdk": "^0.9.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-avatar": "^1.1.1",
