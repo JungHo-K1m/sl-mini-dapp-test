@@ -140,6 +140,28 @@ const DentalAnalysis: React.FC = () => {
   const analyzeImage = async () => {
     playSfx(Audios.button_click);
     console.log("현재 사용 언어", i18n.language);
+    let useLanguage = "English";
+
+    if(i18n.language === "ko"){
+      useLanguage = "Korean"
+      console.log("바뀜요: ", useLanguage);
+    }
+    else if(i18n.language === "en"){
+      useLanguage = "English"
+      console.log("바뀜요: ", useLanguage);
+    }
+    else if(i18n.language === "ja"){
+      useLanguage = "Japanese"
+      console.log("바뀜요: ", useLanguage);
+    }
+    else if(i18n.language === "zh"){
+      useLanguage = "Taiwanese"
+      console.log("바뀜요: ", useLanguage);
+    }
+    else if(i18n.language === "th"){
+      useLanguage = "Thai"
+      console.log("바뀜요: ", useLanguage);
+    }
 
     if (!selectedImage) {
       showModalFunction(t("ai_page.Please_upload_an_image_before_analysis."));
@@ -210,7 +232,7 @@ const DentalAnalysis: React.FC = () => {
                       },
                       "description": {
                         "type": "string",
-                        "description": `A detailed explanation of the diagnosis, translated into ${i18n.language}, at least 150 characters.`
+                        "description": `A detailed explanation of the diagnosis, translated into ${useLanguage}, at least 150 characters.`
                       }
                     },
                     "required": [
