@@ -31,11 +31,14 @@ const DiagnosisRecords: React.FC = () => {
 
     type RecordItem = {
         diagnosisAt: string;
+        diagnosisImgUrl: string;
         petName: string;
         type: string;
         details: {
-        label: string;
-        probability: number;
+            caution: string;
+            description: string;
+            label: string;
+            probability: number;
         }[];
     };
     const [records, setRecords] = useState<RecordItem[]>([]);
@@ -47,7 +50,7 @@ const DiagnosisRecords: React.FC = () => {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
 
-  // 커스텀 날짜 인풋
+    // 커스텀 날짜 인풋
     const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
         ({ value, onClick, placeholder }, ref) => (
         <div
@@ -55,11 +58,11 @@ const DiagnosisRecords: React.FC = () => {
             onClick={onClick}
         >
             <input
-            ref={ref}
-            value={value}
-            readOnly
-            placeholder={placeholder}
-            className="bg-transparent outline-none w-full text-white"
+                ref={ref}
+                value={value}
+                readOnly
+                placeholder={placeholder}
+                className="bg-transparent outline-none w-full text-white"
             />
             <FaCalendarAlt className="text-white ml-2" />
         </div>
@@ -67,51 +70,50 @@ const DiagnosisRecords: React.FC = () => {
     );
     CustomDateInput.displayName = "CustomDateInput";
 
-  // 페이지 최초 로드시 모든 기록 조회 & 필터 옵션 조회
+    // 페이지 최초 로드시 모든 기록 조회 & 필터 옵션 조회
     useEffect(() => {
         const fetchAllRecords = async () => {
-        setLoading(true);
-        try {
-            const allRecords = await getDiagnosisList(id);
-            if (allRecords && Array.isArray(allRecords)) {
-            setRecords(allRecords);
-            } else {
-            setRecords([]);
-            }
-        } catch (error) {
-            console.error('Failed to fetch records:', error);
-            setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
-        } finally {
-            setLoading(false);
-        }
-        };
-
-        const fetchFilterOptions = async () => {
-        try {
-            const filters = await getRecords(navigate);
-
-            // null 체크와 배열 여부를 함께 확인
-            if (filters && Array.isArray(filters)) {
-            // filter.record가 string인지 확인
-            const filterLabels = filters
-                .map((filter) => {
-                if (typeof filter?.record === "string") {
-                    return filter.record;
+            setLoading(true);
+            try {
+                    const allRecords = await getDiagnosisList(id);
+                if (allRecords && Array.isArray(allRecords)) {
+                    setRecords(allRecords);
+                } else {
+                    setRecords([]);
                 }
-                return null;
-                })
-                .filter((item) => item !== null) as string[];
-
-            setFilterOptions(["All", ...new Set(filterLabels)]);
-            } else {
-            setFilterOptions(["All"]);
+            } catch (error) {
+                console.error('Failed to fetch records:', error);
+                setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
+            } finally {
+                setLoading(false);
             }
-        } catch (error) {
-            console.error('Failed to fetch filter options:', error);
-            setModal(t("ai_page.Failed_to_load_filter_options._Please_try_again_later."));
-        }
-        };
+            };
 
+            const fetchFilterOptions = async () => {
+            try {
+                const filters = await getRecords(navigate);
+
+                // null 체크와 배열 여부를 함께 확인
+                if (filters && Array.isArray(filters)) {
+                // filter.record가 string인지 확인
+                const filterLabels = filters
+                    .map((filter) => {
+                        if (typeof filter?.record === "string") {
+                            return filter.record;
+                        }
+                        return null;
+                    })
+                    .filter((item) => item !== null) as string[];
+
+                    setFilterOptions(["All", ...new Set(filterLabels)]);
+                } else {
+                    setFilterOptions(["All"]);
+                }
+            } catch (error) {
+                console.error('Failed to fetch filter options:', error);
+                setModal(t("ai_page.Failed_to_load_filter_options._Please_try_again_later."));
+            }
+        };
         fetchAllRecords();
         fetchFilterOptions();
     }, [id, navigate, t]);
@@ -119,49 +121,48 @@ const DiagnosisRecords: React.FC = () => {
     // 필터 변경 시 기록 조회
     useEffect(() => {
         const fetchFilteredRecords = async () => {
-        playSfx(Audios.button_click);
-        setLoading(true);
-        if (id) {
-            try {
-            // 예: selectedFilter: "All" 이면 null 처리
-            const record = selectedFilter === 'All' ? null : selectedFilter;
-            const filteredRecords = await getDiagnosisList(id);
+            playSfx(Audios.button_click);
+            setLoading(true);
 
-            if (filteredRecords && Array.isArray(filteredRecords)) {
-                // 1) 우선 전체 리스트를 불러온 후
-                let result = filteredRecords as RecordItem[];
+            if (id) {
+                try {
+                // 예: selectedFilter: "All" 이면 null 처리
+                const record = selectedFilter === 'All' ? null : selectedFilter;
+                const filteredRecords = await getDiagnosisList(id);
 
-                // 2) selectedFilter로 1차 필터 (원하는 로직으로 수정)
-                if (record) {
-                // 필터 로직 예시 (record와 일치하는 어떤 조건?)
-                // result = result.filter(r => r.someProperty === record);
+                if (filteredRecords && Array.isArray(filteredRecords)) {
+                    // 1) 우선 전체 리스트를 불러온 후
+                    let result = filteredRecords as RecordItem[];
+
+                    // 2) selectedFilter로 1차 필터 (원하는 로직으로 수정)
+                    if (record) {
+                        // 필터 로직 예시 (record와 일치하는 어떤 조건?)
+                        // result = result.filter(r => r.someProperty === record);
+                    }
+                        // 3) typeFilter로 2차 필터 (DENTAL_REAL / DENTAL_X_RAY)
+                    if (typeFilter !== 'All') {
+                        result = result.filter(r => r.type === typeFilter);
+                    }
+
+                    setRecords(result);
+                } else {
+                    setRecords([]);
                 }
-
-                // 3) typeFilter로 2차 필터 (DENTAL_REAL / DENTAL_X_RAY)
-                if (typeFilter !== 'All') {
-                result = result.filter(r => r.type === typeFilter);
+                } catch (error) {
+                    console.error('Failed to fetch filtered records:', error);
+                    setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
+                } finally {
+                    setLoading(false);
                 }
-
-                setRecords(result);
-            } else {
-                setRecords([]);
             }
-            } catch (error) {
-            console.error('Failed to fetch filtered records:', error);
-            setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
-            } finally {
-            setLoading(false);
-            }
-        }
         };
-
         fetchFilteredRecords();
     }, [selectedFilter, typeFilter, id, playSfx, t]);
 
     // 글자수를 17글자로 제한
     const truncateText = (text: string, maxLength: number) => {
         if (typeof text !== "string") {
-        return "";
+            return "";
         }
         return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     };
@@ -175,10 +176,11 @@ const DiagnosisRecords: React.FC = () => {
     const handleNavigateToDetail = (record: RecordItem) => {
         playSfx(Audios.button_click);
         navigate('/diagnosis-detail', {
-        state: {
-            result: record.details,
-            description: record.type === "DENTAL_REAL" ? record.details : "",
-        },
+            state: {
+                result: record.details,
+                img: record.diagnosisImgUrl,
+                description: record.details,
+            },
         });
     };
 

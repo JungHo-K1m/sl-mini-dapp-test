@@ -261,6 +261,12 @@ const AIXrayAnalysis: React.FC = () => {
               imageElement.src = URL.createObjectURL(selectedImage);
               imageElement.onload = async () => {
                 const predictions = await loadedModel.predict(imageElement);
+
+                // 각 클래스별 확률 콘솔 출력
+                predictions.forEach((p) => {
+                  console.log(`Class: ${p.className}, Probability: ${p.probability}`);
+                });
+                
                 const highestPrediction = predictions.reduce((prev, current) =>
                   prev.probability > current.probability ? prev : current
                 );
@@ -439,7 +445,7 @@ const AIXrayAnalysis: React.FC = () => {
               style={{ backgroundColor: '#252932', borderColor: '#35383F' }}
               onClick={resetAnalysis}
             >
-              Retest
+              {t('ai_page.Retest')} 
             </button>
             <button
               className={`w-[48%] h-14 text-white text-base py-2 px-4 rounded-full ${isSaving ? 'cursor-wait' : ''}`}
