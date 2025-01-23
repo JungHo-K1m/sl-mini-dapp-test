@@ -262,15 +262,20 @@ const AIXrayAnalysis: React.FC = () => {
               imageElement.onload = async () => {
                 const predictions = await loadedModel.predict(imageElement);
 
-                // 각 클래스별 확률 콘솔 출력
-                predictions.forEach((p) => {
-                  console.log(`Class: ${p.className}, Probability: ${p.probability}`);
-                });
-                
-                const highestPrediction = predictions.reduce((prev, current) =>
-                  prev.probability > current.probability ? prev : current
-                );
+              // 각 클래스별 확률 콘솔 출력
+              predictions.forEach((p) => {
+                const percentage = (p.probability * 100).toFixed(2);
+                console.log(`Class: ${p.className}, Probability: ${percentage}%`);
+              });
+              
+              const highestPrediction = predictions.reduce((prev, current) =>
+                prev.probability > current.probability ? prev : current
+              );
 
+              const highestPercentage = (highestPrediction.probability * 100).toFixed(2);
+              console.log(
+                `Highest Probability Class: ${highestPrediction.className}, Probability: ${highestPercentage}%`
+              );
                 // ① 예측 결과(영어 원본)
                 const rawLabel = highestPrediction.className;
 

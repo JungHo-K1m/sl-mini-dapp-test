@@ -543,7 +543,7 @@ const DentalAnalysis: React.FC = () => {
                             style={{ backgroundColor: '#252932', borderColor: '#35383F' }}
                             onClick={resetAnalysis}
                         >
-                            {t('ai_page.Retest')} 
+                          {t('ai_page.Retest')} 
                         </button>
                         <button
                             className={`w-[48%] h-14 text-white text-base py-2 px-4 rounded-full ${isSaving ? 'cursor-wait' : ''}`}
