@@ -184,130 +184,132 @@ const DiagnosisRecords: React.FC = () => {
 
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
-        <TopTitle title={t("ai_page.Records")} back={true} />
+            <TopTitle title={t("ai_page.Records")} back={true} />
 
-        {/* "range" 텍스트 왼쪽 / 필터 2개 오른쪽 */}
-        <div className="flex items-center justify-between w-full mt-4">            
-            <div className="flex items-center space-x-3">
-            {/* 첫 번째 필터 */}
-            <div className="relative w-[120px]">
-                <select
-                    className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
-                    value={selectedFilter}
-                    onChange={(e) => setSelectedFilter(e.target.value)}
-                    >
-                    {filterOptions.map((option, index) => (
-                        <option key={index} value={option}>
-                        {truncateText(option, 17)}
-                        </option>
-                    ))}
-                </select>
-                <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
+            {/* 필터 버튼 2개 */}
+            <div className="flex items-center w-full mt-4">
+                {/* 첫 번째 필터 */}
+                <div className="relative w-1/2 mr-2">
+                    <select
+                        className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
+                        value={selectedFilter}
+                        onChange={(e) => setSelectedFilter(e.target.value)}
+                        >
+                        {filterOptions.map((option, index) => (
+                            <option key={index} value={option}>
+                            {truncateText(option, 17)}
+                            </option>
+                        ))}
+                    </select>
+                    <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
+                </div>
+
+                {/* 두 번째 필터 (타입 필터) */}
+                <div className="relative w-1/2 ml-2">
+                    <select
+                        className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
+                        value={typeFilter}
+                        onChange={(e) => setTypeFilter(e.target.value)}
+                        >
+                        <option value="All">All</option>
+                        <option value="DENTAL_REAL">DENTAL_REAL</option>
+                        <option value="DENTAL_X_RAY">DENTAL_X_RAY</option>
+                    </select>
+                    <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
+                </div>
             </div>
 
-            {/* 두 번째 필터 (타입 필터) */}
-            <div className="relative w-[140px]">
-                <select
-                    className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
-                    value={typeFilter}
-                    onChange={(e) => setTypeFilter(e.target.value)}
-                    >
-                    <option value="All">All</option>
-                    <option value="DENTAL_REAL">DENTAL_REAL</option>
-                    <option value="DENTAL_X_RAY">DENTAL_X_RAY</option>
-                </select>
-                <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
-            </div>
-            </div>
-        </div>
+            {/* 날짜 범위 */}
+            <div className="mt-4 w-full">
+                <p className="text-lg font-medium mb-2">{t("reward_page.range")}</p>
 
-        {/* 날짜 범위 선정 */}
-        <div className="flex items-center gap-4 mt-4 w-full">
-            {/* 왼쪽에 range 텍스트 */}
-            <p className="text-lg font-medium">{t("reward_page.range")}</p>
-            {/* 시작일 */}
-            <div className="w-1/2">
-            <DatePicker
-                selected={startDate}
-                onChange={(date) => {
-                    playSfx(Audios.button_click);
-                    setStartDate(date);
-                }}
-                placeholderText="Start Date"
-                customInput={<CustomDateInput placeholder="Start Date" />}
-                dateFormat="yyyy-MM-dd"
-                maxDate={endDate || undefined}
-                className="rounded-full"
-            />
-            </div>
-            {/* 종료일 */}
-            <div className="w-1/2">
-            <DatePicker
-                selected={endDate}
-                onChange={(date) => {
-                    playSfx(Audios.button_click);
-                    setEndDate(date);
-                }}
-                placeholderText="End Date"
-                customInput={<CustomDateInput placeholder="End Date" />}
-                dateFormat="yyyy-MM-dd"
-                minDate={startDate || undefined}
-                className="rounded-full"
-            />
-            </div>
-        </div>
-
-        {loading ? (
-            <div className="flex justify-center items-center h-64 min-h-screen">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
-            </div>
-        ) : (
-            <div className="w-full mt-8">
-                {records.map((record, index) => {
-                    // details 배열의 label(probability%) 합치기
-                    const detailDisplay = record.details
-                    ? record.details.map(detail => `${detail.label}(${detail.probability}%)`).join(', ')
-                    : '';
-
-                    return (
-                    <div
-                        key={index}
-                        className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                        onClick={() => handleNavigateToDetail(record)}
-                    >
-                        <div>
-                        <p className="font-semibold text-base">
-                            {/* 예: 2025-01-23  DENTAL_REAL */}
-                            {`${record.diagnosisAt}  ${record.type}`}
-                        </p>
-                        <p className="text-sm font-normal text-gray-400">
-                            {detailDisplay}
-                        </p>
-                        </div>
-                        <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+                {/* 시작일, 종료일 데이트피커 */}
+                <div className="flex items-center gap-4">
+                    {/* 시작일 */}
+                    <div className="w-1/2">
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => {
+                                playSfx(Audios.button_click);
+                                setStartDate(date);
+                            }}
+                            placeholderText="Start Date"
+                            customInput={<CustomDateInput placeholder="Start Date" />}
+                            dateFormat="yyyy-MM-dd"
+                            maxDate={endDate || undefined}
+                            className="rounded-full"
+                        />
                     </div>
-                    );
-                })}
+                    {/* 종료일 */}
+                    <div className="w-1/2">
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => {
+                                playSfx(Audios.button_click);
+                                setEndDate(date);
+                            }}
+                            placeholderText="End Date"
+                            customInput={<CustomDateInput placeholder="End Date" />}
+                            dateFormat="yyyy-MM-dd"
+                            minDate={startDate || undefined}
+                            className="rounded-full"
+                        />
+                    </div>
+                </div>
             </div>
-        )}
 
-        {/* api 에러 발생 시 모달창 */}
-        {open && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white text-black p-6 rounded-lg text-center">
-                <p>{modalText}</p>
-                <button
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                onClick={() => {
-                    playSfx(Audios.button_click);
-                    setOpen(false);
-                }}
-                >
-                {t("OK")}
-                </button>
-            </div>
-            </div>
-        )}
+
+            {loading ? (
+                <div className="flex justify-center items-center h-64 min-h-screen">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
+                </div>
+            ) : (
+                <div className="w-full mt-8">
+                    {records.map((record, index) => {
+                        // details 배열의 label(probability%) 합치기
+                        const detailDisplay = record.details
+                        ? record.details.map(detail => `${detail.label}(${detail.probability}%)`).join(', ')
+                        : '';
+
+                        return (
+                        <div
+                            key={index}
+                            className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
+                            onClick={() => handleNavigateToDetail(record)}
+                        >
+                            <div>
+                            <p className="font-semibold text-base">
+                                {/* 예: 2025-01-23  DENTAL_REAL */}
+                                {`${record.diagnosisAt}  ${record.type}`}
+                            </p>
+                            <p className="text-sm font-normal text-gray-400">
+                                {detailDisplay}
+                            </p>
+                            </div>
+                            <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+                        </div>
+                        );
+                    })}
+                </div>
+            )}
+
+            {/* api 에러 발생 시 모달창 */}
+            {open && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white text-black p-6 rounded-lg text-center">
+                        <p>{modalText}</p>
+                        <button
+                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                            onClick={() => {
+                                playSfx(Audios.button_click);
+                                setOpen(false);
+                            }}
+                            >
+                            {t("OK")}
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
