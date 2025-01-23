@@ -21,266 +21,293 @@ const DiagnosisRecords: React.FC = () => {
     const [open, setOpen] = useState(false);
     const [modalText, setModalText] = useState('');
     const [loading, setLoading] = useState(false);
+
+    // 기존 필터 state
     const [selectedFilter, setSelectedFilter] = useState<string>('All');
     const [filterOptions, setFilterOptions] = useState<string[]>(['All']);
+
+    // 새로운 진단 타입 필터 state
+    const [typeFilter, setTypeFilter] = useState<string>('All');
+
     type RecordItem = {
         diagnosisAt: string;
         petName: string;
         type: string;
         details: {
-            label: string;
-            probability: number;
+        label: string;
+        probability: number;
         }[];
     };
     const [records, setRecords] = useState<RecordItem[]>([]);
+
     const petData = location.state as { id: string };
     const [id] = useState<string>(petData?.id || '');
 
-    // 날짜 필터
+    // 날짜 필터 state
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
 
-    
-    // 커스텀 날짜 인풋
+  // 커스텀 날짜 인풋
     const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
         ({ value, onClick, placeholder }, ref) => (
-            <div
+        <div
             className="flex items-center w-full px-4 py-2 bg-gray-800 text-white rounded-lg cursor-pointer focus:ring focus:ring-blue-500"
             onClick={onClick}
-            >
+        >
             <input
-                ref={ref}
-                value={value}
-                readOnly
-                placeholder={placeholder}
-                className="bg-transparent outline-none w-full text-white"
+            ref={ref}
+            value={value}
+            readOnly
+            placeholder={placeholder}
+            className="bg-transparent outline-none w-full text-white"
             />
             <FaCalendarAlt className="text-white ml-2" />
-            </div>
+        </div>
         )
     );
     CustomDateInput.displayName = "CustomDateInput";
 
-    // 페이지 최초 로드시 모든 기록 조회
+  // 페이지 최초 로드시 모든 기록 조회 & 필터 옵션 조회
     useEffect(() => {
         const fetchAllRecords = async () => {
-            setLoading(true);
-            try {
-                const allRecords = await getDiagnosisList(id);
-                if (allRecords && Array.isArray(allRecords)) {
-                    setRecords(allRecords);
-                } else {
-                    setRecords([]);
-                }
-            } catch (error) {
-                console.error('Failed to fetch records:', error);
-                setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
-            } finally {
-                setLoading(false); // 로딩 상태 비활성화
+        setLoading(true);
+        try {
+            const allRecords = await getDiagnosisList(id);
+            if (allRecords && Array.isArray(allRecords)) {
+            setRecords(allRecords);
+            } else {
+            setRecords([]);
             }
+        } catch (error) {
+            console.error('Failed to fetch records:', error);
+            setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
+        } finally {
+            setLoading(false);
+        }
         };
 
         const fetchFilterOptions = async () => {
-            try {
-              const filters = await getRecords(navigate);
-          
-              // null 체크와 배열 여부를 함께 확인
-              if (filters && Array.isArray(filters)) {
-                // filter.record가 실제로 string인지 다시 한 번 검증
-                const filterLabels = filters
-                  .map((filter) => {
-                    if (typeof filter?.record === "string") {
-                      return filter.record;
-                    } else {
-                      // record 필드가 문자열이 아니면 null 처리 또는 기본 문자열로 대체
-                      return null;
-                    }
-                  })
-                  .filter((item) => item !== null);
-              
-                setFilterOptions(["All", ...new Set(filterLabels)]);
-              } else {
-                setFilterOptions(["All"]);
-              }
-            } catch (error) {
-              console.error('Failed to fetch filter options:', error);
-              setModal(t("ai_page.Failed_to_load_filter_options._Please_try_again_later."));
+        try {
+            const filters = await getRecords(navigate);
+
+            // null 체크와 배열 여부를 함께 확인
+            if (filters && Array.isArray(filters)) {
+            // filter.record가 string인지 확인
+            const filterLabels = filters
+                .map((filter) => {
+                if (typeof filter?.record === "string") {
+                    return filter.record;
+                }
+                return null;
+                })
+                .filter((item) => item !== null) as string[];
+
+            setFilterOptions(["All", ...new Set(filterLabels)]);
+            } else {
+            setFilterOptions(["All"]);
             }
-          };
-          
+        } catch (error) {
+            console.error('Failed to fetch filter options:', error);
+            setModal(t("ai_page.Failed_to_load_filter_options._Please_try_again_later."));
+        }
+        };
+
         fetchAllRecords();
         fetchFilterOptions();
-    }, [id]);
+    }, [id, navigate, t]);
 
     // 필터 변경 시 기록 조회
     useEffect(() => {
-        const fetchFilteredRecords = async () => {    
-            playSfx(Audios.button_click);
-            setLoading(true);
-            if (id) {
-                try {
-                    const record = selectedFilter === 'All' ? null : selectedFilter;
-                    const filteredRecords = await getDiagnosisList(id);
-                    if (filteredRecords && Array.isArray(filteredRecords)) {
-                        setRecords(filteredRecords);
-                    } else {
-                        setRecords([]); // 빈 배열로 설정하여 오류 방지
-                    }
-                } catch (error) {
-                    console.error('Failed to fetch filtered records:', error);
-                    setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
-                } finally {
-                    setLoading(false); // 로딩 상태 비활성화
+        const fetchFilteredRecords = async () => {
+        playSfx(Audios.button_click);
+        setLoading(true);
+        if (id) {
+            try {
+            // 예: selectedFilter: "All" 이면 null 처리
+            const record = selectedFilter === 'All' ? null : selectedFilter;
+            const filteredRecords = await getDiagnosisList(id);
+
+            if (filteredRecords && Array.isArray(filteredRecords)) {
+                // 1) 우선 전체 리스트를 불러온 후
+                let result = filteredRecords as RecordItem[];
+
+                // 2) selectedFilter로 1차 필터 (원하는 로직으로 수정)
+                if (record) {
+                // 필터 로직 예시 (record와 일치하는 어떤 조건?)
+                // result = result.filter(r => r.someProperty === record);
                 }
+
+                // 3) typeFilter로 2차 필터 (DENTAL_REAL / DENTAL_X_RAY)
+                if (typeFilter !== 'All') {
+                result = result.filter(r => r.type === typeFilter);
+                }
+
+                setRecords(result);
+            } else {
+                setRecords([]);
             }
+            } catch (error) {
+            console.error('Failed to fetch filtered records:', error);
+            setModal(t("ai_page.Failed_to_load_records._Please_try_again_later."));
+            } finally {
+            setLoading(false);
+            }
+        }
         };
 
         fetchFilteredRecords();
-    }, [selectedFilter, id]);
+    }, [selectedFilter, typeFilter, id, playSfx, t]);
 
-    // 글자수를 17글자로 제한하고 넘으면 "..." 붙이기
+    // 글자수를 17글자로 제한
     const truncateText = (text: string, maxLength: number) => {
         if (typeof text !== "string") {
-            // 예외 처리: 문자열이 아닐 때 기본 값 혹은 공백 처리
-            return "";
+        return "";
         }
-
         return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     };
 
-    // 에러 확인 후, 확인 버튼
-    const checkError = () => {
-        setOpen(false);
-    }
-
+    // 에러 모달
     const setModal = (text: string) => {
         setOpen(true);
         setModalText(text);
-    }
+    };
 
-    const handleNavigateToDetail = (record: typeof records[number]) => {
+    const handleNavigateToDetail = (record: RecordItem) => {
         playSfx(Audios.button_click);
         navigate('/diagnosis-detail', {
-            state: {
-                // img: record.diagnosisImgUrl,
-                result: record.details,
-                // DENTAL_REAL일 때만 description을 전달
-                description: record.type === "DENTAL_REAL" ? record.details : "",
-            },
+        state: {
+            result: record.details,
+            description: record.type === "DENTAL_REAL" ? record.details : "",
+        },
         });
     };
 
-
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
-            <TopTitle title={t("ai_page.Records")} back={true} />
+        <TopTitle title={t("ai_page.Records")} back={true} />
 
-            {/* 필터링 버튼 */}
-            <div className="flex justify-start w-full h-11 relative">
-                <div className="relative w-1/2 max-w-xs"> {/* 너비를 절반으로 조정 */}
-                    <select
-                        className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
-                        value={selectedFilter}
-                        onChange={(e) => setSelectedFilter(e.target.value)}
+        {/* "range" 텍스트 왼쪽 / 필터 2개 오른쪽 */}
+        <div className="flex items-center justify-between w-full mt-4">            
+            <div className="flex items-center space-x-3">
+            {/* 첫 번째 필터 */}
+            <div className="relative w-[120px]">
+                <select
+                    className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
+                    value={selectedFilter}
+                    onChange={(e) => setSelectedFilter(e.target.value)}
                     >
-                        {filterOptions.map((option, index) => (
-                            <option key={index} value={option}>
-                                {truncateText(option, 17)} {/* 옵션 글자수 제한 */}
-                            </option>
-                        ))}
-                    </select>
-                    <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
-                </div>
+                    {filterOptions.map((option, index) => (
+                        <option key={index} value={option}>
+                        {truncateText(option, 17)}
+                        </option>
+                    ))}
+                </select>
+                <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
             </div>
-            
-            {/* 날짜 범위 선정 */}
-            <p className="text-lg font-medium text-left mt-4">{t("reward_page.range")}</p>
-            <div className="flex items-center gap-4 mt-4">
-              {/* 시작일 */}
-              <div className="w-full">
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date) => {
+
+            {/* 두 번째 필터 (타입 필터) */}
+            <div className="relative w-[140px]">
+                <select
+                    className="text-black p-2 rounded-full bg-white pr-6 pl-6 appearance-none w-full text-sm font-normal"
+                    value={typeFilter}
+                    onChange={(e) => setTypeFilter(e.target.value)}
+                    >
+                    <option value="All">All</option>
+                    <option value="DENTAL_REAL">DENTAL_REAL</option>
+                    <option value="DENTAL_X_RAY">DENTAL_X_RAY</option>
+                </select>
+                <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
+            </div>
+            </div>
+        </div>
+
+        {/* 날짜 범위 선정 */}
+        <div className="flex items-center gap-4 mt-4 w-full">
+            {/* 왼쪽에 range 텍스트 */}
+            <p className="text-lg font-medium">{t("reward_page.range")}</p>
+            {/* 시작일 */}
+            <div className="w-1/2">
+            <DatePicker
+                selected={startDate}
+                onChange={(date) => {
                     playSfx(Audios.button_click);
                     setStartDate(date);
-                  }}
-                  placeholderText="Start Date"
-                  customInput={<CustomDateInput placeholder="Start Date" />}
-                  dateFormat="yyyy-MM-dd"
-                  maxDate={endDate || undefined}
-                  className="rounded-full"
-                />
-              </div>
-              {/* 종료일 */}
-              <div className="w-full">
-                <DatePicker
-                  selected={endDate}
-                  onChange={(date) => {
+                }}
+                placeholderText="Start Date"
+                customInput={<CustomDateInput placeholder="Start Date" />}
+                dateFormat="yyyy-MM-dd"
+                maxDate={endDate || undefined}
+                className="rounded-full"
+            />
+            </div>
+            {/* 종료일 */}
+            <div className="w-1/2">
+            <DatePicker
+                selected={endDate}
+                onChange={(date) => {
                     playSfx(Audios.button_click);
                     setEndDate(date);
-                  }}
-                  placeholderText="End Date"
-                  customInput={<CustomDateInput placeholder="End Date" />}
-                  dateFormat="yyyy-MM-dd"
-                  minDate={startDate || undefined}
-                  className="rounded-full"
-                />
-              </div>
+                }}
+                placeholderText="End Date"
+                customInput={<CustomDateInput placeholder="End Date" />}
+                dateFormat="yyyy-MM-dd"
+                minDate={startDate || undefined}
+                className="rounded-full"
+            />
             </div>
-            
-            {loading ? (
-                <div className="flex justify-center items-center h-64 min-h-screen">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
-                </div>
-            ) : (
-                <div className="w-full mt-8">
-                    {records.map((record, index) => {
-                    // details 배열이 있는지 확인 후, label(probability%) 형태로 이어 붙이기
+        </div>
+
+        {loading ? (
+            <div className="flex justify-center items-center h-64 min-h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
+            </div>
+        ) : (
+            <div className="w-full mt-8">
+                {records.map((record, index) => {
+                    // details 배열의 label(probability%) 합치기
                     const detailDisplay = record.details
-                        ? record.details.map(detail => `${detail.label}(${detail.probability}%)`).join(', ')
-                        : '';
+                    ? record.details.map(detail => `${detail.label}(${detail.probability}%)`).join(', ')
+                    : '';
 
                     return (
-                        <div
+                    <div
                         key={index}
                         className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                         onClick={() => handleNavigateToDetail(record)}
-                        >
+                    >
                         <div>
+                        <p className="font-semibold text-base">
                             {/* 예: 2025-01-23  DENTAL_REAL */}
-                            <p className="font-semibold text-base">
                             {`${record.diagnosisAt}  ${record.type}`}
-                            </p>
-                            {/* details의 label과 probability를 붙여서 표시 */}
-                            <p className="text-sm font-normal text-gray-400">
+                        </p>
+                        <p className="text-sm font-normal text-gray-400">
                             {detailDisplay}
-                            </p>
+                        </p>
                         </div>
                         <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                        </div>
-                    );
-                    })}
-                </div>
-            )}
-
-            {/* api 에러 발생 시 모달창  */}
-            {open && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white text-black p-6 rounded-lg text-center">
-                        <div> &nbsp;</div>
-                        <p>{modalText}</p>
-                        <div> &nbsp;</div>
-                        <button
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                            onClick={()=>{
-                                playSfx(Audios.button_click);
-                                setOpen(false);
-                            }}>
-                            {t("OK")}
-                        </button>
                     </div>
-                </div>
-            )}
+                    );
+                })}
+            </div>
+        )}
+
+        {/* api 에러 발생 시 모달창 */}
+        {open && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white text-black p-6 rounded-lg text-center">
+                <p>{modalText}</p>
+                <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                onClick={() => {
+                    playSfx(Audios.button_click);
+                    setOpen(false);
+                }}
+                >
+                {t("OK")}
+                </button>
+            </div>
+            </div>
+        )}
         </div>
     );
 };
