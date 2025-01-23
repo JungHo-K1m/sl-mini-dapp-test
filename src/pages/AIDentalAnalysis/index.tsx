@@ -300,7 +300,6 @@ const DentalAnalysis: React.FC = () => {
                 },
                 analysis: {
                   type: "array",
-                  maxItems: 3,
                   items: {
                     type: "object",
                     properties: {
