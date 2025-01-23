@@ -365,13 +365,14 @@ const DentalAnalysis: React.FC = () => {
         setLabel("Non dental");
         setExplanation("");
       } else if (image_type === "dog" || image_type === "cat") {
-        try{
+          console.log("분석을 정상적으로 했어요.");
           setIsAnalyzed(true);
           setImageType(image_type);
           setAnalysisResult(analysis);
-        } catch(error: any){
+        // try{
+        // } catch(error: any){
 
-        }
+        // }
       };
 
       // 5) 응답에 따른 분기 처리
@@ -566,18 +567,30 @@ const DentalAnalysis: React.FC = () => {
             {/* 분석 완료 후 UI */}
             {isAnalyzed && (
                 <>
-                    <div className="mt-4 text-lg font-semibold">
+                    {/* <div className="mt-4 text-lg font-semibold">
                         <p>{t("ai_page.Analysis_results")}: {label}</p>
-                    </div>
+                    </div> */}
+                <div className="mt-4 text-lg font-semibold">
+                <p>Analysis results (image_type: {imageType})</p>
+              </div>
 
                     <div className="mt-4 p-4 bg-gray-800 rounded-xl max-w-sm mx-auto">
-                        <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-3'}`}>
+                        {/* <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-3'}`}>
                             {
                                 // 만약 openAI가 보낸 설명(explanation)이 있으면 우선 표시하고,
                                 // 없으면 기존 getSymptomDescription(label)로 대체
                                 explanation || getSymptomDescription(label)
                             }
-                        </p>
+                        </p> */}
+                        {analysisResult.map((item, idx) => (
+                        <div key={idx} className="mb-4">
+                          <p className="font-semibold text-base">{item.disease_name} ({Math.round(item.probability*100)}%)</p>
+                          <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-2'}`}>
+                            {item.description}
+                          </p>
+                          <p className="text-sm text-red-300 mt-1">{item.caution}</p>
+                        </div>
+                      ))}
                         <div className="flex justify-center mt-2">
                             <button
                                 className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
