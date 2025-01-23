@@ -36,7 +36,7 @@ const DiagnosisRecords: React.FC = () => {
         const fetchAllRecords = async () => {
             setLoading(true);
             try {
-                const allRecords = await getDiagnosisList(null, null, id, navigate);
+                const allRecords = await getDiagnosisList(id);
                 if (allRecords && Array.isArray(allRecords)) {
                     setRecords(allRecords);
                 } else {
@@ -78,7 +78,7 @@ const DiagnosisRecords: React.FC = () => {
             if (id) {
                 try {
                     const record = selectedFilter === 'All' ? null : selectedFilter;
-                    const filteredRecords = await getDiagnosisList(null, record, id, navigate);
+                    const filteredRecords = await getDiagnosisList(id);
                     if (filteredRecords && Array.isArray(filteredRecords)) {
                         setRecords(filteredRecords);
                     } else {
