@@ -176,90 +176,6 @@ const DentalAnalysis: React.FC = () => {
       const base64Data = await convertFileToBase64(selectedImage);
 
       const response = await retryWithBackoff(() => openai.chat.completions.create({
-      //   model: "gpt-4o",
-      //   messages: [
-      //       {
-      //         role: "user",
-      //         content: [
-      //           {
-      //             "type": "image_url",
-      //             "image_url": {
-      //               "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
-      //             }
-      //           }
-      //         ],
-      //       },
-      //     ],
-      //     response_format: {
-      //       "type": "json_schema",
-      //       "json_schema": {
-      //         "name": "image_analysis",
-      //         "strict": true,
-      //         "schema": {
-      //           "type": "object",
-      //           "properties": {
-      //             "is_x_ray": {
-      //               "type": "string",
-      //               "description": "Indicates whether the image is of X-ray, or other.",
-      //               "enum": [
-      //                 "x-ray",
-      //                 "other"
-      //               ]
-      //             },
-      //             "image_type": {
-      //               "type": "string",
-      //               "description": "Indicates whether the image is of a dog, cat, or other.",
-      //               "enum": [
-      //                 "dog",
-      //                 "cat",
-      //                 "other"
-      //               ]
-      //             },
-      //             "is_tooth_image": {
-      //               "type": "boolean",
-      //               "description": "Indicator if the image is specifically of a tooth."
-      //             },
-      //             "diagnosis": {
-      //               "type": "object",
-      //               "properties": {
-      //                 "diagnostic_name": {
-      //                   "type": "string",
-      //                   "description": "The name of the diagnosis.",
-      //                   "enum": [
-      //                     "Gingivitis & Plaque",
-      //                     "Periodontitis",
-      //                     "Normal"
-      //                   ]
-      //                 },
-      //                 "description": {
-      //                   "type": "string",
-      //                   "description": `A detailed explanation of the diagnosis, translated into ${useLanguage}, at least 150 characters.`
-      //                 }
-      //               },
-      //               "required": [
-      //                 "diagnostic_name",
-      //                 "description"
-      //               ],
-      //               "additionalProperties": false
-      //             }
-      //           },
-      //           "required": [
-      //             "is_x_ray",
-      //             "image_type",
-      //             "is_tooth_image",
-      //             "diagnosis"
-      //           ],
-      //           "additionalProperties": false
-      //         }
-      //       }
-      //     },
-      //     temperature: 1,
-      //     max_completion_tokens: 2048,
-      //     top_p: 1,
-      //     frequency_penalty: 0,
-      //     presence_penalty: 0
-      //   })
-      // );
         model: "gpt-4o",
         messages: [
           {
@@ -354,14 +270,16 @@ const DentalAnalysis: React.FC = () => {
 
       const { image_type, analysis, is_tooth } = parsedData;
 
-      if(image_type === "x-ray"){
+      if (image_type === "x-ray") {
+        // x-ray 이미지를 업로드한 경우
         console.log("여기는 x-ray 취급 안해요.");
         showModalFunction(t("ai_page.actual_photo"));
         setIsAnalyzed(false);
         setSelectedImage(null);
         setLabel("X ray");
         setExplanation("");
-      }  else if(image_type === "other"){
+      } else if (image_type === "other") {
+        // 전혀 다른 이미지를 업로드한 경우
         console.log("전혀 다른 이미지를 올리셨어요.");
         showModalFunction(t("ai_page.Please_upload_tooth_image"));
         setIsAnalyzed(false);
@@ -369,14 +287,15 @@ const DentalAnalysis: React.FC = () => {
         setLabel("Non dental");
         setExplanation("");
       } else if (!is_tooth) { 
+        // 치아가 보이지 않는 이미지를 업로드한 경우
         console.log("이빨 좀 보이는 사진 올려주세요.");
         showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
         setIsAnalyzed(false);
         setLabel("Non dental");
         setSelectedImage(null);
         setExplanation(""); // 설명 초기화
-
       } else if ((image_type === "dog" || image_type === "cat") && is_tooth) {
+        // 치아가 보이는 반려동물 이미지를 업로드한 경우(정상 케이스)
         console.log("분석을 정상적으로 했어요.");
         setIsAnalyzed(true);
         setImageType(image_type);
@@ -479,8 +398,6 @@ const DentalAnalysis: React.FC = () => {
 
   // 결과 저장 mutation
   const { mutate: saveResultMutate, isPending: isSaving } = useMutation({
-    // mutationFn: (formData: FormData) => storeResult(formData, "dental"),
-    
     mutationFn: (formData: FormData) => storeDescription(formData),
     onSuccess: () => navigate('/AI-menu', { state: { id: petId } }),
     onError: () => showModalFunction(t("ai_page.Failed_to_save_result._Please_try_again.")),
@@ -489,26 +406,42 @@ const DentalAnalysis: React.FC = () => {
   // 결과 저장 함수
   const saveResult = () => {
     playSfx(Audios.button_click);
+
+    // 분석이 안 된 상태이거나 이미지가 없을 때는 중단
     if (!selectedImage || !isAnalyzed) {
       showModalFunction(t("ai_page.Please_analyze_the_image_before_saving."));
       return;
     }
 
-    const formData = new FormData();
-    formData.append(
-      'json',
-      new Blob(
-        [
-          JSON.stringify({
-            petId, 
-            result: label,
-            description: explanation,           
-        })], { type: 'application/json' })
-    );
-    formData.append('file', selectedImage);
+    // analysisResult 배열에서 최대 3개까지만 추출
+    const limitedAnalysis = analysisResult.slice(0, 3);
 
+    const payload = {
+      petId,
+      details: limitedAnalysis.map((item) => ({
+        label: item.disease_name,
+        probability: Math.round(item.probability * 100), // 정수 변환 예시
+        description: item.description,
+        caution: item.caution,
+      })),
+    };
+
+    // FormData 생성
+    const formData = new FormData();
+
+    // JSON 데이터를 Blob 형태로 넣기
+    formData.append(
+      "json",
+      new Blob([JSON.stringify(payload)], { type: "application/json" })
+    );
+
+    // 이미지는 별도 필드에 추가
+    formData.append("file", selectedImage);
+
+    // Mutation 실행
     saveResultMutate(formData);
   };
+
 
     // 재검사 진행 버튼 함수
     const resetAnalysis = () => {
