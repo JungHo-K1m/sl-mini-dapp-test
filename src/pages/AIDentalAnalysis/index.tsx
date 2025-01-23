@@ -420,7 +420,7 @@ const DentalAnalysis: React.FC = () => {
       petId,
       details: limitedAnalysis.map((item) => ({
         label: item.disease_name,
-        probability: Math.round(item.probability * 100), // 정수 변환 예시
+        probability: Math.round(item.probability * 100),
         description: item.description,
         caution: item.caution,
       })),
@@ -452,10 +452,10 @@ const DentalAnalysis: React.FC = () => {
       setIsAnalyzed(false);
     };
 
-    const handleSeeMore = () => {
-      playSfx(Audios.button_click);
-      setShowFullText(!showFullText)
-    }
+    // const handleSeeMore = () => {
+    //   playSfx(Audios.button_click);
+    //   setShowFullText(!showFullText)
+    // }
 
     return (
         <div className="flex flex-col items-center text-white mx-6 h-screen overflow-x-hidden">

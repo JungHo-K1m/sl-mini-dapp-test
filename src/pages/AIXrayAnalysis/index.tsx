@@ -35,6 +35,7 @@ const AIXrayAnalysis: React.FC = () => {
 
   const petData = location.state as { id: string };
   const petId = petData?.id || '';
+  const [probability, setProbability] = useState("");
 
   const openai = new OpenAI({
     apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
@@ -272,7 +273,8 @@ const AIXrayAnalysis: React.FC = () => {
                 prev.probability > current.probability ? prev : current
               );
 
-              const highestPercentage = (highestPrediction.probability * 100).toFixed(2);
+              const highestPercentage = Math.round(highestPrediction.probability * 100);
+              setProbability(highestPercentage.toString());
               console.log(
                 `Highest Probability Class: ${highestPrediction.className}, Probability: ${highestPercentage}%`
               );
@@ -350,7 +352,15 @@ const AIXrayAnalysis: React.FC = () => {
     const formData = new FormData();
     formData.append(
       'json',
-      new Blob([JSON.stringify({ petId, result: predictedLabel })], { type: 'application/json' })
+      new Blob([JSON.stringify({ 
+        petId, 
+        details: {
+          label: predictedLabel,
+          probability: parseInt(probability, 10),
+          description: "",
+          caution: ""
+        },
+      })], { type: 'application/json' })
     );
     formData.append('file', selectedImage);
 
