@@ -56,13 +56,21 @@ const DiagnosisRecords: React.FC = () => {
           
               // null 체크와 배열 여부를 함께 확인
               if (filters && Array.isArray(filters)) {
-                // 정상적으로 배열을 받았다면, 필요한 필터 추출
-                const filterLabels = [...new Set(filters.map((filter) => filter.record))];
-                setFilterOptions(['All', ...filterLabels]);
+                // filter.record가 실제로 string인지 다시 한 번 검증
+                const filterLabels = filters
+                  .map((filter) => {
+                    if (typeof filter?.record === "string") {
+                      return filter.record;
+                    } else {
+                      // record 필드가 문자열이 아니면 null 처리 또는 기본 문자열로 대체
+                      return null;
+                    }
+                  })
+                  .filter((item) => item !== null);
+              
+                setFilterOptions(["All", ...new Set(filterLabels)]);
               } else {
-                // 데이터가 없거나 형식이 올바르지 않은 경우
-                console.warn("No filter data found or invalid format", filters);
-                setFilterOptions(['All']);
+                setFilterOptions(["All"]);
               }
             } catch (error) {
               console.error('Failed to fetch filter options:', error);
@@ -102,6 +110,11 @@ const DiagnosisRecords: React.FC = () => {
 
     // 글자수를 17글자로 제한하고 넘으면 "..." 붙이기
     const truncateText = (text: string, maxLength: number) => {
+        if (typeof text !== "string") {
+            // 예외 처리: 문자열이 아닐 때 기본 값 혹은 공백 처리
+            return "";
+        }
+
         return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     };
 
