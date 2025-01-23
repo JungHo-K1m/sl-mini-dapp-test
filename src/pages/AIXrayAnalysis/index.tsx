@@ -363,6 +363,12 @@ const AIXrayAnalysis: React.FC = () => {
       })], { type: 'application/json' })
     );
     formData.append('file', selectedImage);
+    // formData에 어떤 값이 들어있는지 확인
+    console.log("=== FormData entries ===");
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    console.log("=== End of FormData entries ===");
 
     saveResultMutate(formData);
   };
