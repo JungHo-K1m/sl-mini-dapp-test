@@ -3,7 +3,7 @@ import api from '@/shared/api/axiosInstance';
 async function getDiagnosisList(petId: string): Promise<any> {
     try {
         const url = `diagnosis/${petId}`;
-        const response = await api.post(url);
+        const response = await api.get(url);
 
         if (response.data.code === 'OK') {
             console.log("진단 리스트: ", response.data.data);
