@@ -281,7 +281,6 @@ const DiagnosisRecords: React.FC = () => {
                         >
                             <div>
                             <p className="font-semibold text-base">
-                                {/* 예: 2025-01-23  DENTAL_REAL */}
                                 {`${record.diagnosisAt}  ${record.type}`}
                             </p>
                             <p className="text-sm font-normal text-gray-400">
