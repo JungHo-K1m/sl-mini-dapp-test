@@ -19,15 +19,16 @@ const DiagnosisRecords: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [selectedFilter, setSelectedFilter] = useState<string>('All');
     const [filterOptions, setFilterOptions] = useState<string[]>(['All']);
-    const [records, setRecords] = useState<{ 
-        diagnosisAt: string, 
-        result: string, 
-        diagnosisImgUrl: string, 
-        petName: string, 
-        petImgUrl: string, 
-        type: string,
-        description: string
-    }[]>([]);
+    type RecordItem = {
+        diagnosisAt: string;
+        petName: string;
+        type: string;
+        details: {
+            label: string;
+            probability: number;
+        }[];
+    };
+    const [records, setRecords] = useState<RecordItem[]>([]);
     const petData = location.state as { id: string };
     const [id] = useState<string>(petData?.id || '');
 
@@ -132,10 +133,10 @@ const DiagnosisRecords: React.FC = () => {
         playSfx(Audios.button_click);
         navigate('/diagnosis-detail', {
             state: {
-                img: record.diagnosisImgUrl,
-                result: record.result,
+                // img: record.diagnosisImgUrl,
+                result: record.details,
                 // DENTAL_REAL일 때만 description을 전달
-                description: record.type === "DENTAL_REAL" ? record.description : "",
+                description: record.type === "DENTAL_REAL" ? record.details : "",
             },
         });
     };
@@ -169,17 +170,32 @@ const DiagnosisRecords: React.FC = () => {
                 </div>
             ) : (
                 <div className="w-full mt-8">
-                    {records.map((record, index) => (
-                        <div 
-                            key={index} className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
-                            onClick={() => handleNavigateToDetail(record)}>
-                            <div>
-                                <p className="font-semibold text-base">{`${record.diagnosisAt}  ${record.type}`}</p>
-                                <p className="text-sm font-normal text-gray-400">{record.result}</p>
-                            </div>
-                            <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+                    {records.map((record, index) => {
+                    // details 배열이 있는지 확인 후, label(probability%) 형태로 이어 붙이기
+                    const detailDisplay = record.details
+                        ? record.details.map(detail => `${detail.label}(${detail.probability}%)`).join(', ')
+                        : '';
+
+                    return (
+                        <div
+                        key={index}
+                        className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
+                        onClick={() => handleNavigateToDetail(record)}
+                        >
+                        <div>
+                            {/* 예: 2025-01-23  DENTAL_REAL */}
+                            <p className="font-semibold text-base">
+                            {`${record.diagnosisAt}  ${record.type}`}
+                            </p>
+                            {/* details의 label과 probability를 붙여서 표시 */}
+                            <p className="text-sm font-normal text-gray-400">
+                            {detailDisplay}
+                            </p>
                         </div>
-                    ))}
+                        <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
+                        </div>
+                    );
+                    })}
                 </div>
             )}
 
