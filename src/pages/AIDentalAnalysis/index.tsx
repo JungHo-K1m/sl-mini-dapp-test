@@ -271,7 +271,8 @@ const DentalAnalysis: React.FC = () => {
                 - probability: number(0~1)
                 - description: a detailed explanation
                 - caution: any warnings or tips
-              3) Write all text responses in ${useLanguage}.
+              3) Return "is_tooth": a boolean indicating if the dog's or cat's teeth are clearly visible.
+              4) Write all text responses in ${useLanguage}.
             `,
           },
           {
@@ -297,6 +298,10 @@ const DentalAnalysis: React.FC = () => {
                 image_type: {
                   type: "string",
                   enum: ["dog", "cat", "x-ray", "other"],
+                },
+                is_tooth: {
+                  type: "boolean",
+                  description: "Whether the pet’s teeth are visible in the image.",
                 },
                 analysis: {
                   type: "array",
@@ -326,7 +331,7 @@ const DentalAnalysis: React.FC = () => {
                   description: "A list of possible diagnoses with their probabilities and explanations.",
                 },
               },
-              required: ["image_type", "analysis"],
+              required: ["image_type", "analysis", "is_tooth"],
               additionalProperties: false,
             },
           },
@@ -336,8 +341,8 @@ const DentalAnalysis: React.FC = () => {
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
-      }));
-
+      })
+    );
       // 4) 응답(JSON) 파싱
       const responseData = response;
       console.log("openAI 응답: ", responseData);
@@ -347,7 +352,7 @@ const DentalAnalysis: React.FC = () => {
       const parsedData = JSON.parse(assistantMessage);
       console.log("Parsed data:", parsedData);
 
-      const { image_type, analysis } = parsedData;
+      const { image_type, analysis, is_tooth } = parsedData;
 
       if(image_type === "x-ray"){
         console.log("여기는 x-ray 취급 안해요.");
@@ -363,11 +368,19 @@ const DentalAnalysis: React.FC = () => {
         setSelectedImage(null);
         setLabel("Non dental");
         setExplanation("");
-      } else if (image_type === "dog" || image_type === "cat") {
-          console.log("분석을 정상적으로 했어요.");
-          setIsAnalyzed(true);
-          setImageType(image_type);
-          setAnalysisResult(analysis);
+      } else if (!is_tooth) { 
+        console.log("이빨 좀 보이는 사진 올려주세요.");
+        showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
+        setIsAnalyzed(false);
+        setLabel("Non dental");
+        setSelectedImage(null);
+        setExplanation(""); // 설명 초기화
+
+      } else if ((image_type === "dog" || image_type === "cat") && is_tooth) {
+        console.log("분석을 정상적으로 했어요.");
+        setIsAnalyzed(true);
+        setImageType(image_type);
+        setAnalysisResult(analysis);
         // try{
         // } catch(error: any){
 
@@ -566,21 +579,11 @@ const DentalAnalysis: React.FC = () => {
             {/* 분석 완료 후 UI */}
             {isAnalyzed && (
                 <>
-                    {/* <div className="mt-4 text-lg font-semibold">
-                        <p>{t("ai_page.Analysis_results")}: {label}</p>
-                    </div> */}
                 <div className="mt-4 text-lg font-semibold">
                 <p>Analysis results (image_type: {imageType})</p>
               </div>
 
                     <div className="mt-4 p-4 bg-gray-800 rounded-xl max-w-sm mx-auto">
-                        {/* <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-3'}`}>
-                            {
-                                // 만약 openAI가 보낸 설명(explanation)이 있으면 우선 표시하고,
-                                // 없으면 기존 getSymptomDescription(label)로 대체
-                                explanation || getSymptomDescription(label)
-                            }
-                        </p> */}
                         {analysisResult.map((item, idx) => (
                         <div key={idx} className="mb-4">
                           <p className="font-semibold text-base">{item.disease_name} ({Math.round(item.probability*100)}%)</p>
