@@ -52,20 +52,24 @@ const DiagnosisRecords: React.FC = () => {
 
         const fetchFilterOptions = async () => {
             try {
-                const filters = await getRecords(navigate);
-                if (filters && Array.isArray(filters)) {
-                    // 필터 데이터에서 `record` 속성만을 추출하여 문자열 배열로 변환하고, 중복 제거
-                    const filterLabels = [...new Set(filters.map((filter) => filter.record))];
-                    setFilterOptions(['All', ...filterLabels]);
-                } else {
-                    console.warn("Received unexpected filter options format:", filters);
-                    setFilterOptions(['All']); // 기본 옵션으로 설정
-                }
+              const filters = await getRecords(navigate);
+          
+              // null 체크와 배열 여부를 함께 확인
+              if (filters && Array.isArray(filters)) {
+                // 정상적으로 배열을 받았다면, 필요한 필터 추출
+                const filterLabels = [...new Set(filters.map((filter) => filter.record))];
+                setFilterOptions(['All', ...filterLabels]);
+              } else {
+                // 데이터가 없거나 형식이 올바르지 않은 경우
+                console.warn("No filter data found or invalid format", filters);
+                setFilterOptions(['All']);
+              }
             } catch (error) {
-                console.error('Failed to fetch filter options:', error);
-                setModal(t("ai_page.Failed_to_load_filter_options._Please_try_again_later."));
+              console.error('Failed to fetch filter options:', error);
+              setModal(t("ai_page.Failed_to_load_filter_options._Please_try_again_later."));
             }
-        };
+          };
+          
         fetchAllRecords();
         fetchFilterOptions();
     }, [id]);
