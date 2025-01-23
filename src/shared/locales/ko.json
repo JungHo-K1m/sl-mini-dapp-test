@@ -257,6 +257,7 @@
       "attendance": "출석",
       "level_reward": "레벨 보상",
       "level": "레벨",
+      "monthly_rewards": "이번 달 보상",
       "day": {
         "SUN": "일",
         "MON": "월",

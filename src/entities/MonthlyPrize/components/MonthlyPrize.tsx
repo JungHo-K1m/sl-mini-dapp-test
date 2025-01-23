@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Images from '@/shared/assets/images';
 import { formatNumber } from '@/shared/utils/formatNumber';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 import { useNavigationStore } from '@/shared/store/navigationStore';
 import { Snowfall } from 'react-snowfall';
 import { useSound } from "@/shared/provider/SoundProvider";
@@ -22,6 +23,7 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
   eventFinishTime,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { playSfx } = useSound();
   const setSelected = useNavigationStore((state) => state.setSelected);
 
@@ -155,7 +157,7 @@ const MonthlyPrize: React.FC<MonthlyPrizeProps> = ({
 
       {/* 상품 정보 */}
       <div className="flex flex-col items-center">
-        <p className="font-semibold text-base">{prizeType}</p>
+        <p className="font-semibold text-base">{t("dice_event.monthly_rewards")}</p>
         <p className="text-xs font-normal">(Approx. ${formatNumber(amount)})</p>
       </div>
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaChevronDown, FaChevronUp, FaChevronRight } from "react-icons/fa";
+import { FaChevronRight, FaCaretDown, FaCaretUp } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -125,7 +125,7 @@ const RewardHistory: React.FC = () => {
                     <div className="flex items-center">
                         <p className="text-lg font-semibold">Filter Option</p>
                     </div>
-                    {isOpen ? <FaChevronUp className="w-4 h-4" /> : <FaChevronDown className="w-4 h-4" />}
+                    {isOpen ? <FaCaretUp className="w-4 h-4" /> : <FaCaretDown className="w-4 h-4" />}
                 </div>
 
                 {/* 애니메이션이 적용된 영역 */}

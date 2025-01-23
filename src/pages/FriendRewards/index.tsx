@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
+import { FaSearch, FaCaretDown, FaCaretUp } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
@@ -170,9 +170,9 @@ const FriendRewards: React.FC = () => {
             <p className="text-lg font-semibold">{t("reward_page.filter")}</p>
           </div>
           {isOpen ? (
-            <FaChevronUp className="text-lg" />
+            <FaCaretUp className="text-lg" />
           ) : (
-            <FaChevronDown className="text-lg" />
+            <FaCaretDown className="text-lg" />
           )}
         </div>
 
