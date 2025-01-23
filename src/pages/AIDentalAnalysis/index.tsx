@@ -584,13 +584,13 @@ const DentalAnalysis: React.FC = () => {
                         {analysisResult.map((item, idx) => (
                         <div key={idx} className="mb-4">
                           <p className="font-semibold text-base">{item.disease_name} ({Math.round(item.probability*100)}%)</p>
-                          <p className={`overflow-hidden text-sm ${showFullText ? '' : 'line-clamp-2'}`}>
+                          <p className={`overflow-hidden text-sm`}>
                             {item.description}
                           </p>
                           <p className="text-sm text-red-300 mt-1">{item.caution}</p>
                         </div>
                       ))}
-                        <div className="flex justify-center mt-2">
+                        {/* <div className="flex justify-center mt-2">
                             <button
                                 className="mt-2 w-1/2 text-black font-semibold py-2 px-4 rounded-xl"
                                 style={{ backgroundColor: '#FFFFFF' }}
@@ -598,7 +598,7 @@ const DentalAnalysis: React.FC = () => {
                             >
                                 {t(showFullText ? "ai_page.See_less" : "ai_page.See_more")}
                             </button>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="flex w-full max-w-sm justify-between mt-10 mb-16">
