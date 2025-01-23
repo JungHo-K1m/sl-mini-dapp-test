@@ -215,7 +215,7 @@ const DiagnosisRecords: React.FC = () => {
                         >
                         <option value="All">All</option>
                         <option value="DENTAL_REAL">DENTAL_REAL</option>
-                        <option value="DENTAL_X_RAY">DENTAL_X_RAY</option>
+                        <option value="DENTAL_XRAY">DENTAL_XRAY</option>
                     </select>
                     <FaChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
                 </div>
