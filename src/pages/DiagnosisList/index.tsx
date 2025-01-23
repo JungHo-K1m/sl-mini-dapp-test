@@ -7,6 +7,10 @@ import { useTranslation } from "react-i18next";
 import { TopTitle } from '@/shared/components/ui';
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const DiagnosisRecords: React.FC = () => {
     const location = useLocation();
@@ -31,6 +35,31 @@ const DiagnosisRecords: React.FC = () => {
     const [records, setRecords] = useState<RecordItem[]>([]);
     const petData = location.state as { id: string };
     const [id] = useState<string>(petData?.id || '');
+
+    // 날짜 필터
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
+
+    
+    // 커스텀 날짜 인풋
+    const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
+        ({ value, onClick, placeholder }, ref) => (
+            <div
+            className="flex items-center w-full px-4 py-2 bg-gray-800 text-white rounded-lg cursor-pointer focus:ring focus:ring-blue-500"
+            onClick={onClick}
+            >
+            <input
+                ref={ref}
+                value={value}
+                readOnly
+                placeholder={placeholder}
+                className="bg-transparent outline-none w-full text-white"
+            />
+            <FaCalendarAlt className="text-white ml-2" />
+            </div>
+        )
+    );
+    CustomDateInput.displayName = "CustomDateInput";
 
     // 페이지 최초 로드시 모든 기록 조회
     useEffect(() => {
@@ -162,6 +191,41 @@ const DiagnosisRecords: React.FC = () => {
                     </select>
                     <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-black pointer-events-none" />
                 </div>
+            </div>
+            
+            {/* 날짜 범위 선정 */}
+            <p className="text-lg font-medium text-left mt-4">{t("reward_page.range")}</p>
+            <div className="flex items-center gap-4 mt-4">
+              {/* 시작일 */}
+              <div className="w-full">
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => {
+                    playSfx(Audios.button_click);
+                    setStartDate(date);
+                  }}
+                  placeholderText="Start Date"
+                  customInput={<CustomDateInput placeholder="Start Date" />}
+                  dateFormat="yyyy-MM-dd"
+                  maxDate={endDate || undefined}
+                  className="rounded-full"
+                />
+              </div>
+              {/* 종료일 */}
+              <div className="w-full">
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => {
+                    playSfx(Audios.button_click);
+                    setEndDate(date);
+                  }}
+                  placeholderText="End Date"
+                  customInput={<CustomDateInput placeholder="End Date" />}
+                  dateFormat="yyyy-MM-dd"
+                  minDate={startDate || undefined}
+                  className="rounded-full"
+                />
+              </div>
             </div>
             
             {loading ? (
