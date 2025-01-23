@@ -26,7 +26,8 @@ const DentalAnalysis: React.FC = () => {
   const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [modalInfo, setModalInfo] = useState({ isVisible: false, message: '' });
-
+  const [analysisResult, setAnalysisResult] = useState<any[]>([]);
+  const [imageType, setImageType] = useState<string>("unknown");
   const petData = location.state as { id: string };
   const petId = petData?.id || '';
 
@@ -175,167 +176,168 @@ const DentalAnalysis: React.FC = () => {
       const base64Data = await convertFileToBase64(selectedImage);
 
       const response = await retryWithBackoff(() => openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  "type": "image_url",
-                  "image_url": {
-                    "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
-                  }
-                }
-              ],
-            },
-          ],
-          response_format: {
-            "type": "json_schema",
-            "json_schema": {
-              "name": "image_analysis",
-              "strict": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "is_x_ray": {
-                    "type": "string",
-                    "description": "Indicates whether the image is of X-ray, or other.",
-                    "enum": [
-                      "x-ray",
-                      "other"
-                    ]
-                  },
-                  "image_type": {
-                    "type": "string",
-                    "description": "Indicates whether the image is of a dog, cat, or other.",
-                    "enum": [
-                      "dog",
-                      "cat",
-                      "other"
-                    ]
-                  },
-                  "is_tooth_image": {
-                    "type": "boolean",
-                    "description": "Indicator if the image is specifically of a tooth."
-                  },
-                  "diagnosis": {
-                    "type": "object",
-                    "properties": {
-                      "diagnostic_name": {
-                        "type": "string",
-                        "description": "The name of the diagnosis.",
-                        "enum": [
-                          "Gingivitis & Plaque",
-                          "Periodontitis",
-                          "Normal"
-                        ]
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": `A detailed explanation of the diagnosis, translated into ${useLanguage}, at least 150 characters.`
-                      }
-                    },
-                    "required": [
-                      "diagnostic_name",
-                      "description"
-                    ],
-                    "additionalProperties": false
-                  }
-                },
-                "required": [
-                  "is_x_ray",
-                  "image_type",
-                  "is_tooth_image",
-                  "diagnosis"
-                ],
-                "additionalProperties": false
-              }
-            }
-          },
-          temperature: 1,
-          max_completion_tokens: 2048,
-          top_p: 1,
-          frequency_penalty: 0,
-          presence_penalty: 0
-        })
-      );
       //   model: "gpt-4o",
       //   messages: [
-      //     {
-      //       role: "system",
-      //       content: `
-      //         You are an AI specialized in pet dental analysis.
-      //         1) Return "image_type": one of ['dog','cat','x-ray','other'].
-      //         2) Return "analysis": an array of objects => { disease_name, probability, description, caution } 
-      //           - probability: number(0~1)
-      //           - description: a detailed explanation
-      //           - caution: any warnings or tips
-      //         3) Write all text responses in ${useLanguage}.
-      //       `,
-      //     },
-      //     {
-      //       role: "user",
-      //       content: [
-      //         {
-      //           type: "image_url",
-      //           image_url: {
-      //             url: `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
-      //           },
-      //         },
-      //       ],
-      //     },
-      //   ],
-      //   response_format: {
-      //     type: "json_schema",
-      //     json_schema: {
-      //       name: "pet_dental_analysis",
-      //       strict: true,
-      //       schema: {
-      //         type: "object",
-      //         properties: {
-      //           image_type: {
-      //             type: "string",
-      //             enum: ["dog", "cat", "x-ray", "other"],
-      //           },
-      //           analysis: {
-      //             type: "array",
-      //             items: {
-      //               type: "object",
-      //               properties: {
-      //                 disease_name: {
-      //                   type: "string",
-      //                   description: `Disease name in ${useLanguage}.`,
-      //                 },
-      //                 probability: {
-      //                   type: "number",
-      //                   description: "A number between 0 and 1 indicating the likelihood of this disease.",
-      //                 },
-      //                 description: {
-      //                   type: "string",
-      //                   description: `A detailed explanation of the disease in ${useLanguage}.`,
-      //                 },
-      //                 caution: {
-      //                   type: "string",
-      //                   description: `Any warnings or tips in ${useLanguage}.`,
-      //                 },
-      //               },
-      //               required: ["disease_name", "probability", "description", "caution"],
-      //               additionalProperties: false,
-      //             },
-      //             description: "A list of possible diagnoses with their probabilities and explanations.",
-      //           },
-      //         },
-      //         required: ["image_type", "analysis"],
-      //         additionalProperties: false,
+      //       {
+      //         role: "user",
+      //         content: [
+      //           {
+      //             "type": "image_url",
+      //             "image_url": {
+      //               "url": `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
+      //             }
+      //           }
+      //         ],
       //       },
+      //     ],
+      //     response_format: {
+      //       "type": "json_schema",
+      //       "json_schema": {
+      //         "name": "image_analysis",
+      //         "strict": true,
+      //         "schema": {
+      //           "type": "object",
+      //           "properties": {
+      //             "is_x_ray": {
+      //               "type": "string",
+      //               "description": "Indicates whether the image is of X-ray, or other.",
+      //               "enum": [
+      //                 "x-ray",
+      //                 "other"
+      //               ]
+      //             },
+      //             "image_type": {
+      //               "type": "string",
+      //               "description": "Indicates whether the image is of a dog, cat, or other.",
+      //               "enum": [
+      //                 "dog",
+      //                 "cat",
+      //                 "other"
+      //               ]
+      //             },
+      //             "is_tooth_image": {
+      //               "type": "boolean",
+      //               "description": "Indicator if the image is specifically of a tooth."
+      //             },
+      //             "diagnosis": {
+      //               "type": "object",
+      //               "properties": {
+      //                 "diagnostic_name": {
+      //                   "type": "string",
+      //                   "description": "The name of the diagnosis.",
+      //                   "enum": [
+      //                     "Gingivitis & Plaque",
+      //                     "Periodontitis",
+      //                     "Normal"
+      //                   ]
+      //                 },
+      //                 "description": {
+      //                   "type": "string",
+      //                   "description": `A detailed explanation of the diagnosis, translated into ${useLanguage}, at least 150 characters.`
+      //                 }
+      //               },
+      //               "required": [
+      //                 "diagnostic_name",
+      //                 "description"
+      //               ],
+      //               "additionalProperties": false
+      //             }
+      //           },
+      //           "required": [
+      //             "is_x_ray",
+      //             "image_type",
+      //             "is_tooth_image",
+      //             "diagnosis"
+      //           ],
+      //           "additionalProperties": false
+      //         }
+      //       }
       //     },
-      //   },
-      //   temperature: 1,
-      //   max_completion_tokens: 2048,
-      //   top_p: 1,
-      //   frequency_penalty: 0,
-      //   presence_penalty: 0,
-      // }));
+      //     temperature: 1,
+      //     max_completion_tokens: 2048,
+      //     top_p: 1,
+      //     frequency_penalty: 0,
+      //     presence_penalty: 0
+      //   })
+      // );
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content: `
+              You are an AI specialized in pet dental analysis.
+              1) Return "image_type": one of ['dog','cat','x-ray','other'].
+              2) Return "analysis": an array of objects => { disease_name, probability, description, caution } 
+                - probability: number(0~1)
+                - description: a detailed explanation
+                - caution: any warnings or tips
+              3) Write all text responses in ${useLanguage}.
+            `,
+          },
+          {
+            role: "user",
+            content: [
+              {
+                type: "image_url",
+                image_url: {
+                  url: `data:image/${getImageExtension(selectedImage)};base64,${base64Data}`,
+                },
+              },
+            ],
+          },
+        ],
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "pet_dental_analysis",
+            strict: true,
+            schema: {
+              type: "object",
+              properties: {
+                image_type: {
+                  type: "string",
+                  enum: ["dog", "cat", "x-ray", "other"],
+                },
+                analysis: {
+                  type: "array",
+                  maxItems: 3,
+                  items: {
+                    type: "object",
+                    properties: {
+                      disease_name: {
+                        type: "string",
+                        description: `Disease name in ${useLanguage}.`,
+                      },
+                      probability: {
+                        type: "number",
+                        description: "A number between 0 and 1 indicating the likelihood of this disease.",
+                      },
+                      description: {
+                        type: "string",
+                        description: `A detailed explanation of the disease in ${useLanguage}.`,
+                      },
+                      caution: {
+                        type: "string",
+                        description: `Any warnings or tips in ${useLanguage}.`,
+                      },
+                    },
+                    required: ["disease_name", "probability", "description", "caution"],
+                    additionalProperties: false,
+                  },
+                  description: "A list of possible diagnoses with their probabilities and explanations.",
+                },
+              },
+              required: ["image_type", "analysis"],
+              additionalProperties: false,
+            },
+          },
+        },
+        temperature: 1,
+        max_completion_tokens: 2048,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      }));
 
       // 4) 응답(JSON) 파싱
       const responseData = response;
@@ -348,108 +350,110 @@ const DentalAnalysis: React.FC = () => {
 
       const { image_type, analysis } = parsedData;
 
-      // if(image_type === "x-ray"){
-      //   console.log("여기는 x-ray 취급 안해요.");
-      //   showModalFunction(t("ai_page.actual_photo"));
-      //   setIsAnalyzed(false);
-      //   setSelectedImage(null);
-      //   setLabel("Non dental");
-      //   setExplanation("");
-      // }  else if(image_type === "other"){
-      //   console.log("전혀 다른 이미지를 올리셨어요.");
-      //   showModalFunction(t("ai_page.Please_upload_tooth_image"));
-      //   setIsAnalyzed(false);
-      //   setSelectedImage(null);
-      //   setLabel("Non dental");
-      //   setExplanation("");
-      // } else if (image_type === "dog" || image_type === "cat") {
-      //   try{
+      if(image_type === "x-ray"){
+        console.log("여기는 x-ray 취급 안해요.");
+        showModalFunction(t("ai_page.actual_photo"));
+        setIsAnalyzed(false);
+        setSelectedImage(null);
+        setLabel("X ray");
+        setExplanation("");
+      }  else if(image_type === "other"){
+        console.log("전혀 다른 이미지를 올리셨어요.");
+        showModalFunction(t("ai_page.Please_upload_tooth_image"));
+        setIsAnalyzed(false);
+        setSelectedImage(null);
+        setLabel("Non dental");
+        setExplanation("");
+      } else if (image_type === "dog" || image_type === "cat") {
+        try{
+          setIsAnalyzed(true);
+          setImageType(image_type);
+          setAnalysisResult(analysis);
+        } catch(error: any){
 
-      //   } catch(error: any){
-
-      //   }
-      // };
+        }
+      };
 
       // 5) 응답에 따른 분기 처리
-      try {
-          // assistantMessage를 JSON 객체로 파싱
-          const parsedData = JSON.parse(assistantMessage);
-          console.log("Parsed Response Data:", parsedData);
+      // try {
+      //     // assistantMessage를 JSON 객체로 파싱
+      //     const parsedData = JSON.parse(assistantMessage);
+      //     console.log("Parsed Response Data:", parsedData);
       
-          // 데이터 유효성 검사 및 분기 처리
-          if (parsedData.is_x_ray === "x-ray") {
-              // 업로드한 사진이 x-ray 이미지인 경우
-              console.log("여기는 x-ray 취급 안해요.");
-              showModalFunction(t("ai_page.actual_photo"));
-              setIsAnalyzed(false);
-              setLabel("Non dental");
-              setSelectedImage(null);
-              setExplanation(""); // 설명 초기화
-          } else if(parsedData.image_type === "other" && parsedData.is_tooth_image === false && parsedData.diagnosis){
-              // 업로드한 사진이 전혀 다른 사진인 경우
-              console.log("전혀 다른 이미지를 올리셨어요.");
-              showModalFunction(t("ai_page.Please_upload_tooth_image"));
-              setIsAnalyzed(false);
-              setLabel("Non dental");
-              setSelectedImage(null);
-              setExplanation(""); // 설명 초기화
-          } else if((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === false && parsedData.diagnosis){
-              // 업로드한 사진이 반려 동물의 사진이지만 치아가 보이지 않는 경우
-              console.log("이빨 좀 보이는 사진 올려주세요.");
-              showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
-              setIsAnalyzed(false);
-              setLabel("Non dental");
-              setSelectedImage(null);
-              setExplanation(""); // 설명 초기화
-          } else if (parsedData.is_tooth_image === true && parsedData.diagnosis) {
-              // 분석 성공: 진단 결과 표시
-              console.log("분석을 정상적으로 했어요.");
-              const originalExplanation = parsedData.diagnosis.description;
+      //     // 데이터 유효성 검사 및 분기 처리
+      //     if (parsedData.is_x_ray === "x-ray") {
+      //         // 업로드한 사진이 x-ray 이미지인 경우
+      //         console.log("여기는 x-ray 취급 안해요.");
+      //         showModalFunction(t("ai_page.actual_photo"));
+      //         setIsAnalyzed(false);
+      //         setLabel("Non dental");
+      //         setSelectedImage(null);
+      //         setExplanation(""); // 설명 초기화
+      //     } else if(parsedData.image_type === "other" && parsedData.is_tooth_image === false && parsedData.diagnosis){
+      //         // 업로드한 사진이 전혀 다른 사진인 경우
+      //         console.log("전혀 다른 이미지를 올리셨어요.");
+      //         showModalFunction(t("ai_page.Please_upload_tooth_image"));
+      //         setIsAnalyzed(false);
+      //         setLabel("Non dental");
+      //         setSelectedImage(null);
+      //         setExplanation(""); // 설명 초기화
+      //     } else if((parsedData.image_type === "dog" || parsedData.image_type === "cat") && parsedData.is_tooth_image === false && parsedData.diagnosis){
+      //         // 업로드한 사진이 반려 동물의 사진이지만 치아가 보이지 않는 경우
+      //         console.log("이빨 좀 보이는 사진 올려주세요.");
+      //         showModalFunction(t("ai_page.Please_upload_pets_tooth_image"));
+      //         setIsAnalyzed(false);
+      //         setLabel("Non dental");
+      //         setSelectedImage(null);
+      //         setExplanation(""); // 설명 초기화
+      //     } else if (parsedData.is_tooth_image === true && parsedData.diagnosis) {
+      //         // 분석 성공: 진단 결과 표시
+      //         console.log("분석을 정상적으로 했어요.");
+      //         const originalExplanation = parsedData.diagnosis.description;
       
-              setLabel(parsedData.diagnosis.diagnostic_name);
-              setExplanation(originalExplanation);
-              setIsAnalyzed(true);
+      //         setLabel(parsedData.diagnosis.diagnostic_name);
+      //         setExplanation(originalExplanation);
+      //         setIsAnalyzed(true);
 
-              // sl 차감 api 진행
-              // try{
-              //   const slResponse = await slPayment();
+      //         // sl 차감 api 진행
+      //         // try{
+      //         //   const slResponse = await slPayment();
 
-              //   if(slResponse.message === "Success"){
-              //     const originalExplanation = parsedData.diagnosis.description;
+      //         //   if(slResponse.message === "Success"){
+      //         //     const originalExplanation = parsedData.diagnosis.description;
       
-              //     setLabel(parsedData.diagnosis.diagnostic_name);
-              //     setExplanation(originalExplanation);
-              //     setIsAnalyzed(true);
-              //   }else {
-              //     setShowModal(true);
-              //     setSelectedImage(null);
-              //     setIsAnalyzed(false);
-              //     showModalFunction(t("ai_page.5SL_tokens"));
-              //   }
-              // }catch(error: any){
-              //   console.error("sl payment Error:", error);
-              //   showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
-              //   setIsAnalyzed(false);
-              //   setSelectedImage(null);
-              //   setLabel(t("ai_page.Analysis_failed"));
-              //   setExplanation(""); // 설명 초기화
-              // }
-          } else {
-              // 예외 처리: 유효하지 않은 응답
-              showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
-              setIsAnalyzed(false);
-              setSelectedImage(null);
-              setLabel(t("ai_page.Analysis_failed"));
-              setExplanation(""); // 설명 초기화
-          }
-      } catch (error) {
-          console.error("JSON Parsing Error:", error);
-          showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
-          setIsAnalyzed(false);
-          setSelectedImage(null);
-          setLabel(t("ai_page.Analysis_failed"));
-          setExplanation(""); // 설명 초기화
-      }            
+      //         //     setLabel(parsedData.diagnosis.diagnostic_name);
+      //         //     setExplanation(originalExplanation);
+      //         //     setIsAnalyzed(true);
+      //         //   }else {
+      //         //     setShowModal(true);
+      //         //     setSelectedImage(null);
+      //         //     setIsAnalyzed(false);
+      //         //     showModalFunction(t("ai_page.5SL_tokens"));
+      //         //   }
+      //         // }catch(error: any){
+      //         //   console.error("sl payment Error:", error);
+      //         //   showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+      //         //   setIsAnalyzed(false);
+      //         //   setSelectedImage(null);
+      //         //   setLabel(t("ai_page.Analysis_failed"));
+      //         //   setExplanation(""); // 설명 초기화
+      //         // }
+      //     } else {
+      //         // 예외 처리: 유효하지 않은 응답
+      //         showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+      //         setIsAnalyzed(false);
+      //         setSelectedImage(null);
+      //         setLabel(t("ai_page.Analysis_failed"));
+      //         setExplanation(""); // 설명 초기화
+      //     }
+      // } catch (error) {
+      //     console.error("JSON Parsing Error:", error);
+      //     showModalFunction(t("ai_page.Failed_to_analyze_the_image"));
+      //     setIsAnalyzed(false);
+      //     setSelectedImage(null);
+      //     setLabel(t("ai_page.Analysis_failed"));
+      //     setExplanation(""); // 설명 초기화
+      // }            
     } catch (error: any) {
         console.error("OpenAI Error:", error);
         setIsAnalyzed(false);
