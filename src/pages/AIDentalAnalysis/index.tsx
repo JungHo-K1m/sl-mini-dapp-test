@@ -513,8 +513,8 @@ const DentalAnalysis: React.FC = () => {
             {isAnalyzed && (
                 <>
                 <div className="mt-4 text-lg font-semibold">
-                <p>Analysis results (image_type: {imageType})</p>
-              </div>
+                  <p>Analysis results (image_type: {imageType})</p>
+                </div>
 
                     <div className="mt-4 p-4 bg-gray-800 rounded-xl max-w-sm mx-auto">
                         {analysisResult.map((item, idx) => (
