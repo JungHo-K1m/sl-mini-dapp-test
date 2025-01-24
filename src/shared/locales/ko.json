@@ -1,6 +1,12 @@
 {
     "Error": "오류",
     "OK": "확인",
+    "agree_page": {
+      "welcome_message": "Scan My Pet에<br/>오신 것을 환영합니다!",
+      "agree_all": "모든 약관에 동의하기",
+      "next": "다음",
+      "close": "닫기"
+    },
     "character_page": {
       "Choose_your_character!": "캐릭터를 선택하세요!",
       "Continue": "계속하기"

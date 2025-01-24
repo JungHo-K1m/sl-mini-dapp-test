@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import parse from 'html-react-parser';
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
 
 const AgreementPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [modalContent, setModalContent] = useState<string>(""); // 모달에 표시할 HTML 파일 경로
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
   const [allChecked, setAllChecked] = useState(false);
@@ -58,7 +61,7 @@ const AgreementPage: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center text-white min-h-screen px-6 pt-36 relative">
-      <h1 className="text-2xl font-bold text-center mb-20">Welcome to the<br/>Scan My Pet!</h1>
+      <h1 className="text-2xl font-bold text-center mb-20">{parse(t('agree_page.welcome_message'))}</h1>
       <div className="w-full max-w-md py-6 rounded-lg">
         <div className="flex items-center mb-4">
           <input
@@ -69,7 +72,7 @@ const AgreementPage: React.FC = () => {
             className="w-5 h-5 mr-2"
           />
           <label htmlFor="allTerms" className="font-semibold text-lg">
-            Agree to all terms and conditions
+            {t("agree_page.agree_all")}
           </label>
         </div>
         <hr className="border-gray-600 mb-4" />
@@ -85,7 +88,7 @@ const AgreementPage: React.FC = () => {
             className="font-medium text-base text-left underline"
             onClick={() => handleOpenModal("termsOfService.html")}
           >
-            Terms of Service
+            {t("setting.terms_of_service")}
           </button>
         </div>
         <div className="flex items-center mb-4">
@@ -100,7 +103,7 @@ const AgreementPage: React.FC = () => {
             className="font-medium text-base text-left underline"
             onClick={() => handleOpenModal("privacyPolicy.html")}
           >
-            Privacy Policy
+            {t("setting.privacy_policy")}
           </button>
         </div>
         <div className="flex items-center mb-4">
@@ -115,7 +118,7 @@ const AgreementPage: React.FC = () => {
             className="font-medium text-base text-left underline"
             onClick={() => handleOpenModal("electronicCommerce.html")}
           >
-            Electronic Commerce Policy
+            {t("setting.electronic_commerce_policy")}
           </button>
         </div>
       </div>
@@ -128,7 +131,7 @@ const AgreementPage: React.FC = () => {
         disabled={!isAllChecked}
         onClick={handleNext}
       >
-        Next
+        {t("agree_page.next")}
       </button>
 
       {/* 모달 */}
@@ -144,7 +147,7 @@ const AgreementPage: React.FC = () => {
               className="mt-4 px-4 py-2 bg-[#0147E5] text-white rounded-full w-full"
               onClick={handleCloseModal}
             >
-              Close
+              {t("agree_page.cloase")}
             </button>
           </div>
         </div>

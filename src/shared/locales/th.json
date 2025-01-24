@@ -1,6 +1,12 @@
 {
     "Error": "ข้อผิดพลาด",
     "OK": "ตกลง",
+    "agree_page": {
+      "welcome_message": "ยินดีต้อนรับสู่<br/>Scan My Pet!",
+      "agree_all": "ยอมรับเงื่อนไขทั้งหมด",
+      "next": "ถัดไป",
+      "close": "ปิด"
+    },
     "character_page": {
       "Choose_your_character!": "เลือกตัวละครของคุณ!",
       "Continue": "ดำเนินการต่อ"

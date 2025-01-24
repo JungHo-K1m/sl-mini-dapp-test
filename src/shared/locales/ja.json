@@ -1,6 +1,12 @@
 {
     "Error": "エラー",
     "OK": "確認",
+    "agree_page": {
+        "welcome_message": "Scan My Petへ<br/>ようこそ！",
+        "agree_all": "すべての利用規約に同意する",
+        "next": "次へ",
+        "close": "閉じる"
+    },
     "character_page": {
         "Choose_your_character!": "キャラクターを選択してください！",
         "Continue": "続行"

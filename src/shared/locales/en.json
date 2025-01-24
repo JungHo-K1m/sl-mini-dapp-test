@@ -1,6 +1,12 @@
 {
     "Error": "Error",
     "OK": "OK",
+    "agree_page":{
+      "welcome_message": "Welcome to the<br/>Scan My Pet!",
+      "agree_all": "Agree to all terms and conditions",
+      "next": "Next",
+      "close": "Close"
+    },
     "character_page": {
       "Choose_your_character!": "Choose your character!",
       "Continue": "Continue"

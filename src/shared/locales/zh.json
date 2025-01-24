@@ -1,6 +1,12 @@
 {
     "Error": "錯誤",
     "OK": "确认 ",
+    "agree_page": {
+      "welcome_message": "歡迎來到<br/>Scan My Pet！",
+      "agree_all": "同意所有條款和條件",
+      "next": "下一步",
+      "close": "關閉"
+    },
     "character_page": {
       "Choose_your_character!": "選擇您的角色！",
       "Continue": "繼續"
