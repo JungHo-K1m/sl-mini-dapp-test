@@ -177,9 +177,9 @@ const DiagnosisRecords: React.FC = () => {
         playSfx(Audios.button_click);
         navigate('/diagnosis-detail', {
             state: {
-                result: record.details,
                 img: record.diagnosisImgUrl,
                 description: record.details,
+                photo_type: record.type
             },
         });
     };
