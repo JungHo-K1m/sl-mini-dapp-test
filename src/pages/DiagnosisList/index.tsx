@@ -178,7 +178,7 @@ const DiagnosisRecords: React.FC = () => {
       <TopTitle title={t('ai_page.Records')} back={true} />
 
       {/* 필터 영역 */}
-      <div className="flex items-center w-full mt-4">
+      <div className="flex items-center w-full">
         {/* 라벨 필터 */}
         <div className="relative w-1/2 mr-2">
           <select
