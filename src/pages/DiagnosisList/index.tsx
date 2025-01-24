@@ -268,27 +268,31 @@ const DiagnosisRecords: React.FC = () => {
             ) : (
                 <div className="w-full mt-8">
                     {records.map((record, index) => {
-                        // details 배열의 label(probability%) 합치기
+                        // record.type이 DENTAL_REAL이면 확률 붙여서 표시, 그 외에는 라벨만 표시
                         const detailDisplay = record.details
-                        ? record.details.map(detail => `${detail.label}(${detail.probability}%)`).join(', ')
-                        : '';
+                            ? record.details
+                                .map((detail) =>
+                                record.type === "DENTAL_REAL"
+                                    ? `${detail.label}(${detail.probability}%)`
+                                    : detail.label
+                                )
+                                .join(", ")
+                            : "";
 
                         return (
-                        <div
+                            <div
                             key={index}
                             className="bg-gray-800 p-4 rounded-lg mb-4 flex justify-between items-center"
                             onClick={() => handleNavigateToDetail(record)}
-                        >
+                            >
                             <div>
-                            <p className="font-semibold text-base">
+                                <p className="font-semibold text-base">
                                 {`${record.diagnosisAt}  ${record.type}`}
-                            </p>
-                            <p className="text-sm font-normal text-gray-400">
-                                {detailDisplay}
-                            </p>
+                                </p>
+                                <p className="text-sm font-normal text-gray-400">{detailDisplay}</p>
                             </div>
                             <FaChevronLeft className="text-lg cursor-pointer transform rotate-180" />
-                        </div>
+                            </div>
                         );
                     })}
                 </div>
