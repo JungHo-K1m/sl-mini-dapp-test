@@ -308,7 +308,7 @@ const PreviousRewards: React.FC = () => {
   // JSX 리턴
   // -----------------------------
   return (
-    <div className="flex flex-col mb-44 text-white items-center w-full ">
+    <div className="flex flex-col mb-44 text-white items-center w-full min-h-screen">
       <TopTitle title={t("reward_page.last_month")} className="px-6" back={true} />
 
       {/* 보상 선택 다이얼로그 (랭킹 or 래플) */}
