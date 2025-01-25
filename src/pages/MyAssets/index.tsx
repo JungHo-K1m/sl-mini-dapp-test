@@ -355,7 +355,7 @@ const MyAssets: React.FC = () => {
             <div className="mt-8 w-full">
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-semibold">{t("asset_page.Rewards_History")}</h2>
-                    <button
+                    {/* <button
                         className="flex items-center text-white text-xs"
                         onClick={() => {
                             playSfx(Audios.button_click);
@@ -363,10 +363,13 @@ const MyAssets: React.FC = () => {
                         }}
                         >
                         {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
-                    </button>
+                    </button> */}
                 </div>
                 <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] py-3 px-4">
-                    {rewardHistory.map((reward, index) => (
+                    <div className='flex justify-between items-center py-4'>
+                        <p>Prepareing Services</p>
+                    </div>
+                    {/* {rewardHistory.map((reward, index) => (
                         <div
                             key={reward.id}
                             className={`flex justify-between items-center py-4 ${
@@ -385,7 +388,7 @@ const MyAssets: React.FC = () => {
                                 {reward.points}
                             </p>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
 
