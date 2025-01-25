@@ -142,7 +142,9 @@
       "name": "Search Name...",
       "type": "Asset Type",
       "range": "Date Range",
-      "no_record": "No records found"
+      "no_record": "No records found",
+      "congratulations": "Congratulations!",
+      "airdrop_message": "You got an airdrop of {{slRewards}} SL for finishing #{{rank}} in last month’s event!"
     },
     "wallet_page": {
         "wallet": "Wallet",

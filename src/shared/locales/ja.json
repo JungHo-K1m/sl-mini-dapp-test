@@ -142,7 +142,9 @@
         "name": "名前を検索...",
         "type": "アセットタイプ",
         "range": "日付範囲",
-        "no_record": "該当する記録がありません"
+        "no_record": "該当する記録がありません",
+        "congratulations": "おめでとうございます！",
+        "airdrop_message": "先月のイベントで #{{rank}} を達成し、{{slRewards}} SL のエアドロップを獲得しました！"
     },
     "wallet_page": {
         "wallet": "ウォレット",

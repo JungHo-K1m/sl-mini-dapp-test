@@ -142,7 +142,9 @@
       "name": "이름 검색...",
       "type": "자산 유형",
       "range": "날짜 범위",
-      "no_record": "기록이 없습니다."
+      "no_record": "기록이 없습니다.",
+      "congratulations": "축하합니다!",
+      "airdrop_message": "지난 달 이벤트에서 #{{rank}}를 기록하여 {{slRewards}} SL을 에어드롭 받으셨습니다!"
     },
     "wallet_page": {
       "wallet": "지갑",

@@ -84,6 +84,8 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
   //   - rank != null => 당첨됨
   //   - rank == null => 당첨 실패
   const isWinner = myReward && myReward.rank !== null;
+  const slRewards = myReward && myReward.slRewards.toLocaleString();
+  const rank = myReward && myReward.rank;
 
   return (
     <div className="p-6 bg-[#0D1226] text-white w-full">
@@ -93,18 +95,10 @@ const AirdropSection: React.FC<AirdropSectionProps> = ({
           // rank가 null이 아닌 경우 (당첨)
           <div className="relative flex flex-col box-bg rounded-3xl border-2 border-[#0147E5] p-5 gap-2">
             <p className="font-semibold text-center text-lg">
-              Congratulations!
+              {t('reward_page.congratulations')}
             </p>
             <p className="text-center text-sm">
-              You got an airdrop of{" "}
-              <span className="font-bold text-[#FDE047]">
-                {myReward.slRewards.toLocaleString()} SL
-              </span>{" "}
-              for finishing{" "}
-              <span className="font-bold text-[#FDE047]">
-                #{myReward.rank}
-              </span>{" "}
-              in last month’s event!
+              {t('reward_page.airdrop_message', { slRewards, rank })}
             </p>
           </div>
         ) : (

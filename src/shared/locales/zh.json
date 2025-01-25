@@ -142,7 +142,9 @@
       "name": "搜尋名稱...",
       "type": "資產類型",
       "range": "日期範圍",
-      "no_record": "沒有找到任何紀錄"
+      "no_record": "沒有找到任何紀錄",
+      "congratulations": "恭喜！",
+      "airdrop_message": "在上個月的活動中獲得第 #{{rank}} 名，獲得 {{slRewards}} SL 空投！"
     },
     "wallet_page": {
       "wallet": "錢包",
