@@ -367,7 +367,7 @@ const MyAssets: React.FC = () => {
                 </div>
                 <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] py-3 px-4">
                     <div className='flex justify-between items-center py-4'>
-                        <p>Prepareing Services</p>
+                        <p>{t("asset_page.prepare_service")}</p>
                     </div>
                     {/* {rewardHistory.map((reward, index) => (
                         <div
