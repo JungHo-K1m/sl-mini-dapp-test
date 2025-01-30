@@ -12,7 +12,6 @@ import Audios from "@/shared/assets/audio";
 
 // ★ API 호출 함수
 import getRewardsHistory from "@/entities/Asset/api/getRewardsHistory";
-
 import { format } from "date-fns";
 
 const RewardHistory: React.FC = () => {
@@ -20,16 +19,16 @@ const RewardHistory: React.FC = () => {
   const { t } = useTranslation();
   const { playSfx } = useSound();
 
-  // 필터 관련 상태
+  // 필터 드롭다운 열림 상태
   const [isOpen, setIsOpen] = useState(false);
 
-  // 자산 종류(STAR→POINT로 표시) : SL, USDC, STAR
-  // 최소 1개는 반드시 선택되어 있어야 함
-  const [selectedAssets, setSelectedAssets] = useState<string[]>(["SL"]);
+  // 자산 종류: 하나만 선택. 기본값 "SL"
+  // (STAR → POINT로 표시하지만, 내부적으로는 STAR를 서버로 보냄)
+  const [selectedAsset, setSelectedAsset] = useState<string>("SL");
 
-  // 증감 타입(INCREASE → REWARD, DECREASE → USE)
-  // 초기값으로 둘 다 보이도록 설정
-  const [selectedChanges, setSelectedChanges] = useState<string[]>(["INCREASE", "DECREASE"]);
+  // 증감 필터: 하나만 선택. 기본값 "INCREASE"
+  // ("INCREASE" → 서버에는 "REWARD", "DECREASE" → "USE")
+  const [selectedChange, setSelectedChange] = useState<string>("INCREASE");
 
   // 날짜 필터
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -39,45 +38,36 @@ const RewardHistory: React.FC = () => {
   const [rewardHistory, setRewardHistory] = useState<any[]>([]);
   // 페이지네이션
   const [pageNumber, setPageNumber] = useState(0);
-  const [isLastPage, setIsLastPage] = useState(false); // 더보기 버튼 표시 여부 제어
+  const [isLastPage, setIsLastPage] = useState(false);
 
-  // 처음 진입 시 0페이지 데이터 요청
+  // 컴포넌트 마운트 시 0페이지 호출
   useEffect(() => {
     fetchRewards(0, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 실제 서버 API 호출 함수
+  // 서버 API 호출
   const fetchRewards = async (page: number, replace = false) => {
     try {
-      // 자산 타입 매핑
-      // 여러 개가 선택된 경우 API가 단일만 받으면 null(=전체)로 처리 (스펙에 맞춰 조정)
-      let assetTypeForApi: string | null = null;
-      if (selectedAssets.length === 1) {
-        assetTypeForApi = selectedAssets[0];
-      } else if (selectedAssets.length > 1) {
-        assetTypeForApi = null;
-      }
+      // 자산 필터 매핑
+      // 단일만 선택되므로 그대로 selectedAsset 사용
+      // 예: SL, USDC, STAR
+      const assetTypeForApi = selectedAsset;
 
-      // 증감 타입 매핑: INCREASE/DECREASE → REWARD/USE
-      // 둘 다 포함 시 null(=전체), 하나만 선택 시 해당 타입
+      // 증감 필터 매핑
+      // INCREASE → REWARD, DECREASE → USE
+      // (두 개 모두 보여주는 "전체" 개념이 없다면, 그대로 단일값)
       let changeTypeForApi: string | null = null;
-      if (
-        selectedChanges.includes("INCREASE") &&
-        selectedChanges.includes("DECREASE")
-      ) {
-        changeTypeForApi = null;
-      } else if (selectedChanges.includes("INCREASE")) {
+      if (selectedChange === "INCREASE") {
         changeTypeForApi = "REWARD";
-      } else if (selectedChanges.includes("DECREASE")) {
+      } else if (selectedChange === "DECREASE") {
         changeTypeForApi = "USE";
       }
 
-      // 날짜 필터(YYYY-MM-DD로 변환)
+      // 날짜 필터(YYYY-MM-DD)
       const startDateStr = startDate ? format(startDate, "yyyy-MM-dd") : null;
       const endDateStr = endDate ? format(endDate, "yyyy-MM-dd") : null;
 
-      // 서버에 요청
       const data = await getRewardsHistory(
         assetTypeForApi,
         changeTypeForApi,
@@ -98,40 +88,56 @@ const RewardHistory: React.FC = () => {
     }
   };
 
-  // 자산 체크박스 변경 → 즉시 재조회
+  // 자산 선택(라디오 버튼)
   const handleAssetChange = (asset: string) => {
     playSfx(Audios.button_click);
-    // 최소 1개 선택 강제
-    if (selectedAssets.includes(asset) && selectedAssets.length === 1) {
-      return;
-    }
-    // 토글
-    let newAssets: string[];
-    if (selectedAssets.includes(asset)) {
-      newAssets = selectedAssets.filter((a) => a !== asset);
-    } else {
-      newAssets = [...selectedAssets, asset];
-    }
-    setSelectedAssets(newAssets);
-
-    // ★ 변경 즉시 재조회
+    setSelectedAsset(asset);
+    // 선택 즉시 서버 재조회
     fetchRewards(0, true);
   };
 
-  // 증감 체크박스 변경 → 즉시 재조회
+  // 증감 선택(라디오 버튼)
   const handleChangeType = (change: string) => {
     playSfx(Audios.button_click);
-    let newChanges: string[];
-    if (selectedChanges.includes(change)) {
-      newChanges = selectedChanges.filter((c) => c !== change);
-    } else {
-      newChanges = [...selectedChanges, change];
-    }
-    setSelectedChanges(newChanges);
-
-    // ★ 변경 즉시 재조회
+    setSelectedChange(change);
+    // 선택 즉시 서버 재조회
     fetchRewards(0, true);
   };
+
+  // 날짜 선택 시 즉시 재조회
+  const handleStartDateChange = (date: Date | null) => {
+    playSfx(Audios.button_click);
+    setStartDate(date);
+
+    if (endDate && date && date > endDate) {
+      setEndDate(null);
+    }
+    fetchRewards(0, true);
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    playSfx(Audios.button_click);
+    setEndDate(date);
+    fetchRewards(0, true);
+  };
+
+  // "더보기" 버튼 클릭 → 다음 페이지
+  const handleLoadMore = () => {
+    playSfx(Audios.button_click);
+    fetchRewards(pageNumber + 1, false);
+  };
+
+  // STAR -> POINT, REWARD -> INCREASE, USE -> DECREASE 변환해서 표시
+  const displayHistory = rewardHistory.map((reward) => {
+    const displayAsset = reward.currencyType === "STAR" ? "POINT" : reward.currencyType;
+    const displayChangeType =
+      reward.changeType === "REWARD" ? "INCREASE" : "DECREASE";
+    return {
+      ...reward,
+      displayAsset,
+      displayChangeType,
+    };
+  });
 
   // DatePicker용 Custom Input
   const CustomDateInput = React.forwardRef<HTMLInputElement, any>(
@@ -153,49 +159,6 @@ const RewardHistory: React.FC = () => {
   );
   CustomDateInput.displayName = "CustomDateInput";
 
-  // 날짜 변경 시 → 즉시 재조회
-  const handleStartDateChange = (date: Date | null) => {
-    playSfx(Audios.button_click);
-    setStartDate(date);
-
-    // 날짜가 역전되면 endDate 초기화
-    if (endDate && date && date > endDate) {
-      setEndDate(null);
-    }
-
-    // 즉시 재조회
-    fetchRewards(0, true);
-  };
-
-  const handleEndDateChange = (date: Date | null) => {
-    playSfx(Audios.button_click);
-    setEndDate(date);
-
-    // 즉시 재조회
-    fetchRewards(0, true);
-  };
-
-  // "더보기" 버튼 클릭 → 다음 페이지
-  const handleLoadMore = () => {
-    playSfx(Audios.button_click);
-    fetchRewards(pageNumber + 1, false);
-  };
-
-  // 변환된(표시용) 보상 내역
-  const displayHistory = rewardHistory.map((reward) => {
-    // STAR -> POINT 변환
-    const displayAsset = reward.currencyType === "STAR" ? "POINT" : reward.currencyType;
-    // REWARD -> INCREASE, USE -> DECREASE 변환
-    const displayChangeType =
-      reward.changeType === "REWARD" ? "INCREASE" : "DECREASE";
-
-    return {
-      ...reward,
-      displayAsset,
-      displayChangeType,
-    };
-  });
-
   return (
     <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
       <TopTitle title={t("asset_page.Rewards_History")} back={true} />
@@ -215,7 +178,6 @@ const RewardHistory: React.FC = () => {
           {isOpen ? <FaCaretUp className="w-4 h-4" /> : <FaCaretDown className="w-4 h-4" />}
         </div>
 
-        {/* 펼쳐진 필터 옵션 */}
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
@@ -223,14 +185,16 @@ const RewardHistory: React.FC = () => {
           className="overflow-hidden"
         >
           <div className="mt-4 mx-3">
-            {/* 자산 종류 필터 */}
+            {/* 자산 종류 (단일 선택) */}
             <p className="text-lg font-medium text-left mb-2">Asset Types</p>
             <div className="flex flex-col gap-2 ml-3">
               {["SL", "USDC", "STAR"].map((asset) => (
                 <label key={asset} className="flex items-center text-base font-medium">
                   <input
-                    type="checkbox"
-                    checked={selectedAssets.includes(asset)}
+                    type="radio"
+                    name="assetType"
+                    value={asset}
+                    checked={selectedAsset === asset}
                     onChange={() => handleAssetChange(asset)}
                     className="mr-2"
                   />
@@ -240,14 +204,16 @@ const RewardHistory: React.FC = () => {
               ))}
             </div>
 
-            {/* 증감 필터 */}
+            {/* 증감 필터 (단일 선택) */}
             <p className="text-lg font-medium text-left mt-4 mb-2">Change Types</p>
             <div className="flex flex-col gap-2 ml-3">
               {["INCREASE", "DECREASE"].map((change) => (
                 <label key={change} className="flex items-center text-base font-medium">
                   <input
-                    type="checkbox"
-                    checked={selectedChanges.includes(change)}
+                    type="radio"
+                    name="changeType"
+                    value={change}
+                    checked={selectedChange === change}
                     onChange={() => handleChangeType(change)}
                     className="mr-2"
                   />
