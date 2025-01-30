@@ -17,6 +17,7 @@ export const getRewardsHistory = async(
     const response = await api.post('/reward/history/filter', filters);
 
     if(response.data.code === 'OK'){
+        console.log("내역 확인: ", response.data.data);
         return response.data.data;
     }else{
         console.error('Unexpected response:', response);
