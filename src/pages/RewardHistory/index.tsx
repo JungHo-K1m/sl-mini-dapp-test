@@ -22,41 +22,41 @@ const RewardHistory: React.FC = () => {
   // 필터 드롭다운 열림 상태
   const [isOpen, setIsOpen] = useState(false);
 
-  // 자산 종류: 하나만 선택. 기본값 "SL"
-  // (STAR → POINT로 표시하지만, 내부적으로는 STAR를 서버로 보냄)
+  // 자산 종류(단일 선택)
   const [selectedAsset, setSelectedAsset] = useState<string>("SL");
-
-  // 증감 필터: 하나만 선택. 기본값 "INCREASE"
-  // ("INCREASE" → 서버에는 "REWARD", "DECREASE" → "USE")
+  // 증감 필터(단일 선택)
   const [selectedChange, setSelectedChange] = useState<string>("INCREASE");
 
   // 날짜 필터
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  // 서버에서 받아온 보상 내역
+  // 서버 응답 데이터
   const [rewardHistory, setRewardHistory] = useState<any[]>([]);
-  // 페이지네이션
   const [pageNumber, setPageNumber] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
 
-  // 컴포넌트 마운트 시 0페이지 호출
+  // ★ useEffect로 필터 상태가 변할 때마다 페이지 0부터 재조회
+  useEffect(() => {
+    fetchRewards(0, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAsset, selectedChange, startDate, endDate]);
+
+  // 컴포넌트 첫 렌더링 시에도 0페이지 불러오지만,
+  // 위 useEffect가 이미 [selectedAsset, ...] 의존성으로 포함하므로
+  // 초기 상태에서도 자동 실행된다.
+  // 만약 처음 마운트 시점에만 1회 호출하고 싶다면 의존성 배열을 []로 두거나 별도 처리 필요.
+  // 여기선 "마운트 시점 + 필터 변경 시점" 모두 호출이므로 아래 useEffect는 생략 가능할 수도 있음.
   useEffect(() => {
     fetchRewards(0, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 서버 API 호출
+  // API 호출
   const fetchRewards = async (page: number, replace = false) => {
     try {
-      // 자산 필터 매핑
-      // 단일만 선택되므로 그대로 selectedAsset 사용
-      // 예: SL, USDC, STAR
-      const assetTypeForApi = selectedAsset;
-
-      // 증감 필터 매핑
-      // INCREASE → REWARD, DECREASE → USE
-      // (두 개 모두 보여주는 "전체" 개념이 없다면, 그대로 단일값)
+      // 필터 값 매핑
+      const assetTypeForApi = selectedAsset; // SL, USDC, STAR
       let changeTypeForApi: string | null = null;
       if (selectedChange === "INCREASE") {
         changeTypeForApi = "REWARD";
@@ -64,7 +64,6 @@ const RewardHistory: React.FC = () => {
         changeTypeForApi = "USE";
       }
 
-      // 날짜 필터(YYYY-MM-DD)
       const startDateStr = startDate ? format(startDate, "yyyy-MM-dd") : null;
       const endDateStr = endDate ? format(endDate, "yyyy-MM-dd") : null;
 
@@ -88,23 +87,21 @@ const RewardHistory: React.FC = () => {
     }
   };
 
-  // 자산 선택(라디오 버튼)
+  // 자산 라디오 버튼
   const handleAssetChange = (asset: string) => {
     playSfx(Audios.button_click);
+    // ★ fetchRewards 직접 호출하지 않음
     setSelectedAsset(asset);
-    // 선택 즉시 서버 재조회
-    fetchRewards(0, true);
   };
 
-  // 증감 선택(라디오 버튼)
+  // 증감 라디오 버튼
   const handleChangeType = (change: string) => {
     playSfx(Audios.button_click);
+    // ★ fetchRewards 직접 호출하지 않음
     setSelectedChange(change);
-    // 선택 즉시 서버 재조회
-    fetchRewards(0, true);
   };
 
-  // 날짜 선택 시 즉시 재조회
+  // 날짜 선택
   const handleStartDateChange = (date: Date | null) => {
     playSfx(Audios.button_click);
     setStartDate(date);
@@ -112,22 +109,22 @@ const RewardHistory: React.FC = () => {
     if (endDate && date && date > endDate) {
       setEndDate(null);
     }
-    fetchRewards(0, true);
+    // ★ fetchRewards 직접 호출하지 않음
   };
 
   const handleEndDateChange = (date: Date | null) => {
     playSfx(Audios.button_click);
     setEndDate(date);
-    fetchRewards(0, true);
+    // ★ fetchRewards 직접 호출하지 않음
   };
 
-  // "더보기" 버튼 클릭 → 다음 페이지
+  // 더보기 버튼
   const handleLoadMore = () => {
     playSfx(Audios.button_click);
     fetchRewards(pageNumber + 1, false);
   };
 
-  // STAR -> POINT, REWARD -> INCREASE, USE -> DECREASE 변환해서 표시
+  // 표시용 변환( STAR→POINT, REWARD→INCREASE, USE→DECREASE )
   const displayHistory = rewardHistory.map((reward) => {
     const displayAsset = reward.currencyType === "STAR" ? "POINT" : reward.currencyType;
     const displayChangeType =
@@ -198,7 +195,6 @@ const RewardHistory: React.FC = () => {
                     onChange={() => handleAssetChange(asset)}
                     className="mr-2"
                   />
-                  {/* 표시 시 STAR → POINT */}
                   {asset === "STAR" ? "POINT" : asset}
                 </label>
               ))}
@@ -225,7 +221,6 @@ const RewardHistory: React.FC = () => {
             {/* 날짜 범위 선정 */}
             <p className="text-lg font-medium text-left mt-4">Date Ranges</p>
             <div className="flex items-center gap-4 mt-4">
-              {/* Start Date Picker */}
               <div className="w-full">
                 <DatePicker
                   selected={startDate}
@@ -236,8 +231,6 @@ const RewardHistory: React.FC = () => {
                   maxDate={endDate || undefined}
                 />
               </div>
-
-              {/* End Date Picker */}
               <div className="w-full">
                 <DatePicker
                   selected={endDate}
@@ -267,7 +260,6 @@ const RewardHistory: React.FC = () => {
                   <p className="text-xs text-gray-400">{reward.loggedAt}</p>
                 </div>
                 <div className="flex flex-col items-end">
-                  {/* 예: +100 POINT / -100 POINT 표시 */}
                   <p
                     className={`text-sm font-bold ${
                       reward.displayChangeType === "INCREASE"
@@ -285,7 +277,7 @@ const RewardHistory: React.FC = () => {
             <p className="text-center text-sm text-gray-400">No records found</p>
           )}
 
-          {/* 예시: 레퍼럴 보상 내역(요약본) */}
+          {/* (예시) 레퍼럴 보상 내역(요약본) */}
           <div
             className="flex justify-between items-center py-4 border-b border-[#35383F]"
             onClick={() => {
