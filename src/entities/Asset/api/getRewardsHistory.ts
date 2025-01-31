@@ -14,6 +14,8 @@ export const getRewardsHistory = async(
         page
     }
 
+    console.log("필터링 조건: ", filters);
+
     const response = await api.post('/reward/history/filter', filters);
 
     if(response.data.code === 'OK'){
