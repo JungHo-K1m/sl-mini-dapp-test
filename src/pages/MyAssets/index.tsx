@@ -161,7 +161,7 @@ const MyAssets: React.FC = () => {
             try {
                 const data = await getRewardsHistory("STAR", "REWARD", null, null, 0);
                 // API 응답에 content 속성이 존재한다고 가정 (예: { content: [...], number: 0, last: true })
-                const rewards = data.content || [];
+                const rewards = data.data.content || [];
                 setRewardHistoryData(rewards);
             } catch (error) {
                 console.error("보상 내역을 불러오는데 실패했습니다: ", error);
