@@ -1,6 +1,7 @@
 // src/pages/RewardPage/index.tsx
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { TopTitle } from "@/shared/components/ui";
 import "./Reward.css";
 import Images from "@/shared/assets/images";
@@ -13,8 +14,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
+import { PlayerData } from "@/features/PreviousRewards/types/PlayerData";
 
 const Reward: React.FC = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { playSfx } = useSound();
   const {
@@ -65,14 +68,18 @@ const Reward: React.FC = () => {
     setShowMoreRaffle(true);
   }
 
+  const handlePreviousRewardPage = () => {
+    navigate('/previous-rewards');
+    playSfx(Audios.button_click);
+  }
+
   return (
     <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full min-h-screen">
       <TopTitle title={t("reward_page.reward")} />
 
-      <Link 
-        to="/previous-rewards" 
+      <div 
         className="first-to-third-pace-box h-36 rounded-3xl mb-14 flex flex-row items-center justify-around p-5 cursor-pointer"
-        onClick={() => playSfx(Audios.button_click)}>
+        onClick={handlePreviousRewardPage}>
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">{t("reward_page.previous")}</p>
           <p className="text-sm">
@@ -80,7 +87,7 @@ const Reward: React.FC = () => {
           </p>
         </div>
         <img src={Images.Trophy} alt="trophy" className="w-24 h-24" />
-      </Link>
+      </div>
 
       {/** 이번달 경품 보여주기 */}
       <div className="flex flex-col gap-3 justify-center items-center mb-14">

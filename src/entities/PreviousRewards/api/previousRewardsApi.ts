@@ -11,6 +11,7 @@ export interface InitialDataResponse {
 // 초기 랭킹 정보(1~20, myRanking) 로드
 export const fetchInitialRankingAPI = async (): Promise<InitialDataResponse> => {
   const response = await api.get("/leader/ranking/initial");
+  console.log("랭킹 데이터 : ", response.data.data);
   return response.data.data as InitialDataResponse;
 };
 
