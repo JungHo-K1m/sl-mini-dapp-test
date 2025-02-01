@@ -17,6 +17,7 @@ import {
 } from '@/shared/components/ui';
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
+import getRewardsHistory from "@/entities/Asset/api/getRewardsHistory";
 
 
 interface TruncateMiddleProps {
@@ -64,6 +65,7 @@ const MyAssets: React.FC = () => {
     const [loadingModal, setLoadingModal] = useState(false);
     const [falied, setFailed] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [rewardHistoryData, setRewardHistoryData] = useState<any[]>([]);
 
     const getCharacterImageSrc = () => {
         const index = Math.floor((userLv - 1) / 2);
@@ -154,14 +156,30 @@ const MyAssets: React.FC = () => {
         { id: 4, name: "Cool Cat #1", image: "https://via.placeholder.com/100" },
     ];
 
-    // 보상 내역 더미 데이터
-    const rewardHistory = [
-        { id: 1, description: "Joined Telegram", date: "17-11-2024", points: "+150SL" },
-        { id: 2, description: "AI Dental Examination", date: "17-10-2024", points: "-150SL" },
-        { id: 3, description: "Subscribe to Email", date: "17-12-2024", points: "+150SL" },
-        { id: 4, description: "Game Win", date: "17-6-2024", points: "+150P" },
-        { id: 5, description: "Game Lose", date: "17-9-2024", points: "-150P" },
-    ];
+    useEffect(() => {
+        const fetchRewardsHistory = async () => {
+            try {
+                const data = await getRewardsHistory("STAR", "REWARD", null, null, 0);
+                // API 응답에 content 속성이 존재한다고 가정 (예: { content: [...], number: 0, last: true })
+                const rewards = data.content || [];
+                setRewardHistoryData(rewards);
+            } catch (error) {
+                console.error("보상 내역을 불러오는데 실패했습니다: ", error);
+            }
+        };
+        fetchRewardsHistory();
+    }, []);
+
+    const displayHistory = rewardHistoryData.map((reward) => {
+        const displayAsset = reward.currencyType === "STAR" ? "POINT" : reward.currencyType;
+        const displayChangeType = reward.changeType === "REWARD" ? "INCREASE" : "DECREASE";
+        return {
+            ...reward,
+            displayAsset,
+            displayChangeType,
+        };
+    });
+
 
     // 날짜를 포맷팅하는 함수
     const formatDate = (date: string): string => {
@@ -366,29 +384,38 @@ const MyAssets: React.FC = () => {
                     </button>
                 </div>
                 <div className="mt-4 bg-[#1F1E27] rounded-3xl border-[2px] border-[#35383F] py-3 px-4">
-                    <div className='flex justify-between items-center py-4'>
-                        <p>{t("asset_page.prepare_service")}</p>
-                    </div>
-                    {/* {rewardHistory.map((reward, index) => (
-                        <div
-                            key={reward.id}
-                            className={`flex justify-between items-center py-4 ${
-                                index !== rewardHistory.length - 1 ? "border-b border-[#35383F]" : ""
-                            }`}
-                        >
-                            <div>
-                                <p className="text-base font-normal">{reward.description}</p>
-                                <p className="text-xs font-normal text-[#A3A3A3]">{formatDate(reward.date)}</p>
-                            </div>
-                            <p
-                                className={`text-lg font-semibold ${
-                                    reward.points.startsWith("+") ? "text-[#3B82F6]" : "text-[#DD2726]"
+                    {displayHistory.length > 0 ? (
+                        displayHistory.map((reward, index) => (
+                            <div
+                                key={`${reward.loggedAt}-${index}`}
+                                className={`flex justify-between items-center py-4 ${
+                                    index !== displayHistory.length - 1 ? "border-b border-[#35383F]" : ""
                                 }`}
                             >
-                                {reward.points}
-                            </p>
-                        </div>
-                    ))} */}
+                                <div>
+                                    <p className="text-base font-normal">{reward.content}</p>
+                                    {/* API에서 제공하는 날짜 필드명이 loggedAt 또는 다른 이름일 수 있으므로 확인 후 사용 */}
+                                    <p className="text-xs font-normal text-[#A3A3A3]">
+                                        {formatDate(reward.loggedAt)}
+                                    </p>
+                                </div>
+                                <p
+                                    className={`text-lg font-semibold ${
+                                        reward.displayChangeType === "INCREASE"
+                                            ? "text-[#3B82F6]"
+                                            : "text-[#DD2726]"
+                                    }`}
+                                >
+                                    {reward.displayChangeType === "INCREASE" ? "+" : "-"}
+                                    {reward.amount} {reward.displayAsset}
+                                </p>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-center text-sm text-gray-400">
+                            {t("asset_page.no_records") || "No records found"}
+                        </p>
+                    )}
                 </div>
             </div>
 
