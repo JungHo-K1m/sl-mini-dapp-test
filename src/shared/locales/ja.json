@@ -144,7 +144,8 @@
         "range": "日付範囲",
         "no_record": "該当する記録がありません",
         "congratulations": "おめでとうございます！",
-        "airdrop_message": "先月のイベントで #{{rank}} を達成し、{{slRewards}} SL のエアドロップを獲得しました！"
+        "airdrop_message": "先月のイベントで #{{rank}} を達成し、{{slRewards}} SL のエアドロップを獲得しました！",
+        "no_previous_rewards": "以前の報酬はありません。"
     },
     "wallet_page": {
         "wallet": "ウォレット",

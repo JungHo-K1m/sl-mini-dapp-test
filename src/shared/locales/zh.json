@@ -144,7 +144,8 @@
       "range": "日期範圍",
       "no_record": "沒有找到任何紀錄",
       "congratulations": "恭喜！",
-      "airdrop_message": "在上個月的活動中獲得第 #{{rank}} 名，獲得 {{slRewards}} SL 空投！"
+      "airdrop_message": "在上個月的活動中獲得第 #{{rank}} 名，獲得 {{slRewards}} SL 空投！",
+      "no_previous_rewards": "没有以前的奖励。"
     },
     "wallet_page": {
       "wallet": "錢包",

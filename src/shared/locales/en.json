@@ -144,7 +144,8 @@
       "range": "Date Range",
       "no_record": "No records found",
       "congratulations": "Congratulations!",
-      "airdrop_message": "You got an airdrop of {{slRewards}} SL for finishing #{{rank}} in last month’s event!"
+      "airdrop_message": "You got an airdrop of {{slRewards}} SL for finishing #{{rank}} in last month’s event!",
+      "no_previous_rewards": "There is no Previous Rewards."
     },
     "wallet_page": {
         "wallet": "Wallet",

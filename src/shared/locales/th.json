@@ -144,7 +144,8 @@
       "range": "ช่วงวันที่",
       "no_record": "ไม่พบข้อมูล",    
       "congratulations": "ยินดีด้วย!",
-      "airdrop_message": "คุณได้รับแอร์ดรอป {{slRewards}} SL จากการติดอันดับ #{{rank}} ในกิจกรรมเดือนที่แล้ว!"
+      "airdrop_message": "คุณได้รับแอร์ดรอป {{slRewards}} SL จากการติดอันดับ #{{rank}} ในกิจกรรมเดือนที่แล้ว!",
+      "no_previous_rewards": "ไม่มีรางวัลก่อนหน้านี้"
     },
     "wallet_page": {
       "wallet": "กระเป๋า",
