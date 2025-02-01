@@ -176,7 +176,7 @@ const DentalAnalysis: React.FC = () => {
       const base64Data = await convertFileToBase64(selectedImage);
 
       const response = await retryWithBackoff(() => openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "o1-mini",
         messages: [
           {
             role: "system",
