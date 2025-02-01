@@ -66,7 +66,7 @@ const Reward: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full ">
+    <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full min-h-screen">
       <TopTitle title={t("reward_page.reward")} />
 
       <Link 
