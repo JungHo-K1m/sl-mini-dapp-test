@@ -57,8 +57,14 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
 
     try {
       await fetchUserData();
-      console.log("[AppInitializer] 사용자 데이터 정상적으로 가져옴 -> /connect-wallet 이동");
-      navigate("/connect-wallet");
+      console.log("[AppInitializer] 사용자 데이터 정상적으로 가져옴");
+      if(liff.isInClient()){
+        console.log("[AppInitializer] line 브라우저 사용 -> /dice-event 이동");
+        navigate("/dice-event");
+      } else {
+        console.log("[AppInitializer] 외부 브라우저 사용 -> /connect-wallet 이동");
+        navigate("/connect-wallet");
+      }
     } catch (error: any) {
       console.error("[AppInitializer] getUserInfo() 중 에러:", error);
 
