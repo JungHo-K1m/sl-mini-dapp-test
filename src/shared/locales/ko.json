@@ -145,7 +145,14 @@
       "no_record": "기록이 없습니다.",
       "congratulations": "축하합니다!",
       "airdrop_message": "지난 달 이벤트에서 #{{rank}}를 기록하여 {{slRewards}} SL을 에어드롭 받으셨습니다!",
-      "no_previous_rewards": "이전 보상이 없습니다."
+      "no_previous_rewards": "이전 보상이 없습니다.",
+      "get_started": "시작해봅시다!",
+      "kick_off": "여정을 시작하기 위한 몇 가지 보상을 소개합니다",
+      "your_rewards": "당신의 보상은:",
+      "daily_attendance": "일일 출석 : 1,000 포인트",
+      "welcom_gift": "가입 축하 선물",
+      "rewards": "7,777 포인트 + 10SL 토큰 + 30 다이스",
+      "start_now": "보상 받기 & 지금 시작하기!"
     },
     "wallet_page": {
       "wallet": "지갑",

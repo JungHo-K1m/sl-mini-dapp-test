@@ -145,7 +145,14 @@
       "no_record": "No records found",
       "congratulations": "Congratulations!",
       "airdrop_message": "You got an airdrop of {{slRewards}} SL for finishing #{{rank}} in last month’s event!",
-      "no_previous_rewards": "There is no Previous Rewards."
+      "no_previous_rewards": "There is no Previous Rewards.",
+      "get_started": "Let’s get you started!",
+      "kick_off": "Here are some rewards to kick off your journey",
+      "your_rewards": "Your rewards include:",
+      "daily_attendance": "Daily Attendance : 1,000 Points",
+      "welcom_gift": "Welcome gift for joining",
+      "rewards": "7,777 Points + 10SL Tokens + 30 Dice",
+      "start_now": "Receive Reward & Start Now!"
     },
     "wallet_page": {
         "wallet": "Wallet",

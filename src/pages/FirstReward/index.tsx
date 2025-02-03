@@ -2,11 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Images from "@/shared/assets/images";
 import { useSound } from "@/shared/provider/SoundProvider";
+import { useTranslation } from "react-i18next";
 import Audios from "@/shared/assets/audio";
 
 
 const FirstRewardPage: React.FC = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const { playSfx } = useSound();
 
     const handleReceiveReward = () => {
@@ -18,8 +20,8 @@ const FirstRewardPage: React.FC = () => {
         <div className="flex flex-col items-center text-white mx-6 relative min-h-screen pb-20">
             {/* 상단 메시지 */}
             <h1 className="text-center mt-36 text-xl font-semibold">
-                Let’s get you started! <br />
-                Here are some rewards to kick off your journey
+                {t("reward_page.get_started")} <br />
+                {t("reward_page.kick_off")}
             </h1>
 
             {/* 보상 아이콘 */}
@@ -44,7 +46,7 @@ const FirstRewardPage: React.FC = () => {
             </div>
 
             {/* 보상 내역 */}
-            <h2 className="text-lg font-medium mb-4 mt-16 text-left w-full">Your rewards include:</h2>
+            <h2 className="text-lg font-medium mb-4 mt-16 text-left w-full">{t("reward_page.your_rewards")}</h2>
             <div className="flex flex-col items-start bg-[#1F283C] rounded-2xl px-4 py-6 w-full">
                 <div className="flex flex-col gap-2 text-base w-full">
                     <div className="flex items-center gap-2">
@@ -53,7 +55,7 @@ const FirstRewardPage: React.FC = () => {
                             alt="calendar-icon"
                             className="w-6 h-6"
                         />
-                        <p className="text-left text-base font-medium">Daily Attendance : 1,000 Points</p>
+                        <p className="text-left text-base font-medium">{t("reward_page.daily_attendance")}</p>
                     </div>
                     <div className="flex items-center gap-2">
                         <img
@@ -62,12 +64,12 @@ const FirstRewardPage: React.FC = () => {
                             className="w-6 h-6"
                         />
                         <p className="text-left text-base font-medium">
-                            Welcome gift for joining
+                            {t("reward_page.welcom_gift")}
                         </p>
                     </div>
                     <div className="flex items-center gap-2">
                         <p className="text-left ml-9 text-base font-medium">
-                            : 7,777 Points + 10SL Tokens + 30 Dice
+                            : {t("reward_page.rewards")}
                         </p>
                     </div>
                 </div>
@@ -79,7 +81,7 @@ const FirstRewardPage: React.FC = () => {
                     onClick={handleReceiveReward}
                     style={{backgroundColor: '#0147E5'}}
                 >
-                    Receive Reward & Start Now!
+                    {t("reward_page.start_now")}
                 </button>
             </div>
         </div>

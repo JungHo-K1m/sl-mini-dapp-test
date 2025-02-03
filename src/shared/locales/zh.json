@@ -145,7 +145,14 @@
       "no_record": "沒有找到任何紀錄",
       "congratulations": "恭喜！",
       "airdrop_message": "在上個月的活動中獲得第 #{{rank}} 名，獲得 {{slRewards}} SL 空投！",
-      "no_previous_rewards": "没有以前的奖励。"
+      "no_previous_rewards": "没有以前的奖励。",
+      "get_started": "讓我們開始吧！",
+      "kick_off": "這裡有一些獎勵，助你展開旅程",
+      "your_rewards": "您的獎勵包括：",
+      "daily_attendance": "每日出席：1,000 點數",
+      "welcom_gift": "歡迎加入禮",
+      "rewards": "7,777 點數 + 10SL 代幣 + 30 骰子",
+      "start_now": "立即領取獎勵並開始！"
     },
     "wallet_page": {
       "wallet": "錢包",

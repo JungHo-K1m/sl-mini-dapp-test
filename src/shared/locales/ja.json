@@ -145,7 +145,14 @@
         "no_record": "該当する記録がありません",
         "congratulations": "おめでとうございます！",
         "airdrop_message": "先月のイベントで #{{rank}} を達成し、{{slRewards}} SL のエアドロップを獲得しました！",
-        "no_previous_rewards": "以前の報酬はありません。"
+        "no_previous_rewards": "以前の報酬はありません。",
+        "get_started": "さあ、始めましょう！",
+        "kick_off": "あなたの旅のスタートを飾る報酬はこちらです",
+        "your_rewards": "あなたの報酬は:",
+        "daily_attendance": "毎日出席: 1,000ポイント",
+        "welcom_gift": "参加歓迎ギフト",
+        "rewards": "7,777ポイント + 10SLトークン + 30ダイス",
+        "start_now": "報酬を受け取って、今すぐ始めよう！"
     },
     "wallet_page": {
         "wallet": "ウォレット",
