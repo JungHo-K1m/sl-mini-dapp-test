@@ -341,7 +341,8 @@ const MyAssets: React.FC = () => {
                                     style={{ backgroundColor: '#0147E5' }}
                                     onClick={()=>{
                                         playSfx(Audios.button_click);
-                                        setShowModal(true);
+                                        // setShowModal(true);
+                                        navigate("/item-store");
                                     }}
                                     >
                                     {t("asset_page.shop_item")}

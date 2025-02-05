@@ -46,6 +46,7 @@ import LanguagePage from "./pages/ChooseLanguage";
 import SoundSetting from "./pages/SoundSetting";
 import PaymentHistory from "./pages/PaymentHistory";
 import PaymentDetail from "./pages/PaymentDetail";
+import ItemStore from "./pages/ItemStore";
 
 
 const App:React.FC = () =>{
@@ -209,6 +210,7 @@ const App:React.FC = () =>{
                   <Route path="/connect-wallet" element={<ConnectWalletPage />} />
                   <Route path="/payment-history" element={<DiceEventLayout hidden={true}><PaymentHistory /></DiceEventLayout>} />
                   <Route path="/payment-detail" element={<DiceEventLayout hidden={true}><PaymentDetail /></DiceEventLayout>} />
+                  <Route path="/item-store" element={<DiceEventLayout hidden={true}><ItemStore /></DiceEventLayout>} />
               </Routes>
             </SoundProvider>
           )}

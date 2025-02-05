@@ -158,6 +158,7 @@ import tw from "./tw_flag.svg"
 import th from "./th_flag.svg"
 import ko from "./ko_flag.svg"
 import UploadArrow from "./uploaderarrow.png"
+import Receipt from "./receipt.png"
 
 const Images = {
   HorizontalLogo,
@@ -318,7 +319,8 @@ const Images = {
   tw,
   th,
   ko,
-  UploadArrow
+  UploadArrow,
+  Receipt
 };
 
 export default Images;
