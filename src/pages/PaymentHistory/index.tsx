@@ -126,7 +126,7 @@ const PaymentHistory: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col text-white mb-32 px-6 min-h-screen bg-[#111827]">
+    <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full min-h-screen">
       <TopTitle title={t("asset_page.payment_history")} back={true} />
 
       {/* 필터 드롭다운 */}
@@ -208,7 +208,7 @@ const PaymentHistory: React.FC = () => {
         ) : (
           dateKeys.map((dateKey) => (
             <div key={dateKey} className="mb-4">
-              <p className="text-sm text-gray-300 mb-2">{dateKey}</p>
+              <p className="text-sm text-gray-300 mb-5">{dateKey}</p>
               {groupedByDate[dateKey].map((item) => (
                 <div
                   key={item.id}
