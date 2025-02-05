@@ -209,18 +209,23 @@ const PaymentHistory: React.FC = () => {
                   {/* 아이콘 영역: 실제 앱 아이콘 등으로 교체 가능 */}
                   <div className="flex items-center gap-3">
                     <div
-                        className="w-[70px] h-[70px] rounded-2xl"
+                        className="relative w-[70px] h-[70px] rounded-2xl"
                         style={{
-                            background: item.itemName === "Auto Item"
-                            ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
-                            : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)"
-                        }}>
-                        <img 
-                            src={item.itemName === "AUto Item" ? Images.AutoNFT : Images.RewardNFT}
-                            alt="auto item icon"
+                            background:
+                            item.itemName === "Auto Item"
+                                ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
+                                : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
+                        }}
+                        >
+                        <img
+                            src={
+                            item.itemName === "Auto Item" ? Images.AutoNFT : Images.RewardNFT
+                            }
+                            alt="item icon"
                             className="absolute w-6 h-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                         />
                     </div>
+
                     <div className="flex flex-col">
                       <p className="font-semibold text-base">{item.itemName}</p>
                       <p className="font-normal text-sm">USD ${item.price}</p>
