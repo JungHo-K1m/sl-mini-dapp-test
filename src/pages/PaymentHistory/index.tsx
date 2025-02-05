@@ -255,17 +255,18 @@ const PaymentHistory: React.FC = () => {
                   </div>
                   <FaChevronRight 
                     className="w-5 h-5"
-                    onClick={()=>{
+                    onClick={() => {
                         playSfx(Audios.button_click);
-                        navigate("/payment-detail"),{
-                            state: {
-                                itemName: item.itemName,
-                                purchaseDate: item.purchaseDate,
-                                price: item.price,
-                                orderId: "12345ABC", // 예시로 임의 지정
-                              },
-                        }
-                    }} />
+                        // 콤마 대신 navigate() 함수 두 번째 인자로 바로 전달
+                        navigate("/payment-detail", {
+                          state: {
+                            itemName: item.itemName,
+                            purchaseDate: item.purchaseDate,
+                            price: item.price,
+                            orderId: "12345ABC", // 예시
+                          },
+                        });
+                      }} />
                 </div>
               ))}
             </div>
