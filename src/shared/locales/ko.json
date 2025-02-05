@@ -152,20 +152,7 @@
       "daily_attendance": "일일 출석 : 1,000 포인트",
       "welcom_gift": "가입 축하 선물",
       "rewards": "7,777 포인트 + 10SL 토큰 + 30 다이스",
-      "start_now": "보상 받기 & 지금 시작하기!",
-      "non_nft": "내 Non-NFT 아이템",
-      "buy_more": "아이템 더 구매하기",
-      "item_store": "Non-NFT 아이템 스토어",
-      "payment_history": "결제 내역",
-      "agree_non_refundable": "해당 제품은 환불되지 않는다는 것에 동의합니다.",
-      "provide_encrypted_id": "LINE IAP를 통한 결제 시, 암호화된 ID 정보를 LY Corporation에 제공하는 것에 동의합니다.",
-      "learn_more": "자세히 알아보기",
-      "purchase_success": "구매 성공!",
-      "purchase_fail": "구매 실패.",
-      "purchase_canceled": "구매 취소됨.",
-      "insufficient_balance": "잔액 부족.",
-      "try_again": "잠시 후 다시 시도해 주세요.",
-      "close": "닫기"
+      "start_now": "보상 받기 & 지금 시작하기!"
     },
     "wallet_page": {
       "wallet": "지갑",
@@ -280,7 +267,20 @@
         "claim_pending": "보류",
         "claim_failed": "실패",
         "claim_waiting": "대기 중"
-      }
+      },
+      "non_nft": "내 Non-NFT 아이템",
+      "buy_more": "아이템 더 구매하기",
+      "item_store": "Non-NFT 아이템 스토어",
+      "payment_history": "결제 내역",
+      "agree_non_refundable": "해당 제품은 환불되지 않는다는 것에 동의합니다.",
+      "provide_encrypted_id": "LINE IAP를 통한 결제 시, 암호화된 ID 정보를 LY Corporation에 제공하는 것에 동의합니다.",
+      "learn_more": "자세히 알아보기",
+      "purchase_success": "구매 성공!",
+      "purchase_fail": "구매 실패.",
+      "purchase_canceled": "구매 취소됨.",
+      "insufficient_balance": "잔액 부족.",
+      "try_again": "잠시 후 다시 시도해 주세요.",
+      "close": "닫기"
     },
     "dice_event": {
       "attendance": "출석",

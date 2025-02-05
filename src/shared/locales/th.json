@@ -152,20 +152,7 @@
       "daily_attendance": "การเข้าร่วมทุกวัน: 1,000 คะแนน",
       "welcom_gift": "ของขวัญต้อนรับสำหรับการเข้าร่วม",
       "rewards": "7,777 คะแนน + 10SL โทเค็น + 30 ลูกเต๋า",
-      "start_now": "รับรางวัลและเริ่มต้นเลย!",
-      "non_nft": "รายการไอเทมที่ไม่ใช่ NFT ของฉัน",
-      "buy_more": "ซื้อไอเทมเพิ่ม",
-      "item_store": "ร้านไอเทมที่ไม่ใช่ NFT",
-      "payment_history": "ประวัติการชำระเงิน",
-      "agree_non_refundable": "ฉันยอมรับว่าผลิตภัณฑ์นี้ไม่สามารถขอคืนเงินได้",
-      "provide_encrypted_id": "ฉันยอมรับที่จะให้ข้อมูล ID ที่เข้ารหัสกับ LY Corporation เมื่อทำการชำระเงินผ่าน LINE IAP",
-      "learn_more": "ดูรายละเอียดเพิ่มเติม",
-      "purchase_success": "ซื้อสำเร็จ!",
-      "purchase_fail": "การซื้อไม่สำเร็จ",
-      "purchase_canceled": "การซื้อถูกยกเลิก",
-      "insufficient_balance": "ยอดเงินไม่เพียงพอ",
-      "try_again": "โปรดลองใหม่ในภายหลัง",
-      "close": "ปิด"
+      "start_now": "รับรางวัลและเริ่มต้นเลย!"
     },
     "wallet_page": {
       "wallet": "กระเป๋า",
@@ -280,7 +267,20 @@
         "claim_pending": "รอดำเนินการ",
         "claim_failed": "ล้มเหลว",
         "claim_waiting": "กำลังรอ"
-      }
+      },
+      "non_nft": "รายการไอเทมที่ไม่ใช่ NFT ของฉัน",
+      "buy_more": "ซื้อไอเทมเพิ่ม",
+      "item_store": "ร้านไอเทมที่ไม่ใช่ NFT",
+      "payment_history": "ประวัติการชำระเงิน",
+      "agree_non_refundable": "ฉันยอมรับว่าผลิตภัณฑ์นี้ไม่สามารถขอคืนเงินได้",
+      "provide_encrypted_id": "ฉันยอมรับที่จะให้ข้อมูล ID ที่เข้ารหัสกับ LY Corporation เมื่อทำการชำระเงินผ่าน LINE IAP",
+      "learn_more": "ดูรายละเอียดเพิ่มเติม",
+      "purchase_success": "ซื้อสำเร็จ!",
+      "purchase_fail": "การซื้อไม่สำเร็จ",
+      "purchase_canceled": "การซื้อถูกยกเลิก",
+      "insufficient_balance": "ยอดเงินไม่เพียงพอ",
+      "try_again": "โปรดลองใหม่ในภายหลัง",
+      "close": "ปิด"
     },
     "dice_event": {
       "attendance": "เช็กชื่อ",

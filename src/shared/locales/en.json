@@ -152,20 +152,7 @@
       "daily_attendance": "Daily Attendance : 1,000 Points",
       "welcom_gift": "Welcome gift for joining",
       "rewards": "7,777 Points + 10SL Tokens + 30 Dice",
-      "start_now": "Receive Reward & Start Now!",
-      "non_nft": "My Non-NFT Items",
-      "buy_more": "Buy more Itmes",
-      "item_store":"Non-NFT Item Store",
-      "payment_history": "Payment History",
-      "agree_non_refundable": "I agree that the product is non-refundable.",
-      "provide_encrypted_id": "I agree to provide encrypted ID information to LY Corporation when making a payment via LINE IAP.",
-      "learn_more": "Learn More",
-      "purchase_success": "Purchase Successful!",
-      "purchase_fail": "Purchase Failed.",
-      "purchase_canceled": "Purchase Canceled.",
-      "insufficient_balance": "Insufficient Balance.",
-      "try_again": "Please try again later.",
-      "close": "Close"
+      "start_now": "Receive Reward & Start Now!"
     },
     "wallet_page": {
         "wallet": "Wallet",
@@ -280,7 +267,20 @@
         "claim_pending": "Pending",
         "claim_failed": "Failed",
         "claim_waiting": "Waiting"
-      }
+      },
+      "non_nft": "My Non-NFT Items",
+      "buy_more": "Buy more Itmes",
+      "item_store":"Non-NFT Item Store",
+      "payment_history": "Payment History",
+      "agree_non_refundable": "I agree that the product is non-refundable.",
+      "provide_encrypted_id": "I agree to provide encrypted ID information to LY Corporation when making a payment via LINE IAP.",
+      "learn_more": "Learn More",
+      "purchase_success": "Purchase Successful!",
+      "purchase_fail": "Purchase Failed.",
+      "purchase_canceled": "Purchase Canceled.",
+      "insufficient_balance": "Insufficient Balance.",
+      "try_again": "Please try again later.",
+      "close": "Close"
     },
     "dice_event": {
       "attendance": "Attendance",

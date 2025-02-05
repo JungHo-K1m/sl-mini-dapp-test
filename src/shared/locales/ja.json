@@ -152,20 +152,7 @@
         "daily_attendance": "毎日出席: 1,000ポイント",
         "welcom_gift": "参加歓迎ギフト",
         "rewards": "7,777ポイント + 10SLトークン + 30ダイス",
-        "start_now": "報酬を受け取って、今すぐ始めよう！",
-        "non_nft": "私のNon-NFTアイテム",
-        "buy_more": "アイテムをもっと購入する",
-        "item_store": "Non-NFTアイテムストア",
-        "payment_history": "支払い履歴",
-        "agree_non_refundable": "この商品は返金不可であることに同意します。",
-        "provide_encrypted_id": "LINE IAPによる支払いの際に、暗号化されたID情報をLY Corporationに提供することに同意します。",
-        "learn_more": "詳しくはこちら",
-        "purchase_success": "購入成功！",
-        "purchase_fail": "購入失敗。",
-        "purchase_canceled": "購入キャンセル済み。",
-        "insufficient_balance": "残高不足。",
-        "try_again": "後でもう一度お試しください。",
-        "close": "閉じる"
+        "start_now": "報酬を受け取って、今すぐ始めよう！"
     },
     "wallet_page": {
         "wallet": "ウォレット",
@@ -280,7 +267,20 @@
             "claim_pending": "保留",
             "claim_failed": "失敗",
             "claim_waiting": "待機中"
-        }
+        },
+        "non_nft": "私のNon-NFTアイテム",
+        "buy_more": "アイテムをもっと購入する",
+        "item_store": "Non-NFTアイテムストア",
+        "payment_history": "支払い履歴",
+        "agree_non_refundable": "この商品は返金不可であることに同意します。",
+        "provide_encrypted_id": "LINE IAPによる支払いの際に、暗号化されたID情報をLY Corporationに提供することに同意します。",
+        "learn_more": "詳しくはこちら",
+        "purchase_success": "購入成功！",
+        "purchase_fail": "購入失敗。",
+        "purchase_canceled": "購入キャンセル済み。",
+        "insufficient_balance": "残高不足。",
+        "try_again": "後でもう一度お試しください。",
+        "close": "閉じる"
     },
     "dice_event": {
         "attendance": "出席",
