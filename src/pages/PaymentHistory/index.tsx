@@ -9,6 +9,7 @@ import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from "@/shared/components/ui";
+import Images from "@/shared/assets/images";
 
 
 // 더미 데이터: 24 Nov 2024 날짜에 아이템 2개가 구매되었다고 가정
@@ -198,23 +199,28 @@ const PaymentHistory: React.FC = () => {
           <p className="text-center text-sm text-gray-400">No records found</p>
         ) : (
           dateKeys.map((dateKey) => (
-            <div key={dateKey} className="mb-4">
-              <p className="text-sm text-gray-300 mb-5">{dateKey}</p>
+            <div key={dateKey} className="mb-[10px]">
+              <p className="text-sm text-gray-300 mb-[10px]">{dateKey}</p>
               {groupedByDate[dateKey].map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between mb-2"
+                  className="flex items-center justify-between mb-5"
                 >
                   {/* 아이콘 영역: 실제 앱 아이콘 등으로 교체 가능 */}
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-[70px] h-[70px] rounded-2xl"
-                      style={{
-                        background: item.itemName === "Auto Item"
-                          ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
-                          : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)"
-                      }}
-                    />
+                        className="w-[70px] h-[70px] rounded-2xl"
+                        style={{
+                            background: item.itemName === "Auto Item"
+                            ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
+                            : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)"
+                        }}>
+                        <img 
+                            src={item.itemName === "AUto Item" ? Images.AutoNFT : Images.RewardNFT}
+                            alt="auto item icon"
+                            className="absolute w-6 h-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                        />
+                    </div>
                     <div className="flex flex-col">
                       <p className="font-semibold text-base">{item.itemName}</p>
                       <p className="font-normal text-sm">USD ${item.price}</p>
