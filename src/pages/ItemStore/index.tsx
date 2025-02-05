@@ -78,7 +78,7 @@ const ItemStore: React.FC = () => {
                         onClick={() => handleSelectItem(nftItem.id)}
                         >
                         <div 
-                            className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden"
+                            className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
                             style={{
                                 background:
                                     nftItem.name === "Auto Item"
@@ -132,7 +132,7 @@ const ItemStore: React.FC = () => {
                 </div>
 
                 {/* 하단 결제 버튼들 */}
-                <div className="flex w-full gap-3">
+                <div className="flex w-full gap-3 mb-5">
                     {/* KAIA 결제 */}
                     <button
                         onClick={() => {
