@@ -5,11 +5,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
-
-// 예시: i18n이나 사운드 관련 훅은 필요시 import
-// import { useSound } from "@/shared/provider/SoundProvider";
-// import Audios from "@/shared/assets/audio";
-// import { useTranslation } from "react-i18next";
+import { useSound } from "@/shared/provider/SoundProvider";
+import Audios from "@/shared/assets/audio";
+import { useTranslation } from "react-i18next";
 
 // 상단 타이틀 영역을 감싸는 간단한 컴포넌트 예시(필요 시 교체/삭제 가능)
 const TopTitle: React.FC<{ title: string; back?: boolean }> = ({ title }) => {
@@ -37,8 +35,8 @@ const DUMMY_PAYMENTS = [
 ];
 
 const PaymentHistory: React.FC = () => {
-  // const { t } = useTranslation(); // i18n 필요시 활성
-  // const { playSfx } = useSound(); // 사운드 필요시 활성
+  const { t } = useTranslation();
+  const { playSfx } = useSound();
   const navigate = useNavigate();
 
   // 필터 드롭다운 열림 여부
@@ -100,18 +98,18 @@ const PaymentHistory: React.FC = () => {
   );
   CustomDateInput.displayName = "CustomDateInput";
 
-  // 필터 적용
-  const filteredPayments = paymentHistory.filter((item) => {
-    // 아이템 필터
-    if (item.itemName === "Auto Item" && !filterAuto) return false;
-    if (item.itemName === "Reward Booster(5x)" && !filterBooster) return false;
+    // 필터 적용
+    const filteredPayments = paymentHistory.filter((item) => {
+        // 아이템 필터
+        if (item.itemName === "Auto Item" && !filterAuto) return false;
+        if (item.itemName === "Reward Booster(5x)" && !filterBooster) return false;
 
-    // 날짜 필터
-    if (startDate && item.purchaseDate < startDate) return false;
-    if (endDate && item.purchaseDate > endDate) return false;
+        // 날짜 필터
+        if (startDate && item.purchaseDate < startDate) return false;
+        if (endDate && item.purchaseDate > endDate) return false;
 
-    return true;
-  });
+        return true;
+    });
 
   // 날짜별로 묶어서 표시 (예: "24 Nov 2024" 그룹)
   const groupedByDate = filteredPayments.reduce((acc: Record<string, typeof filteredPayments>, cur) => {
@@ -129,7 +127,7 @@ const PaymentHistory: React.FC = () => {
 
   return (
     <div className="flex flex-col text-white mb-32 px-6 min-h-screen bg-[#111827]">
-      <TopTitle title="Payment History" />
+      <TopTitle title={t("asset_page.payment_history")} back={true} />
 
       {/* 필터 드롭다운 */}
       <div>
@@ -214,12 +212,12 @@ const PaymentHistory: React.FC = () => {
               {groupedByDate[dateKey].map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between bg-gray-800 p-4 rounded-lg mb-2"
+                  className="flex items-center justify-between mb-2"
                 >
                   {/* 아이콘 영역: 실제 앱 아이콘 등으로 교체 가능 */}
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-10 h-10 rounded-md"
+                      className="w-[70px] h-[70px] rounded-2xl"
                       style={{
                         background: item.itemName === "Auto Item"
                           ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
@@ -227,11 +225,11 @@ const PaymentHistory: React.FC = () => {
                       }}
                     />
                     <div className="flex flex-col">
-                      <p className="font-semibold">{item.itemName}</p>
-                      <p className="text-sm text-gray-300">USD ${item.price}</p>
+                      <p className="font-semibold text-base">{item.itemName}</p>
+                      <p className="font-normal text-sm">USD ${item.price}</p>
                     </div>
                   </div>
-                  <FaChevronRight className="text-gray-400" />
+                  <FaChevronRight className="w-5 h-5" />
                 </div>
               ))}
             </div>
