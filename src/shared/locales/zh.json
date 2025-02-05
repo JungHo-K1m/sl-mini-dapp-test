@@ -152,7 +152,20 @@
       "daily_attendance": "每日出席：1,000 點數",
       "welcom_gift": "歡迎加入禮",
       "rewards": "7,777 點數 + 10SL 代幣 + 30 骰子",
-      "start_now": "立即領取獎勵並開始！"
+      "start_now": "立即領取獎勵並開始！",
+      "non_nft": "我的非 NFT 項目",
+      "buy_more": "購買更多物品",
+      "item_store": "非 NFT 物品商店",
+      "payment_history": "付款記錄",
+      "agree_non_refundable": "我同意該產品不可退費。",
+      "provide_encrypted_id": "我同意在使用 LINE IAP 付款時，向 LY Corporation 提供加密後的 ID 資訊。",
+      "learn_more": "了解更多",
+      "purchase_success": "購買成功！",
+      "purchase_fail": "購買失敗。",
+      "purchase_canceled": "購買已取消。",
+      "insufficient_balance": "餘額不足。",
+      "try_again": "請稍後再試。",
+      "close": "關閉"
     },
     "wallet_page": {
       "wallet": "錢包",

@@ -313,6 +313,64 @@ const MyAssets: React.FC = () => {
                     </div>
                 </div>
 
+                {/* 내 Non-NFT Items */}
+                <div className="mt-9 w-full">
+                    <div className="flex justify-between items-center">
+                        <h2 className="text-lg font-semibold">{t("asset_page.non_nft")}</h2>
+                        
+                        <button
+                            className="flex items-center text-white text-xs"
+                            onClick={() => {
+                                playSfx(Audios.button_click);
+                                navigate("/payment-history");
+                            }}
+                            aria-label="View All Items"
+                            >
+                            {t("asset_page.View_All")} <FaChevronRight className="ml-1 w-2 h-2" />
+                        </button>
+                    </div>
+                    <div className="mt-4 w-full">
+                        {nft === 0 ? (
+                            <div className="mt-20 mb-36 h-[150px] flex flex-col items-center justify-center">
+                                <p className="text-center text-[#737373] text-sm font-medium">
+                                    {t("asset_page.no_nft")}<br />
+                                    {t("asset_page.own_nft")}
+                                </p>
+                                <button
+                                    className="w-1/2 py-4 rounded-full text-base font-medium mt-12"
+                                    style={{ backgroundColor: '#0147E5' }}
+                                    onClick={()=>{
+                                        playSfx(Audios.button_click);
+                                        setShowModal(true);
+                                    }}
+                                    >
+                                    {t("asset_page.shop_nft")}
+                                </button>
+                            </div>
+
+                        ) : (
+                            <div className="grid grid-cols-2 gap-4 mt-4 w-full">
+                                {nftCollection.map((nftItem) => (
+                                    <div
+                                        key={nftItem.id}
+                                        className="bg-[#1F1E27] border border-[#737373] p-[10px] rounded-xl flex flex-col items-center"
+                                        >
+                                        {/* 비율을 유지하며 크기가 리니어하게 바뀌도록 설정 */}
+                                        <div className="w-full aspect-[145/154] rounded-md mt-1 mx-1 overflow-hidden">
+                                            <img
+                                            src={nftItem.image}
+                                            alt={nftItem.name}
+                                            className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <p className="mt-2 font-bold">{nftItem.name}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 {/* 클래임 */}
                 <div className="mt-8 w-full">
                     <div className="flex justify-between items-center">
