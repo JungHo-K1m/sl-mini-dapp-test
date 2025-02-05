@@ -280,7 +280,10 @@
         "purchase_canceled": "購入キャンセル済み。",
         "insufficient_balance": "残高不足。",
         "try_again": "後でもう一度お試しください。",
-        "close": "閉じる"
+        "close": "閉じる",
+        "no_item": "まだ所有しているアイテムがありません。",
+        "own_item": "アイテムを所有して、ランクを上げよう！",
+        "shop_item": "アイテムを購入する"
     },
     "dice_event": {
         "attendance": "出席",

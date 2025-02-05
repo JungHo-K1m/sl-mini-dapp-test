@@ -333,8 +333,8 @@ const MyAssets: React.FC = () => {
                         {nft === 0 ? (
                             <div className="mt-20 mb-36 h-[150px] flex flex-col items-center justify-center">
                                 <p className="text-center text-[#737373] text-sm font-medium">
-                                    {t("asset_page.no_nft")}<br />
-                                    {t("asset_page.own_nft")}
+                                    {t("asset_page.no_item")}<br />
+                                    {t("asset_page.own_item")}
                                 </p>
                                 <button
                                     className="w-1/2 py-4 rounded-full text-base font-medium mt-12"
@@ -344,7 +344,7 @@ const MyAssets: React.FC = () => {
                                         setShowModal(true);
                                     }}
                                     >
-                                    {t("asset_page.shop_nft")}
+                                    {t("asset_page.shop_item")}
                                 </button>
                             </div>
 

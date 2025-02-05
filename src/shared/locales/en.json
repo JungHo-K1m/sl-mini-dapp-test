@@ -280,7 +280,10 @@
       "purchase_canceled": "Purchase Canceled.",
       "insufficient_balance": "Insufficient Balance.",
       "try_again": "Please try again later.",
-      "close": "Close"
+      "close": "Close",
+      "no_item": "You don't have any items yet.",
+      "own_item": "Own items and boost your rank!",
+      "shop_item": "Shop for items"
     },
     "dice_event": {
       "attendance": "Attendance",

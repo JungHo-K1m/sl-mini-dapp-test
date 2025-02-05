@@ -280,7 +280,10 @@
       "purchase_canceled": "구매 취소됨.",
       "insufficient_balance": "잔액 부족.",
       "try_again": "잠시 후 다시 시도해 주세요.",
-      "close": "닫기"
+      "close": "닫기",
+      "no_item": "아직 보유 중인 item이 없습니다.",
+      "own_item": "item을 소유하고 랭크를 올려보세요!",
+      "shop_item": "item 쇼핑하기"
     },
     "dice_event": {
       "attendance": "출석",
