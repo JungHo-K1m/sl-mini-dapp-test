@@ -8,15 +8,8 @@ import { format } from "date-fns";
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
 import { useTranslation } from "react-i18next";
+import { TopTitle } from "@/shared/components/ui";
 
-// 상단 타이틀 영역을 감싸는 간단한 컴포넌트 예시(필요 시 교체/삭제 가능)
-const TopTitle: React.FC<{ title: string; back?: boolean }> = ({ title }) => {
-  return (
-    <div className="flex items-center mb-4">
-      <h1 className="text-xl font-bold">{title}</h1>
-    </div>
-  );
-};
 
 // 더미 데이터: 24 Nov 2024 날짜에 아이템 2개가 구매되었다고 가정
 const DUMMY_PAYMENTS = [
