@@ -91,7 +91,7 @@ const ItemStore: React.FC = () => {
                                 className="w-[80px] h-[80px] object-cover"
                             />
                         </div>
-                        <p className="mt-2 font-bold">{nftItem.name}</p>
+                        <p className="mt-2 text-sm font-semibold">{nftItem.name}</p>
                     </div>
                 ))}
             </div>
