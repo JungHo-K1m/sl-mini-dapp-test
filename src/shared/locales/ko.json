@@ -283,7 +283,8 @@
       "close": "닫기",
       "no_item": "아직 보유 중인 item이 없습니다.",
       "own_item": "item을 소유하고 랭크를 올려보세요!",
-      "shop_item": "item 쇼핑하기"
+      "shop_item": "item 쇼핑하기",
+      "detail": "구매 내역 상세"
     },
     "dice_event": {
       "attendance": "출석",

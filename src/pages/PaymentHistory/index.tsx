@@ -253,7 +253,19 @@ const PaymentHistory: React.FC = () => {
                       <p className="font-normal text-sm">USD ${item.price}</p>
                     </div>
                   </div>
-                  <FaChevronRight className="w-5 h-5" />
+                  <FaChevronRight 
+                    className="w-5 h-5"
+                    onClick={()=>{
+                        playSfx(Audios.button_click);
+                        navigate("/payment-detail"),{
+                            state: {
+                                itemName: item.itemName,
+                                purchaseDate: item.purchaseDate,
+                                price: item.price,
+                                orderId: "12345ABC", // 예시로 임의 지정
+                              },
+                        }
+                    }} />
                 </div>
               ))}
             </div>

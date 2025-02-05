@@ -283,7 +283,8 @@
       "close": "關閉",
       "no_item": "您目前沒有任何物品。",
       "own_item": "擁有物品並提升您的等級！",
-      "shop_item": "選購物品"
+      "shop_item": "選購物品",
+      "detail": "付款方式"
     },
     "dice_event": {
       "attendance": "簽到",

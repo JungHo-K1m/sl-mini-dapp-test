@@ -283,7 +283,8 @@
         "close": "閉じる",
         "no_item": "まだ所有しているアイテムがありません。",
         "own_item": "アイテムを所有して、ランクを上げよう！",
-        "shop_item": "アイテムを購入する"
+        "shop_item": "アイテムを購入する",
+        "detail": "支払詳細"
     },
     "dice_event": {
         "attendance": "出席",
