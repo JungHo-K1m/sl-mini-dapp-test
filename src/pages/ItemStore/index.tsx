@@ -68,7 +68,7 @@ const ItemStore: React.FC = () => {
                     <div
                         key={nftItem.id}
                         // 선택된 아이템이면 테두리 강조
-                        className={`bg-[#1F1E27] border p-[10px] rounded-xl flex flex-col items-center
+                        className={`bg-[#1F1E27] border-2 p-[10px] rounded-xl flex flex-col items-center
                             ${
                             selectedItem === nftItem.id
                                 ? "border-blue-400"
@@ -150,7 +150,7 @@ const ItemStore: React.FC = () => {
                             playSfx(Audios.button_click);
                             // TODO: USD 결제 로직
                         }}
-                        className="w-1/2 border border-[#0147E5] text-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
+                        className="w-1/2 border-2 border-[#0147E5] text-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
                         >
                         USD $10
                     </button>
