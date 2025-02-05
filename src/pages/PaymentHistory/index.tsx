@@ -11,20 +11,37 @@ import { useTranslation } from "react-i18next";
 import { TopTitle } from "@/shared/components/ui";
 import Images from "@/shared/assets/images";
 
-
-// 더미 데이터: 24 Nov 2024 날짜에 아이템 2개가 구매되었다고 가정
+// -- (1) 여러 날짜를 포함한 더미 데이터
 const DUMMY_PAYMENTS = [
   {
     id: 1,
     itemName: "Auto Item",
     price: 10,
-    purchaseDate: new Date("2024-11-24"),
+    purchaseDate: new Date("2024-11-24"), // 2024년 11월 24일
   },
   {
     id: 2,
     itemName: "Reward Booster(5x)",
     price: 10,
-    purchaseDate: new Date("2024-11-24"),
+    purchaseDate: new Date("2024-11-24"), // 2024년 11월 24일
+  },
+  {
+    id: 3,
+    itemName: "Auto Item",
+    price: 8,
+    purchaseDate: new Date("2025-02-05"), // 2025년 2월 5일
+  },
+  {
+    id: 4,
+    itemName: "Auto Item",
+    price: 9,
+    purchaseDate: new Date("2025-03-10"), // 2025년 3월 10일
+  },
+  {
+    id: 5,
+    itemName: "Reward Booster(5x)",
+    price: 12,
+    purchaseDate: new Date("2025-03-11"), // 2025년 3월 11일
   },
 ];
 
@@ -92,29 +109,33 @@ const PaymentHistory: React.FC = () => {
   );
   CustomDateInput.displayName = "CustomDateInput";
 
-    // 필터 적용
-    const filteredPayments = paymentHistory.filter((item) => {
-        // 아이템 필터
-        if (item.itemName === "Auto Item" && !filterAuto) return false;
-        if (item.itemName === "Reward Booster(5x)" && !filterBooster) return false;
+  // -- (2) 필터 적용 로직은 동일
+  const filteredPayments = paymentHistory.filter((item) => {
+    // 아이템 필터
+    if (item.itemName === "Auto Item" && !filterAuto) return false;
+    if (item.itemName === "Reward Booster(5x)" && !filterBooster) return false;
 
-        // 날짜 필터
-        if (startDate && item.purchaseDate < startDate) return false;
-        if (endDate && item.purchaseDate > endDate) return false;
+    // 날짜 필터
+    if (startDate && item.purchaseDate < startDate) return false;
+    if (endDate && item.purchaseDate > endDate) return false;
 
-        return true;
-    });
+    return true;
+  });
 
-  // 날짜별로 묶어서 표시 (예: "24 Nov 2024" 그룹)
-  const groupedByDate = filteredPayments.reduce((acc: Record<string, typeof filteredPayments>, cur) => {
-    const dateKey = format(cur.purchaseDate, "dd MMM yyyy");
-    if (!acc[dateKey]) {
-      acc[dateKey] = [];
-    }
-    acc[dateKey].push(cur);
-    return acc;
-  }, {});
+  // -- (3) 날짜별로 묶어 표시 (예: "24 Nov 2024" 그룹)
+  const groupedByDate = filteredPayments.reduce(
+    (acc: Record<string, typeof filteredPayments>, cur) => {
+      const dateKey = format(cur.purchaseDate, "dd MMM yyyy");
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(cur);
+      return acc;
+    },
+    {}
+  );
 
+  // -- (4) 날짜 문자열 키를 실제 날짜로 비교해 정렬
   const dateKeys = Object.keys(groupedByDate).sort(
     (a, b) => +new Date(a) - +new Date(b)
   );
@@ -124,74 +145,74 @@ const PaymentHistory: React.FC = () => {
       <TopTitle title={t("asset_page.payment_history")} back={true} />
 
       {/* 필터 드롭다운 */}
-        <div
-          className="flex items-center justify-between cursor-pointer"
-          onClick={() => {
-            // playSfx(Audios.button_click);
-            setIsOpen(!isOpen);
-          }}
-        >
-          <p className="text-lg font-semibold">Filter Option</p>
-          {isOpen ? <FaCaretUp className="w-4 h-4" /> : <FaCaretDown className="w-4 h-4" />}
-        </div>
+      <div
+        className="flex items-center justify-between cursor-pointer"
+        onClick={() => {
+          // playSfx(Audios.button_click);
+          setIsOpen(!isOpen);
+        }}
+      >
+        <p className="text-lg font-semibold">Filter Option</p>
+        {isOpen ? <FaCaretUp className="w-4 h-4" /> : <FaCaretDown className="w-4 h-4" />}
+      </div>
 
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="overflow-hidden"
-        >
-          <div className="mt-4 mx-3">
-            {/* 아이템 필터 (체크박스) */}
-            <p className="text-lg font-medium text-left mb-2">Item Name</p>
-            <div className="flex flex-col gap-2 ml-3">
-              <label className="flex items-center text-base font-medium">
-                <input
-                  type="checkbox"
-                  checked={filterAuto}
-                  onChange={handleCheckAuto}
-                  className="mr-2"
-                />
-                Auto Item
-              </label>
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden"
+      >
+        <div className="mt-4 mx-3">
+          {/* 아이템 필터 (체크박스) */}
+          <p className="text-lg font-medium text-left mb-2">Item Name</p>
+          <div className="flex flex-col gap-2 ml-3">
+            <label className="flex items-center text-base font-medium">
+              <input
+                type="checkbox"
+                checked={filterAuto}
+                onChange={handleCheckAuto}
+                className="mr-2"
+              />
+              Auto Item
+            </label>
 
-              <label className="flex items-center text-base font-medium">
-                <input
-                  type="checkbox"
-                  checked={filterBooster}
-                  onChange={handleCheckBooster}
-                  className="mr-2"
-                />
-                Reward Booster(5x)
-              </label>
+            <label className="flex items-center text-base font-medium">
+              <input
+                type="checkbox"
+                checked={filterBooster}
+                onChange={handleCheckBooster}
+                className="mr-2"
+              />
+              Reward Booster(5x)
+            </label>
+          </div>
+
+          {/* 날짜 범위 선택 */}
+          <p className="text-lg font-medium text-left mt-4">Date Ranges</p>
+          <div className="flex items-center gap-4 mt-4">
+            <div className="w-full">
+              <DatePicker
+                selected={startDate}
+                onChange={handleStartDateChange}
+                placeholderText="Start Date"
+                customInput={<CustomDateInput placeholder="Start Date" />}
+                dateFormat="yyyy-MM-dd"
+                maxDate={endDate || undefined}
+              />
             </div>
-
-            {/* 날짜 범위 선택 */}
-            <p className="text-lg font-medium text-left mt-4">Date Ranges</p>
-            <div className="flex items-center gap-4 mt-4">
-              <div className="w-full">
-                <DatePicker
-                  selected={startDate}
-                  onChange={handleStartDateChange}
-                  placeholderText="Start Date"
-                  customInput={<CustomDateInput placeholder="Start Date" />}
-                  dateFormat="yyyy-MM-dd"
-                  maxDate={endDate || undefined}
-                />
-              </div>
-              <div className="w-full">
-                <DatePicker
-                  selected={endDate}
-                  onChange={handleEndDateChange}
-                  placeholderText="End Date"
-                  customInput={<CustomDateInput placeholder="End Date" />}
-                  dateFormat="yyyy-MM-dd"
-                  minDate={startDate || undefined}
-                />
-              </div>
+            <div className="w-full">
+              <DatePicker
+                selected={endDate}
+                onChange={handleEndDateChange}
+                placeholderText="End Date"
+                customInput={<CustomDateInput placeholder="End Date" />}
+                dateFormat="yyyy-MM-dd"
+                minDate={startDate || undefined}
+              />
             </div>
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
 
       {/* 결제 내역 리스트 */}
       <div className="w-full mt-6">
@@ -199,31 +220,32 @@ const PaymentHistory: React.FC = () => {
           <p className="text-center text-sm text-gray-400">No records found</p>
         ) : (
           dateKeys.map((dateKey) => (
-            <div key={dateKey} className="mb-[10px]">
-              <p className="text-sm text-gray-300 mb-[10px]">{dateKey}</p>
+            <div key={dateKey} className="mb-3">
+              <p className="text-sm text-gray-300 mb-2">{dateKey}</p>
               {groupedByDate[dateKey].map((item) => (
                 <div
                   key={item.id}
                   className="flex items-center justify-between mb-5"
                 >
-                  {/* 아이콘 영역: 실제 앱 아이콘 등으로 교체 가능 */}
                   <div className="flex items-center gap-3">
                     <div
-                        className="relative w-[70px] h-[70px] rounded-2xl"
-                        style={{
-                            background:
-                            item.itemName === "Auto Item"
-                                ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
-                                : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
-                        }}
-                        >
-                        <img
-                            src={
-                            item.itemName === "Auto Item" ? Images.AutoNFT : Images.RewardNFT
-                            }
-                            alt="item icon"
-                            className="absolute w-6 h-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                        />
+                      className="relative w-[70px] h-[70px] rounded-2xl"
+                      style={{
+                        background:
+                          item.itemName === "Auto Item"
+                            ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
+                            : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
+                      }}
+                    >
+                      <img
+                        src={
+                          item.itemName === "Auto Item"
+                            ? Images.AutoNFT
+                            : Images.RewardNFT
+                        }
+                        alt="item icon"
+                        className="absolute w-[50px] h-[50px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                      />
                     </div>
 
                     <div className="flex flex-col">
