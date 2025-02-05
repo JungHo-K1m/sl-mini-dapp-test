@@ -22,7 +22,7 @@ const PaymentDetail: React.FC = () => {
 
             {/* 상단 아이콘 + 아이템 이름 */}
             <div
-                className="relative w-[100px] h-[100px] rounded-2xl"
+                className="relative w-[100px] h-[100px] rounded-2xl mb-8"
                 style={{
                 background:
                     itemName === "Auto Item"
