@@ -126,11 +126,10 @@ const PaymentHistory: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col px-6 md:px-0 text-white mb-44 w-full min-h-screen">
+    <div className="flex flex-col text-white mb-32 px-6 min-h-screen">
       <TopTitle title={t("asset_page.payment_history")} back={true} />
 
       {/* 필터 드롭다운 */}
-      <div>
         <div
           className="flex items-center justify-between cursor-pointer"
           onClick={() => {
@@ -199,7 +198,6 @@ const PaymentHistory: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      </div>
 
       {/* 결제 내역 리스트 */}
       <div className="w-full mt-6">
