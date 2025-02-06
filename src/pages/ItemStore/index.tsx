@@ -31,6 +31,9 @@ const ItemStore: React.FC = () => {
     const [agreeRefund, setAgreeRefund] = useState(false);
     const [agreeEncrypted, setAgreeEncrypted] = useState(false);
 
+    // 모든 조건이 만족되어야 버튼 활성화
+    const isEnabled = selectedItem !== null && agreeRefund && agreeEncrypted;
+
     // 뒤로가기
     const handleBackClick = () => {
         playSfx(Audios.button_click);
@@ -69,27 +72,28 @@ const ItemStore: React.FC = () => {
                         key={nftItem.id}
                         // 선택된 아이템이면 테두리 강조
                         className={`bg-[#1F1E27] border-2 p-[10px] rounded-xl flex flex-col items-center
-                            ${
+                        ${
                             selectedItem === nftItem.id
-                                ? "border-blue-400"
-                                : "border-[#737373]"
-                            }
+                            ? "border-blue-400"
+                            : "border-[#737373]"
+                        }
                         `}
                         onClick={() => handleSelectItem(nftItem.id)}
+                    >
+                        <div
+                        className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
+                        style={{
+                            background:
+                            nftItem.name === "Auto Item"
+                                ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
+                                : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
+                        }}
                         >
-                        <div 
-                            className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
-                            style={{
-                                background:
-                                    nftItem.name === "Auto Item"
-                                        ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
-                                        : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
-                            }}>
-                            <img
-                                src={nftItem.image}
-                                alt={nftItem.name}
-                                className="w-[80px] h-[80px] object-cover"
-                            />
+                        <img
+                            src={nftItem.image}
+                            alt={nftItem.name}
+                            className="w-[80px] h-[80px] object-cover"
+                        />
                         </div>
                         <p className="mt-2 text-sm font-semibold">{nftItem.name}</p>
                     </div>
@@ -105,13 +109,15 @@ const ItemStore: React.FC = () => {
                             type="checkbox"
                             checked={agreeRefund}
                             onChange={() => {
-                            playSfx(Audios.button_click);
-                            setAgreeRefund(!agreeRefund);
+                                playSfx(Audios.button_click);
+                                setAgreeRefund(!agreeRefund);
                             }}
-                        />
+                            />
                         <span className="text-xs font-medium">
                             {t("asset_page.agree_non_refundable")}
-                            <span className="text-xs font-semibold text-[#3B82F6] ml-1">{t("asset_page.learn_more")}</span>
+                            <span className="text-xs font-semibold text-[#3B82F6] ml-1">
+                                {t("asset_page.learn_more")}
+                            </span>
                         </span>
                     </label>
 
@@ -123,10 +129,12 @@ const ItemStore: React.FC = () => {
                                 playSfx(Audios.button_click);
                                 setAgreeEncrypted(!agreeEncrypted);
                             }}
-                        />
+                            />
                         <span className="text-xs font-medium">
                             {t("asset_page.provide_encrypted_id")}
-                            <span className="text-xs font-semibold text-[#3B82F6] ml-1">{t("asset_page.learn_more")}</span>
+                            <span className="text-xs font-semibold text-[#3B82F6] ml-1">
+                                {t("asset_page.learn_more")}
+                            </span>
                         </span>
                     </label>
                 </div>
@@ -135,23 +143,34 @@ const ItemStore: React.FC = () => {
                 <div className="flex w-full gap-3 mb-5">
                     {/* KAIA 결제 */}
                     <button
+                        disabled={!isEnabled} // 조건 미충족 시 비활성화
                         onClick={() => {
                             playSfx(Audios.button_click);
                             // TODO: KAIA 결제 로직
                         }}
-                        className="w-1/2 bg-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
-                        >
+                        className={
+                        // 조건에 따라 색상 및 속성 적용
+                        isEnabled
+                            ? "w-1/2 bg-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
+                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-gray-300"
+                        }
+                    >
                         67.758 KAIA
                     </button>
 
                     {/* USD 결제 */}
                     <button
+                        disabled={!isEnabled}
                         onClick={() => {
                             playSfx(Audios.button_click);
                             // TODO: USD 결제 로직
                         }}
-                        className="w-1/2 border-2 border-[#0147E5] text-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
-                        >
+                        className={
+                        isEnabled
+                            ? "w-1/2 border-2 border-[#0147E5] text-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
+                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-gray-300"
+                        }
+                    >
                         USD $10
                     </button>
                 </div>
