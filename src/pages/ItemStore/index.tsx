@@ -152,7 +152,7 @@ const ItemStore: React.FC = () => {
                         // 조건에 따라 색상 및 속성 적용
                         isEnabled
                             ? "w-1/2 bg-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
-                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-[#555]"
+                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-white"
                         }
                     >
                         67.758 KAIA
