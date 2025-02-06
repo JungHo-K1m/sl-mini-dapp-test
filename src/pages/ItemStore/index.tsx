@@ -152,7 +152,7 @@ const ItemStore: React.FC = () => {
                         // 조건에 따라 색상 및 속성 적용
                         isEnabled
                             ? "w-1/2 bg-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
-                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-gray-300"
+                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-[#555]"
                         }
                     >
                         67.758 KAIA
@@ -168,7 +168,7 @@ const ItemStore: React.FC = () => {
                         className={
                         isEnabled
                             ? "w-1/2 border-2 border-[#0147E5] text-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
-                            : "w-1/2 bg-[#555] px-6 py-3 rounded-full text-base font-medium text-gray-300"
+                            : "w-1/2 border-2 border-[#555] text-[#555] px-6 py-3 rounded-full text-base font-medium "
                         }
                     >
                         USD $10
