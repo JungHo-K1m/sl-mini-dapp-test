@@ -35,7 +35,7 @@ const TruncateMiddle: React.FC<TruncateMiddleProps> = ({
     const truncateMiddle = (str: string, maxLen: number): string => {
         if (str.length <= maxLen) return str;
 
-        const charsToShow = maxLen - 3; // 3 characters for "..."
+        const charsToShow = maxLen - 9;
         const frontChars = Math.ceil(charsToShow / 2);
         const backChars = Math.floor(charsToShow / 2);
 
