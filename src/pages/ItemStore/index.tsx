@@ -101,7 +101,7 @@ const ItemStore: React.FC = () => {
             </div>
 
             {/* (2) 체크박스 & 결제 버튼: 화면 하단 고정 */}
-            <div className="fixed bottom-0 left-0 w-full bg-[#111827] px-6 py-4">
+            <div className="fixed bottom-0 left-0 bg-[#111827] px-6 py-4">
                 {/* 체크박스 동의 내용 */}
                 <div className="flex flex-col gap-3 mb-5">
                     <label className="flex items-start gap-2">
