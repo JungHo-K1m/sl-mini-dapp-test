@@ -94,7 +94,7 @@ const ConnectWalletPage: React.FC = () => {
           {/* 애니메이션 버튼 */}
           <motion.button
             onClick={handleConnectWallet}
-            className="relative w-[340px] h-[150px]"
+            className="relative w-[342px] h-[56px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeInOut", delay: 0.4 }}
