@@ -167,7 +167,7 @@ const ItemStore: React.FC = () => {
                         }}
                         className={
                         isEnabled
-                            ? "w-1/2 border-2 border-[#0147E5] text-[#0147E5] px-6 py-3 rounded-full text-base font-medium"
+                            ? "w-1/2 border-2 border-[#0147E5] text-white px-6 py-3 rounded-full text-base font-medium"
                             : "w-1/2 border-2 border-[#555] text-[#555] px-6 py-3 rounded-full text-base font-medium "
                         }
                     >

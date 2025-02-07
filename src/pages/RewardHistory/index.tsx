@@ -36,20 +36,13 @@ const RewardHistory: React.FC = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [isLastPage, setIsLastPage] = useState(false);
 
-  // ★ useEffect로 필터 상태가 변할 때마다 페이지 0부터 재조회
+  
   useEffect(() => {
     fetchRewards(0, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAsset, selectedChange, startDate, endDate]);
 
-  // 컴포넌트 첫 렌더링 시에도 0페이지 불러오지만,
-  // 위 useEffect가 이미 [selectedAsset, ...] 의존성으로 포함하므로
-  // 초기 상태에서도 자동 실행된다.
-  // 만약 처음 마운트 시점에만 1회 호출하고 싶다면 의존성 배열을 []로 두거나 별도 처리 필요.
-  // 여기선 "마운트 시점 + 필터 변경 시점" 모두 호출이므로 아래 useEffect는 생략 가능할 수도 있음.
   useEffect(() => {
     fetchRewards(0, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // API 호출
@@ -118,6 +111,22 @@ const RewardHistory: React.FC = () => {
     // ★ fetchRewards 직접 호출하지 않음
   };
 
+  // 월 데이터를 숫자에서 영문으로 변환하는 헬퍼 함수
+  const getMonthName = (monthNumber: number): string => {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return months[monthNumber - 1] || "Unknown"; // 1월 = index 0
+  };
+
+  // 날짜를 포맷팅하는 함수
+  const formatDate = (date: string): string => {
+    const [day, month, year] = date.split("-").map(Number);
+    const monthName = getMonthName(month);
+    return `${day} ${monthName} ${year}`;
+  };
+
   // 더보기 버튼
   const handleLoadMore = () => {
     playSfx(Audios.button_click);
@@ -126,7 +135,7 @@ const RewardHistory: React.FC = () => {
 
   // 표시용 변환( STAR→POINT, REWARD→INCREASE, USE→DECREASE )
   const displayHistory = rewardHistory.map((reward) => {
-    const displayAsset = reward.currencyType === "STAR" ? "POINT" : reward.currencyType;
+    const displayAsset = reward.currencyType === "STAR" ? "P" : reward.currencyType;
     const displayChangeType =
       reward.changeType === "REWARD" ? "INCREASE" : "DECREASE";
     return {
@@ -256,12 +265,12 @@ const RewardHistory: React.FC = () => {
                 className="flex justify-between items-center py-4 border-b border-[#35383F]"
               >
                 <div>
-                  <p className="text-sm font-medium">{reward.content}</p>
-                  <p className="text-xs text-gray-400">{reward.loggedAt}</p>
+                  <p className="text-sm font-normal">{reward.content}</p>
+                  <p className="text-xs font-normal text-[#A3A3A3]">{formatDate(reward.loggedAt)}</p>
                 </div>
                 <div className="flex flex-col items-end">
                   <p
-                    className={`text-sm font-bold ${
+                    className={`text-base font-semibold ${
                       reward.displayChangeType === "INCREASE"
                         ? "text-[#3B82F6]"
                         : "text-[#DD2726]"
@@ -274,7 +283,7 @@ const RewardHistory: React.FC = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-sm text-gray-400">No records found</p>
+            <p className="text-center text-sm text-[#A3A3A3]">No records found</p>
           )}
 
           {/* (예시) 레퍼럴 보상 내역(요약본) */}
@@ -287,7 +296,7 @@ const RewardHistory: React.FC = () => {
           >
             <div>
               <p className="text-sm font-medium">Friend Referral Rewards</p>
-              <p className="text-xs text-gray-400">17-12-2024</p>
+              <p className="text-xs text-[#A3A3A3]">17-12-2024</p>
             </div>
             <div className="flex items-center gap-3 ml-auto">
               <p className="text-sm font-bold text-[#3B82F6]">+150 POINT</p>

@@ -165,7 +165,7 @@ const MyAssets: React.FC = () => {
     }, []);
 
     const displayHistory = rewardHistoryData.map((reward) => {
-        const displayAsset = reward.currencyType === "STAR" ? "POINT" : reward.currencyType;
+        const displayAsset = reward.currencyType === "STAR" ? "P" : reward.currencyType;
         const displayChangeType = reward.changeType === "REWARD" ? "INCREASE" : "DECREASE";
         return {
             ...reward,
@@ -449,14 +449,14 @@ const MyAssets: React.FC = () => {
                                     }`}
                                 >
                                     <div>
-                                        <p className="text-base font-normal">{reward.content}</p>
+                                        <p className="text-sm font-normal">{reward.content}</p>
                                         {/* API에서 제공하는 날짜 필드명이 loggedAt 또는 다른 이름일 수 있으므로 확인 후 사용 */}
                                         <p className="text-xs font-normal text-[#A3A3A3]">
                                             {formatDate(reward.loggedAt)}
                                         </p>
                                     </div>
                                     <p
-                                        className={`text-lg font-semibold ${
+                                        className={`text-base font-semibold ${
                                             reward.displayChangeType === "INCREASE"
                                                 ? "text-[#3B82F6]"
                                                 : "text-[#DD2726]"
