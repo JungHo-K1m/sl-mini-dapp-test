@@ -66,7 +66,7 @@ const MyAssets: React.FC = () => {
     const [falied, setFailed] = useState(false);
     const [success, setSuccess] = useState(false);
     const [rewardHistoryData, setRewardHistoryData] = useState<any[]>([]);
-    const [balance, setBalance] = useState(164.00);
+    const [balance, setBalance] = useState("164.00");
 
     const getCharacterImageSrc = () => {
         const index = Math.floor((userLv - 1) / 2);
@@ -216,7 +216,7 @@ const MyAssets: React.FC = () => {
                                 alt="Kaia Icon"
                                 className="relative w-9 h-9 z-10"
                             />
-                            <div className="-ml-[18px] flex items-center bg-[#1F1E27] rounded-full px-3 py-1 w-20 h-7 z-0">
+                            <div className="-ml-[18px] flex items-center justify-end bg-[#1F1E27] rounded-full px-3 py-1 w-20 h-7 z-0">
                                 <span className="text-white text-xs">{balance}</span>
                             </div>
                         </div>

@@ -140,8 +140,8 @@ const ItemStore: React.FC = () => {
                 </div>
 
                 {/* Kaia 잔액 표시 */}
-                <div className="mb-3">
-
+                <div className="mb-3 flex justify-center">
+                    <span className="text-sm">Available Balance : 164.395 KAIA</span>
                 </div>
 
                 {/* 하단 결제 버튼들 */}
