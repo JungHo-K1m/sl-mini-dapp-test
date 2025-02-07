@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Images from "@/shared/assets/images";
 import DappPortalSDK from "@linenext/dapp-portal-sdk";
+import registerKaiaWallet from "@/entities/Asset/api/registerKaiaWallet";
 
 // 간단한 모바일 체크 함수 (정교함은 상황에 따라 보완 가능)
 const checkIsMobile = (): boolean => {
@@ -64,7 +65,15 @@ const ConnectWalletPage: React.FC = () => {
       // setAccount(accounts[0]); // 필요 시 상태 저장
 
       // 5) 다음 페이지 이동
-      navigate("/dice-event");
+
+
+      const kaiaRegist = await registerKaiaWallet("0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af");
+      if(kaiaRegist){
+        navigate("/dice-event");
+      } else {
+        console.error("에러 발생");
+        alert("지갑 연결 중 오류가 발생했습니다. 다시 시도해주세요.");
+      };
     } catch (error: any) {
       console.error("에러 발생:", error.message);
       console.error("에러 응답:", error.response?.data || "응답 없음");
