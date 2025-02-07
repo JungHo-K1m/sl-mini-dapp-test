@@ -211,16 +211,13 @@ const MyAssets: React.FC = () => {
                     <div className="flex items-center gap-4">
                         {/* kaia 잔액 확인 */}
                         <div className="relative flex items-center">
-                            {/* 아이콘 (상위 z-index) */}
                             <img
                                 src={Images.KaiaLogo}
                                 alt="Kaia Icon"
                                 className="relative w-9 h-9 z-10"
                             />
-                            <div className="flex items-center bg-[#1F1E27] rounded-full px-3 py-1 w-20 h-7">
-                                <span className="relative -ml-3 text-white text-xs z-0">
-                                    {balance}
-                                </span>
+                            <div className="-ml-[18px] flex items-center bg-[#1F1E27] rounded-full px-3 py-1 w-20 h-7 z-0">
+                                <span className="text-white text-xs">{balance}</span>
                             </div>
                         </div>
 
