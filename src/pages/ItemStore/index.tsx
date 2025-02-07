@@ -47,7 +47,7 @@ const ItemStore: React.FC = () => {
     };
 
     return (
-        <div className="relative flex flex-col text-white px-6 min-h-screen bg-[#111827]">
+        <div className="flex flex-col items-center text-white px-6 min-h-screen">
             {/* 상단 영역 */}
             <div className="h-14 flex items-center w-full font-bold text-xl mb-4 justify-between">
                 <IoChevronBackOutline
