@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Images from "@/shared/assets/images";
 import DappPortalSDK from "@linenext/dapp-portal-sdk";
 import registerKaiaWallet from "@/entities/Asset/api/registerKaiaWallet";
+import { kaiaGetBalance, KaiaRpcResponse } from "@/entities/Asset/api/getKaiaBalance";
 
 // 간단한 모바일 체크 함수 (정교함은 상황에 따라 보완 가능)
 const checkIsMobile = (): boolean => {
@@ -18,6 +19,9 @@ const ConnectWalletPage: React.FC = () => {
   // 0. 페이지 접근 시 모바일/웹 체크
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [showConnectButton, setShowConnectButton] = useState<boolean>(true);
+
+  const [balance, setBalance] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // 페이지 진입 시 1회만 체크
@@ -40,34 +44,18 @@ const ConnectWalletPage: React.FC = () => {
         console.log("외부 접근입니다.");
       }
 
-      // 2) 먼저 계정 요청(사용자에게 지갑 선택 UI가 뜸)
-      //    이 로직을 통해 사용자가 실제로 Web/Extension/Mobile 지갑 등을 선택하게 됩니다.
-    //   const accounts = (await walletProvider.request({
-    //     method: "kaia_requestAccounts",
-    //   })) as string[];
-
-    //   // 지갑 선택이 끝난 후, walletType이 갱신됨
-    //   const walletType = walletProvider.getWalletType() || null;
-    //   console.log("사용자가 선택한 지갑 타입:", walletType);
-
-    //   // 3) 환경과 walletType 간의 조건 불일치 시 예외 처리
-    //   if (!isMobile && walletType === "Mobile") {
-    //     alert(
-    //       "현재 PC 웹 브라우저 환경에서 '모바일 지갑'은 연결할 수 없습니다.\n모바일 환경에서 다시 시도해주세요."
-    //     );
-    //     // 필요시 로컬 스토리지 key 제거
-    //     localStorage.removeItem("sdk.dappportal.io:1001:walletType");
-    //     return;
-    //   }
-
-    //   // 4) 문제없으면 연결 성공
-    //   console.log("지갑 연결 성공:", accounts[0]);
-      // setAccount(accounts[0]); // 필요 시 상태 저장
-
-      // 5) 다음 페이지 이동
-
 
       const kaiaRegist = await registerKaiaWallet("0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af");
+
+      const response: KaiaRpcResponse<string> = await kaiaGetBalance(
+        '0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af'
+      );
+      if (response.error) {
+        setError(response.error.message);
+      } else if (response.result) {
+        setBalance(response.result);
+        console.log("잔고: ", response.result);
+      }
       if(kaiaRegist){
         navigate("/dice-event");
       } else {
