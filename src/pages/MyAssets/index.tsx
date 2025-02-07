@@ -216,7 +216,7 @@ const MyAssets: React.FC = () => {
                                 alt="Kaia Icon"
                                 className="relative w-9 h-9 z-10"
                             />
-                            <div className="-ml-[18px] flex items-center justify-end bg-[#1F1E27] rounded-full px-3 py-1 w-20 h-7 z-0">
+                            <div className="-ml-[20px] flex items-center justify-end bg-[#1F1E27] rounded-full px-3 py-2 w-20 h-7 z-0">
                                 <span className="text-white text-xs">{balance}</span>
                             </div>
                         </div>
