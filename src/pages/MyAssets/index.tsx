@@ -216,7 +216,9 @@ const MyAssets: React.FC = () => {
                                 alt="Kaia Icon"
                                 className="w-9 h-9"
                             />
-                            <span className="text-white font-semibold text-xs">{balance}</span>
+                            <div className="flex items-center bg-[#1F1E27] rounded-full px-3 py-1">
+                              <span className="text-white font-semibold text-xs">{balance}</span>
+                            </div>
                         </div>  
 
                         {/* 지갑 페이지 이동 */}
