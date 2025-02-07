@@ -66,6 +66,7 @@ const MyAssets: React.FC = () => {
     const [falied, setFailed] = useState(false);
     const [success, setSuccess] = useState(false);
     const [rewardHistoryData, setRewardHistoryData] = useState<any[]>([]);
+    const [balance, setBalance] = useState(0);
 
     const getCharacterImageSrc = () => {
         const index = Math.floor((userLv - 1) / 2);
@@ -208,6 +209,16 @@ const MyAssets: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
+                        {/* kaia 잔액 확인 */}
+                        <div className="flex items-center gap-2">
+                            <img
+                                src={Images.KaiaLogo}
+                                alt="Kaia Icon"
+                                className="w-9 h-9"
+                            />
+                            <span className="text-white font-semibold text-xs">{balance}</span>
+                        </div>  
+
                         {/* 지갑 페이지 이동 */}
                         <button 
                             className="w-8 h-8 rounded-full flex items-center justify-center"

@@ -159,6 +159,7 @@ import th from "./th_flag.svg"
 import ko from "./ko_flag.svg"
 import UploadArrow from "./uploaderarrow.png"
 import Receipt from "./receipt.png"
+import KaiaLogo from "./kaialogo.png"
 
 const Images = {
   HorizontalLogo,
@@ -320,7 +321,8 @@ const Images = {
   th,
   ko,
   UploadArrow,
-  Receipt
+  Receipt,
+  KaiaLogo
 };
 
 export default Images;
