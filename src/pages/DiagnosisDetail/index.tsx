@@ -143,16 +143,15 @@ const DiagnosisDetail: React.FC = () => {
           : renderDentalRealUI()}
       </div>
 
-      {/* 하단 고정 버튼 */}
-      <div className="flex w-11/12 max-w-md absolute transform -translate-x-1/2">
-        <button
-          className="w-full py-4 rounded-full text-lg font-semibold"
-          style={{ backgroundColor: '#0147E5' }}
-          onClick={handleGoHome}
-        >
-          {t("ai_page.Home")}
-        </button>
-      </div>
+      <div className="mt-6 flex w-11/12 max-w-md">
+          <button
+            className="w-full py-4 rounded-full text-lg font-semibold"
+            style={{ backgroundColor: '#0147E5' }}
+            onClick={handleGoHome}
+          >
+            {t("ai_page.Home")}
+          </button>
+        </div>
     </div>
   );
 };
