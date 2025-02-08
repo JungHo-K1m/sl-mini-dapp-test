@@ -46,6 +46,13 @@ const ItemStore: React.FC = () => {
         setSelectedItem(itemId);
     };
 
+    // USD 결제 버튼 클릭 시 Stripe Checkout 링크로 리디렉션
+    const handleUSDCheckout = () => {
+        playSfx(Audios.button_click);
+        // Stripe 대시보드에서 발급받은 Checkout 링크 사용
+        window.location.href = "https://buy.stripe.com/test_6oE6qf4GCcJX5OgfYY";
+    };
+
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
             {/* 상단 영역 */}
@@ -167,10 +174,7 @@ const ItemStore: React.FC = () => {
                     {/* USD 결제 */}
                     <button
                         disabled={!isEnabled}
-                        onClick={() => {
-                            playSfx(Audios.button_click);
-                            // TODO: USD 결제 로직
-                        }}
+                        onClick={handleUSDCheckout}
                         className={
                         isEnabled
                             ? "w-1/2 border-2 border-[#0147E5] text-white px-6 py-3 rounded-full text-base font-medium"
