@@ -120,7 +120,7 @@ const DiagnosisDetail: React.FC = () => {
 
   return (
     <div className="relative flex flex-col items-center text-white mx-6 md:mx-28 min-h-screen">
-      <div className="flex-1 w-full overflow-y-auto pb-6">
+      <div className="flex-1 w-full overflow-y-auto">
         <TopTitle title={t("ai_page.Record_Details")} back={true} />
 
         {/* 이미지 표시 */}
@@ -143,7 +143,7 @@ const DiagnosisDetail: React.FC = () => {
           : renderDentalRealUI()}
       </div>
 
-      <div className="mt-6 flex w-11/12 max-w-md">
+      <div className="mb-6 flex w-11/12 max-w-md">
           <button
             className="w-full py-4 rounded-full text-lg font-semibold"
             style={{ backgroundColor: '#0147E5' }}
