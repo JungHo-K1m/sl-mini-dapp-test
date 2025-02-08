@@ -144,7 +144,7 @@ const DiagnosisDetail: React.FC = () => {
       </div>
 
       {/* 하단 고정 버튼 */}
-      <div className="w-11/12 max-w-md absolute bottom-4 left-1/2 transform -translate-x-1/2">
+      <div className="flex w-11/12 max-w-md absolute transform -translate-x-1/2">
         <button
           className="w-full py-4 rounded-full text-lg font-semibold"
           style={{ backgroundColor: '#0147E5' }}
