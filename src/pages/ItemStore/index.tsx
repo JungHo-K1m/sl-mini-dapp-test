@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
 import Images from "@/shared/assets/images";
+import DappPortalSDK from "@linenext/dapp-portal-sdk";
 
 const nftCollection = [
     {
@@ -52,6 +53,18 @@ const ItemStore: React.FC = () => {
         // Stripe 대시보드에서 발급받은 Checkout 링크 사용
         window.location.href = "https://buy.stripe.com/test_6oE6qf4GCcJX5OgfYY";
     };
+
+    const handleKaiaCheckout = async () => {
+        playSfx(Audios.button_click);
+        
+        // 1) SDK 초기화
+        const sdk = await DappPortalSDK.init({
+        clientId: import.meta.env.VITE_LINE_CLIENT_ID || "",
+        });
+        const paymentProvider = sdk.getPaymentProvider();
+
+        console.log("paymeny Provider testing: ", paymentProvider);
+    }
 
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
@@ -157,10 +170,7 @@ const ItemStore: React.FC = () => {
                     {/* KAIA 결제 */}
                     <button
                         disabled={!isEnabled} // 조건 미충족 시 비활성화
-                        onClick={() => {
-                            playSfx(Audios.button_click);
-                            // TODO: KAIA 결제 로직
-                        }}
+                        onClick={handleKaiaCheckout}
                         className={
                         // 조건에 따라 색상 및 속성 적용
                         isEnabled
