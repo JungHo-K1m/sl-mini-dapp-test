@@ -59,11 +59,17 @@ const ItemStore: React.FC = () => {
         
         // 1) SDK 초기화
         const sdk = await DappPortalSDK.init({
-        clientId: import.meta.env.VITE_LINE_CLIENT_ID || "",
+            clientId: import.meta.env.VITE_LINE_CLIENT_ID || "",
         });
+        
+        const walletProvider = sdk.getWalletProvider();
+        await walletProvider.request({ method: 'kaia_requestAccounts' });
+        
         const paymentProvider = sdk.getPaymentProvider();
 
         console.log("paymeny Provider testing: ", paymentProvider);
+
+        await paymentProvider.startPayment("123456");
     }
 
     return (
