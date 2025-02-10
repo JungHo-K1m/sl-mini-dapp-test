@@ -349,7 +349,9 @@
             "include": "獲得した報酬には以下が含まれます:",
             "booster": "報酬ブースター",
             "spin_reward": "ルーレット報酬",
-            "ok": "OK"
+            "ok": "OK",
+            "spin": "ルーレットを回す",
+            "spinning":"回転..."
         },
         "inventory": "現在の所持品",
         "points": "ゲームボードポイント",

@@ -349,7 +349,9 @@
         "include": "Your rewards include",
         "booster": "Reward Booster",
         "spin_reward": "Spin Reward",
-        "ok": "OK"
+        "ok": "OK",
+        "spin": "Spin the Wheel",
+        "spinning":"Spinning..."
       },
       "inventory": "Your Current Inventory",
       "points": "Game Board Points",

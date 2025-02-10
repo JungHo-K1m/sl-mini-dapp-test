@@ -10,7 +10,13 @@ import { useTranslation } from "react-i18next";
 import parse from 'html-react-parser';
 import { SoundProvider } from "./shared/provider/SoundProvider";
 import Audios from "./shared/assets/audio";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import "./App.css";
+
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
 
 // 페이지 컴포넌트들
 import AIMenu from "@/pages/AIMenu";

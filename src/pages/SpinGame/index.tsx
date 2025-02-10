@@ -404,7 +404,7 @@ const Spin: React.FC<{ onSpinEnd: () => void }> = ({ onSpinEnd }) => {
             : "bg-[#21212f] text-white"
         }`}
       >
-        {isSpinning ? "Spinning..." : "Spin the Wheel"}
+        {isSpinning ? t("dice_event.spin_game.spinning") : t("dice_event.spin_game.spin")}
       </button>
 
       <AlertDialog open={isDialogOpen}>

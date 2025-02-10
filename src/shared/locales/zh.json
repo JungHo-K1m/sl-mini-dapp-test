@@ -349,7 +349,9 @@
         "include": "您的獎勵包含以下內容：",
         "booster": "獎勵加速器",
         "spin_reward": "轉盤獎勵",
-        "ok": "確認"
+        "ok": "確認",
+        "spin": "轉轉樂",
+        "spinning":"公司简介"
       },
       "inventory": "你目前的庫存",
       "points": "遊戲棋盤積分",
