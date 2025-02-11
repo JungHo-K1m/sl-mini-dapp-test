@@ -63,18 +63,12 @@ const ItemStore: React.FC = () => {
             clientId: import.meta.env.VITE_LINE_CLIENT_ID || "",
         });
         
-        // const walletProvider = sdk.getWalletProvider();
-        // await walletProvider.request({ method: 'kaia_requestAccounts' });
-        
-        // const paymentProvider = sdk.getPaymentProvider();
-
-        // console.log("payment Provider testing: ", paymentProvider);
-
-        // await paymentProvider.startPayment("123456");
         const response = await paymentSession(1,"CRYPTO","0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af");
         
         if(response){
             console.log("결제 진행 payment id : ", response.id);
+            const walletProvider = sdk.getWalletProvider();
+            await walletProvider.request({ method: 'kaia_requestAccounts' });
             const paymentProvider = sdk.getPaymentProvider();
             await paymentProvider.startPayment(response.id);
         }
