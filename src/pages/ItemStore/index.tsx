@@ -122,19 +122,24 @@ const ItemStore: React.FC = () => {
                         onClick={() => handleSelectItem(nftItem.id)}
                     >
                         <div
-                        className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
-                        style={{
-                            background:
-                            nftItem.name === "Auto Item"
-                                ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
-                                : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
-                        }}
-                        >
-                        <img
-                            src={nftItem.image}
-                            alt={nftItem.name}
-                            className="w-[80px] h-[80px] object-cover"
-                        />
+                            className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
+                            style={{
+                                background:
+                                nftItem.name === "Auto Item"
+                                    ? "linear-gradient(180deg, #0147E5 0%, #FFFFFF 100%)"
+                                    : "linear-gradient(180deg, #FF4F4F 0%, #FFFFFF 100%)",
+                            }}
+                            >
+                            <img
+                                src={nftItem.image}
+                                alt={nftItem.name}
+                                className="w-[80px] h-[80px] object-cover"
+                            />
+                            <img
+                                src={Images.infoMark}
+                                alt="info"
+                                className="absolute top-1 right-1 w-5 h-5"
+                            />
                         </div>
                         <p className="mt-2 text-sm font-semibold">{nftItem.name}</p>
                     </div>
