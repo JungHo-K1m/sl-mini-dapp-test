@@ -25,6 +25,7 @@ const ItemStore: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { playSfx } = useSound();
+    const [showModal, setShowModal] = useState(false);
 
     // 어떤 아이템(auto, booster)을 선택했는지 추적
     const [selectedItem, setSelectedItem] = useState<string | null>(null);
@@ -87,6 +88,11 @@ const ItemStore: React.FC = () => {
         }
     }
 
+    const handleInfo = () => {
+        playSfx(Audios.button_click);
+
+    }
+
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
             {/* 상단 영역 */}
@@ -122,7 +128,7 @@ const ItemStore: React.FC = () => {
                         onClick={() => handleSelectItem(nftItem.id)}
                     >
                         <div
-                            className="w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
+                            className="relative w-full aspect-[145/102] rounded-md mt-1 mx-1 overflow-hidden flex items-center justify-center"
                             style={{
                                 background:
                                 nftItem.name === "Auto Item"
@@ -139,6 +145,7 @@ const ItemStore: React.FC = () => {
                                 src={Images.infoMark}
                                 alt="info"
                                 className="absolute top-1 right-1 w-5 h-5"
+                                onClick={handleInfo}
                             />
                         </div>
                         <p className="mt-2 text-sm font-semibold">{nftItem.name}</p>
