@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/shared/components/ui'
+import getItemInfo from "@/entities/Asset/api/getItemInfo";
 
 const nftCollection = [
     {
@@ -50,6 +51,23 @@ const ItemStore: React.FC = () => {
         playSfx(Audios.button_click);
         navigate(-1);
     };
+
+    useEffect(()=>{
+        const getItems = async () =>{
+            try{
+                const items = await getItemInfo();
+
+                if(items){
+                    console.log("아이템 정보 확인");
+                } else {
+                    console.log("아이템 정보 실패");
+                }
+            } catch (err: any){
+                console.error('Failed to fetch sl token count:', err);
+            }
+        }
+        getItems();
+    },[]);
 
     // 아이템 카드 클릭 시
     const handleSelectItem = (itemId: string) => {
@@ -104,6 +122,8 @@ const ItemStore: React.FC = () => {
             
         }
     }
+
+
 
     return (
         <div className="flex flex-col items-center text-white px-6 min-h-screen">
