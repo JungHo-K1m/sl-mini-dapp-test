@@ -251,7 +251,7 @@ const ItemStore: React.FC = () => {
                         <AlertDialogTitle className="text-center font-bold text-xl">
                             <div className="flex flex-row items-center justify-between">
                                 <div> &nbsp;</div>
-                                <p>Auto Item</p>
+                                {selectedItem === "auto" ? <p>Auto Item</p>: <p>Reward Booster</p>}
                                 <HiX 
                                     className={'w-6 h-6 cursor-pointer'} 
                                     onClick={() => {
