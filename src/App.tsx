@@ -15,9 +15,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import "./App.css";
 
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-
-
 // 페이지 컴포넌트들
 import AIMenu from "@/pages/AIMenu";
 import SelectCharacterPage from "./pages/SelectCharacter";
