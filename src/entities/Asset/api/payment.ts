@@ -1,9 +1,9 @@
 import api from '@/shared/api/axiosInstance';
 
-export const paymentSession = async (itemId: number, pgtype: string, buyerDappPortalAddress: string): Promise<any> => {
+export const paymentSession = async (itemId: number, pgType: string, buyerDappPortalAddress: string): Promise<any> => {
     const paymentInfo = {
         itemId,
-        pgtype,
+        pgType,
         buyerDappPortalAddress
     };
 
