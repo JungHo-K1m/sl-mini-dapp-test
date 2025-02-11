@@ -74,7 +74,9 @@ const ItemStore: React.FC = () => {
         const response = await paymentSession(1,"CRYPTO","0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af");
         
         if(response){
-            console.log("결제 진행");
+            console.log("결제 진행 payment id : ", response.id);
+            const paymentProvider = sdk.getPaymentProvider();
+            await paymentProvider.startPayment(response.id);
         }
     }
 

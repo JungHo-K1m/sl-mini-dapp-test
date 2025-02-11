@@ -17,7 +17,7 @@ export const paymentSession = async (itemId: number, pgType: string, buyerDappPo
             throw new Error('결제 시도에 실패했습니다.');
         }
         console.log('결제 세션 성공:', response);
-        return true;
+        return response.data.data;
     } else {
         console.error('Unexpected response:', response);
         throw new Error(response.data.message || 'Failed to fetch wallet information');
