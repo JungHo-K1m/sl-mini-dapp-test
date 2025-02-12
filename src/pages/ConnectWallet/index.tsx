@@ -45,10 +45,10 @@ const ConnectWalletPage: React.FC = () => {
       }
 
 
-      const kaiaRegist = await registerKaiaWallet("0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af");
+      const kaiaRegist = await registerKaiaWallet("0xE7173731309E07da77DA0452179212B9Ea7DBfd7");
 
       const response: KaiaRpcResponse<string> = await kaiaGetBalance(
-        '0xf80fF1B467Ce45100A1E2dB89d25F1b78c0d22af'
+        '0xE7173731309E07da77DA0452179212B9Ea7DBfd7'
       );
       if (response.error) {
         setError(response.error.message);
