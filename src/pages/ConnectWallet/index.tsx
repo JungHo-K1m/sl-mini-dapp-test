@@ -5,6 +5,7 @@ import Images from "@/shared/assets/images";
 import DappPortalSDK from "@linenext/dapp-portal-sdk";
 import registerKaiaWallet from "@/entities/Asset/api/registerKaiaWallet";
 import { kaiaGetBalance, KaiaRpcResponse } from "@/entities/Asset/api/getKaiaBalance";
+import { BigNumber, ethers } from "ethers";
 
 // 간단한 모바일 체크 함수 (정교함은 상황에 따라 보완 가능)
 const checkIsMobile = (): boolean => {
@@ -53,8 +54,21 @@ const ConnectWalletPage: React.FC = () => {
       if (response.error) {
         setError(response.error.message);
       } else if (response.result) {
-        setBalance(response.result);
-        console.log("잔고: ", response.result);
+        // 여기서 response.result는 16진수 형태의 잔액(raw)일 가능성이 큼 (예: '0x56bc75e2d63100000')
+        const rawBalanceHex = response.result;
+
+        // KAIA 토큰의 decimals (예: 18)
+        const KAIA_DECIMALS = 18;
+
+        // 3) ethers.BigNumber로 변환
+        const balanceBigNumber = BigNumber.from(rawBalanceHex);
+
+        // 4) 사람 읽기 편한 단위로 변환 (decimals 적용)
+        const formattedBalance = ethers.utils.formatUnits(balanceBigNumber, KAIA_DECIMALS);
+
+        // 5) 콘솔 출력 & state에 저장
+        console.log("잔고(가공 후):", formattedBalance);
+        setBalance(formattedBalance);
       }
       if(kaiaRegist){
         navigate("/dice-event");
