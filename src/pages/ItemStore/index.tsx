@@ -88,8 +88,8 @@ const ItemStore: React.FC = () => {
         
         if(response){
             console.log("결제 진행 payment id : ", response.id);
-            const walletProvider = sdk.getWalletProvider();
-            await walletProvider.request({ method: 'kaia_requestAccounts' });
+            // const walletProvider = sdk.getWalletProvider();
+            // await walletProvider.request({ method: 'kaia_requestAccounts' });
             const paymentProvider = sdk.getPaymentProvider();
             await paymentProvider.startPayment(response.id);
         }
