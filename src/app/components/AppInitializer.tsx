@@ -46,6 +46,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     "claim-history",
     "sdk-test",
     "invite-friends-list",
+    "connect-wallet",
   ];
   const referralPattern = /^[A-Za-z0-9]{4,16}$/;
 
@@ -74,7 +75,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     }
   };
 
-  // 레퍼럴 코드 유무 체크
+  // 레퍼럴 코드 유무 체크 (URL 마지막 Segment 확인)
   useEffect(() => {
     console.log("[AppInitializer] 레퍼럴 코드 체크 시작");
     const url = window.location.href;
@@ -93,21 +94,26 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     }
   }, []);
 
-  // 토큰 처리 및 사용자 검증
+  // 토큰(우리 서버용 Access Token) 처리 및 사용자 검증
   const handleTokenFlow = async () => {
     console.log("[AppInitializer] handleTokenFlow() 시작");
     const accessToken = localStorage.getItem("accessToken");
     console.log("[AppInitializer] 현재 localStorage의 accessToken 확인");
 
+    // 외부 브라우저인 경우 바로 /wallet-connect로 이동
+    if (!liff.isInClient()) {
+      console.log("[AppInitializer] 외부 브라우저 접근 감지 -> /connect-wallet 이동");
+      navigate("/connect-wallet");
+      return;
+    }
+
     if (!accessToken) {
       console.log("[AppInitializer] 서버용 토큰이 없음 -> LINE 로그인 여부 확인");
 
-      // LIFF 환경에서는 이미 로그인된 상태여야 하므로, 액세스 토큰을 바로 추출함
       const lineToken = liff.getAccessToken();
       console.log("[AppInitializer] liff.getAccessToken() 결과:", lineToken);
 
       if (!lineToken) {
-        // LINE 토큰이 없으면 더 이상 진행할 수 없음.
         console.error("[AppInitializer] LINE 토큰이 없습니다. dapp 접근이 불가합니다.");
         throw new Error("LINE 인증이 필요합니다.");
       }
