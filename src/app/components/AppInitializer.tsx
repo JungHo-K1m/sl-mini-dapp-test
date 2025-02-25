@@ -46,7 +46,6 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     "claim-history",
     "sdk-test",
     "invite-friends-list",
-    "connect-wallet",
   ];
   const referralPattern = /^[A-Za-z0-9]{4,16}$/;
 
@@ -100,7 +99,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     const accessToken = localStorage.getItem("accessToken");
     console.log("[AppInitializer] 현재 localStorage의 accessToken 확인");
 
-    // 외부 브라우저인 경우 바로 /wallet-connect로 이동
+    // 외부 브라우저인 경우 바로 /connect-wallet로 이동
     if (!liff.isInClient()) {
       console.log("[AppInitializer] 외부 브라우저 접근 감지 -> /connect-wallet 이동");
       navigate("/connect-wallet");
