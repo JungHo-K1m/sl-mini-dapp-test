@@ -12,6 +12,7 @@ export interface Mission {
   redirectUrl: string | null;
   type: 'ONETIME' | 'DAILY';
   isCleared: boolean;
+  status: 'PENDING' | 'COMPLETED' | null;
 }
 
 interface MissionState {

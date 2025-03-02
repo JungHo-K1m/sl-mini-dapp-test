@@ -1,3 +1,4 @@
+// Attendance.tsx
 import React, { useState } from "react";
 import AttendanceDay from "@/features/AttendanceDay/components/AttendanceDay";
 import { useUserStore } from "@/entities/User/model/userModel";
@@ -5,13 +6,18 @@ import { useTranslation } from "react-i18next";
 
 type DayKeys = "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT" | "SUN";
 
+interface AttendanceProps {
+  /** Tailwind width 클래스를 지정해 너비를 커스터마이징 */
+  customWidth?: string;
+}
+
 const getTodayDay = (): DayKeys => {
   const days: DayKeys[] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const today = new Date();
   return days[today.getDay()];
 };
 
-const Attendance: React.FC = () => {
+const Attendance: React.FC<AttendanceProps> = ({ customWidth }) => {
   const { weekAttendance } = useUserStore();
   const [today] = useState<DayKeys>(getTodayDay());
   const { t } = useTranslation();
@@ -30,38 +36,32 @@ const Attendance: React.FC = () => {
 
     if (attendanceData[day]) return "checked";
     if (day === today) return "today";
-    
+
     const daysOfWeek: DayKeys[] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
     const todayIndex = daysOfWeek.indexOf(today);
     const dayIndex = daysOfWeek.indexOf(day);
-    
+
     return dayIndex < todayIndex ? "missed" : "default";
   };
 
-  // 요일 목록
   const days: DayKeys[] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   return (
     <div>
-      <h1 className="mt-6 flex items-center justify-center text-white font-jalnan text-3xl">
-        {t("dice_event.attendance")}
-      </h1>
-
       <div
         id="attendance"
-        className="grid grid-cols-7 gap-2 bg-box mt-4 w-[332px] px-8 md:w-[595.95px] min-h-24 md:h-32 text-white text-xs"
+        className={`grid grid-cols-7 gap-2 bg-box mt-4 px-8 min-h-24 md:h-32 text-white text-xs ${
+          // customWidth가 있으면 그 클래스를, 없으면 기본 너비를 사용
+          customWidth ? customWidth : "w-full md:w-[595.95px]"
+        }`}
       >
         {days.map((day) => {
-          // day: "SUN" | "MON" etc. (식별자)
-          // displayDay: i18n에서 불러온 번역 문자열
           const displayDay = t(`dice_event.day.${day}`);
-          // 예: day === "SUN" -> displayDay === "일" (혹은 "SUN" 등)
-
           return (
             <AttendanceDay
               key={day}
-              day={day}               // 식별자
-              displayDay={displayDay} // 화면 표시용 번역문
+              day={day}
+              displayDay={displayDay}
               status={getStatus(day)}
             />
           );

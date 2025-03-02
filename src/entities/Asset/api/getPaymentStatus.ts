@@ -8,7 +8,7 @@ export type PaymentStatus =
   | 'CAPTURED'
   | 'CONFIRMED'
   | 'CONFIRM_FAILED'
-  | 'FINALZED'
+  | 'FINALIZED'
   | 'CANCELED';
 
 // API 응답 인터페이스

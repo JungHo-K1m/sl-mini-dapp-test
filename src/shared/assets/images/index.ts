@@ -161,6 +161,14 @@ import UploadArrow from "./uploaderarrow.png"
 import Receipt from "./receipt.png"
 import KaiaLogo from "./kaialogo.png"
 import infoMark from "./infomark.png"
+import failed from "./failed.png"
+import success from "./success.png"
+import airDropBox from "./airdropbox.png"
+import airDropBoxes from "./airdrop_boxes.png"
+import rankingModal from "./ranking_modal.png"
+import urlReward from "./urlreward.png"
+import eventBanner from "./eventbanner.png"
+import eventBox from "./eventbox.png"
 
 const Images = {
   HorizontalLogo,
@@ -324,7 +332,15 @@ const Images = {
   UploadArrow,
   Receipt,
   KaiaLogo,
-  infoMark
+  infoMark,
+  failed,
+  success,
+  airDropBox,
+  airDropBoxes,
+  rankingModal,
+  urlReward,
+  eventBanner,
+  eventBox
 };
 
 export default Images;

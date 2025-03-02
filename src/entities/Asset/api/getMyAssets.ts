@@ -1,9 +1,10 @@
 import api from '@/shared/api/axiosInstance';
 
-export const getWallets = async(): Promise<any> => {
-    const response = await api.get('/wallet/my');
+export const getMyAssets = async(): Promise<any> => {
+    const response = await api.get('/assets');
 
     if(response.data.code === 'OK'){
+        console.log("my asset response: ", response);
         return response.data.data;
     }else{
         console.error('Unexpected response:', response);
@@ -11,4 +12,4 @@ export const getWallets = async(): Promise<any> => {
     }
 };
 
-export default getWallets;
+export default getMyAssets;

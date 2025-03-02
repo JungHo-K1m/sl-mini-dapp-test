@@ -14,7 +14,7 @@ import RPSGame from "../RPSGame";
 import SpinGame from "../SpinGame";
 import { useUserStore } from "@/entities/User/model/userModel";
 import LoadingSpinner from "@/shared/components/ui/loadingSpinner";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/shared/components/ui";
+import { Dialog, DialogTitle, DialogContent, DialogHeader, DialogTrigger } from "@/shared/components/ui";
 import { formatNumber } from "@/shared/utils/formatNumber";
 import LevelRewards from "@/widgets/LevelRewards";
 import LeaderBoard from "@/widgets/LeaderBoard";
@@ -72,6 +72,16 @@ const DiceEventPage: React.FC = () => {
   const [initialY, setInitialY] = useState<number>(474);
   const [delta, setDelta] = useState<number>(56);
   const { t } = useTranslation();
+
+  // 랭킹 보상 팝업 표시를 위한 상태
+  const [showRankingModal, setShowRankingModal] = useState<boolean>(false);
+
+  // AirDrop 팝업 표시를 위한 상태
+  const [showAirDrop, setShowAirDrop] = useState<boolean>(false);
+
+  // URL 보상 팝업 표시를 위한 상태
+  const [showUrlReward, setShowUrlReward] = useState<boolean>(false);
+  
 
   // 레벨 업 시 팝업 표시를 위한 상태
   const [showLevelUpDialog, setShowLevelUpDialog] = useState<boolean>(false);
@@ -264,7 +274,7 @@ const DiceEventPage: React.FC = () => {
             </DialogContent>
           </Dialog>
 
-          <Attendance />
+          <Attendance customWidth="w-[332px] md:w-[595.95px]"  />
           <MissionWidget />
 
           {/* 레벨업 시 다이얼로그: 이전보다 레벨이 올라갔을 때만 표시 */}
@@ -316,12 +326,129 @@ const DiceEventPage: React.FC = () => {
                   onClick={() => setShowLevelUpDialog(false)}
                   className="bg-[#0147E5] font-medium rounded-full w-40 h-14"
                 >
-                  Continue
+                  {t("character_page.Continue")}
+                </button>
+              </div>
+            </DialogContent>
+          </Dialog>
+          
+          {/* 지난 달 보상 다이얼로그 */}
+          <Dialog open={showRankingModal}>
+            <DialogTitle></DialogTitle>
+            <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
+              <div className="relative">
+                <DialogClose className="absolute top-0 right-0 p-2">
+                  <HiX 
+                    className="w-5 h-5"
+                    onClick={() => {
+                      playSfx(Audios.button_click);
+                      setShowRankingModal(false);
+                    }} 
+                  />
+                </DialogClose>
+              </div>
+              <div className="flex flex-col items-center justify-around">
+                <div className=" flex flex-col items-center gap-2">
+                  <h1 className=" font-jalnan text-4xl text-[#DD2726] text-center">
+                    Check your rank this mnonth!
+                  </h1>
+                  <img
+                    src={Images.rankingModal}
+                    alt="ranking modal"
+                    className="mt-2 w-60 h-60"
+                  />
+                </div>
+                <div className="flex flex-col mt-4">
+                  <p className="font-Pretendard text-center text-base font-semibold">Check your ranking and claim your rewards!</p>
+                </div>
+                <button
+                  onClick={() => setShowAirDrop(false)}
+                  className="bg-[#0147E5] text-base font-medium rounded-full w-40 h-14 mt-8 mb-7"
+                >
+                  Check now
                 </button>
               </div>
             </DialogContent>
           </Dialog>
 
+          {/* AirDrop 다이얼로그 */}
+          <Dialog open={showAirDrop}>
+            <DialogTitle></DialogTitle>
+            <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
+              <div className="relative">
+                <DialogClose className="absolute top-0 right-0 p-2">
+                  <HiX 
+                    className="w-5 h-5"
+                    onClick={() => {
+                      playSfx(Audios.button_click);
+                      setShowRankingModal(false);
+                    }} 
+                  />
+                </DialogClose>
+              </div>
+              <div className="flex flex-col items-center justify-around">
+                <div className=" flex flex-col items-center gap-2">
+                  <h1 className=" font-jalnan text-4xl text-[#DD2726] text-center">
+                    Lucky Airdrop Event!
+                  </h1>
+                  <img
+                    src={Images.airDropBoxes}
+                    alt="airdrop boxes"
+                    className="mt-2 w-60 h-60"
+                  />
+                </div>
+                <div className="flex flex-col mt-4">
+                  <p className="font-Pretendard text-center text-base font-semibold">Check if you're one of the lucky winners!</p>
+                </div>
+                <button
+                  onClick={() => setShowRankingModal(false)}
+                  className="bg-[#0147E5] text-base font-medium rounded-full w-40 h-14 mt-8 mb-7"
+                >
+                  Check now
+                </button>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+
+          {/* dapp-portal URL 보상 다이얼로그 */}
+          <Dialog open={showUrlReward}>
+            <DialogTitle></DialogTitle>
+            <DialogContent className=" bg-[#21212F] border-none rounded-3xl text-white h-svh overflow-x-hidden font-semibold overflow-y-auto max-w-[90%] md:max-w-lg max-h-[80%]">
+              <div className="relative">
+                <DialogClose className="absolute top-0 right-0 p-2">
+                  <HiX 
+                    className="w-5 h-5"
+                    onClick={() => {
+                      playSfx(Audios.button_click);
+                      setShowUrlReward(false);
+                    }} 
+                  />
+                </DialogClose>
+              </div>
+              <div className="flex flex-col items-center justify-around">
+                <div className=" flex flex-col items-center gap-2">
+                  <h1 className=" font-Pretendard text-base font-semibold text-white text-center">
+                    Claim Your Point Reward.
+                  </h1>
+                  <img
+                    src={Images.urlReward}
+                    alt="airdrop boxes"
+                    className="mt-2 w-16 h-16"
+                  />
+                </div>
+                <button
+                  onClick={() => {
+                    playSfx(Audios.button_click);
+                    setShowUrlReward(false);
+                  }}
+                  className="bg-[#0147E5] text-base font-medium rounded-full w-40 h-14 mt-8 mb-7"
+                >
+                  Claim now
+                </button>
+              </div>
+            </DialogContent>
+          </Dialog>
           <br />
           <br />
           <br />

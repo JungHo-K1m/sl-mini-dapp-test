@@ -5,7 +5,6 @@ export const getFriendsReward = async (): Promise<any> => {
   const response = await api.get('/friends/reward');
   
   if (response.data.code === 'OK') {
-    console.log("수입이 좀 있나? ", response.data.data);
     return response.data.data;
   } else {
     console.error('Unexpected response:', response);

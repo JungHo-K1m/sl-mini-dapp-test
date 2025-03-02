@@ -15,7 +15,6 @@ export const registerWallet = async (address: string, market: string): Promise<a
             console.error('지갑 검증 실패: data가 null입니다.');
             throw new Error('지갑 검증에 실패했습니다.');
         }
-        console.log('지갑 등록 성공:', response);
         return true;
     } else {
         console.error('Unexpected response:', response);
