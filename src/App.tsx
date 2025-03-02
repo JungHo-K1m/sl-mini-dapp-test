@@ -10,10 +10,7 @@ import { useTranslation } from "react-i18next";
 import parse from 'html-react-parser';
 import { SoundProvider } from "./shared/provider/SoundProvider";
 import Audios from "./shared/assets/audio";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 import "./App.css";
-
 
 // 페이지 컴포넌트들
 import AIMenu from "@/pages/AIMenu";
@@ -47,10 +44,11 @@ import ClaimHistory from "./pages/ClaimHistory";
 import ConnectWalletPage from "./pages/ConnectWallet";
 import LanguagePage from "./pages/ChooseLanguage";
 import SoundSetting from "./pages/SoundSetting";
-import PaymentHistory from "./pages/PaymentHistory";
-import PaymentDetail from "./pages/PaymentDetail";
 import ItemStore from "./pages/ItemStore";
 
+// import PreviousRanking from "./pages/PreviousRanking";
+// import PreviousRaffle from "./pages/PreviousRaffle";
+// import PreviousAirdrop from "./pages/PreviousAirdrop";
 
 const App:React.FC = () =>{
   const [isInitialized, setIsInitialized] = useState(false);
@@ -211,9 +209,13 @@ const App:React.FC = () =>{
                   <Route path="/choose-language" element={<DiceEventLayout hidden={true}><LanguagePage /></DiceEventLayout>} />
                   <Route path="/sound-setting" element={<DiceEventLayout hidden={true}><SoundSetting /></DiceEventLayout>} />
                   <Route path="/connect-wallet" element={<ConnectWalletPage />} />
-                  <Route path="/payment-history" element={<DiceEventLayout hidden={true}><PaymentHistory /></DiceEventLayout>} />
-                  <Route path="/payment-detail" element={<DiceEventLayout hidden={true}><PaymentDetail /></DiceEventLayout>} />
                   <Route path="/item-store" element={<DiceEventLayout hidden={true}><ItemStore /></DiceEventLayout>} />
+                  {/* <Route path="/previous-ranking" element={<DiceEventLayout hidden={true}><PreviousRanking /></DiceEventLayout>} />
+                  <Route path="/previous-raffle" element={<DiceEventLayout hidden={true}><PreviousRaffle /></DiceEventLayout>} />
+                  <Route path="/previous-airdrop" element={<DiceEventLayout hidden={true}><PreviousAirdrop /></DiceEventLayout>} />
+                   */}
+              
+
               </Routes>
             </SoundProvider>
           )}

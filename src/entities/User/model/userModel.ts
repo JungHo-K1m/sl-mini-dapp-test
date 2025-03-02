@@ -326,7 +326,11 @@ export const useUserStore = create<UserState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       let data = await fetchHomeData();
-      if (!data) {
+      if (!data || data.data === null) {
+        // 응답 객체가 있고, message가 "Please choose your character first."인 경우 바로 에러 발생
+        if (data && data.message === "Please choose your character first.") {
+          throw new Error(data.message);
+        }
         // 데이터가 없는 경우 토큰 갱신
         console.warn('No data returned from /home API, trying token refresh...');
         const tokenRefreshed = await get().refreshToken();
@@ -352,7 +356,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         items,
         boards,
         bgm
-      } = data;
+      } = data.data;
   
       set({
         userId: user.userId,
@@ -426,9 +430,12 @@ export const useUserStore = create<UserState>((set, get) => ({
       });
 
     } catch (error: any) {
-      console.error('fetchUserData 실패:', error);
-      set({ isLoading: false, error: error.message });
-      throw error;
+      // error.response.data.message가 있으면 그 값을 사용
+      const errorMessage = error.response?.data?.message || error.message;
+      console.error('fetchUserData 실패:', errorMessage);
+      set({ isLoading: false, error: errorMessage });
+      // 새로운 에러 객체를 던져서 error.message에 원하는 메시지가 포함되도록 함
+      throw new Error(errorMessage);
     }
   },
   

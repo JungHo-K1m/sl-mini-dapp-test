@@ -52,21 +52,14 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   // 사용자 정보 가져오기
   const getUserInfo = async () => {
     console.log("[AppInitializer] getUserInfo() 호출");
-
     try {
       await fetchUserData();
       console.log("[AppInitializer] 사용자 데이터 정상적으로 가져옴");
-      if (liff.isInClient()) {
-        console.log("[AppInitializer] LINE 브라우저 사용 -> /dice-event 이동");
-        navigate("/dice-event");
-      } else {
-        console.log("[AppInitializer] 외부 브라우저 사용 -> /connect-wallet 이동");
-        navigate("/connect-wallet");
-      }
+      navigate("/dice-event");
     } catch (error: any) {
       console.error("[AppInitializer] getUserInfo() 중 에러:", error);
-      if (error.response?.status === 500) {
-        console.error("[AppInitializer] 500 오류: 캐릭터가 선택되지 않음 -> /choose-character 이동");
+      if (error.message === "Please choose your character first.") {
+        console.error("[AppInitializer] 오류: 캐릭터가 선택되지 않음 -> /choose-character 이동");
         navigate("/choose-character");
         return;
       }
@@ -93,28 +86,20 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     }
   }, []);
 
-  // 토큰(우리 서버용 Access Token) 처리 및 사용자 검증
+  // 토큰(서버용 Access Token) 처리 및 사용자 검증
   const handleTokenFlow = async () => {
     console.log("[AppInitializer] handleTokenFlow() 시작");
     const accessToken = localStorage.getItem("accessToken");
     console.log("[AppInitializer] 현재 localStorage의 accessToken 확인");
 
-    // 외부 브라우저인 경우 바로 /connect-wallet로 이동
-    if (!liff.isInClient()) {
-      console.log("[AppInitializer] 외부 브라우저 접근 감지 -> /connect-wallet 이동");
-      navigate("/connect-wallet");
-      return;
-    }
-
     if (!accessToken) {
       console.log("[AppInitializer] 서버용 토큰이 없음 -> LINE 로그인 여부 확인");
-
       const lineToken = liff.getAccessToken();
       console.log("[AppInitializer] liff.getAccessToken() 결과:", lineToken);
 
       if (!lineToken) {
         console.error("[AppInitializer] LINE 토큰이 없습니다. dapp 접근이 불가합니다.");
-        throw new Error("LINE 인증이 필요합니다.");
+        throw new Error("LINE앱으로 로그인 후 사용바랍니다.");
       }
 
       try {
@@ -145,9 +130,10 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   // 에러 핸들링
   const handleError = (error: any, navigate: (path: string) => void) => {
     console.error("[AppInitializer] 앱 초기화 중 오류:", error);
-    if (error.response?.status === 500) {
-      console.error("[AppInitializer] 500 오류 -> /choose-character 이동");
+    if (error.message === "Please choose your character first.") {
+      console.error("오류: 캐릭터가 선택되지 않음 -> /choose-character 이동");
       navigate("/choose-character");
+      return;
     } else {
       console.error("[AppInitializer] 그 외 오류 발생:", error);
       throw error;
@@ -157,6 +143,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   // 초기화 Effect
   useEffect(() => {
     console.log("[AppInitializer] useEffect() - initializeApp() 진입");
+
     const initializeApp = async () => {
       if (initializedRef.current) {
         console.log("[AppInitializer] 이미 초기화됨 -> 중단");
@@ -213,6 +200,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
         onInitialized();
       }
     };
+
     initializeApp();
   }, [fetchUserData, navigate, onInitialized]);
 
