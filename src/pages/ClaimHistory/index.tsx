@@ -1,13 +1,10 @@
 // ClaimHistory.tsx
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { TopTitle } from "@/shared/components/ui";
-import { FaChevronRight } from "react-icons/fa";
 import getClaimHistory from "@/entities/Asset/api/getClaimHistory";
 
 const ClaimHistory: React.FC = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
   
   const [claimHistory, setClaimHistory] = useState<any[]>([]);
