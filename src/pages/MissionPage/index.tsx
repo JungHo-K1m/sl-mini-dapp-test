@@ -243,8 +243,8 @@ const MissionPage: React.FC = () => {
           }}
         >
           <div className="text-white">
-            <p className="font-bold text-2xl">Limited-Time Airdrop!</p>
-            <p className="font-bold text-2xl">Grab Yours Today!</p>
+            <p className="font-bold text-2xl">{t("mission_page.air_drop")}</p>
+            <p className="font-bold text-2xl">{t("mission_page.grab")}</p>
           </div>
           <img
             src={Images.eventBox}
@@ -387,106 +387,110 @@ const MissionPage: React.FC = () => {
       </div>
 
       {/* 완료된 미션 */}
-      <h1 className="font-semibold text-lg mb-4 ml-7">Completed Mission</h1>
-      <div className="grid grid-cols-2 gap-3 mx-6">
-        {completedMissions.map((mission) => {
-          if (mission.name !== "Leave a Supportive Comment on SL X") {
-            return (
-              <OneTimeMissionCard
-                key={mission.id}
-                mission={mission}
-                onClear={handleClearMission}
-                onMissionCleared={handleMissionCleared}
-              />
-            );
-          } else {
-            const translatedName = missionNamesMap[mission.name]
-              ? t(missionNamesMap[mission.name])
-              : mission.name;
-            return (
-              <div className="col-span-2" key={mission.id}>
-                <div
-                  className={`basic-mission-card h-36 rounded-3xl flex flex-row items-center pl-8 pr-5 justify-between relative cursor-pointer ${
-                    mission.isCleared || mission.status === "PENDING"
-                      ? "pointer-events-none"
-                      : ""
-                  }`}
-                  onClick={() => {
-                    playSfx(Audios.button_click);
-                    if (!mission.isCleared && mission.status !== "PENDING") {
-                      if (mission.redirectUrl) {
-                        window.open(mission.redirectUrl, "_blank");
-                      }
-                      handleClearMission(mission.id);
-                    }
-                  }}
-                  role="button"
-                  aria-label={`Mission: ${mission.name}`}
-                  tabIndex={0}
-                  onKeyPress={(e) => {
-                    if (
-                      e.key === "Enter" &&
-                      !mission.isCleared &&
-                      mission.status !== "PENDING"
-                    ) {
-                      if (mission.redirectUrl) {
-                        window.open(mission.redirectUrl, "_blank");
-                      }
-                      handleClearMission(mission.id);
-                    }
-                  }}
-                >
-                  {(mission.isCleared || mission.status === "PENDING") && (
-                    <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10" />
-                  )}
+      {completedMissions.length > 0 && (
+        <>
+          <h1 className="font-semibold text-lg mb-4 ml-7">{t("mission_page.Completed_mission")}</h1>
+          <div className="grid grid-cols-2 gap-3 mx-6">
+            {completedMissions.map((mission) => {
+              if (mission.name !== "Leave a Supportive Comment on SL X") {
+                return (
+                  <OneTimeMissionCard
+                    key={mission.id}
+                    mission={mission}
+                    onClear={handleClearMission}
+                    onMissionCleared={handleMissionCleared}
+                  />
+                );
+              } else {
+                const translatedName = missionNamesMap[mission.name]
+                  ? t(missionNamesMap[mission.name])
+                  : mission.name;
+                return (
+                  <div className="col-span-2" key={mission.id}>
+                    <div
+                      className={`basic-mission-card h-36 rounded-3xl flex flex-row items-center pl-8 pr-5 justify-between relative cursor-pointer ${
+                        mission.isCleared || mission.status === "PENDING"
+                          ? "pointer-events-none"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        playSfx(Audios.button_click);
+                        if (!mission.isCleared && mission.status !== "PENDING") {
+                          if (mission.redirectUrl) {
+                            window.open(mission.redirectUrl, "_blank");
+                          }
+                          handleClearMission(mission.id);
+                        }
+                      }}
+                      role="button"
+                      aria-label={`Mission: ${mission.name}`}
+                      tabIndex={0}
+                      onKeyPress={(e) => {
+                        if (
+                          e.key === "Enter" &&
+                          !mission.isCleared &&
+                          mission.status !== "PENDING"
+                        ) {
+                          if (mission.redirectUrl) {
+                            window.open(mission.redirectUrl, "_blank");
+                          }
+                          handleClearMission(mission.id);
+                        }
+                      }}
+                    >
+                      {(mission.isCleared || mission.status === "PENDING") && (
+                        <div className="absolute inset-0 bg-gray-950 bg-opacity-60 rounded-3xl z-10" />
+                      )}
 
-                  <div className="relative flex flex-row items-center justify-between z-0 w-full">
-                    <div className="md:space-y-3">
-                      <p className="text-sm font-medium">{translatedName}</p>
-                      <p className="font-semibold flex flex-row items-center gap-1 mt-2">
-                        +{mission.diceReward}{" "}
+                      <div className="relative flex flex-row items-center justify-between z-0 w-full">
+                        <div className="md:space-y-3">
+                          <p className="text-sm font-medium">{translatedName}</p>
+                          <p className="font-semibold flex flex-row items-center gap-1 mt-2">
+                            +{mission.diceReward}{" "}
+                            <img
+                              src={Images.Dice}
+                              alt="dice"
+                              className="w-5 h-5"
+                            />
+                            &nbsp; +{formatNumber(mission.starReward)}{" "}
+                            <img
+                              src={Images.Star}
+                              alt="star"
+                              className="w-5 h-5"
+                            />
+                          </p>
+                        </div>
                         <img
-                          src={Images.Dice}
-                          alt="dice"
-                          className="w-5 h-5"
+                          src={Images.LargeTwitter}
+                          alt="Large Twitter"
+                          className="w-20 h-20"
                         />
-                        &nbsp; +{formatNumber(mission.starReward)}{" "}
-                        <img
-                          src={Images.Star}
-                          alt="star"
-                          className="w-5 h-5"
-                        />
-                      </p>
+                      </div>
+
+                      {mission.isCleared && (
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-sm font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
+                          <img
+                            src={Images.MissionCompleted}
+                            alt="Mission Completed"
+                            className="w-5 h-5"
+                          />
+                          <p>{t("mission_page.Completed")}</p>
+                        </div>
+                      )}
+
+                      {mission.status === "PENDING" && (
+                        <div className="absolute inset-0 flex items-center justify-center z-30">
+                          <LoadingSpinner />
+                        </div>
+                      )}
                     </div>
-                    <img
-                      src={Images.LargeTwitter}
-                      alt="Large Twitter"
-                      className="w-20 h-20"
-                    />
                   </div>
-
-                  {mission.isCleared && (
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-sm font-semibold rounded-full px-4 py-2 z-20 flex items-center justify-center gap-2">
-                      <img
-                        src={Images.MissionCompleted}
-                        alt="Mission Completed"
-                        className="w-5 h-5"
-                      />
-                      <p>{t("mission_page.Completed")}</p>
-                    </div>
-                  )}
-
-                  {mission.status === "PENDING" && (
-                    <div className="absolute inset-0 flex items-center justify-center z-30">
-                      <LoadingSpinner />
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          }
-        })}
-      </div>
+                );
+              }
+            })}
+          </div>
+        </>
+      )}
 
       {/* 페이지 하단 여백 */}
       <div className="my-10"></div>
@@ -498,7 +502,7 @@ const MissionPage: React.FC = () => {
             <AlertDialogTitle className="text-center font-bold text-xl">
               <div className="flex flex-row items-center justify-between">
                 <div>&nbsp;</div>
-                <p>Mission Reward</p>
+                <p>{t("mission_page.mission_reward")}</p>
                 <HiX
                   className="w-6 h-6 cursor-pointer"
                   onClick={handleCloseDialog}
@@ -534,10 +538,9 @@ const MissionPage: React.FC = () => {
               </div>
             </div>
             <div className="text-center space-y-2">
-              <p className="text-xl font-semibold">Congratulations!</p>
+              <p className="text-xl font-semibold">{t("mission_page.congrate")}</p>
               <p className="text-[#a3a3a3]">
-                This reward has been added to <br />
-                your account.
+                {t("mission_page.reward_added")}
               </p>
             </div>
             <div className="space-y-3 w-full">
@@ -545,7 +548,7 @@ const MissionPage: React.FC = () => {
                 className="w-full h-14 rounded-full bg-[#0147e5]"
                 onClick={handleCloseDialog}
               >
-                OK
+                {t("mission_page.ok")}
               </button>
             </div>
           </div>
