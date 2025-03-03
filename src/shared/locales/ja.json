@@ -246,7 +246,7 @@
             "claim_token": "トークンを請求",
             "select_token": "請求したいトークンを選択してください：",
             "wallet_connect": "ウォレット接続",
-            "to_claim_sl": "SLを請求するにはKaikasウォレットを接続する必要があります。",
+            "to_claim_sl": "SLを請求するにはKAIAウォレットを接続する必要があります。",
             "would_you": "ウォレットを接続しますか？",
             "connect": "ウォレットを接続",
             "cancel": "キャンセル",

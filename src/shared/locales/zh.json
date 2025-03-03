@@ -246,7 +246,7 @@
         "claim_token": "領取代幣",
         "select_token": "請選擇您要領取的代幣：",
         "wallet_connect": "錢包連接",
-        "to_claim_sl": "要領取 SL，您需要先連接 Kaikas 錢包。",
+        "to_claim_sl": "要領取 SL，您需要先連接 KAIA 錢包。",
         "would_you": "是否要連接您的錢包？",
         "connect": "連接錢包",
         "cancel": "取消",

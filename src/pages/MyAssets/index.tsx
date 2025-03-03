@@ -76,8 +76,6 @@ const MyAssets: React.FC = () => {
     const [SLClaim, setSLClaim]= useState(false);
     const [USDCClaim, setUsdcCaim] = useState(false);
     const [loadingModal, setLoadingModal] = useState(false);
-    const [falied, setFailed] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [rewardHistoryData, setRewardHistoryData] = useState<any[]>([]);
     const [balance, setBalance] = useState("0.00");
     const [walletAccount, setWalletAcount] = useState("");
@@ -89,6 +87,7 @@ const MyAssets: React.FC = () => {
 
     const [claimSuccess, setClaimSuccess] = useState(false);
     const [claimFailed, setClaimFailed] = useState(false);
+    const [failMessage, setFailMessage] = useState("");
     const [claimData, setClaimData] = useState<ClaimData | null>(null);
     const [userClaimAmount, setUserClaimAmount] = useState("");  
 
@@ -327,13 +326,16 @@ const MyAssets: React.FC = () => {
                 setLoadingModal(false);
                 setClaimSuccess(true);
             } else if (claim.message === "Please check your balance."){
+                setFailMessage("Please check your balance.")
                 setLoadingModal(false);
                 setClaimFailed(true);
             } else{
+                setFailMessage("Network error occurred")
                 setLoadingModal(false);
                 setClaimFailed(true);
             }
         } catch(err: any){
+            setFailMessage("Network error occurred")
             setLoadingModal(false);
             setClaimFailed(true);
         }
@@ -984,7 +986,7 @@ const MyAssets: React.FC = () => {
 
                             {/* 오류 메시지 */}
                             <p className="text-sm font-normal text-[#A3A3A3]">
-                                Error message : Network error occurred
+                                Error message : {failMessage}
                             </p>
 
                             {/* 버튼들 */}
