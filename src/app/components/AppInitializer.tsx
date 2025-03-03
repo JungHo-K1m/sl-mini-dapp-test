@@ -49,6 +49,7 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
   ];
   const referralPattern = /^[A-Za-z0-9]{4,16}$/;
 
+
   // 사용자 정보 가져오기
   const getUserInfo = async () => {
     console.log("[AppInitializer] getUserInfo() 호출");
@@ -73,6 +74,13 @@ const AppInitializer: React.FC<AppInitializerProps> = ({ onInitialized }) => {
     const url = window.location.href;
     const parts = url.split("/");
     const lastPart = parts[parts.length - 1];
+
+    // "from-dapp-portal"을 별도 체크하여 처리
+    if (lastPart === "from-dapp-portal") {
+      console.log(`[AppInitializer] "${lastPart}"는 Dapp Portal 링크 -> localStorage에 저장`);
+      localStorage.setItem("referralCode", lastPart);
+      return;
+    }
 
     if (knownRoutes.includes(lastPart)) {
       console.log(`[AppInitializer] "${lastPart}"는 knownRoutes에 있음 -> 레퍼럴 코드 아님`);

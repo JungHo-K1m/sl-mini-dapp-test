@@ -23,6 +23,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { useTranslation } from "react-i18next";
 import { useSound } from "@/shared/provider/SoundProvider";
 import Audios from "@/shared/assets/audio";
+import getRewardPoints from "@/entities/Mission/api/fromRewardPoint";
 
 const levelRewards = [
   // 2~9 레벨 보상 예시
@@ -95,6 +96,27 @@ const DiceEventPage: React.FC = () => {
     }
     setPrevLevel(userLv);
   }, [userLv, prevLevel]);
+
+
+  // 보상 링크를 통한 접근 여부 확인 및 보상 API 호출
+  useEffect(() => {
+    const referralCode = localStorage.getItem("referralCode");
+    if (referralCode === "from-dapp-portal") {
+      console.log("[DiceEventPage] Dapp Portal referral detected. Calling reward API...");
+      getRewardPoints()
+        .then((message) => {
+          console.log("[DiceEventPage] Reward API response:", message);
+          // API 응답 메시지에 따라 다이얼로그를 표시할 수 있음
+          setShowUrlReward(true);
+          // 한번 호출 후 중복 호출 방지를 위해 referralCode 삭제
+          localStorage.removeItem("referralCode");
+        })
+        .catch((error) => {
+          console.error("[DiceEventPage] Reward API error:", error);
+        });
+    }
+  }, []);
+
 
   // 현재 레벨 보상 찾기
   const currentReward = levelRewards.find((r) => r.level === userLv);
@@ -350,7 +372,7 @@ const DiceEventPage: React.FC = () => {
               <div className="flex flex-col items-center justify-around">
                 <div className=" flex flex-col items-center gap-2">
                   <h1 className=" font-jalnan text-4xl text-[#DD2726] text-center">
-                    Check your rank this mnonth!
+                    {t("dice_event.check_rank")}
                   </h1>
                   <img
                     src={Images.rankingModal}
@@ -359,13 +381,13 @@ const DiceEventPage: React.FC = () => {
                   />
                 </div>
                 <div className="flex flex-col mt-4">
-                  <p className="font-Pretendard text-center text-base font-semibold">Check your ranking and claim your rewards!</p>
+                  <p className="font-Pretendard text-center text-base font-semibold">{t("dice_event.claim_rewards")}</p>
                 </div>
                 <button
                   onClick={() => setShowAirDrop(false)}
                   className="bg-[#0147E5] text-base font-medium rounded-full w-40 h-14 mt-8 mb-7"
                 >
-                  Check now
+                  {t("dice_event.check")}
                 </button>
               </div>
             </DialogContent>
@@ -389,7 +411,7 @@ const DiceEventPage: React.FC = () => {
               <div className="flex flex-col items-center justify-around">
                 <div className=" flex flex-col items-center gap-2">
                   <h1 className=" font-jalnan text-4xl text-[#DD2726] text-center">
-                    Lucky Airdrop Event!
+                    {t("dice_event.lucyk_airdrop")}
                   </h1>
                   <img
                     src={Images.airDropBoxes}
@@ -398,13 +420,13 @@ const DiceEventPage: React.FC = () => {
                   />
                 </div>
                 <div className="flex flex-col mt-4">
-                  <p className="font-Pretendard text-center text-base font-semibold">Check if you're one of the lucky winners!</p>
+                  <p className="font-Pretendard text-center text-base font-semibold">{t("dice_event.lucky_winner")}</p>
                 </div>
                 <button
                   onClick={() => setShowRankingModal(false)}
                   className="bg-[#0147E5] text-base font-medium rounded-full w-40 h-14 mt-8 mb-7"
                 >
-                  Check now
+                  {t("dice_event.check")}
                 </button>
               </div>
             </DialogContent>
@@ -429,7 +451,7 @@ const DiceEventPage: React.FC = () => {
               <div className="flex flex-col items-center justify-around">
                 <div className=" flex flex-col items-center gap-2">
                   <h1 className=" font-Pretendard text-base font-semibold text-white text-center">
-                    Claim Your Point Reward.
+                    {t("dice_event.claim_point")}
                   </h1>
                   <img
                     src={Images.urlReward}
@@ -444,7 +466,7 @@ const DiceEventPage: React.FC = () => {
                   }}
                   className="bg-[#0147E5] text-base font-medium rounded-full w-40 h-14 mt-8 mb-7"
                 >
-                  Claim now
+                  {t("dice_event.claim")}
                 </button>
               </div>
             </DialogContent>
