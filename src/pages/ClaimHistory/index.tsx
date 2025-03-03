@@ -57,7 +57,6 @@ const ClaimHistory: React.FC = () => {
             <div
               key={item.id}
               className="flex items-center justify-between py-3 border-b border-gray-700 cursor-pointer"
-              onClick={() => navigate(`/claim-details/${item.id}`)}
             >
               <div>
                 <p className="text-lg font-normal">{item.token}</p>
@@ -72,7 +71,6 @@ const ClaimHistory: React.FC = () => {
                     {label}
                   </span>
                 </div>
-                <FaChevronRight className="w-4 h-4" />
               </div>
             </div>
           );
