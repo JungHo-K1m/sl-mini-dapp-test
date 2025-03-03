@@ -5,7 +5,7 @@ export const getClaimHistory = async(pageNum: number): Promise<any> => {
 
     if (response.status === 200) {
         console.log("클래임 내역: ", response);
-        return response.data.data;
+        return response.data;
     }else{
         console.error('Unexpected response:', response);
         throw new Error(response.data.message || 'Failed to fetch item information');
