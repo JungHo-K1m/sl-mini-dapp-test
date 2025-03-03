@@ -106,9 +106,13 @@ const DiceEventPage: React.FC = () => {
       getRewardPoints()
         .then((message) => {
           console.log("[DiceEventPage] Reward API response:", message);
-          // API 응답 메시지에 따라 다이얼로그를 표시할 수 있음
-          setShowUrlReward(true);
-          // 한번 호출 후 중복 호출 방지를 위해 referralCode 삭제
+          // 응답 메시지가 "Success"인 경우에만 다이얼로그 표시
+          if (message === "Success") {
+            setShowUrlReward(true);
+          } else if (message === "Already Rewarded") {
+            console.log("[DiceEventPage] Reward already claimed.");
+          }
+          // 중복 호출 방지를 위해 referralCode 삭제
           localStorage.removeItem("referralCode");
         })
         .catch((error) => {
@@ -116,6 +120,7 @@ const DiceEventPage: React.FC = () => {
         });
     }
   }, []);
+
 
 
   // 현재 레벨 보상 찾기

@@ -152,7 +152,9 @@
       "daily_attendance": "Daily Attendance : 1,000 Points",
       "welcom_gift": "Welcome gift for joining",
       "rewards": "7,777 Points + 10SL Tokens + 30 Dice",
-      "start_now": "Receive Reward & Start Now!"
+      "start_now": "Receive Reward & Start Now!",
+      "raffle_airdrop" : "Raffle AirDrop Event",
+      "Check_winner": "Check if you're one of the lucky winners!"
     },
     "wallet_page": {
         "wallet": "Wallet",
@@ -211,7 +213,14 @@
       "points":"Ponits Earned",
       "sl": "SL Earned",
       "usdc": "USDC Earned",
-      "friend_list": "Invite Friends List"
+      "friend_list": "Invite Friends List",
+      "air_drop": "Limited-Time Airdrop!",
+      "grab": "Grab Yours Today!",
+      "Completed_mission" :"Completed Mission",
+      "mission_reward": "Mission Reward",
+      "congrate":"Congratulations!",
+      "reward_added": "This reward has been added to your account.",
+      "ok": "OK"
     },
     "asset_page": {
       "Shop_Unique_NFTs_Now!": "Shop Unique NFTs Now!",
@@ -268,7 +277,7 @@
         "claim_failed": "Failed",
         "claim_waiting": "Waiting"
       },
-      "non_nft": "My Non-NFT Items",
+      "non_nft": "My Items",
       "buy_more": "Buy more Itmes",
       "item_store":"Non-NFT Item Store",
       "payment_history": "Payment History",
@@ -284,10 +293,11 @@
       "no_item": "You don't have any items yet.",
       "own_item": "Own items and boost your rank!",
       "shop_item": "Shop for items",
-      "detail": "Payment Detail"
+      "detail": "Payment Detail",
+      "wallet_connect": "Wallet Connected"
     },
     "dice_event": {
-      "attendance": "Attendance",
+      "attendance": "Daily Attendance",
       "level_reward": "Level Rewards",
       "level": "Level",
       "monthly_rewards": "Monthly Rewards",
@@ -367,7 +377,14 @@
       "mission": "Mission",
       "get_more_dice": "Get More Dice",
       "Earn_extra_rolls": "Earn extra rolls",
-      "to_boost_your_chances": "to boost your chances!"
+      "to_boost_your_chances": "to boost your chances!",
+      "check_rank": "Check your rank this mnonth!",
+      "claim_rewards": "Check your ranking and claim your rewards!",
+      "lucyk_airdrop" : "Lucky Airdrop Event!",
+      "lucky_winner" : "Check if you're one of the lucky winners!",
+      "claim_point": "Claim Your Point Reward.",
+      "check": "Check Now",
+      "claim": "Claim Now"
     },
     "setting": {
       "terms_of_service": "Trems of Service",

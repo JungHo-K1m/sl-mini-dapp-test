@@ -152,7 +152,9 @@
       "daily_attendance": "每日出席：1,000 點數",
       "welcom_gift": "歡迎加入禮",
       "rewards": "7,777 點數 + 10SL 代幣 + 30 骰子",
-      "start_now": "立即領取獎勵並開始！"
+      "start_now": "立即領取獎勵並開始！",
+      "raffle_airdrop": "抽獎空投活動",
+      "Check_winner": "檢查你是否成為幸運得主之一！"
     },
     "wallet_page": {
       "wallet": "錢包",
@@ -211,7 +213,14 @@
       "points": "獲得的點數",
       "sl": "獲得的 SL",
       "usdc": "獲得的 USDC",
-      "friend_list": "邀請好友清單"
+      "friend_list": "邀請好友清單",
+      "air_drop": "限時空投！",
+      "grab": "立即搶購！",
+      "Completed_mission": "任務完成",
+      "mission_reward": "任務獎勵",
+      "congrate": "恭喜！",
+      "reward_added": "該獎勵已添加到您的帳戶中。",
+      "ok": "確定"
     },
     "asset_page": {
       "Shop_Unique_NFTs_Now!": "立即購買獨特的NFT！",
@@ -268,7 +277,7 @@
         "claim_failed": "失敗",
         "claim_waiting": "等待中"
       },
-      "non_nft": "我的非 NFT 項目",
+      "non_nft": "我的项目",
       "buy_more": "購買更多物品",
       "item_store": "非 NFT 物品商店",
       "payment_history": "付款記錄",
@@ -284,7 +293,8 @@
       "no_item": "您目前沒有任何物品。",
       "own_item": "擁有物品並提升您的等級！",
       "shop_item": "選購物品",
-      "detail": "付款方式"
+      "detail": "付款方式",
+      "wallet_connect": "钱包连接"
     },
     "dice_event": {
       "attendance": "簽到",
@@ -367,7 +377,14 @@
       "mission": "任務",
       "get_more_dice": "獲取更多骰子",
       "Earn_extra_rolls": "獲得更多擲骰次數",
-      "to_boost_your_chances": "提升你的中獎機率！"
+      "to_boost_your_chances": "提升你的中獎機率！",
+      "check_rank": "檢查您本月的排名！",
+      "claim_rewards": "檢查您的排名並領取獎勵！",
+      "lucyk_airdrop": "幸運空投活動！",
+      "lucky_winner": "檢查您是否為幸運得主！",
+      "claim_point": "領取您的積分獎勵。",
+      "check": "立即檢查",
+      "claim": "立即領取"
     },
     "setting": {
       "terms_of_service": "服務條款",

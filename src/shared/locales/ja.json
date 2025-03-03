@@ -152,7 +152,9 @@
         "daily_attendance": "毎日出席: 1,000ポイント",
         "welcom_gift": "参加歓迎ギフト",
         "rewards": "7,777ポイント + 10SLトークン + 30ダイス",
-        "start_now": "報酬を受け取って、今すぐ始めよう！"
+        "start_now": "報酬を受け取って、今すぐ始めよう！",
+        "raffle_airdrop": "抽選エアドロップイベント",
+        "Check_winner": "あなたが幸運な当選者の一人かどうか確認してください！"
     },
     "wallet_page": {
         "wallet": "ウォレット",
@@ -211,7 +213,14 @@
         "points": "獲得ポイント",
         "sl": "獲得SL",
         "usdc": "獲得USDC",
-        "friend_list": "招待した友達リスト"
+        "friend_list": "招待した友達リスト",
+        "air_drop": "期間限定エアドロップ！",
+        "grab": "今日中にゲットしよう！",
+        "Completed_mission": "完了したミッション",
+        "mission_reward": "ミッション報酬",
+        "congrate": "おめでとうございます！",
+        "reward_added": "この報酬はあなたのアカウントに追加されました。",
+        "ok": "OK"
     },
     "asset_page": {
         "Shop_Unique_NFTs_Now!": "今すぐユニークなNFTを購入しましょう！",
@@ -268,7 +277,7 @@
             "claim_failed": "失敗",
             "claim_waiting": "待機中"
         },
-        "non_nft": "私のNon-NFTアイテム",
+        "non_nft": "私のアイテム",
         "buy_more": "アイテムをもっと購入する",
         "item_store": "Non-NFTアイテムストア",
         "payment_history": "支払い履歴",
@@ -284,7 +293,8 @@
         "no_item": "まだ所有しているアイテムがありません。",
         "own_item": "アイテムを所有して、ランクを上げよう！",
         "shop_item": "アイテムを購入する",
-        "detail": "支払詳細"
+        "detail": "支払詳細",
+        "wallet_connect": "ウォレット接続"
     },
     "dice_event": {
         "attendance": "出席",
@@ -367,7 +377,14 @@
         "mission": "ミッション",
         "get_more_dice": "さらにサイコロを獲得",
         "Earn_extra_rolls": "追加ロールを獲得",
-        "to_boost_your_chances": "チャンスを高めましょう！"
+        "to_boost_your_chances": "チャンスを高めましょう！",
+        "check_rank": "今月のランクを確認！",
+        "claim_rewards": "ランクを確認して報酬を受け取ろう！",
+        "lucyk_airdrop": "ラッキーエアドロップイベント！",
+        "lucky_winner": "あなたがラッキーウィナーの一人か確認しよう！",
+        "claim_point": "ポイント報酬を受け取ろう！",
+        "check": "今すぐ確認",
+        "claim": "今すぐ受け取る"
     },
     "setting": {
         "terms_of_service": "利用規約",
