@@ -246,7 +246,7 @@
         "claim_token": "Claim Tokens",
         "select_token": "Select the token you want to claim :",
         "wallet_connect": "Wallet Connection",
-        "to_claim_sl": "To claim SL, you need to connect your Kaikas wallet.",
+        "to_claim_sl": "To claim SL, you need to connect your KAIA wallet.",
         "would_you": "Would you like to connect your wallet?",
         "connect": "Connect Wallet",
         "cancel": "Cancel",
